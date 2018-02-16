@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+	<head>
+<!-- no contiene nada que el usuario ve, simplemente tiene información para como renderizar la pagina -->
+		<meta charset="utf-8">
+		<title> New Webpage </title>
+<!-- Este es el titulo que se muestra en la pestaña, bookmarks y demas... no aparece en la pantalla -->
+
+
+	<!-- esto le dice todo lo que esta aca adentro es CSS -->
+		<style>
+
+			h2 {
+				color: rgb(212,80,60);
+				font-family: "Helvetica", sans-serif;
+				font-size: 3em;
+				text-align: center;
+				position: fixed;
+			}
+
+			body{
+				background-color: rgb(80,150,280);
+				font-size: 18 ppx;
+			}
+
+			#rabbit-1{
+				color: rgb(100,190,10);
+				background-color: rgb(10,150,150);
+			}
+
+			.mi_clase-2{
+				color: yellow;
+				background-color: purple;	
+			}
+
+			#div-1{
+				color: yellow;
+				background-color: grey;
+				width: 5ppx;
+				overflow: auto;
+				margin: auto;
+				border: 2 px dotted;
+			}
+
+			#container{
+				width: 400px;
+				margin: auto;
+				border: 1px solid rgb(145,0,0);
+				border-top: 10px solid purple;
+				padding: 6px;
+			}
+
+		</style>
+					<!-- el color lo puedo indicar por palabra reservada o por valores de RGB -->
+					<!-- podemos ponerles id a los tags, para despues a CSS decirle... a esete id dale este estilo, etc. -->
+					<!-- podemos tener clases, que es como agrupar elementos en categorias para luego aplicarles estilos directamente-->
+					<!-- indico el tipo de letra que tome por defecto, si no esta instalada en la computadora host, lo que va a hacer es tomar la que tenga por defecto instalada para sans-serif style -->
+					<!-- font-size: 3em; significa que ese elemento de CSS, va a tener un tamaño 3 veces mayor que el que yo haya defnido para el body-->
+					<!--position: fixed; sirve para dejar algo fijo en la pantalla, como un buscador -->
+					<!-- referenciar todo con width en % esta bueno xq mantiene una proporción-->
+					<!-- para lograr que algo siempre este al final se logra con clear: both; -->
+
+					<!-- 
+							p.warning{
+							border: 5px olid orange;
+							} //esto le dice al browser que aplique esa regla solamente a los parrafos que son de la clase warning.
+					-->
+	</head>
+	
+	<body>
+	<div id="container">
+	<!--hay 6 headlines, ordenados jerarquicamente en funcion de la importacnai del texto-->
+	<h1>Hola</h1>
+	<h1>Hola</h1>
+	<h1>Hola</h1>
+	<h2>Hola nena</h2>
+	<h1>Hola</h1>
+	<h1>Hola</h1>
+	<h1>Hola</h1>
+	<h1>Hola</h1>
+	<h1>Hola</h1>
+	<h1>Hola</h1>
+	<h3 id="rabbit-3">Hola</h3>
+	<h1>Hola</h1>
+	<div id="div-1">
+	<h1>Hola</h1>
+	<h1>Hola</h1>
+	<h1>Hola</h1>
+	<h1>Hola</h1>
+	</div>
+	<h1>Hola</h1>
+	<h1>Hola</h1>
+	<h3 id="rabbit-1">Hola</h3>
+	<h3 id="rabbit-2">Hola</h3>
+	
+	<h4>Hola</h4>
+	<h5>Hola</h5>
+	<h6>Hola</h6>
+
+
+	<a target="_blank" href="http://sarasa.com/mas_sarasa"> Link a otra pagina </a>
+	<!-- tambien puede redirigirte a otra sección de la pagina -->
+
+
+
+	
+	<p class="mi_clase">Hola <br> co <em>m</em> o <br> estas <strong> que<em>r</em>ido </strong> amigo mio? <br></p>
+	<p class="mi_clase">Hola como estas querido amigo mio? </p>
+	<p class="mi_clase-2">Hola como estas querido amigo mio? </p>
+	<p class="mi_clase-2">Hola como estas querido amigo mio? </p>
+	<!-- Asi denotamos al párrafo ... <br> es el breakline-->
+
+	<!--Como hacer una lista-->
+	<ul>  
+		<li> <a href="#rabbit-3"> Primer elemento </a></li>
+		<li> Segundo elemento</li>
+		<li> Tercer elemento</li>
+
+	</ul>
+	<!-- unordered list, no le pone numeros simplemente bullets-->
+	<ol> 
+		<li> elemento</li>
+		<li> elemento</li>
+		<li> elemento</li>
+
+	</ol>
+
+
+	<img src="C:/Users/jorge/Desktop/iot_Tesis/auto.jpg" alt="Rabbit with lop ears in barn" width=auto> 
+	<!-- Si por alguna razon la imagen no se puede cargar, vos le podes decir al browser que imagen cargar como alternativa... está bueno para los ciegos que les leen las paginas....... las paginans tienen que ser pensadas para que TODAS las personas puedan vivir la experiencia de ver tu pagina web. -->
+
+
+
+
+	</div>
+	</body>
+
+<!-- En CSS y HTML tenemos el modelo BOX
+
+
+[ Margin [ Border [ Padding [ Content ] ] ] ]
+
+Para HTML todo es una BOX.
+
+   -->
+
+
+	
+</html>

@@ -1,0 +1,234 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title> Dashboard - Sample </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel='shortcut icon' type='image/x-icon' href='C:\Users\jorge\Desktop\iot_Tesis\cosmos.jpg' /> 
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- Adding Jquery library from CDN (Content Delivery Network) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+    <script>
+      $(document).ready(function(){
+
+        var ctx = document.getElementById('lineChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+            datasets: [
+            {
+              label: 'Temperature',
+              data: [22, 22, 23, 26, 26, 21, 24, 23, 23, 23],
+              backgroundColor: "#fc9272",
+              pointBackgroundColor: "#de2d26",
+              strokeColor: "#de2d26",
+              pointColor: "#de2d26",
+              pointStrokeColor: "#de2d26",
+              pointHighlightFill: "#de2d26",
+              pointHighlightStroke: "#de2d26",
+          }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+            yAxes: [{
+                display:false,
+                ticks: {
+                    beginAtZero:false
+                },
+                gridLines:{
+                    display:false
+                }
+            }],
+            xAxes: [{
+                //display:false,
+                ticks: {
+                    beginAtZero:false
+                },
+                gridLines:{
+                    display:false
+                }
+            }]
+        }
+    }
+});
+
+        var ctx = document.getElementById('secondLineChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+            datasets: [
+            {
+              label: 'Humidity',
+              data: [22, 22, 23, 26, 26, 21, 24, 23, 23, 23],
+              backgroundColor: "#7fcdbb",
+              pointBackgroundColor: "#2c7fb8",
+              strokeColor: "#3182bd",
+              pointColor: "#3182bd",
+              pointStrokeColor: "#3182bd",
+              pointHighlightFill: "#3182bd",
+              pointHighlightStroke: "#3182bd",
+          }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+            yAxes: [{
+                display:false,
+                ticks: {
+                    beginAtZero:false
+                },
+                gridLines:{
+                    display:false
+                }
+            }],
+            xAxes: [{
+                //display:false,
+                ticks: {
+                    beginAtZero:false
+                },
+                gridLines:{
+                    display:false
+                }
+            }]
+        }
+    }
+});
+
+        var ctx = document.getElementById('thirdLineChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+            datasets: [
+            {
+              label: 'Pressure',
+              data: [1030, 1060, 1070, 1090, 1040, 1060, 1050, 1040, 1080, 1050],
+              backgroundColor: "#fec44f",
+              pointBackgroundColor: "#d95f0e",
+              strokeColor: "#d95f0e",
+              pointColor: "#d95f0e",
+              pointStrokeColor: "#d95f0e",
+              pointHighlightFill: "#d95f0e",
+              pointHighlightStroke: "#d95f0e",
+          }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+            yAxes: [{
+                display:false,
+                ticks: {
+                    beginAtZero:false
+                },
+                gridLines:{
+                    display:false
+                }
+            }],
+            xAxes: [{
+                //display:false,
+                ticks: {
+                    beginAtZero:false
+                },
+                gridLines:{
+                    display:false
+                }
+            }]
+        }
+    }
+});
+
+        var ctx = document.getElementById("myChart").getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Action 1', 'Action 2', 'Action 3', 'Action 4', 'Action 5'],
+                datasets: [{
+                    label: 'Population (millions)',
+                    data: [11, 22, 5, 17, 15],
+                    backgroundColor: ['#FABB3C', '#32D75E','#D02FC0','#EB0524','#848B7A']
+                    /*backgroundColor: ['#3e95cd', '#8e5ea2','#3cba9f','#e8c3b9','#c45850']*/
+                }]
+            },
+            options: {
+                responsive:true,
+                cutoutPercentage:75,
+                maintainAspectRatio: true,
+                title: {
+                    display: true,
+                    text: 'Predicted world population (millions) in 2050'
+                }
+            }
+        });
+
+
+    });
+</script>
+<style type="text/css">
+    .box{
+        /*max-width: 45%;
+        max-height: 43%;*/
+        position: relative;
+    }
+    #lineChart{
+        /*background-color: #fc9272;*/
+        position: absolute;
+        max-width: 450px;
+        max-height: 450px;
+        z-index: 1;
+    }
+    #secondLineChart{
+        background-color: solid-blue;
+        position: absolute;
+        max-width: 450px;
+        max-height: 450px;
+        left:450px;
+        top:0px;
+        z-index: 0;
+    }
+
+    #thirdLineChart{
+        background-color: solid-blue;
+        position: absolute;
+        max-width: 450px;
+        max-height: 450px;
+        left:910px;
+        top:0px;
+        z-index: 2;
+    }
+    #myChart{
+        /*display: block;
+        margin: 0 auto;*/
+        max-width: 450px;
+        max-height: 450px;
+    }
+
+    #chartBox{
+        position: relative;
+        margin-top: 500px;
+    }
+
+</style>
+</head>
+
+<body>
+  <div class="box">
+    <canvas id="lineChart"></canvas>
+    <canvas id="secondLineChart"></canvas>
+    <canvas id="thirdLineChart"></canvas>
+</div>
+    <div class="chartBox">
+        <canvas id="myChart"></canvas>
+    </div>
+    <div>
+</body>
+
+</html>

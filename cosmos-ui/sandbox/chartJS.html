@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>sra</title>
+	<link rel='shortcut icon' type='image/x-icon' href='C:\Users\jorge\Desktop\iot_Tesis\cosmos.jpg' />
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+
+	<style type="text/css">
+		#sarasa{
+			background-color: black;
+			position: relative;
+		}
+
+		#myChart{
+			 max-width: 40%;
+			 max-height: 50%;
+		}
+
+	</style>
+</head>
+<body>
+
+	<div id="sarasa">
+	<canvas id="myChart"></canvas>
+	<script>
+		var ctx = document.getElementById("myChart").getContext('2d');
+		
+		var myChart = new Chart(ctx, {
+			type: 'doughnut',
+			data: {
+				labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
+				datasets: [{
+					label: 'Population (millions)',
+					data: [12, 19, 3, 5, 2],
+					backgroundColor: ['#3e95cd', '#8e5ea2','#3cba9f','#e8c3b9','#c45850']
+				}]
+			},
+			options: {
+				responsive:true,
+				cutoutPercentage:75,
+				maintainAspectRatio: true,
+				title: {
+					display: true,
+					text: 'Predicted world population (millions) in 2050'
+				}
+			}
+		});
+	</script>
+	</div>
+</body>
+</html>

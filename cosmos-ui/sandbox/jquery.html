@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+
+<head>
+	<meta charset="utf-8">
+	<title></title>
+
+	<!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<!-- Adding Jquery library from CDN (Content Delivery Network) -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+
+	<script>
+		$(document).ready(function(){
+			var jsonObject;
+			$("button").click(function(){
+				$.getJSON("https://jsonplaceholder.typicode.com/users", function(result){
+					console.log(result);
+					console.log(JSON.stringify(result));
+					var elements = JSON.stringify(result);
+					console.log(elements[0].name);
+					jsonObject = JSON.parse(elements);
+					console.log(jsonObject);
+					console.log(jsonObject[0].name);
+					$("#t1").text(jsonObject[0].name);
+					$("#t2").text(jsonObject[0].username);
+					$("#t3").text(jsonObject[0].email);
+					$("#t4").text(jsonObject[1].name);
+					$("#t5").text(jsonObject[1].username);
+					$("#t6").text(jsonObject[1].email);
+					$("#t7").text(jsonObject[2].name);
+					$("#t8").text(jsonObject[2].username);
+					$("#t9").text(jsonObject[2].email);
+					console.log(jsonObject[0].address.street);
+
+				});
+			});
+		});
+	</script>
+
+	<style type="text/css">		
+	.table{
+		background-color: black;
+		color: grey;
+		font-family: Helvetica;
+		font-weight: bold;
+	}
+	</style>
+
+
+</head>
+<body>
+
+	<button>Get JSON data</button>
+
+
+	<table class="table table-hover table-bordered">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Name</th>
+				<th>User Name</th>
+				<th>Email</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<th scope="row">1</th>
+				<td id="t1"></td>
+				<td id="t2"></td>
+				<td id="t3"></td>
+			</tr>
+			<tr>
+				<th scope="row">2</th>
+				<td id="t4"></td>
+				<td id="t5"></td>
+				<td id="t6"></td>
+			</tr>
+			<tr>
+				<th scope="row">3</th>
+				<td id="t7"></td>
+				<td id="t8"></td>
+				<td id="t9"></td>
+			</tr>
+		</tbody>
+	</table>
+
+	<div></div>
+
+</body>
+</html>

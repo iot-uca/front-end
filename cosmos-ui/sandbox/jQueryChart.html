@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>jQuery Chart</title>
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<!-- Adding Jquery library from CDN (Content Delivery Network) -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+
+	<script defer='defer'>
+		$(document).ready(function(){
+
+			var jsonObject;
+
+			$("#json").click(function(){
+				$.getJSON("https://jsonplaceholder.typicode.com/users", function(result){
+					console.log(result);
+					console.log(JSON.stringify(result));
+					var elements = JSON.stringify(result);
+					jsonObject = JSON.parse(elements);
+					console.log(jsonObject);
+
+        			var ctx = document.getElementById("myChart").getContext('2d');
+        			console.log("Hola!");
+        			var myChart = new Chart(ctx, {
+        				type: 'doughnut',
+        				data: {
+        					labels: [jsonObject[0].name, jsonObject[1].name, jsonObject[2].name, jsonObject[3].name, jsonObject[4].name],
+        					datasets: [{
+        						label: 'Population (millions)',
+        						data: [jsonObject[0].id, jsonObject[1].id, jsonObject[2].id, jsonObject[3].id, jsonObject[4].id],
+        						backgroundColor: ['#3e95cd', '#8e5ea2','#3cba9f','#e8c3b9','#c45850']
+        					}]
+        				},
+        				options: {
+        					responsive:true,
+        					cutoutPercentage:75,
+        					maintainAspectRatio: true,
+        					title: {
+        						display: true,
+        						text: 'Predicted world population (millions) in 2050'
+        					}
+        				}
+        			});
+				});
+        	});
+		});
+	</script>
+
+	<style type="text/css">
+		#myChart{
+			max-height: 300px;
+			max-width: 500px;
+		}
+
+	</style>
+
+</head>
+
+<body>
+	<button id="json">Get JSON data</button>
+
+	<div id="sarasa">
+		<canvas id="myChart"></canvas>
+	</div>
+
+</body>
+</html>
+

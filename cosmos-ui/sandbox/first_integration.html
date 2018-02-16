@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title> Dashboard - Sample </title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel='shortcut icon' type='image/x-icon' href='C:\Users\jorge\Desktop\iot_Tesis\cosmos.jpg' /> 
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css" rel="stylesheet" />
+
+	<!-- Adding Jquery library from CDN (Content Delivery Network) -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
+
+	<script type="text/javascript">
+
+		$(document).ready(function(){
+
+			sarasa();
+
+	
+/* This is to not allow user to select more than X options  */
+
+			var last_valid_selection = null;
+		      $('#selecting').change(function(event) {
+		        if ($(this).val().length > 2) {
+		          alert(' Please choose no more than 2 options ');
+		          $(this).val(last_valid_selection);
+		        } else {
+		          last_valid_selection = $(this).val();
+		        }
+		      });
+		});
+
+/* Generates the label numbers based on the amount of values to display */
+function generateLabelsForChart(length)
+{   console.log(" Entering generateLabelsForChart <"+length+">.");
+    var labels = [];
+    
+    for(i=1; i<=length; i++){
+    	labels.push(i);
+    }
+    return labels;
+}
+
+/* Iterates the list of Data Points, retrieving its values */
+function generateDataForChart(values)
+{                       
+	console.log(" Entering generateDataForChart <"+values+">.");
+    var data = [];
+    
+    for(i=0; i<values.length; i++){
+    	data.push(values[i].value);
+    }
+    return data;
+}
+
+/*   NO TENGO QUE HACER RETURNS  --> getJSON es asíncrona, entonces va a ejecutar su body cuando sea que el backend responda!!!                  */
+
+function sarasa(){
+	$.getJSON("http://localhost:8090/dataStream/availables", function(result){
+		console.log(result);
+		console.log(JSON.stringify(result));
+		var elements = JSON.stringify(result);
+		console.log(elements);
+		var jsonObject = JSON.parse(elements);
+		console.log(jsonObject);
+		console.log(jsonObject[0]);
+		console.log(jsonObject.length);
+
+		for(i=0; i<jsonObject.length; i++){
+			var o = new Option(jsonObject[i], jsonObject[i]); /// jquerify the DOM object 'o' so we can use the html method
+		
+			//$('#sarasa').append('<label class="checkbox-inline"><input type="checkbox" value="'+jsonObject[i]+'">'+jsonObject[i]+'</label>');
+
+			$(o).html(jsonObject[i]); 
+			$('#selecting').append(o);
+		}
+		console.log(jsonObject);
+	});
+}
+
+function displayDashboards(){
+
+	var values = $('#selecting').val();
+
+	console.log(" VALUES = " + values);
+
+	var valuesLength = values.length;
+
+	console.log(" Values Length = " + valuesLength);
+
+	for(i=0; i<values.length;i++){
+
+		console.log("Going to query for <" + values[i] + "> data-stream.");
+
+		console.log(" LENGTH => " + $('#'+values[i]).length);
+
+		// If canvas already exists, then we reuse the same
+		if($('#'+values[i]).length === 0) {
+
+			console.log(" APPENDING => " + '<div class="col-md-4"><canvas id="' + values[i] + '"></canvas></div>');
+
+			$('#scoreCards').append('<div class="col-md-5"><canvas id="' + values[i] + '"></canvas></div>');
+		}
+
+		$.getJSON("http://localhost:8090/dataStream/" + values[i], function(result){
+				
+			console.log(" RESPONSE => " + JSON.stringify(result));
+			var elements = JSON.stringify(result);
+			jsonObject = JSON.parse(elements);
+			console.log(jsonObject);
+			console.log(jsonObject.length);
+
+			var dataPoints = jsonObject.dataPoints;
+			var dataStreamName = jsonObject.name;
+
+			console.log(" dataStreamName => " + dataStreamName);
+			console.log(" dataPoints => " + dataPoints);
+
+			//generate labels for Chart
+		    var chartLabels = generateLabelsForChart(dataPoints.length);
+		    console.log("chartLabels => " + chartLabels);
+
+			//generate data sources for Chart
+		    var chartData =  generateDataForChart(dataPoints);
+		    console.log(" chartData => " + chartData);
+
+		    // Draw the chart using labels and data generated before
+			var ctx = document.getElementById(dataStreamName).getContext('2d');
+			var myChart = new Chart(ctx, {
+				type: 'line',
+				data: { labels: chartLabels,
+					datasets: [
+					{
+						label: dataStreamName, 
+						data: chartData,
+						backgroundColor: generateRandomColor(),//"#fc9272",
+						/*pointBackgroundColor: "#de2d26",
+						strokeColor: "#de2d26",
+						pointColor: "#de2d26",
+						pointStrokeColor: "#de2d26",
+						pointHighlightFill: "#de2d26",
+						pointHighlightStroke: "#de2d26",*/
+					}]
+				},
+				options: {
+					responsive: true,
+					scales: {
+						yAxes: [{
+							display:false,
+							ticks: {
+								beginAtZero:false
+							},
+							gridLines:{
+								display:false
+							}
+						}],
+						xAxes: [{
+        		ticks: {
+			        	beginAtZero:false
+			        },
+			        gridLines:{
+			        	display:false
+			        }
+			    }]
+			}
+			}
+			});
+			
+		});
+	}
+}
+
+function generateRandomColor(){
+	var color = '#'+(Math.random()*0xFFFFFF<<0).toString(16);
+	console.log(" COLOR =>>> " + color);
+	return color;
+}
+
+</script>
+
+
+</head>
+<body>
+
+	<!--div id="sarasa"></div-->
+
+	<select id="selecting" multiple></select>
+
+	<button id="showDashboardButton" onclick="displayDashboards()"> Show dashboard! </button>
+
+	<div class="row" id="scoreCards"></div>
+
+</body>
+</html>

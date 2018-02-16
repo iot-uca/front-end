@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Pie Chart</title>
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<!-- Adding Jquery library from CDN (Content Delivery Network) -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+
+	<script>
+		
+		var myNewChart;
+		var data = [
+		{
+			value: 30,
+			color: "#F7464A"
+		}, {
+			value: 50,
+			color: "#E2EAE9"
+		}, {
+			value: 100,
+			color: "#D4CCC5"
+		}, {
+			value: 40,
+			color: "#949FB1"
+		}, {
+			value: 100,
+			color: "#4D5360"
+		}
+		];
+
+		var options = {
+			animation: true,
+			animationEasing: 'easeInOutQuart',
+			animationSteps: 80
+		};
+
+//Get the context of the canvas element we want to select
+var ctx = document.getElementById("myChart")
+.getContext("2d");
+
+/*******************************************************/
+myNewChart = new Chart(ctx).Doughnut(data, options);
+
+</script>
+
+
+</head>
+
+<body>
+
+
+<canvas id="myChart"></canvas>
+
+</body>
+</html>

@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title> Dashboard - Sample </title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel='shortcut icon' type='image/x-icon' href='C:\Users\jorge\Desktop\iot_Tesis\cosmos.jpg' /> 
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css" rel="stylesheet" />
+
+	<!-- Adding Jquery library from CDN (Content Delivery Network) -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			$("#keys").hide();
+			$("#commands").hide();
+			var jsonObject;
+			//$.getJSON("http://localhost:8090/sarasa", function(result){
+			/*$.getJSON("https://jsonplaceholder.typicode.com/users", function(result){
+						console.log(result);
+						console.log(JSON.stringify(result));
+						var elements = JSON.stringify(result);
+						jsonObject = JSON.parse(elements);
+						console.log(jsonObject);
+					});*/
+
+					var settings = {
+						"async": true,
+						"crossDomain": true,
+						"url": "http://localhost:8090/dataStream/dataPoints",
+						"method": "GET",
+						"headers": {
+							"cache-control": "no-cache",
+						}
+					}
+					console.log(settings);
+					$.ajax(settings).done(function (response) {
+						console.log("HOLA");
+						console.log(response);
+					});
+
+					$.getJSON("http://localhost:8010/data-streams", function(result){
+						console.log(result);
+						console.log(JSON.stringify(result));
+						var elements = JSON.stringify(result);
+						jsonObject = JSON.parse(elements);
+						console.log(jsonObject);
+					});
+					var ctx = document.getElementById('lineChart').getContext('2d');
+					var myChart = new Chart(ctx, {
+						type: 'line',
+						data: {
+							labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+							datasets: [
+							{
+								label: 'Temperature',
+								data: [22, 22, 23, 26, 26, 21, 24, 23, 23, 23],
+								backgroundColor: "#fc9272",
+								pointBackgroundColor: "#de2d26",
+								strokeColor: "#de2d26",
+								pointColor: "#de2d26",
+								pointStrokeColor: "#de2d26",
+								pointHighlightFill: "#de2d26",
+								pointHighlightStroke: "#de2d26",
+							}]
+						},
+						options: {
+							responsive: true,
+							scales: {
+								yAxes: [{
+									display:false,
+									ticks: {
+										beginAtZero:false
+									},
+									gridLines:{
+										display:false
+									}
+								}],
+								xAxes: [{
+                //display:false,
+                ticks: {
+                	beginAtZero:false
+                },
+                gridLines:{
+                	display:false
+                }
+            }]
+        }
+    }
+});
+
+					var ctx = document.getElementById('secondLineChart').getContext('2d');
+					var myChart = new Chart(ctx, {
+						type: 'line',
+						data: {
+							labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+							datasets: [
+							{
+								label: 'Humidity',
+								data: [22, 22, 23, 26, 26, 21, 24, 23, 23, 23],
+								backgroundColor: "#7fcdbb",
+								pointBackgroundColor: "#2c7fb8",
+								strokeColor: "#3182bd",
+								pointColor: "#3182bd",
+								pointStrokeColor: "#3182bd",
+								pointHighlightFill: "#3182bd",
+								pointHighlightStroke: "#3182bd",
+							}]
+						},
+						options: {
+							responsive: true,
+							scales: {
+								yAxes: [{
+									display:false,
+									ticks: {
+										beginAtZero:false
+									},
+									gridLines:{
+										display:false
+									}
+								}],
+								xAxes: [{
+                //display:false,
+                ticks: {
+                	beginAtZero:false
+                },
+                gridLines:{
+                	display:false
+                }
+            }]
+        }
+    }
+});
+
+					var ctx = document.getElementById('thirdLineChart').getContext('2d');
+					var myChart = new Chart(ctx, {
+						type: 'line',
+						data: {
+							labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+							datasets: [
+							{
+								label: 'Pressure',
+								data: [1030, 1060, 1070, 1090, 1040, 1060, 1050, 1040, 1080, 1050],
+								backgroundColor: "#f8af3f",//"#fec44f",
+								pointBackgroundColor: "#de9537",//"#d95f0e",
+								strokeColor: "#d95f0e",
+								pointColor: "#d95f0e",
+								pointStrokeColor: "#d95f0e",
+								pointHighlightFill: "#d95f0e",
+								pointHighlightStroke: "#d95f0e",
+							}]
+						},
+						options: {
+							responsive: true,
+							scales: {
+								yAxes: [{
+									display:false,
+									ticks: {
+										beginAtZero:false
+									},
+									gridLines:{
+										display:false
+									}
+								}],
+								xAxes: [{
+                //display:false,
+                ticks: {
+                	beginAtZero:false
+                },
+                gridLines:{
+                	display:false
+                }
+            }]
+        }
+    }
+});
+
+					var ctx = document.getElementById("myChart").getContext('2d');
+					var myChart = new Chart(ctx, {
+						type: 'doughnut',
+						data: {
+							labels: ['Action 1', 'Action 2', 'Action 3', 'Action 4', 'Action 5'],
+							datasets: [{
+								label: 'Population (millions)',
+								data: [11, 22, 5, 17, 15],
+								backgroundColor: ['#FABB3C', '#32D75E','#D02FC0','#EB0524','#848B7A']
+								/*backgroundColor: ['#3e95cd', '#8e5ea2','#3cba9f','#e8c3b9','#c45850']*/
+							}]
+						},
+						options: {
+							responsive:true,
+							cutoutPercentage:75,
+							maintainAspectRatio: true,
+							title: {
+								display: true,
+								text: 'Predicted world population (millions) in 2050'
+							}
+						}
+					});
+
+				});
+
+/* Set the width of the side navigation to 250px and the left margin of the page content to 250px and add a black background color to body */
+function openNav() {
+	document.getElementById("mySidenav").style.width = "250px";
+	document.getElementById("main").style.marginLeft = "250px";
+	document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+}
+
+/* Set the width of the side navigation to 0 and the left margin of the page content to 0, and the background color of body to white */
+function closeNav() {
+	document.getElementById("mySidenav").style.width = "0";
+	document.getElementById("main").style.marginLeft = "0";
+	document.body.style.backgroundColor = "white";
+}
+
+function showKeysView(){
+	//$("#main").hide();
+	$(".dashboardSeparator").hide();
+	$("#scoreCards").hide();
+	$("#actions").hide();
+	$("#commands").hide();
+	$("#keys").show();
+}
+
+function showDashboardView(){
+	//$("#main").show();
+	$(".dashboardSeparator").show();
+	$("#scoreCards").show();
+	$("#actions").show();
+	$("#commands").hide();
+	$("#keys").hide();
+}
+
+function showCommandsView(){
+	//$("#main").hide();
+	$(".dashboardSeparator").hide();
+	$("#scoreCards").hide();
+	$("#actions").hide();
+	$("#keys").hide();
+	$("#commands").show();
+}
+
+</script>
+
+<style type="text/css">
+
+	#contentSeparator{
+		color: "#2b2c37";
+		text-align: left;
+		border-bottom: black solid;
+	}
+
+	#cosmosTitle{
+		color: white;
+		size: 40 ppx;
+		text-align: center;
+		font-family: "Helvetica", sans-serif;
+	}
+
+	#optionTitle{
+		color: #170E2C;
+		size: 58ppx;
+	}
+
+	#menuButton{
+		color: #5bc0de;
+	}
+
+	#opt{
+		color: #170E2C;
+		size: 22ppx;	
+	}
+
+	/* Style The Dropdown Button */
+	.dropbtn {
+		background-color: #250869;
+		color: white;
+		padding: 16px;
+		font-size: 16px;
+		border: black;
+		cursor: pointer;
+	}
+
+	/* The container <div> - needed to position the dropdown content */
+	.dropdown {
+		position: relative;
+		display: inline-block;
+	}
+
+	/* Dropdown Content (Hidden by Default) */
+	.dropdown-content {
+		display: none;
+		position: absolute;
+		background-color: #250869;
+		min-width: 160px;
+		box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+		z-index: 1;
+	}
+
+	/* Links inside the dropdown */
+	.dropdown-content a {
+		color: white;
+		padding: 12px 16px;
+		text-decoration: none;
+		display: block;
+	}
+
+	/* Change color of dropdown links on hover */
+	.dropdown-content a:hover {background-color: #250869}
+
+	/* Show the dropdown menu on hover */
+	.dropdown:hover .dropdown-content {
+		display: block;
+	}
+
+	/* Change the background color of the dropdown button when the dropdown content is shown */
+	.dropdown:hover .dropbtn {
+		background-color: #250869;
+	}
+
+	/* The side navigation menu */
+	.sidenav {
+		height: 100%; /* 100% Full-height */
+		width: 0; /* 0 width - change this with JavaScript */
+		position: fixed; /* Stay in place */
+		z-index: 1; /* Stay on top */
+		top: 0;
+		left: 0;
+		background-color: #111; /* Black*/
+		overflow-x: hidden; /* Disable horizontal scroll */
+		padding-top: 60px; /* Place content 60px from the top */
+		transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+	}
+
+	/* The navigation menu links */
+	.sidenav a {
+		padding: 8px 8px 8px 32px;
+		text-decoration: none;
+		font-size: 25px;
+		color: #818181;
+		display: block;
+		transition: 0.3s
+	}
+
+	/* When you mouse over the navigation links, change their color */
+	.sidenav a:hover, .offcanvas a:focus{
+		color: #f1f1f1;
+	}
+
+	/* Position and style the close button (top right corner) */
+	.sidenav .closebtn {
+		position: absolute;
+		top: 0;
+		right: 25px;
+		font-size: 36px;
+		margin-left: 50px;
+	}
+
+	/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+	#main {
+		/*transition: margin-left .5s; --- esta opción es para desplazar el contenido a la derecha*/
+		padding: 20px;
+		/*background-color: #290B6E;*/
+		/*background-color: #151E21;   EL MAS PARECIDO Y MEJOR COLOR!!!!*/
+		/*background-color: #1E2B2F;*/
+		/*background-color: #323855;*/
+
+		/*nuevas opciones de colores que consegui googleando:*/
+		/*background-color: #32333E;*/
+		/*background-color: #373843;*/
+		/*background-color: #3c3d48;*/
+		/*background-color: #353440;*/
+		/*background-color: #373843;*/
+		background-color: #2b2c37;
+
+	}
+
+	/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+	@media screen and (max-height: 450px) {
+		.sidenav {padding-top: 15px;}
+		.sidenav a {font-size: 18px;}
+	}
+
+	.btn-info {
+		color: #ffffff;
+		background-color: #5bc0de;
+		border-color: #5bc0de;
+	}
+
+	.btn-info:focus, .btn-info.focus {
+		color: #ffffff;
+		background-color: #31b0d5;
+		border-color: #1f7e9a;
+	}
+
+	.btn {
+		display: inline-block;
+		margin-bottom: 0;
+		font-weight: normal;
+		text-align: center;
+		vertical-align: middle;
+		-ms-touch-action: manipulation;
+		touch-action: manipulation;
+		cursor: pointer;
+		background-image: none;
+		border: 1px solid transparent;
+		white-space: nowrap;
+		padding: 8px 12px;
+		font-size: 14px;
+		line-height: 1.42857143;
+		border-radius: 4px;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+		text-decoration: none;
+		box-sizing: border-box;
+		margin: 0 0 10px;
+	}
+
+	.btn:hover{
+		background-color: #229BC0;
+	}
+	#lineChart{
+		max-height: 90%;
+		max-width: 90%;
+	}
+	#secondLineChart{
+		max-height: 90%;
+		max-width: 90%;
+	}
+	#thirdLineChart{
+		max-height: 90%;
+		max-width: 90%;
+	}
+	#myChart{
+		max-height: 78%;
+		max-width: 78%;
+	}
+	.panel panel-default{
+
+	}
+
+
+	#keys{
+		margin-left: 2%;
+		max-width: 50%;
+		font-size: 15px;
+	}
+
+	#commands{
+		margin-left: 2%;
+		max-width: 50%;
+		font-size: 15px;
+	}
+</style>
+
+</head>
+<body>
+
+	<div id="mySidenav" class="sidenav">
+		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+		<a href="#" onclick="showDashboardView()">DashBoard</a>
+		<a href="#" onclick="showCommandsView()">Actions</a>
+		<a href="#" onclick="showKeysView()">Security</a>
+		<a href="#">About</a>
+	</div>
+
+	<!--button class="btn btn-info" onclick="openNav()">Display Menu</button-->
+	
+
+	<div id="main">
+		<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
+		<h1 id="cosmosTitle"><strong>Cosmos Web Interface<strong></h1>
+
+	</div>
+
+	<div class="container">
+		<h2>Form control: inline checkbox</h2>
+		<p>The form below contains three inline checkboxes:</p>
+		<form>
+			<label class="checkbox-inline">
+				<input type="checkbox" value="">Option 1
+			</label>
+			<label class="checkbox-inline">
+				<input type="checkbox" value="">Option 2
+			</label>
+			<label class="checkbox-inline">
+				<input type="checkbox" value="">Option 3
+			</label>
+		</form>
+	</div>
+
+	<div class="dashboardSeparator">
+		<h1 id="contentSeparator"><strong>Data Streams</strong></h1>
+	</div>
+	<!--hr/-->
+
+	<div class="row" id="scoreCards">
+		<div class="col-md-4">
+			<canvas id="lineChart"></canvas>
+		</div>
+		<div class="col-md-4">
+			<canvas id="secondLineChart"></canvas>
+		</div>
+		<div class="col-md-4">
+			<canvas id="thirdLineChart"></canvas>
+		</div>
+	</div>
+
+	<div class="dashboardSeparator">
+		<h1 id="contentSeparator"><strong>Actions and Commands</strong></h1>
+	</div>
+	<!--hr/-->
+	<div class="row" id="actions">
+
+		<div class="col-md-4">
+			<!--div class="col-lg-4"-->
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Last Tasks Excuted</h3>
+				</div>
+				<div class="panel-body">
+					<div class="list-group">
+						<a href="#" class="list-group-item">
+							<span class="badge">just now</span>
+							<i class="fa fa-fw fa-calendar"></i> Calendar updated
+						</a>
+						<a href="#" class="list-group-item">
+							<span class="badge">4 minutes ago</span>
+							<i class="fa fa-fw fa-comment"></i> Commented on a post
+						</a>
+						<a href="#" class="list-group-item">
+							<span class="badge">23 minutes ago</span>
+							<i class="fa fa-fw fa-truck"></i> Order 392 shipped
+						</a>
+						<a href="#" class="list-group-item">
+							<span class="badge">46 minutes ago</span>
+							<i class="fa fa-fw fa-money"></i> Invoice 653 has been paid
+						</a>
+					</div>
+				</div>
+			</div>
+			<!--/div-->
+		</div>
+		<div class="col-md-4">
+			<canvas id="myChart"></canvas>
+		</div>
+	</div>
+
+	<div id="keys"> 
+		<form>
+			<p>Please select all the permissions you want to associate to the security key:</p>
+			<div class="checkbox">
+				<label><input id="checkOption1" type="checkbox" value="read">Read</label>
+			</div>
+			<div class="checkbox">
+				<label><input id="checkOption2" type="checkbox" value="write">Write</label>
+			</div>
+			<div class="checkbox">
+				<label><input id="checkOption3" type="checkbox" value="execute">Execute</label>
+			</div>
+			<button type="submit" class="btn btn-primary">Generate Key</button>
+		</form>
+	</div>
+
+	<div id="commands"> 
+		<form>
+			<div class="form-group">
+				<label for="formGroupExampleInput">Action name</label>
+				<input type="text" class="form-control" id="formGroupExampleInput" placeholder="Action Name Example">
+			</div>
+			<label for="formGroupExampleInput">Action priority</label>
+			<select class="form-control">
+				<option>High</option>
+				<option>Medium</option>
+				<option>Low</option>
+			</select>
+			<button type="submit" class="btn btn-primary">Define Command</button>
+		</form>
+	</div>
+
+</body>
+</html>

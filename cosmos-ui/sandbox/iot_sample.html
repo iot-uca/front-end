@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title> Cosmos - Sample </title>
+	<link rel='shortcut icon' type='image/x-icon' href='C:\Users\jorge\Desktop\iot_Tesis\cosmos.jpg' />
+	<style type="text/css">
+
+		#cosmosTitle{
+			color: white;
+			size: 40 ppx;
+			text-align: center;
+			font-family: "Helvetica", sans-serif;
+		}
+
+		#optionTitle{
+			color: #170E2C;
+			size: 58ppx;
+		}
+
+		#menuButton{
+			color: #5bc0de;
+		}
+
+		#opt{
+			color: #170E2C;
+			size: 22ppx;	
+		}
+
+		/* Style The Dropdown Button */
+		.dropbtn {
+			background-color: #250869;
+			color: white;
+			padding: 16px;
+			font-size: 16px;
+			border: black;
+			cursor: pointer;
+		}
+
+		/* The container <div> - needed to position the dropdown content */
+		.dropdown {
+			position: relative;
+			display: inline-block;
+		}
+
+		/* Dropdown Content (Hidden by Default) */
+		.dropdown-content {
+			display: none;
+			position: absolute;
+			background-color: #250869;
+			min-width: 160px;
+			box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+			z-index: 1;
+		}
+
+		/* Links inside the dropdown */
+		.dropdown-content a {
+			color: white;
+			padding: 12px 16px;
+			text-decoration: none;
+			display: block;
+		}
+
+		/* Change color of dropdown links on hover */
+		.dropdown-content a:hover {background-color: #250869}
+
+		/* Show the dropdown menu on hover */
+		.dropdown:hover .dropdown-content {
+			display: block;
+		}
+
+		/* Change the background color of the dropdown button when the dropdown content is shown */
+		.dropdown:hover .dropbtn {
+			background-color: #250869;
+		}
+
+		/* The side navigation menu */
+		.sidenav {
+			height: 100%; /* 100% Full-height */
+			width: 0; /* 0 width - change this with JavaScript */
+			position: fixed; /* Stay in place */
+			z-index: 1; /* Stay on top */
+			top: 0;
+			left: 0;
+			background-color: #111; /* Black*/
+			overflow-x: hidden; /* Disable horizontal scroll */
+			padding-top: 60px; /* Place content 60px from the top */
+			transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+		}
+
+		/* The navigation menu links */
+		.sidenav a {
+			padding: 8px 8px 8px 32px;
+			text-decoration: none;
+			font-size: 25px;
+			color: #818181;
+			display: block;
+			transition: 0.3s
+		}
+
+		/* When you mouse over the navigation links, change their color */
+		.sidenav a:hover, .offcanvas a:focus{
+			color: #f1f1f1;
+		}
+
+		/* Position and style the close button (top right corner) */
+		.sidenav .closebtn {
+			position: absolute;
+			top: 0;
+			right: 25px;
+			font-size: 36px;
+			margin-left: 50px;
+		}
+
+		/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+		#main {
+			transition: margin-left .5s;
+			padding: 20px;
+			/*background-color: #290B6E;*/
+			/*background-color: #151E21;   EL MAS PARECIDO Y MEJOR COLOR!!!!*/
+			/*background-color: #1E2B2F;*/
+			background-color: #323855;
+		}
+
+		/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+		@media screen and (max-height: 450px) {
+			.sidenav {padding-top: 15px;}
+			.sidenav a {font-size: 18px;}
+		}
+
+		.btn-info {
+			color: #ffffff;
+			background-color: #5bc0de;
+			border-color: #5bc0de;
+		}
+
+		.btn-info:focus, .btn-info.focus {
+			color: #ffffff;
+			background-color: #31b0d5;
+			border-color: #1f7e9a;
+		}
+
+		.btn {
+			display: inline-block;
+			margin-bottom: 0;
+			font-weight: normal;
+			text-align: center;
+			vertical-align: middle;
+			-ms-touch-action: manipulation;
+			touch-action: manipulation;
+			cursor: pointer;
+			background-image: none;
+			border: 1px solid transparent;
+			white-space: nowrap;
+			padding: 8px 12px;
+			font-size: 14px;
+			line-height: 1.42857143;
+			border-radius: 4px;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+			text-decoration: none;
+			box-sizing: border-box;
+			margin: 0 0 10px;
+		}
+
+		.btn:hover{
+			background-color: #229BC0;
+		}
+
+	</style>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+	<!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+	<div id="mySidenav" class="sidenav">
+		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+		<a href="#">Actions</a>
+		<a href="#">Security Keys</a>
+		<a href="#">About</a>
+	</div>
+
+	<!-- Use any element to open the sidenav -->
+	
+	<!--span onclick="openNav()" id="menuButton">Display Menu</span-->
+
+	<!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
+
+	<div id="main">
+		
+		<button class="btn btn-info" onclick="openNav()">Display Menu</button>
+
+		<h1 id="cosmosTitle"><strong>Cosmos Web Interface<strong></h1>
+
+		<!--select> 
+			<option id="opt"> Data Channel 1 </option>
+			<option id="opt"> Data Channel 2 </option>
+			<option id="opt"> Data Channel 3 </option>
+			<option id="opt"> Data Channel 4 </option>
+		</select-->
+
+		<div class="dropdown">
+			<button class="dropbtn">Data Channels</button>
+			<div class="dropdown-content">
+				<a href="#">Data Channel 1</a>
+				<a href="#">Data Channel 2</a>
+				<a href="#">Data Channel 3</a>
+			</div>
+		</div>
+
+
+		<p><strong> DashBoard General </strong></p>
+		<img src="C:\Users\jorge\Desktop\iot_Tesis\dash.jpg">
+	</div>
+
+	<script type="text/javascript">
+
+		/* Set the width of the side navigation to 250px and the left margin of the page content to 250px and add a black background color to body */
+		function openNav() {
+			document.getElementById("mySidenav").style.width = "250px";
+			document.getElementById("main").style.marginLeft = "250px";
+			document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+		}
+
+		/* Set the width of the side navigation to 0 and the left margin of the page content to 0, and the background color of body to white */
+		function closeNav() {
+			document.getElementById("mySidenav").style.width = "0";
+			document.getElementById("main").style.marginLeft = "0";
+			document.body.style.backgroundColor = "white";
+		}
+
+	</script>
+
+	<div class="col-lg-4">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Last Tasks Exceuted</h3>
+			</div>
+			<div class="panel-body">
+				<div class="list-group">
+					<a href="#" class="list-group-item">
+						<span class="badge">just now</span>
+						<i class="fa fa-fw fa-calendar"></i> Calendar updated
+					</a>
+					<a href="#" class="list-group-item">
+						<span class="badge">4 minutes ago</span>
+						<i class="fa fa-fw fa-comment"></i> Commented on a post
+					</a>
+					<a href="#" class="list-group-item">
+						<span class="badge">23 minutes ago</span>
+						<i class="fa fa-fw fa-truck"></i> Order 392 shipped
+					</a>
+					<a href="#" class="list-group-item">
+						<span class="badge">46 minutes ago</span>
+						<i class="fa fa-fw fa-money"></i> Invoice 653 has been paid
+					</a>
+					<a href="#" class="list-group-item">
+						<span class="badge">1 hour ago</span>
+						<i class="fa fa-fw fa-user"></i> A new user has been added
+					</a>
+					<a href="#" class="list-group-item">
+						<span class="badge">2 hours ago</span>
+						<i class="fa fa-fw fa-check"></i> Completed task: "pick up dry cleaning"
+					</a>
+					<a href="#" class="list-group-item">
+						<span class="badge">yesterday</span>
+						<i class="fa fa-fw fa-globe"></i> Saved the world
+					</a>
+					<a href="#" class="list-group-item">
+						<span class="badge">two days ago</span>
+						<i class="fa fa-fw fa-check"></i> Completed task: "fix error on sales page"
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<div class="ea agg air">
+	<div class="azy aim"><iframe class="chartjs-hidden-iframe" tabindex="-1" style="display: block; overflow: hidden; border: 0px; margin: 0px; top: 0px; left: 0px; bottom: 0px; right: 0px; height: 100%; width: 100%; position: absolute; pointer-events: none; z-index: -1;"></iframe>
+		<canvas class="bra js-chart-drawn" width="180" height="180" data-chart="doughnut" data-dataset="[330,30]" data-dataset-options="{ borderColor: '#252830', backgroundColor: ['#1ca8dd', '#1bc98e'] }" data-labels="['Returning', 'New']" style="display: block; width: 180px; height: 180px;">
+		</canvas>
+	</div>
+</div>
+
+</body>
+
+</html>

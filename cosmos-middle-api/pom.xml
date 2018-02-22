@@ -68,6 +68,21 @@
 		<scope>provided</scope>
 	</dependency>
 	
+	
+	<dependency>
+	    <groupId>com.tocea.easycoverage</groupId>
+	    <artifactId>easyCoverage4J-framework</artifactId>
+	    <version>0.2.2</version>
+	    <scope>test</scope>
+	</dependency>
+	
+	<dependency>
+	    <groupId>com.tocea.easycoverage</groupId>
+	    <artifactId>easyCoverage4J-junit</artifactId>
+	    <version>0.2.2</version>
+	    <scope>test</scope>
+	</dependency>
+	
     </dependencies>
 
     <build>

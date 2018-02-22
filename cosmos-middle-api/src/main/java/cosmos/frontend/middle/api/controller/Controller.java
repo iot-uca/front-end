@@ -66,21 +66,6 @@ public class Controller {
 		log.debug(" Returning dataStreamInfo: " + dataStreamInfo);
 		return dataStreamInfo.getBody();
 	}
-
-//	@CrossOrigin
-//	@RequestMapping(value = "/dataPoints/{name}", method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON_VALUE })
-//	public List<DataPoint> getDataPointsForDataStream(@PathVariable(value = "name") String dataStreamName) throws MiddlewareServiceException{
-//		log.debug(" Entering getDataPointsForDataStream.");
-//		System.out.println(" Entering getDataPointsForDataStream.");
-//		if("undefined".equalsIgnoreCase(dataStreamName)){
-//			return null;
-//		}else{
-//			
-//			ResponseEntity<List<DataPoint>> dataPointsForDataStream = middlewareService.getDataPointsForDataStream(dataStreamName);
-//			System.out.println(dataPointsForDataStream);
-//			return dataPointsForDataStream.getBody();
-//		}
-//	}
 	
 
 	//////////////////////

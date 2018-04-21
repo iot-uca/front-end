@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title> Insertar Form en el DOM</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.3/vue.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+	<script src= "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
+
+	<style type="text/css">
+	
+
+	#contentSeparator{
+		color: "#2b2c37";
+		text-align: left;
+		border-bottom: black solid;
+	}
+</style>
+
+</head>
+<body>
+
+	<div id="app">
+
+		<p><strong>Select the data streams you want to visualize...</strong></p>
+
+		<!--p><select multiple id="selectDataStream" >
+			<option value="Pressure">Pressure</option>
+			<option value="Humidity">Humidity</option>
+			<option value="Temperature">Temperature</option>
+			<option value="UV intensity">UV intensity</option>
+		</select></p-->
+
+		<p>
+		<div id='example-3'>
+			<input type="checkbox"  value="Pressure" v-model="dataStreams">
+			<label for="jack">Pressure</label>
+			<input type="checkbox" value="Humidity" v-model="dataStreams">
+			<label for="john">Humidity</label>
+			<input type="checkbox"  value="Temperature" v-model="dataStreams">
+			<label for="mike">Temperature</label>
+			<input type="checkbox" value="UV intensity" v-model="dataStreams">
+			<label for="mike">UV intensity</label>
+			<br>
+			<span>Checked names: {{ dataStreams }}</span>
+		</div></p>
+
+		<!--button type="button" v-on:click="postearDatos()">Add Data Streams</button-->
+		<p></p>
+		<button type="button" v-on:click="drawMe()">Draw me!</button>
+		<p></p>
+		<my-test v-if="hasToShowStreams()">Data Streams</my-test>
+		<div-canvas-for-chart v-for="dS in dataStreams" v-bind:id="dS"></div-canvas-for-chart> <!-- 	TENGO QUE CHCEKAR QUE NO EXISTA YA EL CANVAS, XQ LO ESTÁ VOLVIENDO A DIBUJAR, DEJANDO DIVS EN BLANCO EN EL DASHBOARD  -->
+
+
+	</div>
+
+	<script type="text/javascript">
+
+		Vue.component('div-canvas-for-chart', {
+			props:['id'],
+			template:'<div class="col-md-4"><canvas :id="id"></canvas></div>' 
+		});
+
+		Vue.component('my-test', {
+				//props:['title'],
+				//template:'<h1 id="contentSeparator"><strong>{{title}}</strong></h1>'
+				template:'<h1 id="contentSeparator"><strong><slot></slot></strong></h1>'
+			});
+
+
+		new Vue({
+			el: '#app',
+			data: {
+				dataStreams: [],
+				checkedNames: []
+			},
+
+			methods: {
+				/*addForm: function() {
+					this.dataStreams.push({dataStream: 'Temperature', index: 0});
+					this.dataStreams.push({dataStream: 'Pressure', index: 1});
+				},*/
+				hasToShowStreams: function(){
+					return this.dataStreams.length > 0;
+				},
+				postearDatos: function(){
+
+					var selectedDataStream = $('#selectDataStream').val();
+
+					console.log(selectedDataStream);
+
+					for(i=0; i<selectedDataStream.length; i++){
+						this.dataStreams.push({dataStream: selectedDataStream[i], index: i});	
+						console.log(this.dataStreams);
+					}
+
+					console.log("FINAL: " + this.dataStreams);
+
+				},
+				drawMe: function(){
+
+					console.log(this.dataStreams);
+					var length = this.dataStreams.length;
+					console.log("length = " + length);
+
+					for(i=0;i<length; i++){
+
+				    // Draw the chart using labels and data generated before
+				    var ctx = document.getElementById(this.dataStreams[i]).getContext('2d');
+				    var myChart = new Chart(ctx, {
+				    	type: 'line',
+				    	data: {
+				    		labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+				    		datasets: [
+				    		{
+				    			label: this.dataStreams[i],
+				    			data: [22, 22, 23, 26, 26, 21, 24, 23, 23, 23],
+				    			backgroundColor: "#fc9272",
+				    			pointBackgroundColor: "#de2d26",
+				    			strokeColor: "#de2d26",
+				    			pointColor: "#de2d26",
+				    			pointStrokeColor: "#de2d26",
+				    			pointHighlightFill: "#de2d26",
+				    			pointHighlightStroke: "#de2d26",
+				    		}]
+				    	},
+				    	options: {
+				    		responsive: true,
+				    		scales: {
+				    			yAxes: [{
+				    				display:false,
+				    				ticks: {
+				    					beginAtZero:false
+				    				},
+				    				gridLines:{
+				    					display:false
+				    				}
+				    			}],
+				    			xAxes: [{
+            //display:false,
+            ticks: {
+            	beginAtZero:false
+            },
+            gridLines:{
+            	display:false
+            }
+        }]
+    }
+}
+});
+				}
+			}
+		}})
+
+	</script>
+
+</body>
+</html>

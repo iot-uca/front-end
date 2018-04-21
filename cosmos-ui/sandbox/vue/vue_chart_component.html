@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title> VUE Chart Component </title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.3/vue.js"></script>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+	<script src= "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+</head>
+
+<body>
+
+	<div class="container">
+		<select multiple id="select" >
+			<option>Uno</option>
+			<option>Dos</option>
+			<option>Tres</option>
+			<option>Cuatro</option>
+		</select>
+
+		<button id="selection" onclick="sarasa()">CLick me!</button>    <!-- Podría usar el @click de Vue -->
+
+		<!--my-test v-if="value == value_after_ajax"></my-test-->
+
+	</div>
+
+
+<script type="text/javascript">
+			
+			Vue.component('my-test', {
+				//props:['title'],
+				//template:'<h1 id="contentSeparator"><strong>{{title}}</strong></h1>'
+				template:'<h1 id="contentSeparator"><strong><slot></slot></strong></h1>'
+			})
+
+			new Vue({el:"#container", 
+					 data:{
+					 	selectedValues: $('#select').val(),
+					 } })
+
+			function sarasa(){
+				var values = $('#select').val();
+				var amount = $('#select').length();
+
+				console.log(" VALUES = " + values);
+				console.log(" VALUES LENGTH = " + amount);
+
+				for(i=0; i<amount; i++){
+					$('#select').append('<my-test>'+values.[i]+'</my-test>');
+				}				
+			}
+
+</script>
+
+
+</body>
+</html>

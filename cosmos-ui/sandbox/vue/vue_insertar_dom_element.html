@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title> Insertar Form en el DOM</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.3/vue.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+			<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+
+</head>
+<body>
+
+
+	<div id="app">
+
+		<select multiple id="select" >
+			<option>Uno</option>
+			<option>Dos</option>
+			<option>Tres</option>
+			<option>Cuatro</option>
+		</select>
+
+
+		<p/><button type="button" v-on:click="addForm()">Add Form</button>
+		<my-form v-for="n in range" v-bind:tuvi="dsName"></my-form>
+	</div>
+
+	<script type="text/javascript">
+
+		Vue.component('my-form', {
+			props:['canvasName'],
+			template:'<div class="col-md-4"><canvas id="{{canvasName}}"></canvas></div>'
+		});
+
+		new Vue({
+			el: '#app',
+			data: {
+				range:0,
+				selectedValues: 0,
+				dsName: 'caca'
+			},
+
+			methods: {
+				addForm: function() {
+					console.log(this.selectedValues);
+					this.range += 1;
+					this.selectedValues= $('#select').val();
+					console.log(this.selectedValues);
+					this.dsName = this.selectedValues[0];
+				}
+			}
+		})
+
+	</script>
+
+</body>
+</html>

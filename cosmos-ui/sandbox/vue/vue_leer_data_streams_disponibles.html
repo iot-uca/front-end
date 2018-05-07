@@ -3,60 +3,517 @@
 <head>
 
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width">
-	<title> Insertar Form en el DOM</title>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.3/vue.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-	<script src= "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Cosmos GUI</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.3/vue.js"></script> <!-- Vue as primary JS fwmk -->
+	<!--script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script--> <!-- JQuery for certain DOM elem manipulations -->
+	<!--link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css" /--> <!-- Bootstrap for styling -->
+	<script src= "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script> <!-- ChartJS for dashboard charts -->
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script> <!-- Axios as Http client -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"></script> <!-- Moment JS for Date manipulation -->
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">	 <!--  For calendar icon  -->
+
 
 	<style type="text/css">
-	
+	#contentSeparator{
+		color: "#2b2c37";
+		text-align: left;
+		border-bottom: black solid;
+		box-shadow: 10px 10px 5px grey;
+		border: 1px solid grey;
+	}
 
 	#contentSeparator{
 		color: "#2b2c37";
 		text-align: left;
 		border-bottom: black solid;
 	}
-</style>
+
+	#selectDataStream{
+		size: 10 ppx;
+		font-family: "Helvetica", sans-serif;
+	}
+
+	#buttonShowCharts{
+		size: 10 ppx;
+		font-family: "Helvetica", sans-serif;
+	}
+
+	#cosmosTitle{
+		color: white;
+		size: 40 ppx;
+		text-align: center;
+		font-family: "Helvetica", sans-serif;
+	}
+
+	#optionTitle{
+		color: #170E2C;
+		size: 58ppx;
+	}
+
+	#menuButton{
+		color: #5bc0de;
+	}
+
+	#opt{
+		color: #170E2C;
+		size: 22ppx;	
+	}
+
+	/* Style The Dropdown Button */
+	.dropbtn {
+		background-color: #250869;
+		color: white;
+		padding: 16px;
+		font-size: 16px;
+		border: black;
+		cursor: pointer;
+	}
+
+	/* The container <div> - needed to position the dropdown content */
+	.dropdown {
+		position: relative;
+		display: inline-block;
+	}
+
+	/* Dropdown Content (Hidden by Default) */
+	.dropdown-content {
+		display: none;
+		position: absolute;
+		background-color: #250869;
+		min-width: 160px;
+		box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+		z-index: 1;
+	}
+
+	/* Links inside the dropdown */
+	.dropdown-content a {
+		color: white;
+		padding: 12px 16px;
+		text-decoration: none;
+		display: block;
+	}
+
+	/* Change color of dropdown links on hover */
+	.dropdown-content a:hover {background-color: #250869}
+
+	/* Show the dropdown menu on hover */
+	.dropdown:hover .dropdown-content {
+		display: block;
+	}
+
+	/* Change the background color of the dropdown button when the dropdown content is shown */
+	.dropdown:hover .dropbtn {
+		background-color: #250869;
+	}
+
+	/* The side navigation menu */
+	.sidenav {
+		height: 100%; /* 100% Full-height */
+		width: 0; /* 0 width - change this with JavaScript */
+		position: fixed; /* Stay in place */
+		z-index: 1; /* Stay on top */
+		top: 0;
+		left: 0;
+		background-color: #111; /* Black*/
+		overflow-x: hidden; /* Disable horizontal scroll */
+		padding-top: 60px; /* Place content 60px from the top */
+		transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+	}
+
+	/* The navigation menu links */
+	.sidenav a {
+		padding: 8px 8px 8px 32px;
+		text-decoration: none;
+		font-size: 20px;
+		color: #818181;
+		display: block;
+		transition: 0.3s
+	}
+
+	/* When you mouse over the navigation links, change their color */
+	.sidenav a:hover, .offcanvas a:focus{
+		color: #f1f1f1;
+	}
+
+	/* Position and style the close button (top right corner) */
+	.sidenav .closebtn {
+		position: absolute;
+		top: 0;
+		right: 25px;
+		font-size: 36px;
+		margin-left: 50px;
+	}
+
+	/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+	#main {
+		/*transition: margin-left .5s; --- esta opción es para desplazar el contenido a la derecha*/
+		padding: 20px;
+		/*background-color: #290B6E;*/
+		/*background-color: #151E21;   EL MAS PARECIDO Y MEJOR COLOR!!!!*/
+		/*background-color: #1E2B2F;*/
+		/*background-color: #323855;*/
+
+		/*nuevas opciones de colores que consegui googleando:*/
+		/*background-color: #32333E;*/
+		/*background-color: #373843;*/
+		/*background-color: #3c3d48;*/
+		/*background-color: #353440;*/
+		/*background-color: #373843;*/
+		background-color: #2b2c37;
+
+	}
+
+	/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+	@media screen and (max-height: 450px) {
+		.sidenav {padding-top: 15px;}
+		.sidenav a {font-size: 18px;}
+	}
+
+	.btn-info {
+		color: #ffffff;
+		background-color: #5bc0de;
+		border-color: #5bc0de;
+	}
+
+	.btn-info:focus, .btn-info.focus {
+		color: #ffffff;
+		background-color: #31b0d5;
+		border-color: #1f7e9a;
+	}
+
+	.btn {
+		display: inline-block;
+		margin-bottom: 0;
+		font-weight: normal;
+		text-align: center;
+		vertical-align: middle;
+		-ms-touch-action: manipulation;
+		touch-action: manipulation;
+		cursor: pointer;
+		background-image: none;
+		border: 1px solid transparent;
+		white-space: nowrap;
+		padding: 8px 12px;
+		font-size: 14px;
+		line-height: 1.42857143;
+		border-radius: 4px;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+		text-decoration: none;
+		box-sizing: border-box;
+		margin: 0 0 10px;
+	}
+
+	.btn:hover{
+		background-color: #229BC0;
+	}
+	#lineChart{
+		max-height: 90%;
+		max-width: 90%;
+	}
+	#secondLineChart{
+		max-height: 90%;
+		max-width: 90%;
+	}
+	#thirdLineChart{
+		max-height: 90%;
+		max-width: 90%;
+	}
+	#myChart{
+		max-height: 78%;
+		max-width: 78%;
+	}
+	.panel panel-default{
+
+	}
+
+
+	#keys{
+		margin-left: 2%;
+		max-width: 50%;
+		font-size: 15px;
+	}
+
+	#commands{
+		margin-left: 2%;
+		max-width: 50%;
+		font-size: 15px;
+	}
+
+	/*  									====>  esto es para ponerle un fondo con el borde recortado */
+	#commands {
+    	border-radius: 5px;
+    	background-color: #f2f2f2;
+    	padding: 15px;
+	}
+
+	</style>
 
 </head>
+
+
+
+
 <body>
 
 	<div id="app">
 
-		<p><strong>Select the data streams you want to visualize...</strong></p>
+		<!-- Side Nav for burguer menu -->
+		<div id="mySidenav" class="sidenav" v-on:click="closeNav()" v-bind:style="sideNavStyle">
+			<a href="javascript:void(0)" class="closebtn">&times;</a>
+			<a href="#" v-on:click="showDashboardView()"><i class="fa fa-bar-chart" style="font-size:20px"></i> DASHBOARD</a>
+			<a href="#" v-on:click="showCommandsView()"><i class="fa fa-hand-paper-o" style="font-size:20px"></i> ACTIONS</a>
+			<a href="#" v-on:click="showCommandsView()"><i class="fa fa-bell-o" style="font-size:20px"></i> TRIGGERS</a> <!-- fa fa-calendar -->
+			<a href="#" v-on:click="showSecurityView()"><i class="fa fa-lock" style="font-size:20px"></i>   SECURITY</a>
+			<a href="#" v-on:click="showAboutView()"><i class="fa fa-info" style="font-size:20px"></i>   ABOUT</a>
+		</div>
 
-		<!--p><select multiple id="selectDataStream" >
-			<option value="Pressure">Pressure</option>
-			<option value="Humidity">Humidity</option>
-			<option value="Temperature">Temperature</option>
-			<option value="UV intensity">UV intensity</option>
-		</select></p-->
+		<div id="main">
+			<span style="font-size:30px;cursor:pointer" v-on:click="openNav()">&#9776;</span>
+			<h1 id="cosmosTitle"><strong>Cosmos GUI</strong></h1>
+		</div>
 
-		<p>
-		<div id='example-3'>
-			<input type="checkbox"  value="Pressure" v-model="dataStreams">
-			<label for="jack">Pressure</label>
-			<input type="checkbox" value="Humidity" v-model="dataStreams">
-			<label for="john">Humidity</label>
-			<input type="checkbox"  value="Temperature" v-model="dataStreams">
-			<label for="mike">Temperature</label>
-			<input type="checkbox" value="UV intensity" v-model="dataStreams">
-			<label for="mike">UV intensity</label>
+
+		<div v-if="renderDashboardView" id="dashboard">
+
+			<content-separator v-if="hasToShowStreams()"><i class="fa fa-line-chart" style="font-size:24px"></i> Data Streams</content-separator>
+
+			<!-- Div for the stream selection -->
+			<div style="text-align: center;">
+				<div style="width: auto; margin: 0 auto;">
+					<strong>Select the data streams you want to visualize...</strong>
+					<br>
+					<div class="wrapper text-center">		
+						<div style="margin: 0 auto" class="btn-group container-fluid" role="group" aria-label="Basic example" v-if="hasToShowStreams()">
+							<data-streams-button v-for="dS in dataStreams" v-bind:name="dS" v-bind:class="[selectedDs == dS ? 'btn btn-primary': 'btn btn-secondary']" v-on:click.native="assignDataStream(dS)"></data-streams-button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<br>	
+
+
+			<!-- Div for the Stream chart and stat Cards -->
+			<div class="row" style="margin: 50px auto;">
+				<div class="col-md-8">
+					<canvas id="streamCanvas"></canvas>
+				</div>
+				<div class="col-md-4">
+					<div class="row container-fluid">
+						<div class="card">
+							<div class="card-header bg-primary"><strong style="font-size:13px; color: white;"><i class="fa fa-arrow-circle-right" style="font-size:20px"></i> CURRENT VALUE</strong></div>
+							<div class="card-body">
+								<h2><p class="card-text"><strong>{{currentValue.value}}</strong></p></h2>
+							</div>
+							<div class="card-footer">
+								<!--small class="text-muted">Registered {{currentValue.timestamp}} ago</small-->
+								<small class="text-muted">Registered 5 min ago</small>
+							</div>
+						</div>
+						<div class="card">
+							<div class="card-header bg-primary"><strong style="font-size:13px; color: white;"><i class="fa fa-percent	" style="font-size:20px"></i> AVERAGE VALUE</strong></div>
+							<div class="card-body">
+								<h2><p class="card-text"><strong>{{averageValue.value}}</strong></p></h2>
+							</div>
+							<div class="card-footer">
+								<small class="text-muted">During last {{averageValue.timestamp}} mins</small>
+							</div>
+						</div>
+					</div>
+
+					<br>
+
+					<div class="row container-fluid">
+						<div class="card">
+							<div class="card-header bg-primary"><strong style="font-size:13px; color: white;"><i class="fa fa-arrow-circle-down" style="font-size:20px"></i> MIN VALUE</strong></div>
+							<div class="card-body">
+								<h2><p class="card-text"><strong>{{minValue.value}}</strong></p></h2>
+							</div>
+							<div class="card-footer">
+								<!--small class="text-muted">Registered {{minValue.timestamp}} ago</small-->
+								<small class="text-muted">Registered 5 min ago</small>
+							</div>
+						</div>			
+						<div class="card">
+							<div class="card-header bg-primary"><strong style="font-size:13px; color: white;"><i class="fa fa-arrow-circle-up" style="font-size:20px"></i> MAX VALUE</strong></div>
+							<div class="card-body">
+								<h2><p class="card-text"><strong>{{maxValue.value}}</strong></p></h2>
+							</div>
+							<div class="card-footer">
+								<!--small class="text-muted">Registered {{maxValue.timestamp}} ago</small-->
+								<small class="text-muted">Registered 5 min ago</small>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<content-separator v-if="hasToShowStreams()"><i class="fa fa-pie-chart" style="font-size:24px"></i> Actions, Commands & Triggers</content-separator>
 			<br>
-			<span>Checked names: {{ dataStreams }}</span>
-		</div></p>
 
-		<!--button type="button" v-on:click="postearDatos()">Add Data Streams</button-->
-		<p></p>
-		<button type="button" v-on:click="drawMe()">Draw me!</button>
-		<p></p>
-		<my-test v-if="hasToShowStreams()">Data Streams</my-test>
-		<div-canvas-for-chart v-for="dS in dataStreams" v-bind:id="dS"></div-canvas-for-chart> <!-- 	TENGO QUE CHCEKAR QUE NO EXISTA YA EL CANVAS, XQ LO ESTÁ VOLVIENDO A DIBUJAR, DEJANDO DIVS EN BLANCO EN EL DASHBOARD  -->
+			<!-- Div for showing the recently/most executed actions -->
+			<div class="row" id="actions" v-if="renderDashboardView" style="margin: 50px auto;">
 
+				<div class="col-md-6">
+					<div class="card">
+						<div class="card-header bg-info">
+							<h3 class="card-title"><i class="fa fa-clock-o fa-fw"></i> Last Tasks Executed</h3>
+						</div>
+						<div class="card-body">
+							<div class="list-group">
+								<a href="#" class="list-group-item d-flex justify-content-between align-items-center">
+									<i class="fa fa-fw fa-calendar pull-left"></i> Calendar updated
+									<span class="badge badge-secondary badge-pill">just now</span>
+									<!--span class="badge">just now</span-->
+								</a>
+								<a href="#" class="list-group-item d-flex justify-content-between align-items-center">
+									<!--span class="badge">4 minutes ago</span-->
+									<i class="fa fa-fw fa-comment"></i> Commented on a post
+									<span class="badge badge-secondary badge-pill">4 minutes ago</span>
+								</a>
+								<a href="#" class="list-group-item d-flex justify-content-between align-items-center">
+									<!--span class="badge">23 minutes ago</span-->
+									<i class="fa fa-fw fa-truck"></i> Order 392 shipped
+									<span class="badge badge-secondary badge-pill">23 minutes ago</span>
+								</a>
+								<a href="#" class="list-group-item d-flex justify-content-between align-items-center">
+									<!--span class="badge">46 minutes ago</span-->									
+									<i class="fa fa-fw fa-money"></i> Invoice 653 has been paid
+									<span class="badge badge-secondary badge-pill">46 minutes ago</span>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- div for drawing the actions/commands pie chart -->
+				<div class="col-md-6">
+					<canvas id="actionsChart"></canvas>
+				</div>
+			</div>
 
-	</div>
+		</div>
+
+		<!-- div for showing the Keys menu view -->
+		<div id="keys" v-if="renderSecurityView"> 
+			<form>
+				<p>Please select all the permissions you want to associate to the security key:</p>
+				<div class="checkbox">
+					<label><input id="checkOption1" type="checkbox" value="read">Read</label>
+				</div>
+				<div class="checkbox">
+					<label><input id="checkOption2" type="checkbox" value="write">Write</label>
+				</div>
+				<div class="checkbox">
+					<label><input id="checkOption3" type="checkbox" value="execute">Execute</label>
+				</div>
+				<button type="submit" class="btn btn-primary">Generate Key</button>
+			</form>
+		</div>
+
+		<!-- div for showing the Commands menu view -->
+		<div id="commands" v-if="renderActionTriggersView"> 
+			<form>
+				<div class="form-group row">
+					<label for="example-text-input" class="col-2 col-form-label">Action name</label>
+					<div class="col-10">
+						<input class="form-control" type="text" placeholder="Sense Temperature" id="example-text-input">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="example-search-input" class="col-2 col-form-label">Search</label>
+					<div class="col-10">
+						<input class="form-control" type="search" value="How do I shoot web" id="example-search-input">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="example-email-input" class="col-2 col-form-label">Email</label>
+					<div class="col-10">
+						<input class="form-control" type="email" value="bootstrap@example.com" id="example-email-input">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="example-url-input" class="col-2 col-form-label">URL</label>
+					<div class="col-10">
+						<input class="form-control" type="url" value="https://getbootstrap.com" id="example-url-input">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="example-tel-input" class="col-2 col-form-label">Telephone</label>
+					<div class="col-10">
+						<input class="form-control" type="tel" value="1-(555)-555-5555" id="example-tel-input">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="formGroupExampleInput">Action priority</label>
+					<select class="form-control">
+						<option>High</option>
+						<option>Medium</option>
+						<option>Low</option>
+					</select>
+				</div>
+				<div class="form-group row">
+					<label for="example-password-input" class="col-2 col-form-label">Password</label>
+					<div class="col-10">
+						<input class="form-control" type="password" value="hunter2" id="example-password-input">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="example-number-input" class="col-2 col-form-label">Number</label>
+					<div class="col-10">
+						<input class="form-control" type="number" value="42" id="example-number-input">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="example-datetime-local-input" class="col-2 col-form-label">Date and time</label>
+					<div class="col-10">
+						<input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="example-datetime-local-input">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="example-date-input" class="col-2 col-form-label">Date</label>
+					<div class="col-10">
+						<input class="form-control" type="date" value="2011-08-19" id="example-date-input">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="example-month-input" class="col-2 col-form-label">Month</label>
+					<div class="col-10">
+						<input class="form-control" type="month" value="2011-08" id="example-month-input">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="example-week-input" class="col-2 col-form-label">Week</label>
+					<div class="col-10">
+						<input class="form-control" type="week" value="2011-W33" id="example-week-input">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="example-time-input" class="col-2 col-form-label">Time</label>
+					<div class="col-10">
+						<input class="form-control" type="time" value="13:45:00" id="example-time-input">
+					</div>
+				</div>
+				<!--div class="form-group row">
+					<label for="example-color-input" class="col-2 col-form-label">Color</label>
+					<div class="col-10">
+						<input class="form-control" type="color" value="#563d7c" id="example-color-input">
+					</div>
+				</div-->
+				<button type="submit" class="btn btn-primary">Define Command</button>
+			</form>
+		</div>
+	</div>	
+
 
 	<script type="text/javascript">
 
@@ -65,98 +522,404 @@
 			template:'<div class="col-md-4"><canvas :id="id"></canvas></div>' 
 		});
 
-		Vue.component('my-test', {
-				//props:['title'],
-				//template:'<h1 id="contentSeparator"><strong>{{title}}</strong></h1>'
-				template:'<h1 id="contentSeparator"><strong><slot></slot></strong></h1>'
-			});
+		Vue.component('content-separator', {
+			template:'<h1 id="contentSeparator"><strong><slot></slot></strong></h1>'
+		});
 
+		Vue.component('data-streams-button', {
+			props:['name'],
+			template:'<button type="button">{{name}}</button>'
+		});
+
+		Vue.component('data-stream-checkboxes', {
+			props:['value'],
+			template:'<p><input type="checkbox" :value="value" v-model="caca"><label :for="value">{{value}}</label></p>',
+			data() {
+				console.log(" data() en componen => " + this.value);
+				return { caca: this.value }
+			},
+			watch: {
+				caca(val) {
+					console.log(" caca => " + val);
+					this.$emit('input', val);
+				}
+			} 
+		});
 
 		new Vue({
 			el: '#app',
 			data: {
-				dataStreams: [],
-				checkedNames: []
+					dataStreams: [],
+					dataStreamSelected: [],
+					hasNotFinishedDS: true,
+					hasNotFinishedDPS: true,
+					renderDashboardView: true,
+					renderSecurityView: false,
+					renderActionTriggersView: false,
+					renderAboutView: false,
+					streamWasSelected:false,
+					maxValue:{
+						value:'',
+						timestamp:''
+					},
+					minValue:{
+						value:'',
+						timestamp:''
+					},
+					averageValue:{
+						value:'',
+						timestamp:''
+					},
+					currentValue: {
+						value:'',
+						timestamp:''
+					},
+					data:'',
+					dataStreamInformation: [],
+					selectedDs: '',
+					sideNavStyle:{
+						backgroundColor: '',
+						width: ''						
+					}
 			},
 
-			methods: {
-				/*addForm: function() {
-					this.dataStreams.push({dataStream: 'Temperature', index: 0});
-					this.dataStreams.push({dataStream: 'Pressure', index: 1});
-				},*/
+			mounted(){
+
+				this.hasNotFinishedDS = true;
+				this.isSideNavActive = false;
+				this.renderDashboardView = true;
+				this.renderSecurityView = false;
+				this.renderActionTriggersView = false;
+				this.renderAboutView = false;
+
+				this.streamWasSelected = false;
+
+				this.data = new Date();
+
+				console.log("DATE => " + this.data);
+
+				axios.get('http://localhost:8090/test/dataStream/availables').then(response => {
+					this.hasNotFinishedDS = false;
+					this.dataStreams = response.data;	
+					console.log("[SUCCESS] DataStreams =>>>> " + this.dataStreams);
+				}, (error) => {
+					this.hasNotFinishedDS=false;
+					console.log(error);
+					this.dataStreams = ["Temperature","Pressure","Humidity","UV-Intensity"];
+					console.log("[ERROR] DataStreams > " + this.dataStreams);
+				})
+
+				console.log("Width => " + this.sideNavStyle.backgroundColor);
+				console.log("Color => " + this.sideNavStyle.width);
+
+
+			    // Drawing the chart for Actions -> FIXME <-
+			    var ctx = document.getElementById("actionsChart").getContext('2d');
+				var actionsChart = new Chart(ctx, {
+					type: 'doughnut',
+					data: {
+						labels: ['Action 1', 'Action 2', 'Action 3', 'Action 4', 'Action 5'],
+						datasets: [{
+							label: 'Population (millions)',
+							data: [11, 22, 5, 17, 15],
+							backgroundColor: ['#FABB3C', '#32D75E','#D02FC0','#EB0524','#848B7A']
+							/*backgroundColor: ['#3e95cd', '#8e5ea2','#3cba9f','#e8c3b9','#c45850']*/
+						}]
+					},
+					options: {
+						responsive:true,
+						cutoutPercentage:75,
+						maintainAspectRatio: true,
+						title: {
+							display: false,
+							text: 'Predicted world population (millions) in 2050'
+						}
+					}
+				});
+
+				},
+
+				methods: {
+
+				drawPieChart(){	
+				    // Drawing the chart for Actions -> FIXME <-
+				    var ctx = document.getElementById("actionsChart").getContext('2d');
+					var actionsChart = new Chart(ctx, {
+						type: 'doughnut',
+						data: {
+							labels: ['Action 1', 'Action 2', 'Action 3', 'Action 4', 'Action 5'],
+							datasets: [{
+								label: 'Population (millions)',
+								data: [11, 22, 5, 17, 15],
+								backgroundColor: ['#FABB3C', '#32D75E','#D02FC0','#EB0524','#848B7A']
+								/*backgroundColor: ['#3e95cd', '#8e5ea2','#3cba9f','#e8c3b9','#c45850']*/
+							}]
+						},
+						options: {
+							responsive:true,
+							cutoutPercentage:75,
+							maintainAspectRatio: true,
+							title: {
+								display: true,
+								text: 'Predicted world population (millions) in 2050'
+							}
+						}
+					});
+				},
+
+				showSecurityView: function(){
+					this.renderDashboardView = false;
+					this.renderSecurityView = true;
+					this.renderActionTriggersView = false;
+					this.renderAboutView = false;
+				},
+				assignDataStream: function(dS){
+					console.log(" Entering assignDataStream function");
+					this.selectedDs = dS;
+					this.streamWasSelected=true;
+
+					this.getdataStreamInformation(dS);
+				},
+				showDashboardView: function(){
+					this.renderDashboardView = true;
+					this.renderSecurityView = false;
+					this.renderActionTriggersView = false;
+					this.renderAboutView = false;
+					this.drawPieChart();
+				},
+				showCommandsView: function(){
+					this.renderDashboardView = false;
+					this.renderSecurityView = false;
+					this.renderActionTriggersView = true;
+					this.renderAboutView = false;
+				},
+				showAboutView: function(){
+					this.renderDashboardView = false;
+					this.renderSecurityView = false;
+					this.renderActionTriggersView = false;
+					this.renderAboutView = true;
+				},
+
+				getMaxValue: function(dataPoints){
+					var max = 0;
+					var timestamp = '';
+					
+					for(i=0;i<dataPoints.length;i++){
+						if(dataPoints[i].value>=max){
+							max=dataPoints[i].value;
+							timestamp = dataPoints[i].timestamp;
+						}
+					}
+					console.log("Max value = " + max);
+					console.log("timestamp = " + timestamp);
+					this.maxValue.value = max;
+					this.maxValue.timestamp = timestamp;
+				},
+				getMinValue: function(dataPoints){
+					var min=dataPoints[0].value;
+					var timestamp = '';
+					
+					for(i=0;i<dataPoints.length;i++){
+						if(dataPoints[i].value<=min){
+							min=dataPoints[i].value;
+							timestamp=dataPoints[i].timestamp;
+						}
+					}
+					console.log("Min value = " + min);
+					console.log("timestamp = " + timestamp);
+					this.minValue.value = min;
+					this.minValue.timestamp = timestamp;
+				},
+				getAvgValue: function(){
+					var values = this.getDataFromStream();
+					var sum=0;
+					var length = values.length;
+					var avg = 0;
+
+					console.log("values: " + values);
+					console.log("length: " + length);
+
+					for(i=0;i<length;i++){
+						sum = sum + values[i];						
+					}
+					avg = sum / length;
+					avg = avg.toFixed(2);
+					console.log("Sum value = " + sum);
+					console.log("Avg = " + avg)
+
+					this.averageValue.value = avg;
+					var time = this.getTimeElapsed();
+
+					/*if(time<60){
+						this.averageValue.timestamp = time.toString() + "mins";
+					}else{
+						time = time / 60;
+						if(time>24){
+							time = time / 24;
+							this.averageValue.timestamp = time + "days";
+						}else{
+							this.averageValue.timestamp = time + "hrs";
+						}	
+					}
+					console.log("timeeee " + time);*/
+					this.averageValue.timestamp=time;
+					
+				},
+
+				getTimeElapsed: function(){
+					var length = this.dataStreamInformation.dataPoints.length;
+					var time1 = this.dataStreamInformation.dataPoints[0].timestamp;
+					var time2 = this.dataStreamInformation.dataPoints[length-1].timestamp;
+
+					console.log("timestamp 1 => " + time1);
+					console.log("timestamp 2 => " + time2);
+
+					// "October 7, 2017 18:15:28 {(GMT-03:00) Local Time}"
+
+					var subs1 = time1.substring(0, 24);
+					var subs2 = time2.substring(0, 24);
+					var subs3 = time2.substring(0, 37);
+
+					console.log(subs1);
+					console.log(subs2); // "October 7, 2017 18:15:28
+					console.log(subs3); // "October 7, 2017 18:15:28 {(GMT-03:00)
+
+					var date1 = moment(subs1, 'MMM DD, YYYY hh:mm:ss').toDate();
+					var date2 = moment(subs2, 'MMM DD, YYYY hh:mm:ss').toDate();
+					var date3 = moment(subs3, 'MMM DD, YYYY hh:mm:ss {(GMT').toDate(); // NECESITO VER CÓMO FORMATER CON GMT Y DSPS RESTAR CONTRA LA DEL CLIENTE.
+
+					var minsElapsed = ((date2.getTime() - date1.getTime() ) / 1000) / 60;
+
+					console.log( "Mins Elapsed: " +minsElapsed);
+					return minsElapsed;
+				},
+
+				openNav: function(){
+						//this.sideNavStyle.backgroundColor = "rgba(0,0,0,0.4)";
+						this.sideNavStyle.backgroundColor = "#111";
+						this.sideNavStyle.width = "250px";
+
+						console.log("Width => " + this.sideNavStyle.width);
+						console.log("Color => " + this.sideNavStyle.backgroundColor);
+					},
+				closeNav: function(){
+					this.sideNavStyle.backgroundColor = "white";
+					this.sideNavStyle.width = "0";
+				},
+
 				hasToShowStreams: function(){
+					console.log("Entering hasToShowStreams function");
+					console.log("length = " + this.dataStreams.length);
 					return this.dataStreams.length > 0;
 				},
-				postearDatos: function(){
 
-					var selectedDataStream = $('#selectDataStream').val();
+				getdataStreamInformation: function(dS){
+					console.log("Entering getdataStreamInformation !");
+					console.log("dS = " + dS);
+					console.log('http://localhost:8090/test/dataStream/' + dS);
 
-					console.log(selectedDataStream);
+					axios.get('http://localhost:8090/test/dataStream/' + dS).then(response => {
+					console.log("Response PLain => " + response);
+					this.dataStreamInformation = response.data;	
+					console.log("[SUCCESS] dataStreamInformation =>>>> " + this.dataStreamInformation);
+					console.log("[SUCCESS] dataStreamInformation =>>>> " + this.dataStreamInformation.name);
+					console.log("[SUCCESS] dataStreamInformation =>>>> " + this.dataStreamInformation.currentValue);
+					console.log("[SUCCESS] dataStreamInformation =>>>> " + this.dataStreamInformation.lastUpdate);
+					console.log("[SUCCESS] dataStreamInformation =>>>> " + this.dataStreamInformation.dataPoints);
+					console.log("[SUCCESS] dataStreamInformation =>>>> " + this.dataStreamInformation.dataPoints[0]);
+					console.log("[SUCCESS] dataStreamInformation =>>>> " + this.dataStreamInformation.dataPoints[0].timestamp);
+					console.log("[SUCCESS] dataStreamInformation =>>>> " + this.dataStreamInformation.dataPoints[0].value);
+					this.drawStreamChart(dS);
+					
+					this.currentValue.value = this.dataStreamInformation.currentValue ;
+					this.currentValue.timestamp = this.dataStreamInformation.lastUpdate ;
 
-					for(i=0; i<selectedDataStream.length; i++){
-						this.dataStreams.push({dataStream: selectedDataStream[i], index: i});	
-						console.log(this.dataStreams);
-					}
+					this.getAvgValue(this.dataStreamInformation.dataPoints);
+					this.getMaxValue(this.dataStreamInformation.dataPoints);
+					this.getMinValue(this.dataStreamInformation.dataPoints);
 
-					console.log("FINAL: " + this.dataStreams);
-
+				}, (error) => {
+					console.log("[ERROR] " + error);
+				})
 				},
-				drawMe: function(){
 
-					console.log(this.dataStreams);
-					var length = this.dataStreams.length;
-					console.log("length = " + length);
+				getLabelsForChart: function(){
+						console.log(" Entering generateLabelsForChart");
+						var length = this.dataStreamInformation.dataPoints.length;
+					    var labels = [];
+					    
+					    for(i=1; i<=length; i++){
+					    	labels.push(i);
+					    }
 
-					for(i=0;i<length; i++){
+					    console.log(" Labels generated: " + labels);
 
-				    // Draw the chart using labels and data generated before
-				    var ctx = document.getElementById(this.dataStreams[i]).getContext('2d');
-				    var myChart = new Chart(ctx, {
-				    	type: 'line',
-				    	data: {
-				    		labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
-				    		datasets: [
-				    		{
-				    			label: this.dataStreams[i],
-				    			data: [22, 22, 23, 26, 26, 21, 24, 23, 23, 23],
-				    			backgroundColor: "#fc9272",
-				    			pointBackgroundColor: "#de2d26",
-				    			strokeColor: "#de2d26",
-				    			pointColor: "#de2d26",
-				    			pointStrokeColor: "#de2d26",
-				    			pointHighlightFill: "#de2d26",
-				    			pointHighlightStroke: "#de2d26",
-				    		}]
-				    	},
-				    	options: {
-				    		responsive: true,
-				    		scales: {
-				    			yAxes: [{
-				    				display:false,
-				    				ticks: {
-				    					beginAtZero:false
-				    				},
-				    				gridLines:{
-				    					display:false
-				    				}
-				    			}],
-				    			xAxes: [{
-            //display:false,
-            ticks: {
-            	beginAtZero:false
-            },
-            gridLines:{
-            	display:false
-            }
-        }]
-    }
-}
-});
+					    return labels;
+				},
+
+				getDataFromStream: function(){
+					var dataPoints = this.dataStreamInformation.dataPoints;
+					var length = dataPoints.length;
+					var values = [];
+					for(i=0; i< length; i++){
+						values.push(dataPoints[i].value);
+					}
+					console.log(" Data Points values: " + values);
+					return values;
+				},
+
+				drawStreamChart: function(dS){
+
+						console.log(" Entering drawStreamChart function!");
+						console.log(" Preparing for drawing [" + dS + "] stream!");
+
+						var dataPointsLabels = this.getLabelsForChart();
+						var dataPoints = this.getDataFromStream();
+
+					    // Draw the chart using labels and data generated before
+					    var ctx = document.getElementById('streamCanvas').getContext('2d');
+					    var myChart = new Chart(ctx, {
+					    	type: 'line',
+					    	data: {
+					    		labels: dataPointsLabels,
+					    		datasets: [
+					    		{
+					    			label: dS,
+					    			data: dataPoints,
+					    			backgroundColor: "#007bff",
+					    			pointBackgroundColor: "#007bff",
+					    			strokeColor: "#007bff",
+					    			pointColor: "#007bff",
+					    			pointStrokeColor: "#007bff",
+					    			pointHighlightFill: "#007bff",
+					    			pointHighlightStroke: "#007bff",
+					    		}]
+					    	},
+					    	options: {
+					    		responsive: true,
+					    		scales: {
+					    			yAxes: [{
+					    				display:false,
+					    				ticks: {
+					    					beginAtZero:false
+					    				},
+					    				gridLines:{
+					    					display:false
+					    				}
+					    			}],
+					    			xAxes: [{
+			            //display:false,
+			            ticks: {
+			            	beginAtZero:false
+			            },
+			            gridLines:{
+			            	display:false
+			            }       }]     }  }  });
 				}
 			}
-		}})
+		});
 
-	</script>
+</script>
 
 </body>
 </html>

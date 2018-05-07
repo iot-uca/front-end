@@ -1,0 +1,1 @@
+{ "name" : "Temperature", "currentValue" : 16.5, "lastUpdate" : "October 7, 2017 18:25:28 {(GMT-03:00) Local Time}", "dataPoints" : [ { "timestamp" : "October 7, 2017 18:17:04 {(GMT-03:00) Local Time}", "value" : 16 }, { "timestamp" : "October 7, 2017 18:25:28 {(GMT-03:00) Local Time}", "value" : 16.5 } ] }

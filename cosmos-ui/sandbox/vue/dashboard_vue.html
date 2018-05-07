@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title> Insertar Form en el DOM</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.3/vue.js"></script> <!-- Vue as primary JS fwmk -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> <!-- JQuery for certain DOM elem manipulations -->
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css" /> <!-- Bootstrap for styling -->
+	<script src= "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script> <!-- ChartJS for dashboard charts -->
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+
+	<style type="text/css">
+	#contentSeparator{
+		color: "#2b2c37";
+		text-align: left;
+		border-bottom: black solid;
+	}
+</style>
+
+</head>
+<body>
+
+	<div id="app">
+
+		<p><strong>Select the data streams you want to visualize...</strong></p>
+
+			<p></p>
+			<div>
+				<data-stream-checkboxes v-for="dS in dataStreams" v-bind:value="dS"></data-stream-checkboxes>
+				<br>
+				<span>Data Streams selected: {{ dataStreamSelected }}</span>
+			</div>
+			<p></p>
+
+
+
+			<img src="./loading.gif" class="img-responsive" v-if="hasNotFinished">  
+
+		</div>
+
+		<script type="text/javascript">
+
+			/*Vue.component('div-canvas-for-chart', {
+				props:['id'],
+				template:'<div class="col-md-4"><canvas :id="id"></canvas></div>' 
+			});
+
+			Vue.component('content-separator', {
+				template:'<h1 id="contentSeparator"><strong><slot></slot></strong></h1>'
+			});
+			*/
+			Vue.component('data-stream-checkboxes', {
+				props:['value'],
+				template:'<p><input type="checkbox" :value="value" v-model="caca"><label :for="value">{{value}}</label></p>',
+				data() {
+					console.log(" data() en componen => " + this.value);
+				  	return { caca: this.value }
+				},
+				watch: {
+				  caca(val) {
+				  	console.log(" caca => " + val);
+				    this.$emit('input', val);
+				  }
+				} 
+			});
+
+			new Vue({
+				el: '#app',
+				data: {
+					dataStreams: [],
+					sarasa: [],
+					dataStreamSelected: [],
+					checkedNames: [],
+					foo:'abcdef',
+					streamButtonClicked: false,
+					results: [],
+					hasNotFinished: true
+				},
+
+				mounted(){ 
+		          		this.hasNotFinished=true;
+		          		console.log(" DataStreams =>>>> " + this.dataStreams);
+		          		axios.get('http://127.0.0.1:8090/test/dataStream/availables').then(response => {
+							this.hasNotFinished = false;
+							this.dataStreams = response;
+							console.log("[SUCCESS] DataStreams =>>>> " + this.dataStreams);
+		          		}, (error) => {
+							this.hasNotFinished=false;
+		          			console.log(error);
+		          			console.log("ERROR!!");
+		          			this.dataStreams = ["Temperature","Pressure","Humidity","UV-Intensity"];
+		          			console.log("[ERROR] DataStreams > " + this.dataStreams);
+		          		})
+				},
+				methods: {
+					hasToShowStreams: function(){
+						return this.dataStreamSelected.length > 0;
+					},
+					postearDatos: function(){
+
+						var selectedDataStream = $('#selectDataStream').val();
+
+						console.log(selectedDataStream);
+
+						for(i=0; i<selectedDataStream.length; i++){
+							this.dataStreams.push({dataStream: selectedDataStream[i], index: i});	
+							console.log(this.dataStreams);
+						}
+
+						console.log("FINAL: " + this.dataStreams);
+
+					},
+					drawMe: function(){
+
+						this.streamButtonClicked=true;
+
+						console.log(this.dataStreamSelected);
+						var length = this.dataStreamSelected.length;
+						console.log("length = " + length);
+
+						for(i=0;i<length; i++){
+
+					    // Draw the chart using labels and data generated before
+					    var ctx = document.getElementById(this.dataStreamSelected[i]).getContext('2d');
+					    var myChart = new Chart(ctx, {
+					    	type: 'line',
+					    	data: {
+					    		labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+					    		datasets: [
+					    		{
+					    			label: this.dataStreamSelected[i],
+					    			data: [22, 22, 23, 26, 26, 21, 24, 23, 23, 23],
+					    			backgroundColor: "#fc9272",
+					    			pointBackgroundColor: "#de2d26",
+					    			strokeColor: "#de2d26",
+					    			pointColor: "#de2d26",
+					    			pointStrokeColor: "#de2d26",
+					    			pointHighlightFill: "#de2d26",
+					    			pointHighlightStroke: "#de2d26",
+					    		}]
+					    	},
+					    	options: {
+					    		responsive: true,
+					    		scales: {
+					    			yAxes: [{
+					    				display:false,
+					    				ticks: {
+					    					beginAtZero:false
+					    				},
+					    				gridLines:{
+					    					display:false
+					    				}
+					    			}],
+					    			xAxes: [{
+			            //display:false,
+			            ticks: {
+			            	beginAtZero:false
+			            },
+			            gridLines:{
+			            	display:false
+			            }       }]     }  }  });
+					}
+					}
+				}
+			});
+
+		</script>
+
+	</body>
+	</html>

@@ -120,7 +120,7 @@ function generateDataForChart(values)
 
 // Asks the middleware-api about the available data streams
 function getAvailableDataStreams(){
-	$.getJSON("http://localhost:8090/dataStream/availables", function(result){
+	$.getJSON("http://localhost:8090/test/dataStream/availables", function(result){
 		console.log(result);
 		console.log(JSON.stringify(result));
 		var elements = JSON.stringify(result);
@@ -167,7 +167,7 @@ function displayCharts(){
 		}
 */
 
-		$.getJSON("http://localhost:8090/dataStream/" + values[i], function(result){
+		$.getJSON("http://localhost:8090/test/dataStream/" + values[i], function(result){
 				
 			console.log(" RESPONSE => " + JSON.stringify(result));
 			var elements = JSON.stringify(result);

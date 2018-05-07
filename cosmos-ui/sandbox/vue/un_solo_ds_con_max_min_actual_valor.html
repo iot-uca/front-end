@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title> Insertar Form en el DOM</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.3/vue.js"></script> <!-- Vue as primary JS fwmk -->
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+
+	<script src= "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script> <!-- ChartJS for dashboard charts -->
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script> <!-- Axios as Http client -->
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"></script> <!-- Moment JS for Date manipulation -->
+
+</head>
+
+
+
+
+<body>
+
+	<div id="app">
+
+		<div id="main">
+			<span style="font-size:30px;cursor:pointer" v-on:click="openNav()">&#9776;</span>
+			<h1 id="cosmosTitle"><strong>Cosmos GUI</strong></h1>
+		</div>
+		
+		<div style="text-align: center;">
+			<div style="width: 500px; margin: 0 auto;">
+				<strong>Select the data streams you want to visualize...</strong>
+				<br>
+				<div class="wrapper text-center">		
+					<div style="margin: 0 auto" class="btn-group container-fluid" role="group" aria-label="Basic example" v-if="hasToShowStreams()">
+						<data-streams-button v-for="dS in dataStreams" v-bind:name="dS" v-bind:class="[selectedDs == dS ? 'btn btn-primary': 'btn btn-secondary']" v-on:click.native="assignDataStream(dS)"></data-streams-button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div v-if="showDashboardView && streamWasSelected" id="dashboard">
+
+			<!--img src="./loading.gif" class="img-responsive" v-if="hasNotFinishedDPS"-->
+
+			<div class="row" style="margin: 50px auto;">
+				<div class="col-md-8">
+					<canvas id="streamCanvas"></canvas>
+				</div>
+				<div class="col-md-4">
+					<div class="row container-fluid">
+						<div class="card">
+							<div class="card-header bg-primary"><strong>Current Value</strong></div>
+							<div class="card-body">
+								<h2><p class="card-text"><strong>{{currentValue.value}}</strong></p></h2>
+							</div>
+							<div class="card-footer">
+								<small class="text-muted">Registered {{currentValue.timestamp}} ago</small>
+							</div>
+						</div>
+						<div class="card">
+							<div class="card-header bg-primary"><strong>Average Value</strong></div>
+							<div class="card-body">
+								<h2><p class="card-text"><strong>{{averageValue.value}}</strong></p></h2>
+							</div>
+							<div class="card-footer">
+								<small class="text-muted">During last {{averageValue.timestamp}} mins</small>
+							</div>
+						</div>
+					</div>
+
+					<br>
+
+					<div class="row container-fluid">
+						<div class="card">
+							<div class="card-header bg-primary"><strong>Min Value</strong></div>
+							<div class="card-body">
+								<h2><p class="card-text"><strong>{{minValue.value}}</strong></p></h2>
+							</div>
+							<div class="card-footer">
+								<small class="text-muted">Registered {{minValue.timestamp}} ago</small>
+							</div>
+						</div>			
+						<div class="card">
+							<div class="card-header bg-primary"><strong>Max Value</strong></div>
+							<div class="card-body">
+								<h2><p class="card-text"><strong>{{maxValue.value}}</strong></p></h2>
+							</div>
+							<div class="card-footer">
+								<small class="text-muted">Registered {{maxValue.timestamp}} ago</small>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>	
+
+
+	<script type="text/javascript">
+
+		Vue.component('div-canvas-for-chart', {
+			props:['id'],
+			template:'<div class="col-md-4"><canvas :id="id"></canvas></div>' 
+		});
+
+		Vue.component('content-separator', {
+			template:'<h1 id="contentSeparator"><strong><slot></slot></strong></h1>'
+		});
+
+		Vue.component('data-streams-button', {
+			props:['name'],
+			template:'<button type="button">{{name}}</button>'
+		});
+
+		Vue.component('data-stream-checkboxes', {
+			props:['value'],
+			template:'<p><input type="checkbox" :value="value" v-model="caca"><label :for="value">{{value}}</label></p>',
+			data() {
+				console.log(" data() en componen => " + this.value);
+				return { caca: this.value }
+			},
+			watch: {
+				caca(val) {
+					console.log(" caca => " + val);
+					this.$emit('input', val);
+				}
+			} 
+		});
+
+		new Vue({
+			el: '#app',
+			data: {
+				dataStreams: [],
+				dataStreamSelected: [],
+				hasNotFinishedDS: true,
+				hasNotFinishedDPS: true,
+				renderDashboardView: true,
+				renderSecurityView: false,
+				renderActionTriggersView: false,
+				renderAboutView: false,
+				streamWasSelected:false,
+				maxValue:{
+					value:'',
+					timestamp:''
+				},
+				minValue:{
+					value:'',
+					timestamp:''
+				},
+				averageValue:{
+					value:'',
+					timestamp:''
+				},
+				currentValue: {
+					value:'',
+					timestamp:''
+				},
+				data:'',
+				dataStreamInformation: [],
+				selectedDs: '',
+				sideNavStyle:{
+					backgroundColor: '',
+					width: ''						
+				}
+
+
+			},
+
+			mounted(){
+				this.hasNotFinishedDS=true;
+				this.isSideNavActive=false;
+				this.renderDashboardView = true;
+				this.renderSecurityView = false;
+				this.renderActionTriggersView = false;
+				this.renderAboutView =  false;
+
+				this.streamWasSelected= false;
+
+				this.data = new Date();
+
+				console.log("DATE => " + this.data);
+
+				axios.get('http://localhost:8090/test/dataStream/availables').then(response => {
+					this.hasNotFinishedDS = false;
+					this.dataStreams = response.data;	
+					console.log("[SUCCESS] DataStreams =>>>> " + this.dataStreams);
+				}, (error) => {
+					this.hasNotFinishedDS=false;
+					console.log(error);
+					this.dataStreams = ["Temperature","Pressure","Humidity","UV-Intensity"];
+					console.log("[ERROR] DataStreams > " + this.dataStreams);
+				})
+
+				console.log("Width => " + this.sideNavStyle.backgroundColor);
+				console.log("Color => " + this.sideNavStyle.width);
+			},
+			methods: {
+				showSecurityView: function(){
+					this.renderDashboardView = false;
+					this.renderSecurityView = true;
+					this.renderActionTriggersView = false;
+					this.renderAboutView = false;
+				},
+				assignDataStream: function(dS){
+					console.log(" Entering assignDataStream function");
+					this.selectedDs = dS;
+					this.streamWasSelected=true;
+
+					this.getdataStreamInformation(dS);
+				},
+				showDashboardView: function(){
+					this.renderDashboardView = true;
+					this.renderSecurityView = false;
+					this.renderActionTriggersView = false;
+					this.renderAboutView = false;
+				},
+				showCommandsView: function(){
+					this.renderDashboardView = false;
+					this.renderSecurityView = false;
+					this.renderActionTriggersView = true;
+					this.renderAboutView = false;
+				},
+				showAboutView: function(){
+					this.renderDashboardView = false;
+					this.renderSecurityView = false;
+					this.renderActionTriggersView = false;
+					this.renderAboutView = true;
+				},
+
+				getMaxValue: function(dataPoints){
+					var max = 0;
+					var timestamp = '';
+					
+					for(i=0;i<dataPoints.length;i++){
+						if(dataPoints[i].value>=max){
+							max=dataPoints[i].value;
+							timestamp = dataPoints[i].timestamp;
+						}
+					}
+					console.log("Max value = " + max);
+					console.log("timestamp = " + timestamp);
+					this.maxValue.value = max;
+					this.maxValue.timestamp = timestamp;
+				},
+				getMinValue: function(dataPoints){
+					var min=dataPoints[0].value;
+					var timestamp = '';
+					
+					for(i=0;i<dataPoints.length;i++){
+						if(dataPoints[i].value<=min){
+							min=dataPoints[i].value;
+							timestamp=dataPoints[i].timestamp;
+						}
+					}
+					console.log("Min value = " + min);
+					console.log("timestamp = " + timestamp);
+					this.minValue.value = min;
+					this.minValue.timestamp = timestamp;
+				},
+				getAvgValue: function(){
+					var values = this.getDataFromStream();
+					var sum=0;
+					var length = values.length;
+					var avg = 0;
+
+					console.log("values: " + values);
+					console.log("length: " + length);
+
+					for(i=0;i<length;i++){
+						sum = sum + values[i];						
+					}
+					avg = sum / length;
+					avg = avg.toFixed(2);
+					console.log("Sum value = " + sum);
+					console.log("Avg = " + avg)
+
+					this.averageValue.value = avg;
+					var time = this.getTimeElapsed();
+
+/*					if(time<60){
+						this.averageValue.timestamp = time.toString() + "mins";
+					}else{
+						time = time / 60;
+						if(time>24){
+							time = time / 24;
+							this.averageValue.timestamp = time + "days";
+						}else{
+							this.averageValue.timestamp = time + "hrs";
+						}	
+					}
+					console.log("timeeee " + time);*/
+					this.averageValue.timestamp=time;
+					
+				},
+
+				getTimeElapsed: function(){
+					var length = this.dataStreamInformation.dataPoints.length;
+					var time1 = this.dataStreamInformation.dataPoints[0].timestamp;
+					var time2 = this.dataStreamInformation.dataPoints[length-1].timestamp;
+
+					console.log("timestamp 1 => " + time1);
+					console.log("timestamp 2 => " + time2);
+
+					// "October 7, 2017 18:15:28 {(GMT-03:00) Local Time}"
+
+					var subs1 = time1.substring(0, 24);
+					var subs2 = time2.substring(0, 24);
+					var subs3 = time2.substring(0, 37);
+
+					console.log(subs1);
+					console.log(subs2); // "October 7, 2017 18:15:28
+					console.log(subs3); // "October 7, 2017 18:15:28 {(GMT-03:00)
+
+					var date1 = moment(subs1, 'MMM DD, YYYY hh:mm:ss').toDate();
+					var date2 = moment(subs2, 'MMM DD, YYYY hh:mm:ss').toDate();
+					var date3 = moment(subs3, 'MMM DD, YYYY hh:mm:ss {(GMT').toDate(); // NECESITO VER CÓMO FORMATER CON GMT Y DSPS RESTAR CONTRA LA DEL CLIENTE.
+
+					var minsElapsed = ((date2.getTime() - date1.getTime() ) / 1000) / 60;
+
+					console.log( "Mins Elapsed: " +minsElapsed);
+					return minsElapsed;
+				},
+
+				openNav: function(){
+						//this.sideNavStyle.backgroundColor = "rgba(0,0,0,0.4)";
+						this.sideNavStyle.backgroundColor = "#111";
+						this.sideNavStyle.width = "250px";
+
+						console.log("Width => " + this.sideNavStyle.width);
+						console.log("Color => " + this.sideNavStyle.backgroundColor);
+					},
+				closeNav: function(){
+					this.sideNavStyle.backgroundColor = "white";
+					this.sideNavStyle.width = "0";
+				},
+
+				hasToShowStreams: function(){
+					console.log("Entering hasToShowStreams function");
+					console.log("length = " + this.dataStreams.length);
+					return this.dataStreams.length > 0;
+				},
+
+				getdataStreamInformation: function(dS){
+					console.log("Entering getdataStreamInformation !");
+					console.log("dS = " + dS);
+					console.log('http://localhost:8090/test/dataStream/' + dS);
+
+					axios.get('http://localhost:8090/test/dataStream/' + dS).then(response => {
+					console.log("Response PLain => " + response);
+					this.dataStreamInformation = response.data;	
+					console.log("[SUCCESS] dataStreamInformation =>>>> " + this.dataStreamInformation);
+					console.log("[SUCCESS] dataStreamInformation =>>>> " + this.dataStreamInformation.name);
+					console.log("[SUCCESS] dataStreamInformation =>>>> " + this.dataStreamInformation.currentValue);
+					console.log("[SUCCESS] dataStreamInformation =>>>> " + this.dataStreamInformation.lastUpdate);
+					console.log("[SUCCESS] dataStreamInformation =>>>> " + this.dataStreamInformation.dataPoints);
+					console.log("[SUCCESS] dataStreamInformation =>>>> " + this.dataStreamInformation.dataPoints[0]);
+					console.log("[SUCCESS] dataStreamInformation =>>>> " + this.dataStreamInformation.dataPoints[0].timestamp);
+					console.log("[SUCCESS] dataStreamInformation =>>>> " + this.dataStreamInformation.dataPoints[0].value);
+					this.drawStreamChart(dS);
+					
+					this.currentValue.value = this.dataStreamInformation.currentValue ;
+					this.currentValue.timestamp = this.dataStreamInformation.lastUpdate ;
+
+					this.getAvgValue(this.dataStreamInformation.dataPoints);
+					this.getMaxValue(this.dataStreamInformation.dataPoints);
+					this.getMinValue(this.dataStreamInformation.dataPoints);
+
+				}, (error) => {
+					console.log("[ERROR] " + error);
+				})
+				},
+
+				getLabelsForChart: function(){
+						console.log(" Entering generateLabelsForChart");
+						var length = this.dataStreamInformation.dataPoints.length;
+					    var labels = [];
+					    
+					    for(i=1; i<=length; i++){
+					    	labels.push(i);
+					    }
+
+					    console.log(" Labels generated: " + labels);
+
+					    return labels;
+				},
+
+				getDataFromStream: function(){
+					var dataPoints = this.dataStreamInformation.dataPoints;
+					var length = dataPoints.length;
+					var values = [];
+					for(i=0; i< length; i++){
+						values.push(dataPoints[i].value);
+					}
+					console.log(" Data Points values: " + values);
+					return values;
+				},
+
+				drawStreamChart: function(dS){
+
+						console.log(" Entering drawStreamChart function!");
+						console.log(" Preparing for drawing [" + dS + "] stream!");
+
+						var dataPointsLabels = this.getLabelsForChart();
+						var dataPoints = this.getDataFromStream();
+
+					    // Draw the chart using labels and data generated before
+					    var ctx = document.getElementById('streamCanvas').getContext('2d');
+					    var myChart = new Chart(ctx, {
+					    	type: 'line',
+					    	data: {
+					    		labels: dataPointsLabels,
+					    		datasets: [
+					    		{
+					    			label: dS,
+					    			data: dataPoints,
+					    			backgroundColor: "#007bff",
+					    			pointBackgroundColor: "#007bff",
+					    			strokeColor: "#007bff",
+					    			pointColor: "#007bff",
+					    			pointStrokeColor: "#007bff",
+					    			pointHighlightFill: "#007bff",
+					    			pointHighlightStroke: "#007bff",
+					    		}]
+					    	},
+					    	options: {
+					    		responsive: true,
+					    		scales: {
+					    			yAxes: [{
+					    				display:false,
+					    				ticks: {
+					    					beginAtZero:false
+					    				},
+					    				gridLines:{
+					    					display:false
+					    				}
+					    			}],
+					    			xAxes: [{
+			            //display:false,
+			            ticks: {
+			            	beginAtZero:false
+			            },
+			            gridLines:{
+			            	display:false
+			            }       }]     }  }  });
+				}
+			}
+		});
+
+
+</script>
+
+</body>
+</html>

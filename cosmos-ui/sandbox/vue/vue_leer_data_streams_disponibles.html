@@ -27,6 +27,7 @@
 		border-bottom: black solid;
 		box-shadow: 10px 10px 5px grey;
 		border: 1px solid grey;
+		font-size: 25px;
 	}
 
 	#contentSeparator{
@@ -316,8 +317,7 @@
 								<h2><p class="card-text"><strong>{{currentValue.value}}</strong></p></h2>
 							</div>
 							<div class="card-footer">
-								<!--small class="text-muted">Registered {{currentValue.timestamp}} ago</small-->
-								<small class="text-muted">Registered 5 min ago</small>
+								<small class="text-muted">Registered {{currentValue.timestamp}} ago</small>
 							</div>
 						</div>
 						<div class="card">
@@ -340,18 +340,16 @@
 								<h2><p class="card-text"><strong>{{minValue.value}}</strong></p></h2>
 							</div>
 							<div class="card-footer">
-								<!--small class="text-muted">Registered {{minValue.timestamp}} ago</small-->
-								<small class="text-muted">Registered 5 min ago</small>
+								<small class="text-muted">Registered {{minValue.timestamp}} ago</small>
 							</div>
 						</div>			
 						<div class="card">
-							<div class="card-header bg-primary"><strong style="font-size:13px; color: white;"><i class="fa fa-arrow-circle-up" style="font-size:20px"></i> MAX VALUE</strong></div>
+							<div class="card-header bg-primary"><strong style="font-size:13px; color: black;"><i class="fa fa-arrow-circle-up" style="font-size:20px"></i> MAX VALUE</strong></div>
 							<div class="card-body">
 								<h2><p class="card-text"><strong>{{maxValue.value}}</strong></p></h2>
 							</div>
 							<div class="card-footer">
-								<!--small class="text-muted">Registered {{maxValue.timestamp}} ago</small-->
-								<small class="text-muted">Registered 5 min ago</small>
+								<small class="text-muted">Registered {{maxValue.timestamp}} ago</small>
 							</div>
 						</div>
 					</div>
@@ -397,6 +395,7 @@
 				</div>
 				<!-- div for drawing the actions/commands pie chart -->
 				<div class="col-md-6">
+					<strong>Most Executed Actions</strong>
 					<canvas id="actionsChart"></canvas>
 				</div>
 			</div>
@@ -630,10 +629,12 @@
 						responsive:true,
 						cutoutPercentage:75,
 						maintainAspectRatio: true,
-						title: {
+						/*title: {
 							display: false,
-							text: 'Predicted world population (millions) in 2050'
-						}
+							text: 'Most Executed Actions'
+						}*/
+						title: false,
+						//legend:false
 					}
 				});
 
@@ -661,7 +662,7 @@
 							maintainAspectRatio: true,
 							title: {
 								display: true,
-								text: 'Predicted world population (millions) in 2050'
+								text: 'Most Executed actions (times)'
 							}
 						}
 					});
@@ -713,7 +714,7 @@
 					console.log("Max value = " + max);
 					console.log("timestamp = " + timestamp);
 					this.maxValue.value = max;
-					this.maxValue.timestamp = timestamp;
+					this.maxValue.timestamp = this.timeDif(timestamp);
 				},
 				getMinValue: function(dataPoints){
 					var min=dataPoints[0].value;
@@ -728,7 +729,7 @@
 					console.log("Min value = " + min);
 					console.log("timestamp = " + timestamp);
 					this.minValue.value = min;
-					this.minValue.timestamp = timestamp;
+					this.minValue.timestamp = this.timeDif(timestamp);
 				},
 				getAvgValue: function(){
 					var values = this.getDataFromStream();
@@ -750,18 +751,6 @@
 					this.averageValue.value = avg;
 					var time = this.getTimeElapsed();
 
-					/*if(time<60){
-						this.averageValue.timestamp = time.toString() + "mins";
-					}else{
-						time = time / 60;
-						if(time>24){
-							time = time / 24;
-							this.averageValue.timestamp = time + "days";
-						}else{
-							this.averageValue.timestamp = time + "hrs";
-						}	
-					}
-					console.log("timeeee " + time);*/
 					this.averageValue.timestamp=time;
 					
 				},
@@ -771,27 +760,109 @@
 					var time1 = this.dataStreamInformation.dataPoints[0].timestamp;
 					var time2 = this.dataStreamInformation.dataPoints[length-1].timestamp;
 
-					console.log("timestamp 1 => " + time1);
+					console.log("timestamp 1 => " + time1); // "October 7, 2017 18:15:28 {(GMT-03:00) Local Time}"
 					console.log("timestamp 2 => " + time2);
 
-					// "October 7, 2017 18:15:28 {(GMT-03:00) Local Time}"
+					var subs1 = time1.substring(0, 25); // "October 7, 2017 18:15:28
+					var subs2 = time2.substring(0, 25); // "October 7, 2017 18:15:28
 
-					var subs1 = time1.substring(0, 24);
-					var subs2 = time2.substring(0, 24);
-					var subs3 = time2.substring(0, 37);
-
-					console.log(subs1);
-					console.log(subs2); // "October 7, 2017 18:15:28
-					console.log(subs3); // "October 7, 2017 18:15:28 {(GMT-03:00)
+					console.log("subs1: " + subs1);
+					console.log("subs2: " + subs2);
 
 					var date1 = moment(subs1, 'MMM DD, YYYY hh:mm:ss').toDate();
 					var date2 = moment(subs2, 'MMM DD, YYYY hh:mm:ss').toDate();
-					var date3 = moment(subs3, 'MMM DD, YYYY hh:mm:ss {(GMT').toDate(); // NECESITO VER CÓMO FORMATER CON GMT Y DSPS RESTAR CONTRA LA DEL CLIENTE.
+
+					console.log("date1 = " + date1);
+					console.log("date2 = " + date2);
+
+					console.log("RESPONSE IS ==> " + this.timeDif(time1));
 
 					var minsElapsed = ((date2.getTime() - date1.getTime() ) / 1000) / 60;
 
-					console.log( "Mins Elapsed: " +minsElapsed);
+					console.log( "Mins Elapsed: " + minsElapsed);
 					return minsElapsed;
+				},
+
+				timeDif: function(dataPointTimestamp){
+
+					var subs1 = dataPointTimestamp.substring(0, 25);
+
+					expresion = /\(([^)]+)\)/; // GMT-03:00
+					result = expresion.exec(dataPointTimestamp)
+					console.log("regex: " + result[1]);
+
+					hrs = result[1].substring(4,6);
+					sign = result[1].substring(3,4);
+					mins = result[1].substring(7,9);
+
+					console.log("hh: " + hrs);
+					console.log("signus: " + sign);
+					console.log("mm: " + mins);
+
+
+					var clientTimeIso8601 = moment().toISOString(); // te tira la hora del Cliente en UTC (que es GMT a secas)-Ej: '2018-05-09T00:52:46.404Z'
+
+
+					dateSetUp = subs1 + ' ' + sign + hrs + mins;
+
+					serverTimeInUtc = moment(dateSetUp).utc().format("YYYY-MM-DDTHH:mm:ss");
+
+					console.log("###################################");
+
+					console.log("ISO 8601 String: " + clientTimeIso8601); 
+
+					console.log("server Time in UTC: " + serverTimeInUtc); 
+					serverTimeInUtcString = String(serverTimeInUtc);
+					clientTimeIso8601String = String(clientTimeIso8601);
+					console.log("serverTimeInUtc [String]: " + serverTimeInUtcString); 
+					console.log("clientTimeIso8601 [String]: " + clientTimeIso8601String); 
+
+					clientTimeIso8601String = clientTimeIso8601String.substring(0, clientTimeIso8601String.length - 5); // Removing trailing '.msmsmsZ'
+
+					console.log("clientTimeIso8601 cleaned [String]: " + clientTimeIso8601String); 
+
+					var diff = moment(clientTimeIso8601String).diff(moment(serverTimeInUtcString));
+
+					var duration = moment.duration(diff);
+
+					durationMillis = duration.milliseconds();
+					durationSeconds = duration.seconds();
+					durationMinutes = duration.minutes();
+					durationHours = duration.hours();
+					durationMonths = duration.months();
+					durationDays = duration.days();
+					durationYears = duration.years();
+
+					console.log("millis: " + durationMillis);
+					console.log("secs: " + durationSeconds);
+					console.log("mins: " + durationMinutes);
+					console.log("hours: " + durationHours);
+					console.log("days: " + Math.floor(duration.asDays())/*durationDays*/);
+					console.log("months: " + durationMonths);
+					console.log("years: " + durationYears);
+					console.log("###################################");
+
+					durationDays = Math.floor(duration.asDays());
+
+
+					/*if(durationMonths>0){
+						return durationMonths+' mths, '+durationDays+' days, '+durationHours+' hours, '+durationMinutes+' mins, '+durationSeconds+' secs ago.';
+					}else{*/
+						if(durationDays>0){
+							return durationDays+' days, '+durationHours+' hours, '+durationMinutes+' mins, '+durationSeconds+' secs';
+						}else{
+							if(durationHours>0){
+								return durationHours+' hours, '+durationMinutes+' mins, '+durationSeconds+' secs';
+							}else{
+								if(durationMinutes>0){
+									return durationMinutes+' mins, '+durationSeconds+' secs';
+								}else{
+									return durationSeconds+' secs';
+								}
+							}
+						}
+					//}
+					
 				},
 
 				openNav: function(){
@@ -801,7 +872,8 @@
 
 						console.log("Width => " + this.sideNavStyle.width);
 						console.log("Color => " + this.sideNavStyle.backgroundColor);
-					},
+				},
+
 				closeNav: function(){
 					this.sideNavStyle.backgroundColor = "white";
 					this.sideNavStyle.width = "0";
@@ -832,7 +904,7 @@
 					this.drawStreamChart(dS);
 					
 					this.currentValue.value = this.dataStreamInformation.currentValue ;
-					this.currentValue.timestamp = this.dataStreamInformation.lastUpdate ;
+					this.currentValue.timestamp = this.timeDif(this.dataStreamInformation.lastUpdate);
 
 					this.getAvgValue(this.dataStreamInformation.dataPoints);
 					this.getMaxValue(this.dataStreamInformation.dataPoints);

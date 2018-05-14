@@ -64,6 +64,13 @@ public class Controller {
 		ArrayList<String> dataStreamNames = getDataStreamsForTesting();
 		
 		log.debug(" Returning dataStreamNames: " + dataStreamNames);
+
+		try{
+			Thread.sleep(5000);
+		}catch(Exception e){
+			;
+		}
+
 		return dataStreamNames;
 	}
 

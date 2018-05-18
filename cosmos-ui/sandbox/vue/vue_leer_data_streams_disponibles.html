@@ -443,7 +443,7 @@
   		</div>
 
   		<!-- div for showing the Commands menu view -->
-  		<div id="commands" v-if="renderActionTriggersView"> 
+  		<div id="commands" v-if="renderActionsView"> 
   			<form>
   				<div class="form-group row">
   					<label for="example-text-input" class="col-2 col-form-label">Action name</label>
@@ -538,11 +538,12 @@
 		<!-- div for showing the Triggers menu view -->
 		<div id="triggers" v-if="renderTriggersView">
 
-
 			<div class="container">
 				<div class="row">
+					<br>
       				<div class="col-md-11 order-md-1">
       					<h4 class="mb-3 text-center"><strong>New Trigger Configuration</strong></h4>
+      					<hr>
       					<form class="needs-validation" novalidate="">
 
 					      	<div class="mb-3">
@@ -558,8 +559,29 @@
 					      			</div>
 					      	</div>
 
+					      	<hr>
 
-	      					<div class="mb-3">
+				            <div class="custom-control custom-checkbox" style="float: right;">
+				              <input type="checkbox" class="custom-control-input" id="oneTimeEvent" v-on:click="logSomething()">
+				              <label class="custom-control-label" for="oneTimeEvent">One time event</label>
+				            </div>
+
+				            <br><hr>
+
+        					<div class="mb-3" v-if="renderOneTimeTrigger">
+				      			<label for="triggerName"><strong>Taking place on</strong></label>
+				      			<div class="input-group">
+				      				<div class="input-group-prepend">
+				      					<span class="input-group-text"><i class="fa fa-clock-o"></i></span>
+				      				</div>	
+				      				<input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="a">
+			      					<div class="invalid-feedback" style="width: 100%;">
+				      					The Trigger name is required.
+				      				</div>
+				      			</div>
+					      	</div>
+
+	      					<div class="mb-3" v-if="!renderOneTimeTrigger">
 					      			<label for="triggerName"><strong>Days</strong></label>
 					      			<div class="input-group">
 					      				<div class="input-group-prepend">
@@ -580,7 +602,7 @@
 					      			</div>
 					      	</div>
 
-					      	<div class="mb-3">
+					      	<div class="mb-3" v-if="!renderOneTimeTrigger">
 				      			<label for="triggerName"><strong>Starting from</strong></label>
 				      			<div class="input-group">
 				      				<div class="input-group-prepend">
@@ -593,7 +615,7 @@
 				      			</div>
 					      	</div>
 
-					      	<div class="mb-3">
+					      	<div class="mb-3" v-if="!renderOneTimeTrigger">
 				      			<label for="triggerName"><strong>Ending on</strong></label>
 				      			<div class="input-group">
 				      				<div class="input-group-prepend">
@@ -606,7 +628,7 @@
 				      			</div>
 					      	</div>
 
-				      		<div class="mb-3">
+				      		<div class="mb-3" v-if="!renderOneTimeTrigger">
 				              	<label for="formGroupExampleInput">Trigger granularity</label>
 				              	<select class="form-control" id="granularity" placeholder="daily" required="true">
 				              		<option value="daily">Daily</option>
@@ -619,12 +641,12 @@
 				              	</div>
 				            </div>
 
-				            <div class="mb-3">
+				            <div class="mb-3" v-if="!renderOneTimeTrigger">
 				              	<label for="address2">Address 2 <span class="text-muted">(Optional)</span></label>
 				              	<input type="text" class="form-control" id="address2" placeholder="Apartment or suite">
 				            </div>
 
-				            <div class="row">
+				            <div class="row" v-if="!renderOneTimeTrigger">
 				              	<div class="col-md-5 mb-3">
 				              		<label for="country">Country</label>
 				              		<select class="custom-select d-block w-100" id="country" required="">
@@ -656,7 +678,7 @@
 
 
 				            <hr class="mb-4">
-				            <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
+				            <button class="btn btn-primary btn-lg btn-block" type="submit">Define trigger</button>
           				</form>
       				</div>
  				</div>
@@ -712,11 +734,12 @@
 			hasNotFinishedDPS: true,
 			renderDashboardView: true,
 			renderSecurityView: false,
-			renderActionTriggersView: false,
+			renderActionsView: false,
 			renderAboutView: false,
 			streamWasSelected:false,
 			hasToShowCharAndCards: false,
 			renderTriggersView: false,
+			renderOneTimeTrigger: false,
 			maxValue:{
 				value:'',
 				timestamp:''
@@ -750,7 +773,7 @@
 				this.isSideNavActive = false;
 				this.renderDashboardView = true;
 				this.renderSecurityView = false;
-				this.renderActionTriggersView = false;
+				this.renderActionsView = false;
 				this.renderAboutView = false;
 				this.renderTriggersView = false;
 
@@ -805,6 +828,14 @@
 
 			methods: {
 
+				logSomething: function(){
+
+					console.log("CLICKED");
+					console.log("before: " + this.renderOneTimeTrigger);
+					this.renderOneTimeTrigger=!this.renderOneTimeTrigger;
+					console.log("after: " + this.renderOneTimeTrigger);
+				},
+
 				drawPieChart(){	
 				    // Drawing the chart for Actions -> FIXME <-
 				    var ctx = document.getElementById("actionsChart").getContext('2d');
@@ -834,7 +865,7 @@
 				showSecurityView: function(){
 					this.renderDashboardView = false;
 					this.renderSecurityView = true;
-					this.renderActionTriggersView = false;
+					this.renderActionsView = false;
 					this.renderAboutView = false;
 					this.renderTriggersView = false;
 
@@ -849,7 +880,7 @@
 				showDashboardView: function(){
 					this.renderDashboardView = true;
 					this.renderSecurityView = false;
-					this.renderActionTriggersView = false;
+					this.renderActionsView = false;
 					this.renderAboutView = false;
 					this.renderTriggersView = false;
 					this.drawPieChart();
@@ -857,7 +888,7 @@
 				showCommandsView: function(){
 					this.renderDashboardView = false;
 					this.renderSecurityView = false;
-					this.renderActionTriggersView = true;
+					this.renderActionsView = true;
 					this.renderAboutView = false;
 					this.renderTriggersView = false;
 
@@ -866,13 +897,15 @@
 					this.renderTriggersView = true;
 					this.renderDashboardView = false;
 					this.renderSecurityView = false;
-					this.renderActionTriggersView = false;
+					this.renderActionsView = false;
 					this.renderAboutView = false;
+
+					this.renderOneTimeTrigger = false;
 				},
 				showAboutView: function(){
 					this.renderDashboardView = false;
 					this.renderSecurityView = false;
-					this.renderActionTriggersView = false;
+					this.renderActionsView = false;
 					this.renderTriggersView = false;
 					this.renderAboutView = true;
 				},

@@ -20,6 +20,13 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">	 <!--  For calendar icon  -->
 
 
+	<!--   FOR THE TIME PICKER   -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha18/js/tempusdominus-bootstrap-4.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha18/css/tempusdominus-bootstrap-4.min.css" />
+
+
 	<style type="text/css">
 	#contentSeparator{
 		color: "#2b2c37";
@@ -281,7 +288,7 @@
   		<!-- Side Nav for burguer menu -->
   		<div id="mySidenav" class="sidenav" v-on:click="closeNav()" v-bind:style="sideNavStyle">
   			<a href="javascript:void(0)" class="closebtn">&times;</a>
-  			<a href="#" v-on:click="showDashboardView()"><i class="fa fa-bar-chart" style="font-size:20px"></i> DASHBOARD</a>
+  			<a href="#" v-on:click="showDashboardView()"><i class="fa fa-dashboard" style="font-size:20px"></i> DASHBOARD</a>
   			<a href="#" v-on:click="showCommandsView()"><i class="fa fa-hand-paper-o" style="font-size:20px"></i> ACTIONS</a>
   			<a href="#" v-on:click="showTriggersView()"><i class="fa fa-bell-o" style="font-size:20px"></i> TRIGGERS</a> <!-- fa fa-calendar -->
   			<a href="#" v-on:click="showSecurityView()"><i class="fa fa-lock" style="font-size:20px"></i>   SECURITY</a>
@@ -535,237 +542,452 @@
 			</form>
 		</div>
 
+
 		<!-- div for showing the Triggers menu view -->
 		<div id="triggers" v-if="renderTriggersView">
 
 			<div class="container">
 				<div class="row">
 					<br>
-      				<div class="col-md-11 order-md-1">
-      					<h4 class="mb-3 text-center"><strong>New Trigger Configuration</strong></h4>
-      					<hr>
-      					<form class="needs-validation" novalidate="">
+					<div class="col-md-11 order-md-1">
+						<h4 class="mb-3 text-center"><strong>Trigger Configuration</strong></h4>
+						<h6 class="text-muted text-center"><em><small>You trigger an ACTION based on a CONDITION that needs to be checked according to some POLICY</em></small></h6>
+						<hr>
+						<form class="needs-validation" novalidate="">
 
-					      	<div class="mb-3">
-					      			<label for="triggerName"><strong>Name</strong></label>
-					      			<div class="input-group">
-					      				<div class="input-group-prepend">
-					      					<span class="input-group-text"><i class="fa fa-font"></i></span>
-					      				</div>
-					      				<input type="text" class="form-control" id="triggerName" placeholder="Trigger Name" required="true">
-					      				<div class="invalid-feedback" style="width: 100%;">
-					      					The Trigger name is required.
-					      				</div>
-					      			</div>
-					      	</div>
+							<div class="mb-3">
+								<label for="triggerName">Name</label>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"><i class="fa fa-font"></i></span>
+									</div>
+									<input type="text" class="form-control" id="triggerName" placeholder="Trigger Name" required="true">
+									<div class="invalid-feedback" style="width: 100%;">
+										The Trigger name is required.
+									</div>
+								</div>
+							</div>
 
-					      	<hr>
+							<!--hr>
 
-				            <div class="custom-control custom-checkbox" style="float: right;">
-				              <input type="checkbox" class="custom-control-input" id="oneTimeEvent" v-on:click="logSomething()">
-				              <label class="custom-control-label" for="oneTimeEvent">One time event</label>
-				            </div>
+							<div class="custom-control custom-checkbox" style="float: right;">
+								<input type="checkbox" class="custom-control-input" id="oneTimeEvent" v-on:click="logSomething()">
+								<label class="custom-control-label" for="oneTimeEvent">One time event</label>
+							</div>
 
-				            <br><hr>
+							<br><hr-->  
 
-        					<div class="mb-3" v-if="renderOneTimeTrigger">
-				      			<label for="triggerName"><strong>Taking place on</strong></label>
-				      			<div class="input-group">
-				      				<div class="input-group-prepend">
-				      					<span class="input-group-text"><i class="fa fa-clock-o"></i></span>
-				      				</div>	
-				      				<input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="a">
-			      					<div class="invalid-feedback" style="width: 100%;">
-				      					The Trigger name is required.
-				      				</div>
-				      			</div>
-					      	</div>
-
-	      					<div class="mb-3" v-if="!renderOneTimeTrigger">
-					      			<label for="triggerName"><strong>Days</strong></label>
-					      			<div class="input-group">
-					      				<div class="input-group-prepend">
-					      					<span class="input-group-text"><i class="fa fa-calendar"></i></span>
-					      				</div>
-						      			<select multiple="multiple" class="form-control custom-select" id="days" placeholder="" required="true">
-						      				<option value="monday">Monday</option>
-						      				<option value="tuesday">Tuesday</option>
-						      				<option value="wednesday">Wednesday</option>
-						      				<option value="thursday">Thursday</option>
-						      				<option value="friday">Friday</option>
-						      				<option value="saturday">Saturday</option>
-						      				<option value="sunday">Sunday</option>
-						      			</select>
-				      					<div class="invalid-feedback" style="width: 100%;">
-					      					The Trigger name is required.
-					      				</div>
-					      			</div>
-					      	</div>
-
-					      	<div class="mb-3" v-if="!renderOneTimeTrigger">
-				      			<label for="triggerName"><strong>Starting from</strong></label>
-				      			<div class="input-group">
-				      				<div class="input-group-prepend">
-				      					<span class="input-group-text"><i class="fa fa-calendar-check-o"></i></span>
-				      				</div>	
-				      				<input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="a">
-			      					<div class="invalid-feedback" style="width: 100%;">
-				      					The Trigger name is required.
-				      				</div>
-				      			</div>
-					      	</div>
-
-					      	<div class="mb-3" v-if="!renderOneTimeTrigger">
-				      			<label for="triggerName"><strong>Ending on</strong></label>
-				      			<div class="input-group">
-				      				<div class="input-group-prepend">
-				      					<span class="input-group-text"><i class="fa fa-calendar-times-o"></i></span>
-				      				</div>	
-				      				<input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="a">
-			      					<div class="invalid-feedback" style="width: 100%;">
-				      					The Trigger name is required.
-				      				</div>
-				      			</div>
-					      	</div>
-
-				      		<div class="mb-3" v-if="!renderOneTimeTrigger">
-				              	<label for="formGroupExampleInput">Trigger granularity</label>
-				              	<select class="form-control" id="granularity" placeholder="daily" required="true">
-				              		<option value="daily">Daily</option>
-				              		<option value="weekly">Weekly</option>
-				              		<option value="monthly">Monthly</option>
-				              		<option value="annually">Annually</option>
-				              	</select>
-				              	<div class="invalid-feedback">
-				              		Please enter your shipping address.
-				              	</div>
-				            </div>
-
-				            <div class="mb-3" v-if="!renderOneTimeTrigger">
-				              	<label for="address2">Address 2 <span class="text-muted">(Optional)</span></label>
-				              	<input type="text" class="form-control" id="address2" placeholder="Apartment or suite">
-				            </div>
-
-				            <div class="row" v-if="!renderOneTimeTrigger">
-				              	<div class="col-md-5 mb-3">
-				              		<label for="country">Country</label>
-				              		<select class="custom-select d-block w-100" id="country" required="">
-				              			<option value="">Choose...</option>
-				              			<option>United States</option>
-				              		</select>
-				              		<div class="invalid-feedback">
-				              			Please select a valid country.
-				              		</div>
-				              	</div>
-				              	<div class="col-md-4 mb-3">
-				              		<label for="state">State</label>
-				              		<select class="custom-select d-block w-100" id="state" required="">
-				              			<option value="">Choose...</option>
-				              			<option>California</option>
-				              		</select>
-				              		<div class="invalid-feedback">
-				              			Please provide a valid state.
-				              		</div>
-				              	</div>
-				              	<div class="col-md-3 mb-3">
-				              		<label for="zip">Zip</label>
-				              		<input type="text" class="form-control" id="zip" placeholder="" required="">
-				              		<div class="invalid-feedback">
-				              			Zip code required.
-				              		</div>
-				              	</div>
-				            </div>
+							<div class="mb-3" v-if="!renderOneTimeTrigger">
+								<label for="triggerName">Action associated</label>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"><i class="fa fa-star-o"></i></span>
+									</div>
+									<select class="form-control custom-select" id="days" placeholder="" required="true">
+										<option value="monday">Tweet</option>
+										<option value="tuesday">Make Facebook Post</option>
+										<option value="wednesday">Send Email</option>
+										<option value="thursday">Start Engine Alfa</option>
+										<option value="friday">Sense Temperature</option>
+									</select>
+									<div class="invalid-feedback" style="width: 100%;">
+										The Trigger name is required.
+									</div>
+								</div>
+							</div>
 
 
-				            <hr class="mb-4">
-				            <button class="btn btn-primary btn-lg btn-block" type="submit">Define trigger</button>
-          				</form>
-      				</div>
- 				</div>
+							<hr>
+							<div>
+								<label class="custom-control-label" for="triggerPolicy"><h4><strong>Condition</strong></h4></label>
+							</div>
+							<hr>
 
-				<footer class="my-5 pt-5 text-muted text-center text-small">
-				  	<p class="mb-1">© 2017-2018 Company Name</p>
-				  	<ul class="list-inline">
-				  		<li class="list-inline-item"><a href="#">Privacy</a></li>
-				  		<li class="list-inline-item"><a href="#">Terms</a></li>
-				  		<li class="list-inline-item"><a href="#">Support</a></li>
-				  	</ul>
-				</footer>
+							<div class="mb-3" v-if="!renderOneTimeTrigger">
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"><i class="fa fa-exclamation"></i></span>
+									</div>
+									<select class="form-control custom-select" id="days" placeholder="" required="true" v-model="conditionSelected">
+										<option v-for="condition in triggerConditions" v-bind:value="{ id: condition.id, text: condition.name }">{{ condition.name }}</option>
+									</select>
+									<div class="invalid-feedback" style="width: 100%;">
+										The Trigger name is required.
+									</div>
+								</div>
+							</div>
+
+							<div class="mb-3" v-if="conditionSelected.id==2 || conditionSelected.id==3">
+								<label for="dataStreamName">From Data Stream</label>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"><i class="fa fa-diamond"></i></span>
+									</div>
+									<select class="form-control custom-select" id="days" placeholder="" required="true">
+										<option v-for="dS in dataStreams" value="dS">{{dS}}</option>
+									</select>
+									<div class="invalid-feedback" style="width: 100%;">
+										The Trigger name is required.
+									</div>
+								</div>
+							</div>
+							
+
+							<div v-if="conditionSelected.id==2">
+								<div class="row">
+									<div class="col-md-4 mb-3">
+										<label for="cc-number">Value</label>
+										<input class="form-control" type="text" placeholder="Data-Stream current value" readonly>
+									</div>
+									<div class="col-md-4 mb-3">
+										<label for="cc-name">Condition</label>
+										<select class="form-control custom-select" id="currentValueCond" placeholder="" required="true">
+											<option value="monday">greater than</option>
+											<option value="monday">less than</option>
+											<option value="monday">equal to</option>
+											<option value="monday">different to</option>
+										</select>
+										<div class="invalid-feedback">
+											Name on card is required
+										</div>
+									</div>
+									<div class="col-md-4 mb-3">
+										<label for="cc-number">Defined value</label>
+										<input type="text" class="form-control" id="cc-number" placeholder="0" required="">
+										<div class="invalid-feedback">
+											Credit card number is required
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+							<div v-if="conditionSelected.id==3">
+								<label for="triggerName" style="font-style: italic;">For more than...</label>
+								<div class="row">
+									<div class="col-md-2 mb-3">
+										<label for="cc-number">Months</label>
+										<input type="text" class="form-control" id="cc-number" placeholder="0" required="" v-model="dataStreamNotUpdatedFrom.months">
+										<div class="invalid-feedback">
+											Credit card number is required
+										</div>
+									</div>
+									<div class="col-md-2 mb-3">
+										<label for="cc-name">Weeks</label>
+										<input type="text" class="form-control" id="cc-name" placeholder="0" required="" v-model="dataStreamNotUpdatedFrom.weeks">
+										<div class="invalid-feedback">
+											Name on card is required
+										</div>
+									</div>
+									<div class="col-md-2 mb-3">
+										<label for="cc-number">Days</label>
+										<input type="text" class="form-control" id="cc-number" placeholder="0" required="" v-model="dataStreamNotUpdatedFrom.days">
+										<div class="invalid-feedback">
+											Credit card number is required
+										</div>
+									</div>
+									<div class="col-md-2 mb-3">
+										<label for="cc-number">Hours</label>
+										<input type="text" class="form-control" id="cc-number" placeholder="0" required="" v-model="dataStreamNotUpdatedFrom.hours">
+										<div class="invalid-feedback">
+											Credit card number is required
+										</div>
+									</div>
+									<div class="col-md-2 mb-3">
+										<label for="cc-number">Minutes</label>
+										<input type="text" class="form-control" id="cc-number" placeholder="0" required="" v-model="dataStreamNotUpdatedFrom.minutes">
+										<div class="invalid-feedback">
+											Credit card number is required
+										</div>
+									</div>
+									<div class="col-md-2 mb-3">
+										<label for="cc-number">Seconds</label>
+										<input type="text" class="form-control" id="cc-number" placeholder="0" required="" v-model="dataStreamNotUpdatedFrom.seconds">
+										<div class="invalid-feedback">
+											Credit card number is required
+										</div>
+									</div>
+								</div>
+								<label for="triggerName" style="font-style: italic;">For more than {{dataStreamNotUpdatedFrom.months}} months, {{dataStreamNotUpdatedFrom.weeks}} weeks, {{dataStreamNotUpdatedFrom.days}} days, {{dataStreamNotUpdatedFrom.hours}} hours, {{dataStreamNotUpdatedFrom.minutes}} minutes and {{dataStreamNotUpdatedFrom.seconds}} seconds</label>     
+							</div>
+
+							<div v-if="conditionSelected.id==4">
+								<div class="mb-3">
+									<label for="triggerName">From</label>
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text"><i class="fa fa-calendar-plus-o"></i></span>
+										</div>  
+										<input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="a">
+										<div class="invalid-feedback" style="width: 100%;">
+											The Trigger name is required.
+										</div>
+									</div>
+								</div>
+
+								<div class="mb-3" v-if="!renderOneTimeTrigger">
+									<label for="triggerName">To</label>
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text"><i class="fa fa-calendar-times-o"></i></span>
+										</div>  
+										<input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="a">
+										<div class="invalid-feedback" style="width: 100%;">
+											The Trigger name is required.
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+
+							<hr>
+							<div>
+								<label class="custom-control-label" for="triggerPolicy"><h4><strong>Policy</strong></h4></label>
+							</div>
+							<hr>
+
+							<div class="row">
+								<div class="col-md-6 mb-3">
+									<div class="custom-control custom-radio">
+										<input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked="" required="" v-on:click="dataPointPolicy()">
+										<label class="custom-control-label" for="credit">Data Point Registration</label>
+									</div>
+								</div>
+								<div class="col-md-6 mb-3">
+									<div class="custom-control custom-radio">
+										<input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required="" v-on:click="timePeriodPolicy()">
+										<label class="custom-control-label" for="debit">Time Period</label>
+									</div>
+								</div>
+							</div>
+
+							<div v-if="isTimePeriodPolicy">
+
+								<div class="mb-3">
+									<label for="triggerName">Starting from</label>
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text"><i class="fa fa-calendar-plus-o"></i></span>
+										</div>  
+										<input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="a">
+										<div class="invalid-feedback" style="width: 100%;">
+											The Trigger name is required.
+										</div>
+									</div>
+								</div>
+
+
+								<div class="mb-3" v-if="!renderOneTimeTrigger">
+									<label for="triggerName">Ending on</label>
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text"><i class="fa fa-calendar-times-o"></i></span>
+										</div>  
+										<input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="a">
+										<div class="invalid-feedback" style="width: 100%;">
+											The Trigger name is required.
+										</div>
+									</div>
+								</div>
+
+							</div>
+
+
+							<div v-else>
+
+								<div class="mb-3">
+									<label for="triggerName">From Data Stream</label>
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text"><i class="fa fa-diamond"></i></span>
+										</div>
+										<select class="form-control custom-select" id="days" placeholder="" required="true">
+											<option v-for="dS in dataStreams" value="dS">{{dS}}</option>
+										</select>
+										<div class="invalid-feedback" style="width: 100%;">
+											The Trigger name is required.
+										</div>
+									</div>
+								</div>
+
+								<!--div class="mb-3">
+									<label for="triggerName">Value registered</label>
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text"><i class="fa fa-font"></i></span>
+										</div>
+										<input type="text" class="form-control" id="triggerName" placeholder="Trigger Name" required="true">
+										<div class="invalid-feedback" style="width: 100%;">
+											The Trigger name is required.
+										</div>
+									</div>
+								</div-->
+
+							</div>
+
+
+							<!--div class="mb-3">
+								<label for="triggerName">Time granularity</label>
+							</div>
+
+							<label for="triggerName" style="font-style: italic;">Repited every...</label>
+							<div class="row">
+								<div class="col-md-2 mb-3">
+									<label for="cc-number">Months</label>
+									<input type="text" class="form-control" id="cc-number" placeholder="0" required="">
+									<div class="invalid-feedback">
+										Credit card number is required
+									</div>
+								</div>
+								<div class="col-md-2 mb-3">
+									<label for="cc-name">Weeks</label>
+									<input type="text" class="form-control" id="cc-name" placeholder="0" required="">
+									<div class="invalid-feedback">
+										Name on card is required
+									</div>
+								</div>
+								<div class="col-md-2 mb-3">
+									<label for="cc-number">Days</label>
+									<input type="text" class="form-control" id="cc-number" placeholder="0" required="">
+									<div class="invalid-feedback">
+										Credit card number is required
+									</div>
+								</div>
+								<div class="col-md-2 mb-3">
+									<label for="cc-number">Hours</label>
+									<input type="text" class="form-control" id="cc-number" placeholder="0" required="">
+									<div class="invalid-feedback">
+										Credit card number is required
+									</div>
+								</div>
+								<div class="col-md-2 mb-3">
+									<label for="cc-number">Minutes</label>
+									<input type="text" class="form-control" id="cc-number" placeholder="0" required="">
+									<div class="invalid-feedback">
+										Credit card number is required
+									</div>
+								</div>
+								<div class="col-md-2 mb-3">
+									<label for="cc-number">Seconds</label>
+									<input type="text" class="form-control" id="cc-number" placeholder="0" required="">
+									<div class="invalid-feedback">
+										Credit card number is required
+									</div>
+								</div>
+							</div>
+
+							<label for="triggerName" style="font-style: italic;">Every {{months}} months, {{weeks}} weeks, {{hours}} hours, {{minutes}} minutes and {{seconds}} seconds</label-->       
+
+								<hr class="mb-3">
+								<button class="btn btn-primary btn-lg btn-block" type="submit"><h5><strong>Define trigger</strong></h5></button>
+							</form>
+						</div>
+					</div>
+
+
+				</div>
 			</div>
 		</div>
-	</div>
-<script type="text/javascript">
+		<script type="text/javascript">
 
-	Vue.component('div-canvas-for-chart', {
-		props:['id'],
-		template:'<div class="col-md-4"><canvas :id="id"></canvas></div>' 
-	});
+			Vue.component('div-canvas-for-chart', {
+				props:['id'],
+				template:'<div class="col-md-4"><canvas :id="id"></canvas></div>' 
+			});
 
-	Vue.component('content-separator', {
-		template:'<h1 id="contentSeparator"><strong><slot></slot></strong></h1>'
-	});
+			Vue.component('content-separator', {
+				template:'<h1 id="contentSeparator"><strong><slot></slot></strong></h1>'
+			});
 
-	Vue.component('data-streams-button', {
-		props:['name'],
-		template:'<button type="button">{{name}}</button>'
-	});
+			Vue.component('data-streams-button', {
+				props:['name'],
+				template:'<button type="button">{{name}}</button>'
+			});
 
-	Vue.component('data-stream-checkboxes', {
-		props:['value'],
-		template:'<p><input type="checkbox" :value="value" v-model="caca"><label :for="value">{{value}}</label></p>',
-		data() {
-			console.log(" data() en componen => " + this.value);
-			return { caca: this.value }
-		},
-		watch: {
-			caca(val) {
-				console.log(" caca => " + val);
-				this.$emit('input', val);
-			}
-		} 
-	});
+			Vue.component('data-stream-checkboxes', {
+				props:['value'],
+				template:'<p><input type="checkbox" :value="value" v-model="caca"><label :for="value">{{value}}</label></p>',
+				data() {
+					console.log(" data() en componen => " + this.value);
+					return { caca: this.value }
+				},
+				watch: {
+					caca(val) {
+						console.log(" caca => " + val);
+						this.$emit('input', val);
+					}
+				} 
+			});
 
-	new Vue({
-		el: '#app',
-		data: {
-			dataStreams: [],
-			dataStreamSelected: [],
-			hasNotFinishedDS: true,
-			hasNotFinishedDPS: true,
-			renderDashboardView: true,
-			renderSecurityView: false,
-			renderActionsView: false,
-			renderAboutView: false,
-			streamWasSelected:false,
-			hasToShowCharAndCards: false,
-			renderTriggersView: false,
-			renderOneTimeTrigger: false,
-			maxValue:{
-				value:'',
-				timestamp:''
-			},
-			minValue:{
-				value:'',
-				timestamp:''
-			},
-			averageValue:{
-				value:'',
-				timestamp:''
-			},
-			currentValue: {
-				value:'',
-				timestamp:''
-			},
-			data:'',
-			dataStreamInformation: [],
-			selectedDs: '',
-			sideNavStyle:{
-				backgroundColor: '',
-				width: ''						
-			}
-		},
+			new Vue({
+				el: '#app',
+				data: {
+					dataStreams: [],
+					dataStreamSelected: [],
+					hasNotFinishedDS: true,
+					hasNotFinishedDPS: true,
+					renderDashboardView: true,
+					renderSecurityView: false,
+					renderActionsView: false,
+					renderAboutView: false,
+					streamWasSelected:false,
+					hasToShowCharAndCards: false,
+					renderTriggersView: false,
+					renderOneTimeTrigger: false,
 
-		mounted(){
+					isTimePeriodPolicy: false,
+
+					conditionSelected:{
+						id:1,
+						text:''
+					},
+
+					triggerConditions:[
+					{id: 1, name: 'Always'},
+					{id: 2, name: 'On Data-Stream value'},
+					{id: 3, name: 'When Data-Stream has not been updated'},
+					{id: 4, name: 'Time interval'},
+					{id: 5, name: 'Composite condition'}
+					],
+
+					dataStreamNotUpdatedFrom:{
+						months:0,
+						weeks:0,
+						days:0,
+						hours:0,
+						minutes:0,
+						seconds:0,
+					},
+
+					dataStreamBoundedToTrigger:'Data-Stream',
+
+					maxValue:{
+						value:'',
+						timestamp:''
+					},
+					minValue:{
+						value:'',
+						timestamp:''
+					},
+					averageValue:{
+						value:'',
+						timestamp:''
+					},
+					currentValue: {
+						value:'',
+						timestamp:''
+					},
+					data:'',
+					dataStreamInformation: [],
+					selectedDs: '',
+					sideNavStyle:{
+						backgroundColor: '',
+						width: ''						
+					}
+				},
+
+				mounted(){
 
 				//Chart.defaults.global.legend.display = false; // avoid showing dataset labels on any chart
 
@@ -778,6 +1000,7 @@
 				this.renderTriggersView = false;
 
 				this.streamWasSelected = false;
+				this.isTimePeriodPolicy = false;
 
 				this.data = new Date();
 
@@ -827,6 +1050,17 @@
 			},
 
 			methods: {
+
+				dataPointPolicy: function(){
+					console.log(this.isTimePeriodPolicy);
+					this.isTimePeriodPolicy = false;
+					console.log(this.isTimePeriodPolicy);
+				},
+				timePeriodPolicy: function(){
+					console.log(this.isTimePeriodPolicy);
+					this.isTimePeriodPolicy = true;
+					console.log(this.isTimePeriodPolicy);
+				},
 
 				logSomething: function(){
 

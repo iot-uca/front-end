@@ -251,18 +251,18 @@
 		font-size: 15px;
 	}
 
-	#commands{
+	/*#commands{
 		margin-left: 2%;
 		max-width: 50%;
 		font-size: 15px;
-	}
+	}*/
 
 	/*  									====>  esto es para ponerle un fondo con el borde recortado */
-	#commands {
+	/*#commands {
 		border-radius: 5px;
 		background-color: #f2f2f2;
 		padding: 15px;
-	}
+	}*/
 
 	#app{
 		background-color: #444651;
@@ -291,10 +291,13 @@
   			<a href="#" v-on:click="showDashboardView()"><i class="fa fa-dashboard" style="font-size:20px"></i> DASHBOARD</a>
   			<a href="#" v-on:click="showCommandsView()"><i class="fa fa-hand-paper-o" style="font-size:20px"></i> ACTIONS</a>
   			<a href="#" v-on:click="showTriggersView()"><i class="fa fa-bell-o" style="font-size:20px"></i> TRIGGERS</a> <!-- fa fa-calendar -->
+  			<a href="#" v-on:click="showTriggersView()"><i class="fa fa-microphone" style="font-size:20px"></i> COMMANDS</a>
   			<a href="#" v-on:click="showSecurityView()"><i class="fa fa-lock" style="font-size:20px"></i>   SECURITY</a>
   			<a href="#" v-on:click="showAboutView()"><i class="fa fa-info" style="font-size:20px"></i>   ABOUT</a>
   		</div>
 
+
+  		<!-- GUI Header -->
   		<div id="ui-header">
   			<!--span style="font-size:30px;cursor:pointer" v-on:click="openNav()">&#9776;</span--> <!-- &#9776; represents the burguer icon -->
 
@@ -309,6 +312,7 @@
   		</div>
 
 
+  		<!-- div for Dashboard view -->
   		<div v-if="renderDashboardView" id="dashboard">
 
   			<content-separator v-if="hasToShowStreams()"><i class="fa fa-line-chart" style="font-size:24px"></i> Data Streams</content-separator>
@@ -429,8 +433,8 @@
   					<canvas id="actionsChart"></canvas>
   				</div>
   			</div>
-
   		</div>
+
 
   		<!-- div for showing the Keys menu view -->
   		<div id="keys" v-if="renderSecurityView"> 
@@ -449,97 +453,281 @@
   			</form>
   		</div>
 
+
   		<!-- div for showing the Commands menu view -->
   		<div id="commands" v-if="renderActionsView"> 
-  			<form>
-  				<div class="form-group row">
-  					<label for="example-text-input" class="col-2 col-form-label">Action name</label>
-  					<div class="col-10">
-  						<input class="form-control" type="text" placeholder="Sense Temperature" id="example-text-input">
-  					</div>
-  				</div>
-  				<div class="form-group row">
-  					<label for="example-search-input" class="col-2 col-form-label">Search</label>
-  					<div class="col-10">
-  						<input class="form-control" type="search" value="How do I shoot web" id="example-search-input">
-  					</div>
-  				</div>
-  				<div class="form-group row">
-  					<label for="example-email-input" class="col-2 col-form-label">Email</label>
-  					<div class="col-10">
-  						<input class="form-control" type="email" value="bootstrap@example.com" id="example-email-input">
-  					</div>
-  				</div>
-  				<div class="form-group row">
-  					<label for="example-url-input" class="col-2 col-form-label">URL</label>
-  					<div class="col-10">
-  						<input class="form-control" type="url" value="https://getbootstrap.com" id="example-url-input">
-  					</div>
-  				</div>
-  				<div class="form-group row">
-  					<label for="example-tel-input" class="col-2 col-form-label">Telephone</label>
-  					<div class="col-10">
-  						<input class="form-control" type="tel" value="1-(555)-555-5555" id="example-tel-input">
-  					</div>
-  				</div>
-  				<div class="form-group row">
-  					<label for="formGroupExampleInput">Action priority</label>
-  					<select class="form-control">
-  						<option>High</option>
-  						<option>Medium</option>
-  						<option>Low</option>
-  					</select>
-  				</div>
-  				<div class="form-group row">
-  					<label for="example-password-input" class="col-2 col-form-label">Password</label>
-  					<div class="col-10">
-  						<input class="form-control" type="password" value="hunter2" id="example-password-input">
-  					</div>
-  				</div>
-  				<div class="form-group row">
-  					<label for="example-number-input" class="col-2 col-form-label">Number</label>
-  					<div class="col-10">
-  						<input class="form-control" type="number" value="42" id="example-number-input">
-  					</div>
-  				</div>
-  				<div class="form-group row">
-  					<label for="example-datetime-local-input" class="col-2 col-form-label">Date and time</label>
-  					<div class="col-10">
-  						<input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="example-datetime-local-input">
-  					</div>
-  				</div>
-  				<div class="form-group row">
-  					<label for="example-date-input" class="col-2 col-form-label">Date</label>
-  					<div class="col-10">
-  						<input class="form-control" type="date" value="2011-08-19" id="example-date-input">
-  					</div>
-  				</div>
-  				<div class="form-group row">
-  					<label for="example-month-input" class="col-2 col-form-label">Month</label>
-  					<div class="col-10">
-  						<input class="form-control" type="month" value="2011-08" id="example-month-input">
-  					</div>
-  				</div>
-  				<div class="form-group row">
-  					<label for="example-week-input" class="col-2 col-form-label">Week</label>
-  					<div class="col-10">
-  						<input class="form-control" type="week" value="2011-W33" id="example-week-input">
-  					</div>
-  				</div>
-  				<div class="form-group row">
-  					<label for="example-time-input" class="col-2 col-form-label">Time</label>
-  					<div class="col-10">
-  						<input class="form-control" type="time" value="13:45:00" id="example-time-input">
-  					</div>
-  				</div>
-				<!--div class="form-group row">
-					<label for="example-color-input" class="col-2 col-form-label">Color</label>
-					<div class="col-10">
-						<input class="form-control" type="color" value="#563d7c" id="example-color-input">
+			<div class="container">
+				<div class="row">
+					<br>
+					
+					<div class="col-md-2">
 					</div>
-				</div-->
-				<button type="submit" class="btn btn-primary">Define Command</button>
-			</form>
+					
+					<div class="col-md-8">
+						<h4 class="mb-3 text-center"><strong>Action Configuration</strong></h4>
+						<!--h6 class="text-muted text-center"><em><small>You trigger an ACTION based on a CONDITION that needs to be checked according to some POLICY</em></small></h6-->
+						<hr>
+						<form class="needs-validation" novalidate="">
+
+							<div class="mb-3">
+								<label for="triggerName">Name</label>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"><i class="fa fa-font"></i></span>
+									</div>
+									<input type="text" class="form-control" id="triggerName" placeholder="Action Name" required="true">
+									<div class="invalid-feedback" style="width: 100%;">
+										The Action name is required.
+									</div>
+								</div>
+							</div>
+
+
+							<div class="mb-3" v-if="!renderOneTimeTrigger">
+								<label for="triggerName">Type</label>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"><i class="fa fa-star-o"></i></span>
+									</div>
+									<select class="form-control custom-select" id="days" placeholder="Http Request" required="true">
+										<option value="monday">Http Request</option>
+										<option value="tuesday">Facebook Post</option>
+										<option value="wednesday">Tweet</option>
+									</select>
+									<div class="invalid-feedback" style="width: 100%;">
+										The Action type is required.
+									</div>
+								</div>
+							</div>
+
+
+							<hr>
+							<div>
+								<label class="custom-control-label" for="triggerPolicy"><h4><strong>Condition</strong></h4></label>
+							</div>
+							<hr>
+
+							<div class="mb-3" v-if="!renderOneTimeTrigger">
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"><i class="fa fa-exclamation"></i></span>
+									</div>
+									<select class="form-control custom-select" id="days" placeholder="" required="true" v-model="conditionSelected">
+										<option v-for="condition in triggerConditions" v-bind:value="{ id: condition.id, text: condition.name }">{{ condition.name }}</option>
+									</select>
+									<div class="invalid-feedback" style="width: 100%;">
+										The Trigger name is required.
+									</div>
+								</div>
+							</div>
+
+							<div class="mb-3" v-if="conditionSelected.id==2 || conditionSelected.id==3">
+								<label for="dataStreamName">From Data Stream</label>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"><i class="fa fa-diamond"></i></span>
+									</div>
+									<select class="form-control custom-select" id="days" placeholder="" required="true">
+										<option v-for="dS in dataStreams" value="dS">{{dS}}</option>
+									</select>
+									<div class="invalid-feedback" style="width: 100%;">
+										The Trigger name is required.
+									</div>
+								</div>
+							</div>
+							
+
+							<div v-if="conditionSelected.id==2">
+								<div class="row">
+									<div class="col-md-4 mb-3">
+										<label for="cc-number">Value</label>
+										<input class="form-control" type="text" placeholder="Data-Stream current value" readonly>
+									</div>
+									<div class="col-md-4 mb-3">
+										<label for="cc-name">Condition</label>
+										<select class="form-control custom-select" id="currentValueCond" placeholder="" required="true">
+											<option value="monday">greater than</option>
+											<option value="monday">less than</option>
+											<option value="monday">equal to</option>
+											<option value="monday">different to</option>
+										</select>
+										<div class="invalid-feedback">
+											Name on card is required
+										</div>
+									</div>
+									<div class="col-md-4 mb-3">
+										<label for="cc-number">Defined value</label>
+										<input type="text" class="form-control" id="cc-number" placeholder="0" required="">
+										<div class="invalid-feedback">
+											Credit card number is required
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+							<div v-if="conditionSelected.id==3">
+								<label for="triggerName">For more than...</label>
+								<div class="row">
+									<div class="col-md-2 mb-3">
+										<label for="cc-number">Months</label>
+										<input type="text" class="form-control" id="cc-number" placeholder="0" required="" v-model="dataStreamNotUpdatedFrom.months">
+										<div class="invalid-feedback">
+											Credit card number is required
+										</div>
+									</div>
+									<div class="col-md-2 mb-3">
+										<label for="cc-name">Weeks</label>
+										<input type="text" class="form-control" id="cc-name" placeholder="0" required="" v-model="dataStreamNotUpdatedFrom.weeks">
+										<div class="invalid-feedback">
+											Name on card is required
+										</div>
+									</div>
+									<div class="col-md-2 mb-3">
+										<label for="cc-number">Days</label>
+										<input type="text" class="form-control" id="cc-number" placeholder="0" required="" v-model="dataStreamNotUpdatedFrom.days">
+										<div class="invalid-feedback">
+											Credit card number is required
+										</div>
+									</div>
+									<div class="col-md-2 mb-3">
+										<label for="cc-number">Hours</label>
+										<input type="text" class="form-control" id="cc-number" placeholder="0" required="" v-model="dataStreamNotUpdatedFrom.hours">
+										<div class="invalid-feedback">
+											Credit card number is required
+										</div>
+									</div>
+									<div class="col-md-2 mb-3">
+										<label for="cc-number">Minutes</label>
+										<input type="text" class="form-control" id="cc-number" placeholder="0" required="" v-model="dataStreamNotUpdatedFrom.minutes">
+										<div class="invalid-feedback">
+											Credit card number is required
+										</div>
+									</div>
+									<div class="col-md-2 mb-3">
+										<label for="cc-number">Seconds</label>
+										<input type="text" class="form-control" id="cc-number" placeholder="0" required="" v-model="dataStreamNotUpdatedFrom.seconds">
+										<div class="invalid-feedback">
+											Credit card number is required
+										</div>
+									</div>
+								</div>
+								<label for="triggerName" style="font-style: italic;">For more than {{dataStreamNotUpdatedFrom.months}} months, {{dataStreamNotUpdatedFrom.weeks}} weeks, {{dataStreamNotUpdatedFrom.days}} days, {{dataStreamNotUpdatedFrom.hours}} hours, {{dataStreamNotUpdatedFrom.minutes}} minutes and {{dataStreamNotUpdatedFrom.seconds}} seconds</label>     
+							</div>
+
+							<div v-if="conditionSelected.id==4">
+								<div class="mb-3">
+									<label for="triggerName">From</label>
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text"><i class="fa fa-calendar-plus-o"></i></span>
+										</div>  
+										<input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="a">
+										<div class="invalid-feedback" style="width: 100%;">
+											The Trigger name is required.
+										</div>
+									</div>
+								</div>
+
+								<div class="mb-3" v-if="!renderOneTimeTrigger">
+									<label for="triggerName">To</label>
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text"><i class="fa fa-calendar-times-o"></i></span>
+										</div>  
+										<input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="a">
+										<div class="invalid-feedback" style="width: 100%;">
+											The Trigger name is required.
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+
+							<hr>
+							<div>
+								<label class="custom-control-label" for="triggerPolicy"><h4><strong>Policy</strong></h4></label>
+							</div>
+							<hr>
+
+							<div class="row">
+								<div class="col-md-6 mb-3">
+									<div class="custom-control custom-radio">
+										<input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked="" required="" v-on:click="dataPointPolicy()">
+										<label class="custom-control-label" for="credit">Data Point Registration</label>
+									</div>
+								</div>
+								<div class="col-md-6 mb-3">
+									<div class="custom-control custom-radio">
+										<input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required="" v-on:click="timePeriodPolicy()">
+										<label class="custom-control-label" for="debit">Time Period</label>
+									</div>
+								</div>
+							</div>
+
+							<div v-if="isTimePeriodPolicy">
+
+								<div class="mb-3">
+									<label for="triggerName">Starting from</label>
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text"><i class="fa fa-calendar-plus-o"></i></span>
+										</div>  
+										<input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="a">
+										<div class="invalid-feedback" style="width: 100%;">
+											The Trigger name is required.
+										</div>
+									</div>
+								</div>
+
+
+								<div class="mb-3" v-if="!renderOneTimeTrigger">
+									<label for="triggerName">Ending on</label>
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text"><i class="fa fa-calendar-times-o"></i></span>
+										</div>  
+										<input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="a">
+										<div class="invalid-feedback" style="width: 100%;">
+											The Trigger name is required.
+										</div>
+									</div>
+								</div>
+
+							</div>
+
+
+							<div v-else>
+
+								<div class="mb-3">
+									<label for="triggerName">From Data Stream</label>
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text"><i class="fa fa-diamond"></i></span>
+										</div>
+										<select class="form-control custom-select" id="days" placeholder="" required="true">
+											<option v-for="dS in dataStreams" value="dS">{{dS}}</option>
+										</select>
+										<div class="invalid-feedback" style="width: 100%;">
+											The Trigger name is required.
+										</div>
+									</div>
+								</div>
+
+							</div>   
+
+							<hr class="mb-3">
+							<button class="btn btn-primary btn-lg btn-block" type="submit"><h5><strong>Define action</strong></h5></button>
+						</form>
+					</div>
+					
+					<div class="col-md-2">
+					</div>					
+				</div>
+
+
+			</div>
 		</div>
 
 
@@ -549,7 +737,9 @@
 			<div class="container">
 				<div class="row">
 					<br>
-					<div class="col-md-11 order-md-1">
+					<div class="col-md-2">
+					</div>
+					<div class="col-md-8">
 						<h4 class="mb-3 text-center"><strong>Trigger Configuration</strong></h4>
 						<h6 class="text-muted text-center"><em><small>You trigger an ACTION based on a CONDITION that needs to be checked according to some POLICY</em></small></h6>
 						<hr>
@@ -663,7 +853,7 @@
 
 
 							<div v-if="conditionSelected.id==3">
-								<label for="triggerName" style="font-style: italic;">For more than...</label>
+								<label for="triggerName">For more than...</label>
 								<div class="row">
 									<div class="col-md-2 mb-3">
 										<label for="cc-number">Months</label>
@@ -881,14 +1071,21 @@
 
 								<hr class="mb-3">
 								<button class="btn btn-primary btn-lg btn-block" type="submit"><h5><strong>Define trigger</strong></h5></button>
-							</form>
-						</div>
+						</form>
 					</div>
 
+					<div class="col-md-2">
+					</div>
 
 				</div>
+
+
 			</div>
 		</div>
+
+
+	</div>
+
 		<script type="text/javascript">
 
 			Vue.component('div-canvas-for-chart', {

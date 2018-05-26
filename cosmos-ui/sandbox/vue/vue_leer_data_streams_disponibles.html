@@ -286,14 +286,26 @@
   	<div id="app" class="bg-light">
 
   		<!-- Side Nav for burguer menu -->
-  		<div id="mySidenav" class="sidenav" v-on:click="closeNav()" v-bind:style="sideNavStyle">
-  			<a href="javascript:void(0)" class="closebtn">&times;</a>
-  			<a href="#" v-on:click="showDashboardView()"><i class="fa fa-dashboard" style="font-size:20px"></i> DASHBOARD</a>
-  			<a href="#" v-on:click="showActionsView()"><i class="fa fa-hand-paper-o" style="font-size:20px"></i> ACTIONS</a>
-  			<a href="#" v-on:click="showTriggersView()"><i class="fa fa-bell-o" style="font-size:20px"></i> TRIGGERS</a> <!-- fa fa-calendar -->
-  			<a href="#" v-on:click="showCommandsView()"><i class="fa fa-microphone" style="font-size:20px"></i> COMMANDS</a>
-  			<a href="#" v-on:click="showSecurityView()"><i class="fa fa-lock" style="font-size:20px"></i>   SECURITY</a>
-  			<a href="#" v-on:click="showAboutView()"><i class="fa fa-info" style="font-size:20px"></i>   ABOUT</a>
+  		<div id="mySidenav" class="sidenav" v-bind:style="sideNavStyle">
+  			<a href="javascript:void(0)" class="closebtn" v-on:click="closeNav()">&times;</a>
+  			<a href="#" v-on:click="showDashboardView(); closeNav();"><i class="fa fa-dashboard" style="font-size:20px"></i> DASHBOARD</a>
+
+  			<a href="#" v-on:click="showActionsAddRemoveOptions()"><i class="fa fa-hand-paper-o" style="font-size:20px"></i> ACTIONS</a>
+  			<div v-if="showActionsOptions">
+  				<a href="#" v-on:click="showActionAddView(); closeNav();" style="font-size: 15px; padding-left: 70px;"><i class="fa fa-check" style="font-size:15px"></i>  ADD ACTION</a>
+  				<a href="#" v-on:click="showActionRemoveView(); closeNav();" style="font-size: 15px; padding-left: 70px;"><i class="fa fa-remove" style="font-size:15px"></i>  REMOVE ACTION</a>
+  			</div>
+
+  			<a href="#" v-on:click="showTriggersAddRemoveOptions()"><i class="fa fa-bell-o" style="font-size:20px"></i> TRIGGERS</a>
+  			<a href="#" v-if="showTriggersOptions" v-on:click="showTriggerAddView(); closeNav();" style="font-size: 15px; padding-left: 70px;"><i class="fa fa-plus" style="font-size:15px"></i>  ADD TRIGGER</a>
+  			<a href="#" v-if="showTriggersOptions" v-on:click="showTriggerRemoveView(); closeNav();" style="font-size: 15px; padding-left: 70px;"><i class="fa fa-remove" style="font-size:15px"></i>  REMOVE TRIGGER</a>
+
+  			<a href="#" v-on:click="showCommandsAddRemoveOptions()"><i class="fa fa-microphone" style="font-size:20px"></i> COMMANDS</a>
+  			<a href="#" v-if="showCommandsOptions" v-on:click="showCommandAddView(); closeNav();" style="font-size: 15px; padding-left: 70px;"><i class="fa fa-plus" style="font-size:15px"></i>  ADD COMMAND</a>
+  			<a href="#" v-if="showCommandsOptions" v-on:click="showCommandRemoveView(); closeNav();" style="font-size: 15px; padding-left: 70px;"><i class="fa fa-remove" style="font-size:15px"></i>  REMOVE COMMAND</a>
+
+  			<a href="#" v-on:click="showSecurityView(); closeNav();"><i class="fa fa-lock" style="font-size:20px"></i>   SECURITY</a>
+  			<a href="#" v-on:click="showAboutView(); closeNav();"><i class="fa fa-info" style="font-size:20px"></i>   ABOUT</a>
   		</div>
 
 
@@ -399,7 +411,7 @@
   				<div class="col-md-6">
   					<div class="card">
   						<div class="card-header bg-info">
-  							<h3 class="card-title"><i class="fa fa-clock-o fa-fw"></i> Last Tasks Executed</h3>
+  							<h3 class="card-title"><i class="fa fa-clock-o fa-fw"></i> Last Actions Executed</h3>
   						</div>
   						<div class="card-body">
   							<div class="list-group">
@@ -454,8 +466,8 @@
   		</div>
 
 
-  		<!-- div for showing the Actions menu view -->
-  		<div id="actions" v-if="renderActionsView"> 
+  		<!-- div for showing the Actions add view -->
+  		<div id="actions" v-if="renderActionAddView"> 
   			<div class="container">
   				<div class="row">
   					<br>
@@ -464,7 +476,7 @@
   					</div>
 
   					<div class="col-md-8">
-  						<h4 class="mb-3 text-center"><strong>Action Configuration</strong></h4>
+  						<h4 class="mb-3 text-center"><strong>Add Action</strong></h4>
   						<!--h6 class="text-muted text-center"><em><small>You trigger an ACTION based on a CONDITION that needs to be checked according to some POLICY</em></small></h6-->
   						<hr>
   						<form class="needs-validation" novalidate="">
@@ -545,7 +557,7 @@
   							</div>
   							<hr>
 
-  							<div class="row">
+  							<!--div class="row">
   								<div class="col-md-4">
   								</div>
   								<div class="col-md-4">
@@ -553,12 +565,18 @@
   								</div>
   								<div class="col-md-4">
   								</div>
+  							</div-->
+
+  							<div class="row">
+  								<div class="col-md-3">
+  									<button class="btn btn-primary btn-lg btn-block">Add parameter</button>
+  								</div>
   							</div>
 
   							
   							<div class="row">
 
-  								<div class="col-md-6">
+  								<div class="col-md-5">
   									<div class="mb-3">
   										<label for="triggerName">Key</label>
   										<div class="input-group">
@@ -588,10 +606,17 @@
   									</div>
   								</div>
 
+  								<div class="col-md-1">
+  									<div class="mb-3">
+  										<label></label>
+  										<a href="#"><i class="fa fa-remove" style="color: red;"></i></a>
+  									</div>
+  								</div>
+
   							</div>
 
 
-  							<div class="row">
+  							<!--div class="row">
   								<div class="col-md-4">
   								</div>
   								<div class="col-md-4">
@@ -599,7 +624,7 @@
   								</div>
   								<div class="col-md-4">
   								</div>
-  							</div>
+  							</div-->
 
 
   							<hr>
@@ -693,9 +718,67 @@
   			</div>
   		</div>
 
+		<!-- div for showing the Actions remove view -->
+		<div v-if="renderActionRemoveView">
 
-  		<!-- div for showing the Commands menu view -->
-  		<div id="commands" v-if="renderCommandsView"> 
+			<div class="container">
+				<div class="row">
+					<br>
+
+					<div class="col-md-2">
+					</div>
+
+					<div class="col-md-8">
+						<h4 class="mb-3 text-center"><strong>Remove Action</strong></h4>
+						<hr>
+						<form class="needs-validation" novalidate="">
+
+							<div class="mb-3">
+								<label for="securityKey">Security key</label>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"><i class="fa fa-key"></i></span>
+									</div>
+									<input type="text" class="form-control" id="securityKey" placeholder="Enter you security key" required="true">
+									<div class="invalid-feedback" style="width: 100%;">
+										The Trigger name is required.
+									</div>
+								</div>
+							</div>
+
+							<div class="mb-3">
+								<label for="triggerSearchName">Search action</label>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"><i class="fa fa-search"></i></span>
+									</div>
+									<input type="text" class="form-control" id="triggerSearchName" placeholder="Start typing action name..." required="true">
+									<div class="invalid-feedback" style="width: 100%;">
+										The Trigger name is required.
+									</div>
+								</div>
+							</div>
+
+							<hr>
+
+							<div class="mb-3">
+								<label for="triggerSummary">Action summary</label>
+							</div>
+
+							<hr class="mb-3">
+							<button class="btn btn-danger btn-lg btn-block" type="submit"><h5><strong>Remove action</strong></h5></button>
+						</form>
+					</div>
+
+					<div class="col-md-2">
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+  		<!-- div for showing the Commands add view -->
+  		<div id="commands" v-if="renderCommandAddView"> 
   			<div class="container">
   				<div class="row">
   					<br>
@@ -704,7 +787,7 @@
   					</div>
 
   					<div class="col-md-8">
-  						<h4 class="mb-3 text-center"><strong>Command Configuration</strong></h4>
+  						<h4 class="mb-3 text-center"><strong>Add Command</strong></h4>
   						<!--h6 class="text-muted text-center"><em><small>You trigger an ACTION based on a CONDITION that needs to be checked according to some POLICY</em></small></h6-->
   						<hr>
   						<form class="needs-validation" novalidate="">
@@ -755,8 +838,67 @@
   		</div>
 
 
-  		<!-- div for showing the Triggers menu view -->
-  		<div id="triggers" v-if="renderTriggersView">
+		<!-- div for showing the Commands remove view -->
+		<div v-if="renderCommandRemoveView">
+
+			<div class="container">
+				<div class="row">
+					<br>
+
+					<div class="col-md-2">
+					</div>
+
+					<div class="col-md-8">
+						<h4 class="mb-3 text-center"><strong>Remove Command</strong></h4>
+						<hr>
+						<form class="needs-validation" novalidate="">
+
+							<div class="mb-3">
+								<label for="securityKey">Security key</label>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"><i class="fa fa-key"></i></span>
+									</div>
+									<input type="text" class="form-control" id="securityKey" placeholder="Enter you security key" required="true">
+									<div class="invalid-feedback" style="width: 100%;">
+										The Trigger name is required.
+									</div>
+								</div>
+							</div>
+
+							<div class="mb-3">
+								<label for="triggerSearchName">Search command</label>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"><i class="fa fa-search"></i></span>
+									</div>
+									<input type="text" class="form-control" id="triggerSearchName" placeholder="Start typing comannd name..." required="true">
+									<div class="invalid-feedback" style="width: 100%;">
+										The Trigger name is required.
+									</div>
+								</div>
+							</div>
+
+							<hr>
+
+							<div class="mb-3">
+								<label for="triggerSummary">Command summary</label>
+							</div>
+
+							<hr class="mb-3">
+							<button class="btn btn-danger btn-lg btn-block" type="submit"><h5><strong>Remove command</strong></h5></button>
+						</form>
+					</div>
+
+					<div class="col-md-2">
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+  		<!-- div for showing the Triggers add view -->
+  		<div id="triggers" v-if="renderTriggerAddView">
 
   			<div class="container">
   				<div class="row">
@@ -764,7 +906,7 @@
   					<div class="col-md-2">
   					</div>
   					<div class="col-md-8">
-  						<h4 class="mb-3 text-center"><strong>Trigger Configuration</strong></h4>
+  						<h4 class="mb-3 text-center"><strong>Add Trigger</strong></h4>
   						<h6 class="text-muted text-center"><em><small>You trigger an ACTION based on a CONDITION that needs to be checked according to some POLICY</em></small></h6>
   						<hr>
   						<form class="needs-validation" novalidate="">
@@ -1039,176 +1181,190 @@
 								</div-->
 
 							</div>
+  
 
-
-							<!--div class="mb-3">
-								<label for="triggerName">Time granularity</label>
-							</div>
-
-							<label for="triggerName" style="font-style: italic;">Repited every...</label>
-							<div class="row">
-								<div class="col-md-2 mb-3">
-									<label for="cc-number">Months</label>
-									<input type="text" class="form-control" id="cc-number" placeholder="0" required="">
-									<div class="invalid-feedback">
-										Credit card number is required
-									</div>
-								</div>
-								<div class="col-md-2 mb-3">
-									<label for="cc-name">Weeks</label>
-									<input type="text" class="form-control" id="cc-name" placeholder="0" required="">
-									<div class="invalid-feedback">
-										Name on card is required
-									</div>
-								</div>
-								<div class="col-md-2 mb-3">
-									<label for="cc-number">Days</label>
-									<input type="text" class="form-control" id="cc-number" placeholder="0" required="">
-									<div class="invalid-feedback">
-										Credit card number is required
-									</div>
-								</div>
-								<div class="col-md-2 mb-3">
-									<label for="cc-number">Hours</label>
-									<input type="text" class="form-control" id="cc-number" placeholder="0" required="">
-									<div class="invalid-feedback">
-										Credit card number is required
-									</div>
-								</div>
-								<div class="col-md-2 mb-3">
-									<label for="cc-number">Minutes</label>
-									<input type="text" class="form-control" id="cc-number" placeholder="0" required="">
-									<div class="invalid-feedback">
-										Credit card number is required
-									</div>
-								</div>
-								<div class="col-md-2 mb-3">
-									<label for="cc-number">Seconds</label>
-									<input type="text" class="form-control" id="cc-number" placeholder="0" required="">
-									<div class="invalid-feedback">
-										Credit card number is required
-									</div>
-								</div>
-							</div>
-
-							<label for="triggerName" style="font-style: italic;">Every {{months}} months, {{weeks}} weeks, {{hours}} hours, {{minutes}} minutes and {{seconds}} seconds</label-->       
-
-								<hr class="mb-3">
-								<button class="btn btn-primary btn-lg btn-block" type="submit"><h5><strong>Define trigger</strong></h5></button>
-							</form>
-						</div>
-
-						<div class="col-md-2">
-						</div>
-
+							<hr class="mb-3">
+							<button class="btn btn-primary btn-lg btn-block" type="submit"><h5><strong>Define trigger</strong></h5></button>
+						</form>
 					</div>
 
+					<div class="col-md-2">
+					</div>
 
 				</div>
 			</div>
+		</div>
+		
 
+		<!-- div for showing the Triggers remove view -->
+		<div v-if="renderTriggerRemoveView">
 
+			<div class="container">
+				<div class="row">
+					<br>
+
+					<div class="col-md-2">
+					</div>
+
+					<div class="col-md-8">
+						<h4 class="mb-3 text-center"><strong>Remove Trigger</strong></h4>
+						<hr>
+						<form class="needs-validation" novalidate="">
+
+							<div class="mb-3">
+								<label for="securityKey">Security key</label>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"><i class="fa fa-key"></i></span>
+									</div>
+									<input type="text" class="form-control" id="securityKey" placeholder="Enter you security key" required="true">
+									<div class="invalid-feedback" style="width: 100%;">
+										The Trigger name is required.
+									</div>
+								</div>
+							</div>
+
+							<div class="mb-3">
+								<label for="triggerSearchName">Search trigger</label>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"><i class="fa fa-search"></i></span>
+									</div>
+									<input type="text" class="form-control" id="triggerSearchName" placeholder="Start typing trigger name..." required="true">
+									<div class="invalid-feedback" style="width: 100%;">
+										The Trigger name is required.
+									</div>
+								</div>
+							</div>
+
+							<hr>
+
+							<div class="mb-3">
+								<label for="triggerSummary">Trigger summary</label>
+							</div>
+
+							<hr class="mb-3">
+							<button class="btn btn-danger btn-lg btn-block" type="submit"><h5><strong>Remove trigger</strong></h5></button>
+						</form>
+					</div>
+
+					<div class="col-md-2">
+					</div>
+				</div>
+			</div>
 		</div>
 
-		<script type="text/javascript">
+	</div>
 
-			Vue.component('div-canvas-for-chart', {
-				props:['id'],
-				template:'<div class="col-md-4"><canvas :id="id"></canvas></div>' 
-			});
 
-			Vue.component('content-separator', {
-				template:'<h1 id="contentSeparator"><strong><slot></slot></strong></h1>'
-			});
+	<script type="text/javascript">
 
-			Vue.component('data-streams-button', {
-				props:['name'],
-				template:'<button type="button">{{name}}</button>'
-			});
+		Vue.component('div-canvas-for-chart', {
+			props:['id'],
+			template:'<div class="col-md-4"><canvas :id="id"></canvas></div>' 
+		});
 
-			Vue.component('data-stream-checkboxes', {
-				props:['value'],
-				template:'<p><input type="checkbox" :value="value" v-model="caca"><label :for="value">{{value}}</label></p>',
-				data() {
-					console.log(" data() en componen => " + this.value);
-					return { caca: this.value }
-				},
-				watch: {
-					caca(val) {
-						console.log(" caca => " + val);
-						this.$emit('input', val);
-					}
-				} 
-			});
+		Vue.component('content-separator', {
+			template:'<h1 id="contentSeparator"><strong><slot></slot></strong></h1>'
+		});
 
-			new Vue({
-				el: '#app',
-				data: {
-					dataStreams: [],
-					dataStreamSelected: [],
-					hasNotFinishedDS: true,
-					hasNotFinishedDPS: true,
-					renderDashboardView: true,
-					renderSecurityView: false,
-					renderActionsView: false,
-					renderAboutView: false,
-					renderCommandsView: false,
-					streamWasSelected:false,
-					hasToShowCharAndCards: false,
-					renderTriggersView: false,
-					renderOneTimeTrigger: false,
-					isTimePeriodPolicy: false,
+		Vue.component('data-streams-button', {
+			props:['name'],
+			template:'<button type="button">{{name}}</button>'
+		});
 
-					conditionSelected:{
-						id:1,
-						text:''
-					},
+		Vue.component('data-stream-checkboxes', {
+			props:['value'],
+			template:'<p><input type="checkbox" :value="value" v-model="caca"><label :for="value">{{value}}</label></p>',
+			data() {
+				console.log(" data() en componen => " + this.value);
+				return { caca: this.value }
+			},
+			watch: {
+				caca(val) {
+					console.log(" caca => " + val);
+					this.$emit('input', val);
+				}
+			} 
+		});
 
-					triggerConditions:[
-					{id: 1, name: 'Always'},
-					{id: 2, name: 'On Data-Stream value'},
-					{id: 3, name: 'When Data-Stream has not been updated'},
-					{id: 4, name: 'Time interval'},
-					{id: 5, name: 'Composite condition'}
-					],
+		new Vue({
+			el: '#app',
+			data: {
+				dataStreams: [],
+				dataStreamSelected: [],
+				hasNotFinishedDS: true,
+				hasNotFinishedDPS: true,
+				streamWasSelected:false,
+				hasToShowCharAndCards: false,
+				isTimePeriodPolicy: false,
 
-					dataStreamNotUpdatedFrom:{
-						months:0,
-						weeks:0,
-						days:0,
-						hours:0,
-						minutes:0,
-						seconds:0,
-					},
+				renderDashboardView: true,
+				renderSecurityView: false,
+				renderAboutView: false,
+				renderActionAddView: false,
+				renderActionRemoveView: false,
+				renderCommandAddView: false,
+				renderCommandRemoveView: false,
+				renderTriggerAddView: false,
+				renderTriggerRemoveView: false,
+				renderOneTimeTrigger: false,
 
-					dataStreamBoundedToTrigger:'Data-Stream',
+				showActionsOptions : false,
+				showCommandsOptions : false,
+				showTriggersOptions : false,
 
-					maxValue:{
-						value:'',
-						timestamp:''
-					},
-					minValue:{
-						value:'',
-						timestamp:''
-					},
-					averageValue:{
-						value:'',
-						timestamp:''
-					},
-					currentValue: {
-						value:'',
-						timestamp:''
-					},
-					data:'',
-					dataStreamInformation: [],
-					selectedDs: '',
-					sideNavStyle:{
-						backgroundColor: '',
-						width: ''						
-					}
+
+				conditionSelected:{
+					id:1,
+					text:''
 				},
 
-				mounted(){
+				triggerConditions:[
+				{id: 1, name: 'Always'},
+				{id: 2, name: 'On Data-Stream value'},
+				{id: 3, name: 'When Data-Stream has not been updated'},
+				{id: 4, name: 'Time interval'},
+				{id: 5, name: 'Composite condition'}
+				],
+
+				dataStreamNotUpdatedFrom:{
+					months:0,
+					weeks:0,
+					days:0,
+					hours:0,
+					minutes:0,
+					seconds:0,
+				},
+
+				dataStreamBoundedToTrigger:'Data-Stream',
+
+				maxValue:{
+					value:'',
+					timestamp:''
+				},
+				minValue:{
+					value:'',
+					timestamp:''
+				},
+				averageValue:{
+					value:'',
+					timestamp:''
+				},
+				currentValue: {
+					value:'',
+					timestamp:''
+				},
+				data:'',
+				dataStreamInformation: [],
+				selectedDs: '',
+				sideNavStyle:{
+					backgroundColor: '',
+					width: ''						
+				}
+			},
+
+			mounted(){
 
 				//Chart.defaults.global.legend.display = false; // avoid showing dataset labels on any chart
 
@@ -1216,9 +1372,15 @@
 				this.isSideNavActive = false;
 				this.renderDashboardView = true;
 				this.renderSecurityView = false;
-				this.renderActionsView = false;
+				this.renderActionAddView = false;
 				this.renderAboutView = false;
-				this.renderTriggersView = false;
+				this.renderTriggerAddView = false;
+				this.showActionsOptions = false;
+				this.showCommandsOptions = false;
+				this.showTriggersOptions = false;
+				this.renderTriggerRemoveView = false;
+				this.renderCommandRemoveView = false;
+				this.renderActionRemoveView = false;
 
 
 				this.streamWasSelected = false;
@@ -1273,6 +1435,24 @@
 
 			methods: {
 
+				showActionsAddRemoveOptions: function(){
+					console.log("this.showActionsOptions : " + this.showActionsOptions);
+					this.showActionsOptions = !this.showActionsOptions;
+					this.showCommandsOptions = false;
+					this.showTriggersOptions = false;
+				},
+				showCommandsAddRemoveOptions: function(){
+					console.log("this.showCommandsOptions : " + this.showCommandsOptions);
+					this.showCommandsOptions = !this.showCommandsOptions;
+					this.showActionsOptions = false;
+					this.showTriggersOptions = false;
+				},
+				showTriggersAddRemoveOptions: function(){
+					console.log("this.showTriggersOptions : " + this.showTriggersOptions);
+					this.showTriggersOptions = !this.showTriggersOptions;
+					this.showActionsOptions = false;
+					this.showCommandsOptions = false;
+				},
 				dataPointPolicy: function(){
 					console.log(this.isTimePeriodPolicy);
 					this.isTimePeriodPolicy = false;
@@ -1318,15 +1498,6 @@
 				    });
 				},
 
-				showSecurityView: function(){
-					this.renderDashboardView = false;
-					this.renderSecurityView = true;
-					this.renderActionsView = false;
-					this.renderAboutView = false;
-					this.renderTriggersView = false;
-					this.renderCommandsView = false;
-
-				},
 				assignDataStream: function(dS){
 					console.log(" Entering assignDataStream function");
 					this.selectedDs = dS;
@@ -1334,50 +1505,117 @@
 
 					this.getdataStreamInformation(dS);
 				},
+				showSecurityView: function(){
+					this.renderDashboardView = false;
+					this.renderSecurityView = true;
+					this.renderActionAddView = false;
+					this.renderAboutView = false;
+					this.renderTriggerAddView = false;
+					this.renderCommandAddView = false;
+					this.renderTriggerRemoveView = false;
+					this.renderCommandRemoveView = false;
+					this.renderActionRemoveView = false;
+				},
 				showDashboardView: function(){
 					this.renderDashboardView = true;
 					this.renderSecurityView = false;
-					this.renderActionsView = false;
+					this.renderActionAddView = false;
 					this.renderAboutView = false;
-					this.renderTriggersView = false;
-					this.renderCommandsView = false;
+					this.renderTriggerAddView = false;
+					this.renderCommandAddView = false;
+					this.renderTriggerRemoveView = false;
+					this.renderCommandRemoveView = false;
+					this.renderActionRemoveView = false;
 					this.drawPieChart();
 				},
-				showActionsView: function(){
+				showActionAddView: function(){
 					this.renderDashboardView = false;
 					this.renderSecurityView = false;
-					this.renderActionsView = true;
 					this.renderAboutView = false;
-					this.renderTriggersView = false;
-					this.renderCommandsView = false;
+
+					this.renderActionAddView = true;
+					this.renderTriggerAddView = false;
+					this.renderCommandAddView = false;
+					this.renderTriggerRemoveView = false;
+					this.renderCommandRemoveView = false;
+					this.renderActionRemoveView = false;
+				},
+				showCommandAddView: function(){
+					this.renderDashboardView = false;
+					this.renderSecurityView = false;
+					this.renderAboutView = false;
+
+					this.renderActionAddView = false;
+					this.renderTriggerAddView = false;
+					this.renderCommandAddView = true;
+					this.renderTriggerRemoveView = false;
+					this.renderCommandRemoveView = false;
+					this.renderActionRemoveView = false;
 
 				},
-				showCommandsView: function(){
+				showTriggerAddView: function(){
 					this.renderDashboardView = false;
 					this.renderSecurityView = false;
-					this.renderActionsView = false;
 					this.renderAboutView = false;
-					this.renderTriggersView = false;
-					this.renderCommandsView = true;
 
-				},
-				showTriggersView: function(){
-					this.renderTriggersView = true;
-					this.renderDashboardView = false;
-					this.renderSecurityView = false;
-					this.renderActionsView = false;
-					this.renderAboutView = false;
-					this.renderCommandsView = false;
+					this.renderTriggerAddView = true;
+					this.renderActionAddView = false;
+					this.renderCommandAddView = false;
+					this.renderTriggerRemoveView = false;
+					this.renderCommandRemoveView = false;
+					this.renderActionRemoveView = false;
 
 					this.renderOneTimeTrigger = false;
 				},
 				showAboutView: function(){
 					this.renderDashboardView = false;
 					this.renderSecurityView = false;
-					this.renderActionsView = false;
-					this.renderTriggersView = false;
+					this.renderActionAddView = false;
+					this.renderTriggerAddView = false;
 					this.renderAboutView = true;
-					this.renderCommandsView = false;
+					this.renderCommandAddView = false;
+
+					this.renderTriggerRemoveView = false;
+					this.renderCommandRemoveView = false;
+					this.renderActionRemoveView = false;
+				},
+				showActionRemoveView: function(){
+					this.renderDashboardView = false;
+					this.renderSecurityView = false;
+					this.renderActionAddView = false;
+					this.renderTriggerAddView = false;
+					this.renderAboutView = false;
+					this.renderCommandAddView = false;
+
+					this.renderTriggerRemoveView = false;
+					this.renderCommandRemoveView = false;
+					this.renderActionRemoveView = true;
+				},
+				showCommandRemoveView: function(){
+					this.renderDashboardView = false;
+					this.renderSecurityView = false;
+					this.renderActionAddView = false;
+					this.renderTriggerAddView = false;
+					this.renderAboutView = false;
+					this.renderCommandAddView = false;
+
+
+					this.renderTriggerRemoveView = false;
+					this.renderCommandRemoveView = true;
+					this.renderActionRemoveView = false;
+				},
+				showTriggerRemoveView: function(){
+					this.renderDashboardView = false;
+					this.renderSecurityView = false;
+					this.renderActionAddView = false;
+					this.renderTriggerAddView = false;
+					this.renderAboutView = false;
+					this.renderCommandAddView = false;
+
+
+					this.renderTriggerRemoveView = true;
+					this.renderCommandRemoveView = false;
+					this.renderActionRemoveView = false;
 				},
 
 				getMaxValue: function(dataPoints){
@@ -1556,6 +1794,12 @@
 					closeNav: function(){
 						this.sideNavStyle.backgroundColor = "white";
 						this.sideNavStyle.width = "0";
+
+
+						// Avoiding that next time you open it, some add/remove options are still displayed 
+						this.showCommandsOptions = false;
+						this.showActionsOptions = false;
+						this.showTriggersOptions = false;
 					},
 
 					hasToShowStreams: function(){

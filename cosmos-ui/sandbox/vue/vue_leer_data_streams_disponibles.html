@@ -287,734 +287,728 @@
 
 
 
-	  <body>
+  <body>
 
-	  	<div id="app" class="bg-light">
+  	<div id="app" class="bg-light">
 
-	  		<!-- Side Nav for burguer menu -->
-	  		<div id="mySidenav" class="sidenav" v-bind:style="sideNavStyle">
-	  			<a href="javascript:void(0)" class="closebtn" v-on:click="closeNav()">&times;</a>
-	  			<a href="#" v-on:click="showDashboardView(); closeNav();"><i class="fa fa-dashboard" style="font-size:20px"></i> DASHBOARD</a>
+  		<!-- Side Nav for burguer menu -->
+  		<div id="mySidenav" class="sidenav" v-bind:style="sideNavStyle">
+  			<a href="javascript:void(0)" class="closebtn" v-on:click="closeNav()">&times;</a>
+  			<a href="#" v-on:click="showDashboardView(); closeNav();"><i class="fa fa-dashboard" style="font-size:20px"></i> DASHBOARD</a>
 
-	  			<a href="#" v-on:click="showDataStreamView(); closeNav();"><i class="fa fa-cubes" style="font-size:20px"></i> DATA STREAM</a>
+  			<a href="#" v-on:click="showDataStreamView(); closeNav();"><i class="fa fa-cubes" style="font-size:20px"></i> DATA STREAM</a>
 
-	  			<a href="#" v-on:click="showActionsAddRemoveOptions()"><i class="fa fa-hand-paper-o" style="font-size:20px"></i> ACTIONS</a>
-	  			<div v-if="showActionsOptions">
-	  				<a href="#" v-on:click="showActionAddView(); closeNav();" style="font-size: 15px; padding-left: 70px;"><i class="fa fa-check" style="font-size:15px"></i>  ADD ACTION</a>
-	  				<a href="#" v-on:click="showActionRemoveView(); closeNav();" style="font-size: 15px; padding-left: 70px;"><i class="fa fa-remove" style="font-size:15px"></i>  REMOVE ACTION</a>
-	  			</div>
+  			<a href="#" v-on:click="showActionsAddRemoveOptions()"><i class="fa fa-hand-paper-o" style="font-size:20px"></i> ACTIONS</a>
+  			<div v-if="showActionsOptions">
+  				<a href="#" v-on:click="showActionAddView(); closeNav();" style="font-size: 15px; padding-left: 70px;"><i class="fa fa-check" style="font-size:15px"></i>  ADD ACTION</a>
+  				<a href="#" v-on:click="showActionRemoveView(); closeNav();" style="font-size: 15px; padding-left: 70px;"><i class="fa fa-remove" style="font-size:15px"></i>  REMOVE ACTION</a>
+  			</div>
 
-	  			<a href="#" v-on:click="showTriggersAddRemoveOptions()"><i class="fa fa-bell-o" style="font-size:20px"></i> TRIGGERS</a>
-	  			<a href="#" v-if="showTriggersOptions" v-on:click="showTriggerAddView(); closeNav();" style="font-size: 15px; padding-left: 70px;"><i class="fa fa-plus" style="font-size:15px"></i>  ADD TRIGGER</a>
-	  			<a href="#" v-if="showTriggersOptions" v-on:click="showTriggerRemoveView(); closeNav();" style="font-size: 15px; padding-left: 70px;"><i class="fa fa-remove" style="font-size:15px"></i>  REMOVE TRIGGER</a>
+  			<a href="#" v-on:click="showTriggersAddRemoveOptions()"><i class="fa fa-bell-o" style="font-size:20px"></i> TRIGGERS</a>
+  			<a href="#" v-if="showTriggersOptions" v-on:click="showTriggerAddView(); closeNav();" style="font-size: 15px; padding-left: 70px;"><i class="fa fa-plus" style="font-size:15px"></i>  ADD TRIGGER</a>
+  			<a href="#" v-if="showTriggersOptions" v-on:click="showTriggerRemoveView(); closeNav();" style="font-size: 15px; padding-left: 70px;"><i class="fa fa-remove" style="font-size:15px"></i>  REMOVE TRIGGER</a>
 
-	  			<a href="#" v-on:click="showCommandsAddRemoveOptions()"><i class="fa fa-microphone" style="font-size:20px"></i> COMMANDS</a>
-	  			<a href="#" v-if="showCommandsOptions" v-on:click="showCommandAddView(); closeNav();" style="font-size: 15px; padding-left: 70px;"><i class="fa fa-plus" style="font-size:15px"></i>  ADD COMMAND</a>
-	  			<a href="#" v-if="showCommandsOptions" v-on:click="showCommandRemoveView(); closeNav();" style="font-size: 15px; padding-left: 70px;"><i class="fa fa-remove" style="font-size:15px"></i>  REMOVE COMMAND</a>
+  			<a href="#" v-on:click="showCommandsAddRemoveOptions()"><i class="fa fa-microphone" style="font-size:20px"></i> COMMANDS</a>
+  			<a href="#" v-if="showCommandsOptions" v-on:click="showCommandAddView(); closeNav();" style="font-size: 15px; padding-left: 70px;"><i class="fa fa-plus" style="font-size:15px"></i>  ADD COMMAND</a>
+  			<a href="#" v-if="showCommandsOptions" v-on:click="showCommandRemoveView(); closeNav();" style="font-size: 15px; padding-left: 70px;"><i class="fa fa-remove" style="font-size:15px"></i>  REMOVE COMMAND</a>
 
-	  			<a href="#" v-on:click="showSecurityView(); closeNav();"><i class="fa fa-lock" style="font-size:20px"></i>   SECURITY</a>
-	  			<a href="#" v-on:click="showAboutView(); closeNav();"><i class="fa fa-info" style="font-size:20px"></i>   ABOUT</a>
-	  		</div>
-
-
-	  		<!-- GUI Header -->
-	  		<div id="ui-header">
-	  			<!--span style="font-size:30px;cursor:pointer" v-on:click="openNav()">&#9776;</span--> <!-- &#9776; represents the burguer icon -->
-
-	  			<div class="row">
-	  				<div class="col-md-2">
-	  					<span style="font-size:30px;cursor:pointer" v-on:click="openNav()"><i class="fa fa-bars" style="color:white;"></i></span>
-	  				</div>
-	  				<div class="col-md-10 text-center py-2">
-	  					<h1 id="cosmosTitle" style="padding-right: 28%;"><strong>Cosmos GUI</strong></h1>
-	  				</div>
-	  			</div>
-	  		</div>
+  			<a href="#" v-on:click="showSecurityView(); closeNav();"><i class="fa fa-lock" style="font-size:20px"></i>   SECURITY</a>
+  			<a href="#" v-on:click="showAboutView(); closeNav();"><i class="fa fa-info" style="font-size:20px"></i>   ABOUT</a>
+  		</div>
 
 
-	  		<!-- div for Dashboard view -->
-	  		<div v-if="renderDashboardView" id="dashboard">
+  		<!-- GUI Header -->
+  		<div id="ui-header">
+  			<!--span style="font-size:30px;cursor:pointer" v-on:click="openNav()">&#9776;</span--> <!-- &#9776; represents the burguer icon -->
 
-	  			<content-separator v-if="hasToShowStreams()"><i class="fa fa-line-chart" style="font-size:24px"></i> Data Streams</content-separator>
+  			<div class="row">
+  				<div class="col-md-2">
+  					<span style="font-size:30px;cursor:pointer" v-on:click="openNav()"><i class="fa fa-bars" style="color:white;"></i></span>
+  				</div>
+  				<div class="col-md-10 text-center py-2">
+  					<h1 id="cosmosTitle" style="padding-right: 28%;"><strong>Cosmos GUI</strong></h1>
+  				</div>
+  			</div>
+  		</div>
 
-	  			<!-- Div for the stream selection -->
-	  			<div style="text-align: center;">
-	  				<div>
-	  					<!--strong>Select the data streams you want to visualize...</strong-->
-	  					<br>
-	  					<i v-if="!hasToShowStreams()" class="fa fa-spinner fa-spin" style="font-size: 70px"></i>
-	  					<div class="wrapper text-center">
-	  						<div style="width: auto; margin: 0 auto;" class="btn-group container-fluid" role="group" aria-label="Basic example" v-if="hasToShowStreams()">
-	  							<data-streams-button v-for="dS in dataStreams" v-bind:name="dS" v-bind:class="[selectedDs == dS ? 'btn btn-primary': 'btn btn-secondary']" v-on:click.native="assignDataStream(dS)"></data-streams-button>
+
+  		<!-- div for Dashboard view -->
+  		<div v-if="renderDashboardView" id="dashboard">
+
+  			<content-separator v-if="hasToShowStreams()"><i class="fa fa-line-chart" style="font-size:24px"></i> Data Streams</content-separator>
+
+  			<!-- Div for the stream selection -->
+  			<div style="text-align: center;">
+  				<div>
+  					<!--strong>Select the data streams you want to visualize...</strong-->
+  					<br>
+  					<i v-if="!hasToShowStreams()" class="fa fa-spinner fa-spin" style="font-size: 70px"></i>
+  					<div class="wrapper text-center">
+  						<div style="width: auto; margin: 0 auto;" class="btn-group container-fluid" role="group" aria-label="Basic example" v-if="hasToShowStreams()">
+  							<data-streams-button v-for="dS in dataStreams" v-bind:name="dS" v-bind:class="[selectedDs == dS ? 'btn btn-primary': 'btn btn-secondary']" v-on:click.native="assignDataStream(dS)"></data-streams-button>
+  						</div>
+  					</div>
+  				</div>
+  			</div>
+
+  			<br>
+
+  			<div v-if="hasToShowCharAndCards">
+  				<!-- Div for the Stream chart and stat Cards -->
+  				<div class="row" style="margin: 50px auto;">
+  					<div class="col-md-8">
+  						<canvas id="streamCanvas"></canvas>
+  					</div>
+  					<div class="col-md-4">
+  						<div class="row container-fluid">
+  							<div class="card">
+  								<div class="card-header bg-primary"><strong style="font-size:13px; color: black;"><i class="fa fa-arrow-circle-right" style="font-size:20px"></i> CURRENT VALUE</strong></div>
+  								<div class="card-body text-center">
+  									<h2><p class="card-text"><strong>{{currentValue.value}}</strong></p></h2>
+  								</div>
+  								<div class="card-footer">
+  									<small class="text-muted"><strong>WHEN:  </strong>{{currentValue.timestamp}} ago</small>
+  								</div>
+  							</div>
+  							<div style="width: 25px;"> </div>
+  							<div class="card">
+  								<div class="card-header bg-primary"><strong style="font-size:13px; color: black;"><i class="fa fa-percent" style="font-size:20px"></i> AVERAGE VALUE</strong></div>
+  								<div class="card-body text-center">
+  									<h2><p class="card-text"><strong>{{averageValue.value}}</strong></p></h2>
+  								</div>
+  								<div class="card-footer">
+  									<small class="text-muted">During {{averageValue.timestamp}} mins</small>
+  								</div>
+  							</div>
+  						</div>
+
+  						<br>
+
+  						<div class="row container-fluid">
+  							<div class="card">
+  								<div class="card-header bg-primary"><strong style="font-size:13px; color: black;"><i class="fa fa-arrow-circle-down" style="font-size:20px"></i> MIN VALUE</strong></div>
+  								<div class="card-body text-center">
+  									<h2><p class="card-text"><strong>{{minValue.value}}</strong></p></h2>
+  								</div>
+  								<div class="card-footer">
+  									<small class="text-muted"><strong>WHEN:  </strong>{{minValue.timestamp}} ago</small>
+  								</div>
+  							</div>
+  							<div style="width: 25px;"> </div>			
+  							<div class="card">
+  								<div class="card-header bg-primary"><strong style="font-size:13px; color: black;"><i class="fa fa-arrow-circle-up" style="font-size:20px"></i> MAX VALUE</strong></div>
+  								<div class="card-body text-center">
+  									<h2><p class="card-text"><strong>{{maxValue.value}}</strong></p></h2>
+  								</div>
+  								<div class="card-footer">
+  									<small class="text-muted"><strong>WHEN:  </strong>{{maxValue.timestamp}} ago</small>
+  								</div>
+  							</div>
+  						</div>
+  					</div>
+  				</div>
+  			</div>
+
+  			<!--content-separator v-if="hasToShowStreams()"><i class="fa fa-pie-chart" style="font-size:24px"></i> Actions, Commands & Triggers</content-separator-->
+  			<content-separator ><i class="fa fa-pie-chart" style="font-size:24px"></i> Actions, Commands & Triggers</content-separator>
+  			<br>
+
+  			<!-- Div for showing the recently/most executed actions -->
+  			<div class="row" id="actions" v-if="renderDashboardView" style="margin: 50px auto;">
+
+  				<div class="col-md-6">
+  					<div class="card">
+  						<div class="card-header bg-info">
+  							<h3 class="card-title"><i class="fa fa-clock-o fa-fw"></i> Last Actions Executed</h3>
+  						</div>
+  						<div class="card-body">
+  							<div class="list-group">
+  								<a href="#" class="list-group-item d-flex justify-content-between align-items-center">
+  									<i class="fa fa-fw fa-calendar pull-left"></i> Calendar updated
+  									<span class="badge badge-secondary badge-pill">just now</span>
+  									<!--span class="badge">just now</span-->
+  								</a>
+  								<a href="#" class="list-group-item d-flex justify-content-between align-items-center">
+  									<!--span class="badge">4 minutes ago</span-->
+  									<i class="fa fa-fw fa-comment"></i> Commented on a post
+  									<span class="badge badge-secondary badge-pill">4 minutes ago</span>
+  								</a>
+  								<a href="#" class="list-group-item d-flex justify-content-between align-items-center">
+  									<!--span class="badge">23 minutes ago</span-->
+  									<i class="fa fa-fw fa-truck"></i> Order 392 shipped
+  									<span class="badge badge-secondary badge-pill">23 minutes ago</span>
+  								</a>
+  								<a href="#" class="list-group-item d-flex justify-content-between align-items-center">
+  									<!--span class="badge">46 minutes ago</span-->									
+  									<i class="fa fa-fw fa-money"></i> Invoice 653 has been paid
+  									<span class="badge badge-secondary badge-pill">46 minutes ago</span>
+  								</a>
+  							</div>
+  						</div>
+  					</div>
+  				</div>
+  				<!-- div for drawing the actions/commands pie chart -->
+  				<div class="col-md-6">
+  					<strong>Most Executed Actions</strong>
+  					<canvas id="actionsChart"></canvas>
+  				</div>
+  			</div>
+  		</div>
+
+
+  		<!-- div for showing the Data Stream add view -->
+  		<div v-if="renderDataStreamView">
+  			<div class="container">
+  				<div class="row">
+  					<br>
+
+  					<div class="col-md-2">
+  					</div>
+
+  					<div class="col-md-8">		
+
+  						<h4 class="mb-3"><strong>Available Data Streams</strong></h4>
+  						<hr>
+
+  						<label for="triggerName">Available Data Streams are...</label>
+  						<select class="selectpicker" data-live-search="true">
+  							<option data-tokens="ketchup mustard">Hot Dog, Fries and a Soda</option>
+  							<option data-tokens="mustard">Burger, Shake and a Smile</option>
+  							<option data-tokens="frosting">Sugar, Spice and all things nice</option>
+  						</select>
+
+
+  						<hr>
+  						<h4 class="mb-3	"><strong>Add Data Stream</strong></h4>
+  						<hr>
+  						<form class="needs-validation" novalidate="">
+
+  							<div class="mb-3">
+  								<label for="securityKey">Name</label>
+  								<div class="input-group">
+  									<div class="input-group-prepend">
+  										<span class="input-group-text"><i class="fa fa-leaf"></i></span>
+  									</div>
+  									<input type="text" class="form-control" id="dSName" placeholder="Enter the Data Stream name" required="true">
+  									<div class="invalid-feedback" style="width: 100%;">
+  										The Trigger name is required.
+  									</div>
+  								</div>
+  							</div>
+
+  							<hr class="mb-3">
+  							<button class="btn btn-primary btn-lg btn-block" type="submit"><h5><strong>Add Data Stream</strong></h5></button>
+  						</form>
+  					</div>
+
+  					<div class="col-md-2">
+  					</div>
+  				</div>
+  			</div>
+  		</div>
+
+
+  		<!-- div for showing the Keys menu view -->
+  		<div id="keys" v-if="renderSecurityView"> 
+  			<div class="container">
+  				<div class="row">
+  					<div class="col-md-2">
+  					</div>
+
+  					<div class="col-md-8">
+  						<h4 class="mb-3 text-center"><strong>Associate the actions required</strong></h4>
+  						<hr>
+  						<form class="needs-validation" novalidate="">
+
+  							<div class="custom-control custom-checkbox">
+  								<input type="checkbox" class="custom-control-input" id="same-address">
+  								<label class="custom-control-label" for="same-address">Read</label>
+  							</div>
+
+  							<div class="custom-control custom-checkbox">
+  								<input type="checkbox" class="custom-control-input" id="save-info">
+  								<label class="custom-control-label" for="save-info">Write</label>
+  							</div>
+
+  							<div class="custom-control custom-checkbox">
+  								<input type="checkbox" class="custom-control-input" id="delete-info">
+  								<label class="custom-control-label" for="delete-info">Delete</label>
+  							</div>
+
+  							<br>
+
+  							<button class="btn btn-primary btn-lg btn-block" type="submit"><h5><strong>Generate Key</strong></h5></button>
+
+  							<div class="text-muted text-center">
+  								<br>
+  								<span><em><h3>{{securityKey}}</h3></em></span>
+  							</div>
+
+  						</form>
+  					</div>
+
+  					<div class="col-md-2">
+  					</div>
+  				</div>
+  			</div>
+
+  		</div>
+
+
+  		<!-- div for showing the Actions add view -->
+  		<div id="actions" v-if="renderActionAddView"> 
+  			<div class="container">
+  				<div class="row">
+  					<br>
+
+  					<div class="col-md-2">
+  					</div>
+
+  					<div class="col-md-8">
+  						<h4 class="mb-3 text-center"><strong>Add Action</strong></h4>
+  						<!--h6 class="text-muted text-center"><em><small>You trigger an ACTION based on a CONDITION that needs to be checked according to some POLICY</em></small></h6-->
+  						<hr>
+  						<form class="needs-validation" novalidate="">
+
+  							<div class="mb-3">
+  								<label for="triggerName">Name</label>
+  								<div class="input-group">
+  									<div class="input-group-prepend">
+  										<span class="input-group-text"><i class="fa fa-font"></i></span>
+  									</div>
+  									<input type="text" class="form-control" id="triggerName" placeholder="Action Name" required="true">
+  									<div class="invalid-feedback" style="width: 100%;">
+  										The Action name is required.
+  									</div>
+  								</div>
+  							</div>
+
+
+  							<hr>
+  							<div>
+  								<label class="custom-control-label" for="triggerPolicy"><h4><strong>HTTP Request</strong></h4></label>
+  							</div>
+  							<hr>
+
+
+
+  							<div class="mb-3" v-if="!renderOneTimeTrigger">
+  								<label for="triggerName">Method</label>
+  								<div class="input-group">
+  									<div class="input-group-prepend">
+  										<span class="input-group-text"><i class="fa fa-star-o"></i></span>
+  									</div>
+  									<select class="form-control custom-select" id="days" placeholder="POST" required="true">
+  										<option value="monday">DELETE</option>
+  										<option value="tuesday">GET</option>
+  										<option value="wednesday">HEAD</option>
+  										<option value="wednesday">OPTIONS</option>
+  										<option value="wednesday">PATCH</option>
+  										<option value="wednesday">POST</option>
+  										<option value="wednesday">PUT</option>
+  										<option value="wednesday">TRACE</option>
+  									</select>
+  									<div class="invalid-feedback" style="width: 100%;">
+  										The Action type is required.
+  									</div>
+  								</div>
+  							</div>
+
+  							<div class="mb-3">
+  								<label for="triggerName">URL</label>
+  								<div class="input-group">
+  									<div class="input-group-prepend">
+  										<span class="input-group-text"><i class="fa fa-external-link"></i></span>
+  									</div>
+  									<input type="text" class="form-control" id="triggerName" placeholder="http://foo" required="true">
+  									<div class="invalid-feedback" style="width: 100%;">
+  										The Action name is required.
+  									</div>
+  								</div>
+  							</div>
+
+  							<div class="mb-3">
+  								<label for="triggerName">Version</label>
+  								<div class="input-group">
+  									<div class="input-group-prepend">
+  										<span class="input-group-text"><i class="fa fa-code"></i></span>
+  									</div>
+  									<input type="text" class="form-control" id="triggerName" placeholder="HTTP request version" required="true">
+  									<div class="invalid-feedback" style="width: 100%;">
+  										The Action name is required.
+  									</div>
+  								</div>
+  							</div>
+
+
+  							<div class="mb-3">
+  								<label for="triggerName">Body</label>
+  							</div>
+  							<hr>
+
+
+  							<div class="row">
+  								<div class="col-md-3">
+  									<button class="btn btn-info btn-lg btn-block"><strong>Add parameter</strong></button>
+  								</div>
+  							</div>
+
+
+  							<div class="row">
+
+  								<div class="col-md-5">
+  									<div class="mb-3">
+  										<label for="triggerName">Key</label>
+  										<div class="input-group">
+  											<div class="input-group-prepend">
+  												<span class="input-group-text"><i class="fa fa-key"></i></span>
+  											</div>
+  											<input type="text" class="form-control" id="triggerName" placeholder="Parameter key" required="true">
+  											<div class="invalid-feedback" style="width: 100%;">
+  												The Action name is required.
+  											</div>
+  										</div>
+  									</div>
+  								</div>
+
+  								<div class="col-md-6">
+  									<div class="mb-3">
+  										<label for="triggerName">Value</label>
+  										<div class="input-group">
+  											<div class="input-group-prepend">
+  												<span class="input-group-text"><i class="fa fa-pencil-square-o"></i></span>
+  											</div>
+  											<input type="text" class="form-control" id="triggerName" placeholder="Parameter value" required="true">
+  											<div class="invalid-feedback" style="width: 100%;">
+  												The Action name is required.
+  											</div>
+  										</div>
+  									</div>
+  								</div>
+
+  								<div class="col-md-1">
+  									<div class="mb-3">
+  										<label></label>
+  										<button class="btn btn-danger" style="vertical-align: auto"><strong><i class="fa fa-remove"></i></strong></button>
+  									</div>
+  								</div>
+
+  							</div>
+
+
+
+  							<hr>
+  							<div>
+  								<label class="custom-control-label" for="triggerPolicy"><h4><strong>HTTP Headers</strong></h4></label>
+  							</div>
+  							<hr>
+
+
+  							<div class="row">
+  								<div class="col-md-3">
+  									<button class="btn btn-info btn-lg btn-block"><strong>Add parameter</strong></button>
+  								</div>
+  							</div>
+
+
+  							<div class="row">
+
+  								<div class="col-md-5">
+  									<div class="mb-3">
+  										<label for="triggerName">Key</label>
+  										<div class="input-group">
+  											<div class="input-group-prepend">
+  												<span class="input-group-text"><i class="fa fa-key"></i></span>
+  											</div>
+  											<input type="text" class="form-control" id="triggerName" placeholder="Parameter key" required="true">
+  											<div class="invalid-feedback" style="width: 100%;">
+  												The Action name is required.
+  											</div>
+  										</div>
+  									</div>
+  								</div>
+
+  								<div class="col-md-6">
+  									<div class="mb-3">
+  										<label for="triggerName">Value</label>
+  										<div class="input-group">
+  											<div class="input-group-prepend">
+  												<span class="input-group-text"><i class="fa fa-pencil-square-o"></i></span>
+  											</div>
+  											<input type="text" class="form-control" id="triggerName" placeholder="Parameter value" required="true">
+  											<div class="invalid-feedback" style="width: 100%;">
+  												The Action name is required.
+  											</div>
+  										</div>
+  									</div>
+  								</div>
+
+  								<div class="col-md-1">
+  									<div class="mb-3">
+  										<label></label>
+  										<button class="btn btn-danger" style="vertical-align: auto"><strong><i class="fa fa-remove"></i></strong></button>
+  									</div>
+  								</div>
+
+  							</div>
+
+
+  							<hr class="mb-3">
+  							<button class="btn btn-primary btn-lg btn-block" type="submit"><h5><strong>Add action</strong></h5></button>
+
+  						</form>
+  					</div>
+
+  					<div class="col-md-2">
+  					</div>					
+  				</div>
+
+
+  			</div>
+  		</div>
+
+  		<!-- div for showing the Actions remove view -->
+  		<div v-if="renderActionRemoveView">
+
+  			<div class="container">
+  				<div class="row">
+  					<br>
+
+  					<div class="col-md-2">
+  					</div>
+
+  					<div class="col-md-8">
+  						<h4 class="mb-3 text-center"><strong>Remove Action</strong></h4>
+  						<hr>
+  						<form class="needs-validation" novalidate="">
+
+  							<div class="mb-3">
+  								<label for="securityKey">Security key</label>
+  								<div class="input-group">
+  									<div class="input-group-prepend">
+  										<span class="input-group-text"><i class="fa fa-key"></i></span>
+  									</div>
+  									<input type="text" class="form-control" id="securityKey" placeholder="Enter you security key" required="true">
+  									<div class="invalid-feedback" style="width: 100%;">
+  										The Trigger name is required.
+  									</div>
+  								</div>
+  							</div>
+
+  							<div class="mb-3">
+  								<label for="triggerSearchName">Search action</label>
+  								<div class="input-group">
+  									<div class="input-group-prepend">
+  										<span class="input-group-text"><i class="fa fa-search"></i></span>
+  									</div>
+  									<input type="text" class="form-control" id="triggerSearchName" placeholder="Start typing action name..." required="true">
+  									<div class="invalid-feedback" style="width: 100%;">
+  										The Trigger name is required.
+  									</div>
+  								</div>
+  							</div>
+
+  							<hr>
+
+  							<div class="mb-3">
+  								<label for="triggerSummary">Action summary</label>
+  							</div>
+
+  							<hr class="mb-3">
+  							<button class="btn btn-danger btn-lg btn-block" type="submit"><h5><strong>Remove action</strong></h5></button>
+  						</form>
+  					</div>
+
+  					<div class="col-md-2">
+  					</div>
+  				</div>
+  			</div>
+  		</div>
+
+
+  		<!-- div for showing the Commands add view -->
+  		<div id="commands" v-if="renderCommandAddView"> 
+  			<div class="container">
+  				<div class="row">
+  					<br>
+
+  					<div class="col-md-2">
+  					</div>
+
+  					<div class="col-md-8">
+  						<h4 class="mb-3 text-center"><strong>Add Command</strong></h4>
+  						<!--h6 class="text-muted text-center"><em><small>You trigger an ACTION based on a CONDITION that needs to be checked according to some POLICY</em></small></h6-->
+  						<hr>
+  						<form class="needs-validation" novalidate="">
+
+  							<div class="mb-3">
+  								<label for="triggerName">Name</label>
+  								<div class="input-group">
+  									<div class="input-group-prepend">
+  										<span class="input-group-text"><i class="fa fa-font"></i></span>
+  									</div>
+  									<input type="text" class="form-control" id="triggerName" placeholder="Commands name" required="true">
+  									<div class="invalid-feedback" style="width: 100%;">
+  										The Action name is required.
+  									</div>
+  								</div>
+  							</div>
+
+
+  							<div class="mb-3">
+  								<label for="triggerName">Priority</label>
+  								<div class="input-group">
+  									<div class="input-group-prepend">
+  										<span class="input-group-text"><i class="fa fa-star-o"></i></span>
+  									</div>
+  									<select class="form-control custom-select" id="days" placeholder="HIGH" required="true">
+  										<option value="monday">HIGH</option>
+  										<option value="tuesday">MEDIUM</option>
+  										<option value="wednesday">LOW</option>
+  									</select>
+  									<div class="invalid-feedback" style="width: 100%;">
+  										The Action type is required.
+  									</div>
+  								</div>
+  							</div>
+
+  							<hr class="mb-3">
+  							<button class="btn btn-primary btn-lg btn-block" type="submit"><h5><strong>Add command</strong></h5></button>
+
+  						</form>
+  					</div>
+
+  					<div class="col-md-2">
+  					</div>					
+  				</div>
+
+
+  			</div>
+  		</div>
+
+
+  		<!-- div for showing the Commands remove view -->
+  		<div v-if="renderCommandRemoveView">
+
+  			<div class="container">
+  				<div class="row">
+  					<br>
+
+  					<div class="col-md-2">
+  					</div>
+
+  					<div class="col-md-8">
+  						<h4 class="mb-3 text-center"><strong>Remove Command</strong></h4>
+  						<hr>
+  						<form class="needs-validation" novalidate="">
+
+  							<div class="mb-3">
+  								<label for="securityKey">Security key</label>
+  								<div class="input-group">
+  									<div class="input-group-prepend">
+  										<span class="input-group-text"><i class="fa fa-key"></i></span>
+  									</div>
+  									<input type="text" class="form-control" id="securityKey" placeholder="Enter you security key" required="true">
+  									<div class="invalid-feedback" style="width: 100%;">
+  										The Trigger name is required.
+  									</div>
+  								</div>
+  							</div>
+
+  							<div class="mb-3">
+  								<label for="triggerSearchName">Search command</label>
+  								<div class="input-group">
+  									<div class="input-group-prepend">
+  										<span class="input-group-text"><i class="fa fa-search"></i></span>
+  									</div>
+  									<input type="text" class="form-control" id="triggerSearchName" placeholder="Start typing comannd name..." required="true">
+  									<div class="invalid-feedback" style="width: 100%;">
+  										The Trigger name is required.
+  									</div>
+  								</div>
+  							</div>
+
+  							<hr>
+
+  							<div class="mb-3">
+  								<label for="triggerSummary">Command summary</label>
+  							</div>
+
+  							<hr class="mb-3">
+  							<button class="btn btn-danger btn-lg btn-block" type="submit"><h5><strong>Remove command</strong></h5></button>
+  						</form>
+  					</div>
+
+  					<div class="col-md-2">
+  					</div>
+  				</div>
+  			</div>
+  		</div>
+
+
+  		<!-- div for showing the Triggers add view -->
+  		<div id="triggers" v-if="renderTriggerAddView">
+
+  			<div class="container">
+  				<div class="row">
+  					<br>
+  					
+  					<div class="col-md-1">
+  					</div>
+
+  					<div class="col-md-10">
+  						<h4 class="mb-3 text-center"><strong>Already existing triggers</strong></h4>
+  						<hr>
+
+  						<div class="row">
+	  						<div class="col-md-3">
 	  						</div>
-	  					</div>
-	  				</div>
-	  			</div>
-
-	  			<br>
-
-	  			<div v-if="hasToShowCharAndCards">
-	  				<!-- Div for the Stream chart and stat Cards -->
-	  				<div class="row" style="margin: 50px auto;">
-	  					<div class="col-md-8">
-	  						<canvas id="streamCanvas"></canvas>
-	  					</div>
-	  					<div class="col-md-4">
-	  						<div class="row container-fluid">
-	  							<div class="card">
-	  								<div class="card-header bg-primary"><strong style="font-size:13px; color: black;"><i class="fa fa-arrow-circle-right" style="font-size:20px"></i> CURRENT VALUE</strong></div>
-	  								<div class="card-body text-center">
-	  									<h2><p class="card-text"><strong>{{currentValue.value}}</strong></p></h2>
-	  								</div>
-	  								<div class="card-footer">
-	  									<small class="text-muted"><strong>WHEN:  </strong>{{currentValue.timestamp}} ago</small>
-	  								</div>
-	  							</div>
-	  							<div style="width: 25px;"> </div>
-	  							<div class="card">
-	  								<div class="card-header bg-primary"><strong style="font-size:13px; color: black;"><i class="fa fa-percent" style="font-size:20px"></i> AVERAGE VALUE</strong></div>
-	  								<div class="card-body text-center">
-	  									<h2><p class="card-text"><strong>{{averageValue.value}}</strong></p></h2>
-	  								</div>
-	  								<div class="card-footer">
-	  									<small class="text-muted">During {{averageValue.timestamp}} mins</small>
-	  								</div>
-	  							</div>
+	  						<div class="col-md-3">
 	  						</div>
-
-	  						<br>
-
-	  						<div class="row container-fluid">
-	  							<div class="card">
-	  								<div class="card-header bg-primary"><strong style="font-size:13px; color: black;"><i class="fa fa-arrow-circle-down" style="font-size:20px"></i> MIN VALUE</strong></div>
-	  								<div class="card-body text-center">
-	  									<h2><p class="card-text"><strong>{{minValue.value}}</strong></p></h2>
-	  								</div>
-	  								<div class="card-footer">
-	  									<small class="text-muted"><strong>WHEN:  </strong>{{minValue.timestamp}} ago</small>
-	  								</div>
-	  							</div>
-	  							<div style="width: 25px;"> </div>			
-	  							<div class="card">
-	  								<div class="card-header bg-primary"><strong style="font-size:13px; color: black;"><i class="fa fa-arrow-circle-up" style="font-size:20px"></i> MAX VALUE</strong></div>
-	  								<div class="card-body text-center">
-	  									<h2><p class="card-text"><strong>{{maxValue.value}}</strong></p></h2>
-	  								</div>
-	  								<div class="card-footer">
-	  									<small class="text-muted"><strong>WHEN:  </strong>{{maxValue.timestamp}} ago</small>
-	  								</div>
-	  							</div>
+	  						<div class="col-md-3">
 	  						</div>
-	  					</div>
-	  				</div>
-	  			</div>
-
-	  			<!--content-separator v-if="hasToShowStreams()"><i class="fa fa-pie-chart" style="font-size:24px"></i> Actions, Commands & Triggers</content-separator-->
-	  			<content-separator ><i class="fa fa-pie-chart" style="font-size:24px"></i> Actions, Commands & Triggers</content-separator>
-	  			<br>
-
-	  			<!-- Div for showing the recently/most executed actions -->
-	  			<div class="row" id="actions" v-if="renderDashboardView" style="margin: 50px auto;">
-
-	  				<div class="col-md-6">
-	  					<div class="card">
-	  						<div class="card-header bg-info">
-	  							<h3 class="card-title"><i class="fa fa-clock-o fa-fw"></i> Last Actions Executed</h3>
+	  						<div class="col-md-3">
+								<button class="btn btn-primary btn-lg btn-block"><strong>Add new trigger</strong></button>	
 	  						</div>
-	  						<div class="card-body">
-	  							<div class="list-group">
-	  								<a href="#" class="list-group-item d-flex justify-content-between align-items-center">
-	  									<i class="fa fa-fw fa-calendar pull-left"></i> Calendar updated
-	  									<span class="badge badge-secondary badge-pill">just now</span>
-	  									<!--span class="badge">just now</span-->
-	  								</a>
-	  								<a href="#" class="list-group-item d-flex justify-content-between align-items-center">
-	  									<!--span class="badge">4 minutes ago</span-->
-	  									<i class="fa fa-fw fa-comment"></i> Commented on a post
-	  									<span class="badge badge-secondary badge-pill">4 minutes ago</span>
-	  								</a>
-	  								<a href="#" class="list-group-item d-flex justify-content-between align-items-center">
-	  									<!--span class="badge">23 minutes ago</span-->
-	  									<i class="fa fa-fw fa-truck"></i> Order 392 shipped
-	  									<span class="badge badge-secondary badge-pill">23 minutes ago</span>
-	  								</a>
-	  								<a href="#" class="list-group-item d-flex justify-content-between align-items-center">
-	  									<!--span class="badge">46 minutes ago</span-->									
-	  									<i class="fa fa-fw fa-money"></i> Invoice 653 has been paid
-	  									<span class="badge badge-secondary badge-pill">46 minutes ago</span>
-	  								</a>
-	  							</div>
-	  						</div>
-	  					</div>
-	  				</div>
-	  				<!-- div for drawing the actions/commands pie chart -->
-	  				<div class="col-md-6">
-	  					<strong>Most Executed Actions</strong>
-	  					<canvas id="actionsChart"></canvas>
-	  				</div>
-	  			</div>
-	  		</div>
-
-
-	  		<!-- div for showing the Data Stream add view -->
-	  		<div v-if="renderDataStreamView">
-	  			<div class="container">
-	  				<div class="row">
-	  					<br>
-
-	  					<div class="col-md-2">
-	  					</div>
-
-	  					<div class="col-md-8">		
-
-	  						<h4 class="mb-3"><strong>Available Data Streams</strong></h4>
-	  						<hr>
-
-	  						<label for="triggerName">Available Data Streams are...</label>
-	  						<select class="selectpicker" data-live-search="true">
-	  							<option data-tokens="ketchup mustard">Hot Dog, Fries and a Soda</option>
-	  							<option data-tokens="mustard">Burger, Shake and a Smile</option>
-	  							<option data-tokens="frosting">Sugar, Spice and all things nice</option>
-	  						</select>
-
-
-	  						<hr>
-	  						<h4 class="mb-3	"><strong>Add Data Stream</strong></h4>
-	  						<hr>
-	  						<form class="needs-validation" novalidate="">
-
-	  							<div class="mb-3">
-	  								<label for="securityKey">Name</label>
-	  								<div class="input-group">
-	  									<div class="input-group-prepend">
-	  										<span class="input-group-text"><i class="fa fa-leaf"></i></span>
-	  									</div>
-	  									<input type="text" class="form-control" id="dSName" placeholder="Enter the Data Stream name" required="true">
-	  									<div class="invalid-feedback" style="width: 100%;">
-	  										The Trigger name is required.
-	  									</div>
-	  								</div>
-	  							</div>
-
-	  							<hr class="mb-3">
-	  							<button class="btn btn-primary btn-lg btn-block" type="submit"><h5><strong>Add Data Stream</strong></h5></button>
-	  						</form>
-	  					</div>
-
-	  					<div class="col-md-2">
-	  					</div>
-	  				</div>
-	  			</div>
-	  		</div>
-
-
-	  		<!-- div for showing the Keys menu view -->
-	  		<div id="keys" v-if="renderSecurityView"> 
-	  			<div class="container">
-	  				<div class="row">
-	  					<div class="col-md-2">
-	  					</div>
-
-	  					<div class="col-md-8">
-	  						<h4 class="mb-3 text-center"><strong>Associate the actions required</strong></h4>
-	  						<hr>
-	  						<form class="needs-validation" novalidate="">
-
-	  							<div class="custom-control custom-checkbox">
-	  								<input type="checkbox" class="custom-control-input" id="same-address">
-	  								<label class="custom-control-label" for="same-address">Read</label>
-	  							</div>
-
-	  							<div class="custom-control custom-checkbox">
-	  								<input type="checkbox" class="custom-control-input" id="save-info">
-	  								<label class="custom-control-label" for="save-info">Write</label>
-	  							</div>
-
-	  							<div class="custom-control custom-checkbox">
-	  								<input type="checkbox" class="custom-control-input" id="delete-info">
-	  								<label class="custom-control-label" for="delete-info">Delete</label>
-	  							</div>
-
-	  							<br>
-
-	  							<button class="btn btn-primary btn-lg btn-block" type="submit"><h5><strong>Generate Key</strong></h5></button>
-
-	  							<div class="text-muted text-center">
-	  								<br>
-	  								<span><em><h3>{{securityKey}}</h3></em></span>
-	  							</div>
-
-	  						</form>
-	  					</div>
-
-	  					<div class="col-md-2">
-	  					</div>
-	  				</div>
-	  			</div>
-
-	  		</div>
-
-
-	  		<!-- div for showing the Actions add view -->
-	  		<div id="actions" v-if="renderActionAddView"> 
-	  			<div class="container">
-	  				<div class="row">
-	  					<br>
-
-	  					<div class="col-md-2">
-	  					</div>
-
-	  					<div class="col-md-8">
-	  						<h4 class="mb-3 text-center"><strong>Add Action</strong></h4>
-	  						<!--h6 class="text-muted text-center"><em><small>You trigger an ACTION based on a CONDITION that needs to be checked according to some POLICY</em></small></h6-->
-	  						<hr>
-	  						<form class="needs-validation" novalidate="">
-
-	  							<div class="mb-3">
-	  								<label for="triggerName">Name</label>
-	  								<div class="input-group">
-	  									<div class="input-group-prepend">
-	  										<span class="input-group-text"><i class="fa fa-font"></i></span>
-	  									</div>
-	  									<input type="text" class="form-control" id="triggerName" placeholder="Action Name" required="true">
-	  									<div class="invalid-feedback" style="width: 100%;">
-	  										The Action name is required.
-	  									</div>
-	  								</div>
-	  							</div>
-
-
-	  							<hr>
-	  							<div>
-	  								<label class="custom-control-label" for="triggerPolicy"><h4><strong>HTTP Request</strong></h4></label>
-	  							</div>
-	  							<hr>
-
-
-
-	  							<div class="mb-3" v-if="!renderOneTimeTrigger">
-	  								<label for="triggerName">Method</label>
-	  								<div class="input-group">
-	  									<div class="input-group-prepend">
-	  										<span class="input-group-text"><i class="fa fa-star-o"></i></span>
-	  									</div>
-	  									<select class="form-control custom-select" id="days" placeholder="POST" required="true">
-	  										<option value="monday">DELETE</option>
-	  										<option value="tuesday">GET</option>
-	  										<option value="wednesday">HEAD</option>
-	  										<option value="wednesday">OPTIONS</option>
-	  										<option value="wednesday">PATCH</option>
-	  										<option value="wednesday">POST</option>
-	  										<option value="wednesday">PUT</option>
-	  										<option value="wednesday">TRACE</option>
-	  									</select>
-	  									<div class="invalid-feedback" style="width: 100%;">
-	  										The Action type is required.
-	  									</div>
-	  								</div>
-	  							</div>
-
-	  							<div class="mb-3">
-	  								<label for="triggerName">URL</label>
-	  								<div class="input-group">
-	  									<div class="input-group-prepend">
-	  										<span class="input-group-text"><i class="fa fa-external-link"></i></span>
-	  									</div>
-	  									<input type="text" class="form-control" id="triggerName" placeholder="http://foo" required="true">
-	  									<div class="invalid-feedback" style="width: 100%;">
-	  										The Action name is required.
-	  									</div>
-	  								</div>
-	  							</div>
-
-	  							<div class="mb-3">
-	  								<label for="triggerName">Version</label>
-	  								<div class="input-group">
-	  									<div class="input-group-prepend">
-	  										<span class="input-group-text"><i class="fa fa-code"></i></span>
-	  									</div>
-	  									<input type="text" class="form-control" id="triggerName" placeholder="HTTP request version" required="true">
-	  									<div class="invalid-feedback" style="width: 100%;">
-	  										The Action name is required.
-	  									</div>
-	  								</div>
-	  							</div>
-
-
-	  							<div class="mb-3">
-	  								<label for="triggerName">Body</label>
-	  							</div>
-	  							<hr>
-
-
-	  							<div class="row">
-	  								<div class="col-md-3">
-	  									<button class="btn btn-info btn-lg btn-block"><strong>Add parameter</strong></button>
-	  								</div>
-	  							</div>
-
-
-	  							<div class="row">
-
-	  								<div class="col-md-5">
-	  									<div class="mb-3">
-	  										<label for="triggerName">Key</label>
-	  										<div class="input-group">
-	  											<div class="input-group-prepend">
-	  												<span class="input-group-text"><i class="fa fa-key"></i></span>
-	  											</div>
-	  											<input type="text" class="form-control" id="triggerName" placeholder="Parameter key" required="true">
-	  											<div class="invalid-feedback" style="width: 100%;">
-	  												The Action name is required.
-	  											</div>
-	  										</div>
-	  									</div>
-	  								</div>
-
-	  								<div class="col-md-6">
-	  									<div class="mb-3">
-	  										<label for="triggerName">Value</label>
-	  										<div class="input-group">
-	  											<div class="input-group-prepend">
-	  												<span class="input-group-text"><i class="fa fa-pencil-square-o"></i></span>
-	  											</div>
-	  											<input type="text" class="form-control" id="triggerName" placeholder="Parameter value" required="true">
-	  											<div class="invalid-feedback" style="width: 100%;">
-	  												The Action name is required.
-	  											</div>
-	  										</div>
-	  									</div>
-	  								</div>
-
-	  								<div class="col-md-1">
-	  									<div class="mb-3">
-	  										<label></label>
-	  										<button class="btn btn-danger" style="vertical-align: auto"><strong><i class="fa fa-remove"></i></strong></button>
-	  									</div>
-	  								</div>
-
-	  							</div>
-
-
-
-	  							<hr>
-	  							<div>
-	  								<label class="custom-control-label" for="triggerPolicy"><h4><strong>HTTP Headers</strong></h4></label>
-	  							</div>
-	  							<hr>
-
-
-	  							<div class="row">
-	  								<div class="col-md-3">
-	  									<button class="btn btn-info btn-lg btn-block"><strong>Add parameter</strong></button>
-	  								</div>
-	  							</div>
-
-
-	  							<div class="row">
-
-	  								<div class="col-md-5">
-	  									<div class="mb-3">
-	  										<label for="triggerName">Key</label>
-	  										<div class="input-group">
-	  											<div class="input-group-prepend">
-	  												<span class="input-group-text"><i class="fa fa-key"></i></span>
-	  											</div>
-	  											<input type="text" class="form-control" id="triggerName" placeholder="Parameter key" required="true">
-	  											<div class="invalid-feedback" style="width: 100%;">
-	  												The Action name is required.
-	  											</div>
-	  										</div>
-	  									</div>
-	  								</div>
-
-	  								<div class="col-md-6">
-	  									<div class="mb-3">
-	  										<label for="triggerName">Value</label>
-	  										<div class="input-group">
-	  											<div class="input-group-prepend">
-	  												<span class="input-group-text"><i class="fa fa-pencil-square-o"></i></span>
-	  											</div>
-	  											<input type="text" class="form-control" id="triggerName" placeholder="Parameter value" required="true">
-	  											<div class="invalid-feedback" style="width: 100%;">
-	  												The Action name is required.
-	  											</div>
-	  										</div>
-	  									</div>
-	  								</div>
-
-	  								<div class="col-md-1">
-	  									<div class="mb-3">
-	  										<label></label>
-	  										<button class="btn btn-danger" style="vertical-align: auto"><strong><i class="fa fa-remove"></i></strong></button>
-	  									</div>
-	  								</div>
-
-	  							</div>
-
-
-	  							<hr class="mb-3">
-	  							<button class="btn btn-primary btn-lg btn-block" type="submit"><h5><strong>Add action</strong></h5></button>
-
-	  						</form>
-	  					</div>
-
-	  					<div class="col-md-2">
-	  					</div>					
-	  				</div>
-
-
-	  			</div>
-	  		</div>
-
-	  		<!-- div for showing the Actions remove view -->
-	  		<div v-if="renderActionRemoveView">
-
-	  			<div class="container">
-	  				<div class="row">
-	  					<br>
-
-	  					<div class="col-md-2">
-	  					</div>
-
-	  					<div class="col-md-8">
-	  						<h4 class="mb-3 text-center"><strong>Remove Action</strong></h4>
-	  						<hr>
-	  						<form class="needs-validation" novalidate="">
-
-	  							<div class="mb-3">
-	  								<label for="securityKey">Security key</label>
-	  								<div class="input-group">
-	  									<div class="input-group-prepend">
-	  										<span class="input-group-text"><i class="fa fa-key"></i></span>
-	  									</div>
-	  									<input type="text" class="form-control" id="securityKey" placeholder="Enter you security key" required="true">
-	  									<div class="invalid-feedback" style="width: 100%;">
-	  										The Trigger name is required.
-	  									</div>
-	  								</div>
-	  							</div>
-
-	  							<div class="mb-3">
-	  								<label for="triggerSearchName">Search action</label>
-	  								<div class="input-group">
-	  									<div class="input-group-prepend">
-	  										<span class="input-group-text"><i class="fa fa-search"></i></span>
-	  									</div>
-	  									<input type="text" class="form-control" id="triggerSearchName" placeholder="Start typing action name..." required="true">
-	  									<div class="invalid-feedback" style="width: 100%;">
-	  										The Trigger name is required.
-	  									</div>
-	  								</div>
-	  							</div>
-
-	  							<hr>
-
-	  							<div class="mb-3">
-	  								<label for="triggerSummary">Action summary</label>
-	  							</div>
-
-	  							<hr class="mb-3">
-	  							<button class="btn btn-danger btn-lg btn-block" type="submit"><h5><strong>Remove action</strong></h5></button>
-	  						</form>
-	  					</div>
-
-	  					<div class="col-md-2">
-	  					</div>
-	  				</div>
-	  			</div>
-	  		</div>
-
-
-	  		<!-- div for showing the Commands add view -->
-	  		<div id="commands" v-if="renderCommandAddView"> 
-	  			<div class="container">
-	  				<div class="row">
-	  					<br>
-
-	  					<div class="col-md-2">
-	  					</div>
-
-	  					<div class="col-md-8">
-	  						<h4 class="mb-3 text-center"><strong>Add Command</strong></h4>
-	  						<!--h6 class="text-muted text-center"><em><small>You trigger an ACTION based on a CONDITION that needs to be checked according to some POLICY</em></small></h6-->
-	  						<hr>
-	  						<form class="needs-validation" novalidate="">
-
-	  							<div class="mb-3">
-	  								<label for="triggerName">Name</label>
-	  								<div class="input-group">
-	  									<div class="input-group-prepend">
-	  										<span class="input-group-text"><i class="fa fa-font"></i></span>
-	  									</div>
-	  									<input type="text" class="form-control" id="triggerName" placeholder="Commands name" required="true">
-	  									<div class="invalid-feedback" style="width: 100%;">
-	  										The Action name is required.
-	  									</div>
-	  								</div>
-	  							</div>
-
-
-	  							<div class="mb-3">
-	  								<label for="triggerName">Priority</label>
-	  								<div class="input-group">
-	  									<div class="input-group-prepend">
-	  										<span class="input-group-text"><i class="fa fa-star-o"></i></span>
-	  									</div>
-	  									<select class="form-control custom-select" id="days" placeholder="HIGH" required="true">
-	  										<option value="monday">HIGH</option>
-	  										<option value="tuesday">MEDIUM</option>
-	  										<option value="wednesday">LOW</option>
-	  									</select>
-	  									<div class="invalid-feedback" style="width: 100%;">
-	  										The Action type is required.
-	  									</div>
-	  								</div>
-	  							</div>
-
-	  							<hr class="mb-3">
-	  							<button class="btn btn-primary btn-lg btn-block" type="submit"><h5><strong>Add command</strong></h5></button>
-
-	  						</form>
-	  					</div>
-
-	  					<div class="col-md-2">
-	  					</div>					
-	  				</div>
-
-
-	  			</div>
-	  		</div>
-
-
-	  		<!-- div for showing the Commands remove view -->
-	  		<div v-if="renderCommandRemoveView">
-
-	  			<div class="container">
-	  				<div class="row">
-	  					<br>
-
-	  					<div class="col-md-2">
-	  					</div>
-
-	  					<div class="col-md-8">
-	  						<h4 class="mb-3 text-center"><strong>Remove Command</strong></h4>
-	  						<hr>
-	  						<form class="needs-validation" novalidate="">
-
-	  							<div class="mb-3">
-	  								<label for="securityKey">Security key</label>
-	  								<div class="input-group">
-	  									<div class="input-group-prepend">
-	  										<span class="input-group-text"><i class="fa fa-key"></i></span>
-	  									</div>
-	  									<input type="text" class="form-control" id="securityKey" placeholder="Enter you security key" required="true">
-	  									<div class="invalid-feedback" style="width: 100%;">
-	  										The Trigger name is required.
-	  									</div>
-	  								</div>
-	  							</div>
-
-	  							<div class="mb-3">
-	  								<label for="triggerSearchName">Search command</label>
-	  								<div class="input-group">
-	  									<div class="input-group-prepend">
-	  										<span class="input-group-text"><i class="fa fa-search"></i></span>
-	  									</div>
-	  									<input type="text" class="form-control" id="triggerSearchName" placeholder="Start typing comannd name..." required="true">
-	  									<div class="invalid-feedback" style="width: 100%;">
-	  										The Trigger name is required.
-	  									</div>
-	  								</div>
-	  							</div>
-
-	  							<hr>
-
-	  							<div class="mb-3">
-	  								<label for="triggerSummary">Command summary</label>
-	  							</div>
-
-	  							<hr class="mb-3">
-	  							<button class="btn btn-danger btn-lg btn-block" type="submit"><h5><strong>Remove command</strong></h5></button>
-	  						</form>
-	  					</div>
-
-	  					<div class="col-md-2">
-	  					</div>
-	  				</div>
-	  			</div>
-	  		</div>
-
-
-	  		<!-- div for showing the Triggers add view -->
-	  		<div id="triggers" v-if="renderTriggerAddView">
-
-	  			<div class="container">
-	  				<div class="row">
-	  					<br>
-	  					<div class="col-md-1">
-	  					</div>
-	  					<div class="col-md-10">
-	  						<h4 class="mb-3 text-center"><strong>Already existing triggers</strong></h4>
-	  						<hr>
-
-	  						<div class="row">
-		  						<div class="col-md-3">
-		  						</div>
-		  						<div class="col-md-3">
-		  						</div>
-		  						<div class="col-md-3">
-		  						</div>
-		  						<div class="col-md-3">
-									<button class="btn btn-primary btn-lg btn-block"><strong>Add new trigger</strong></button>	
-		  						</div>
-	  						</div>
-
-							<br>
-	  						<table class="table table-striped table-dark table-responsive w-auto">
-	  							<thead>
-	  								<tr>
-	  									<th scope="col">Name</th>
-  										<th scope="col">Action</th>
-  										<th scope="col">Policy</th>
-  										<th scope="col">Condition</th>
-  										<th scope="col"></th>
-  										<th scope="col"></th>
-  									</tr>
-  								</thead>
-  								<tbody>
-  									  <tr v-for="t in existingTrigggers" v-bind:trigger="t" is="trigger-table-row"></tr> 
-  									  <!--Refenrenced in ..... https://github.com/vuejs/Discussion/issues/204 -->
-  								</tbody>
-  							</table>
-
-							<br>
-	  						<h4 class="mb-3 text-center"><strong>Add Trigger</strong></h4>
-	  						<h6 class="text-muted text-center"><em><small>You trigger an ACTION based on a CONDITION that needs to be checked according to some POLICY</em></small></h6>
-	  						<hr>
-	  							<form class="needs-validation" novalidate="">
-
-	  								<div class="mb-3">
-	  									<label for="triggerName">Name</label>
-	  									<div class="input-group">
-	  										<div class="input-group-prepend">
-	  											<span class="input-group-text"><i class="fa fa-font"></i></span>
-	  										</div>
-	  										<input type="text" class="form-control" id="triggerName" placeholder="Trigger Name" required="true">
-	  										<div class="invalid-feedback" style="width: 100%;">
-	  											The Trigger name is required.
-	  										</div>
-	  									</div>
-	  								</div>
-
-							<!--hr>
-
-							<div class="custom-control custom-checkbox" style="float: right;">
-								<input type="checkbox" class="custom-control-input" id="oneTimeEvent" v-on:click="logSomething()">
-								<label class="custom-control-label" for="oneTimeEvent">One time event</label>
+  						</div>
+
+						<br>
+  						<table class="table table-striped table-dark table-responsive w-auto">
+  							<thead>
+  								<tr>
+  									<th scope="col">Name</th>
+										<th scope="col">Action</th>
+										<th scope="col">Policy</th>
+										<th scope="col">Condition</th>
+										<th scope="col"></th>
+										<th scope="col"></th>
+									</tr>
+								</thead>
+								<tbody>
+									  <tr v-for="t in existingTrigggers" v-bind:trigger="t" is="trigger-table-row"></tr> 
+									  <!--Refenrenced in ..... https://github.com/vuejs/Discussion/issues/204 -->
+								</tbody>
+							</table>
+
+						<br>
+  						<h4 class="mb-3 text-center"><strong>Add Trigger</strong></h4>
+  						<h6 class="text-muted text-center"><em><small>You trigger an ACTION based on a CONDITION that needs to be checked according to some POLICY</em></small></h6>
+  						<hr>
+
+						<form class="needs-validation" novalidate="">
+
+							<div class="mb-3">
+								<label for="triggerName">Name</label>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"><i class="fa fa-font"></i></span>
+									</div>
+									<input type="text" class="form-control" id="triggerName" placeholder="Trigger Name" required="true">
+									<div class="invalid-feedback" style="width: 100%;">
+										The Trigger name is required.
+									</div>
+								</div>
 							</div>
-
-							<br><hr-->  
 
 							<div class="mb-3" v-if="!renderOneTimeTrigger">
 								<label for="triggerName">Action associated</label>
@@ -1287,7 +1281,6 @@
 
 					<div class="col-md-1">
 					</div>
-
 				</div>
 			</div>
 		</div>
@@ -1349,6 +1342,322 @@
 					</div>
 				</div>
 			</div>
+		</div>
+
+		<!-- Button trigger modal -->
+		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+		  Launch demo modal
+		</button>
+
+		<!-- Modal -->
+		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+
+						<br>
+  						<h4 class="mb-3 text-center"><strong>Add Trigger</strong></h4>
+  						<h6 class="text-muted text-center"><em><small>You trigger an ACTION based on a CONDITION that needs to be checked according to some POLICY</em></small></h6>
+  						<hr>
+
+						<form class="needs-validation" novalidate="">
+
+							<div class="mb-3">
+								<label for="triggerName">Name</label>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"><i class="fa fa-font"></i></span>
+									</div>
+									<input type="text" class="form-control" id="triggerName" placeholder="Trigger Name" required="true">
+									<div class="invalid-feedback" style="width: 100%;">
+										The Trigger name is required.
+									</div>
+								</div>
+							</div>
+
+							<div class="mb-3" v-if="!renderOneTimeTrigger">
+								<label for="triggerName">Action associated</label>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"><i class="fa fa-star-o"></i></span>
+									</div>
+									<select class="form-control custom-select" id="days" placeholder="" required="true">
+										<option value="monday">Tweet</option>
+										<option value="tuesday">Make Facebook Post</option>
+										<option value="wednesday">Send Email</option>
+										<option value="thursday">Start Engine Alfa</option>
+										<option value="friday">Sense Temperature</option>
+									</select>
+									<div class="invalid-feedback" style="width: 100%;">
+										The Trigger name is required.
+									</div>
+								</div>
+							</div>
+
+
+							<hr>
+							<div>
+								<label class="custom-control-label" for="triggerPolicy"><h4><strong>Policy</strong></h4></label>
+							</div>
+							<hr>
+
+							<div class="row">
+								<div class="col-md-6 mb-3">
+									<div class="custom-control custom-radio">
+										<input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked="" required="" v-on:click="dataPointPolicy()">
+										<label class="custom-control-label" for="credit">Data Point Registration</label>
+									</div>
+								</div>
+								<div class="col-md-6 mb-3">
+									<div class="custom-control custom-radio">
+										<input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required="" v-on:click="timePeriodPolicy()">
+										<label class="custom-control-label" for="debit">Time Period</label>
+									</div>
+								</div>
+							</div>
+
+							<div v-if="isTimePeriodPolicy">
+
+								<div class="mb-3">
+									<label for="triggerName">Starting from</label>
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text"><i class="fa fa-calendar-plus-o"></i></span>
+										</div>  
+										<input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="a">
+										<div class="invalid-feedback" style="width: 100%;">
+											The Trigger name is required.
+										</div>
+									</div>
+								</div>
+
+
+								<div class="mb-3" v-if="!renderOneTimeTrigger">
+									<label for="triggerName">Ending on</label>
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text"><i class="fa fa-calendar-times-o"></i></span>
+										</div>  
+										<input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="a">
+										<div class="invalid-feedback" style="width: 100%;">
+											The Trigger name is required.
+										</div>
+									</div>
+								</div>
+
+							</div>
+
+
+							<div v-else>
+
+								<div class="mb-3">
+									<label for="triggerName">From Data Stream</label>
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text"><i class="fa fa-diamond"></i></span>
+										</div>
+										<select class="form-control custom-select" id="days" placeholder="" required="true">
+											<option v-for="dS in dataStreams" value="dS">{{dS}}</option>
+										</select>
+										<div class="invalid-feedback" style="width: 100%;">
+											The Trigger name is required.
+										</div>
+									</div>
+								</div>
+
+								<!--div class="mb-3">
+									<label for="triggerName">Value registered</label>
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text"><i class="fa fa-font"></i></span>
+										</div>
+										<input type="text" class="form-control" id="triggerName" placeholder="Trigger Name" required="true">
+										<div class="invalid-feedback" style="width: 100%;">
+											The Trigger name is required.
+										</div>
+									</div>
+								</div-->
+
+							</div>
+
+
+							<hr>
+							<div>
+								<label class="custom-control-label" for="triggerPolicy"><h4><strong>Condition</strong></h4></label>
+							</div>
+							<hr>
+
+							<div class="mb-3" v-if="!renderOneTimeTrigger">
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"><i class="fa fa-exclamation"></i></span>
+									</div>
+									<select class="form-control custom-select" id="days" placeholder="" required="true" v-model="conditionSelected">
+										<option v-for="condition in triggerConditions" v-bind:value="{ id: condition.id, text: condition.name }">{{ condition.name }}</option>
+									</select>
+									<div class="invalid-feedback" style="width: 100%;">
+										The Trigger name is required.
+									</div>
+								</div>
+							</div>
+
+							<div class="mb-3" v-if="conditionSelected.id==2 || conditionSelected.id==3">
+								<label for="dataStreamName">From Data Stream</label>
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"><i class="fa fa-diamond"></i></span>
+									</div>
+									<select class="form-control custom-select" id="days" placeholder="" required="true">
+										<option v-for="dS in dataStreams" value="dS">{{dS}}</option>
+									</select>
+									<div class="invalid-feedback" style="width: 100%;">
+										The Trigger name is required.
+									</div>
+								</div>
+							</div>
+							
+
+							<div v-if="conditionSelected.id==2">
+								<div class="row">
+									<div class="col-md-4 mb-3">
+										<label for="cc-number">Value</label>
+										<input class="form-control" type="text" placeholder="Data-Stream current value" readonly>
+									</div>
+									<div class="col-md-4 mb-3">
+										<label for="cc-name">Condition</label>
+										<select class="form-control custom-select" id="currentValueCond" placeholder="" required="true">
+											<option value="monday">greater than</option>
+											<option value="monday">less than</option>
+											<option value="monday">equal to</option>
+											<option value="monday">different to</option>
+										</select>
+										<div class="invalid-feedback">
+											Name on card is required
+										</div>
+									</div>
+									<div class="col-md-4 mb-3">
+										<label for="cc-number">Defined value</label>
+										<input type="text" class="form-control" id="cc-number" placeholder="0" required="">
+										<div class="invalid-feedback">
+											Credit card number is required
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+							<div v-if="conditionSelected.id==3">
+								<label for="triggerName">For more than...</label>
+								<div class="row">
+									<div class="col-md-2 mb-3">
+										<label for="cc-number">Months</label>
+										<input type="text" class="form-control" id="cc-number" placeholder="0" required="" v-model="dataStreamNotUpdatedFrom.months">
+										<div class="invalid-feedback">
+											Credit card number is required
+										</div>
+									</div>
+									<div class="col-md-2 mb-3">
+										<label for="cc-name">Weeks</label>
+										<input type="text" class="form-control" id="cc-name" placeholder="0" required="" v-model="dataStreamNotUpdatedFrom.weeks">
+										<div class="invalid-feedback">
+											Name on card is required
+										</div>
+									</div>
+									<div class="col-md-2 mb-3">
+										<label for="cc-number">Days</label>
+										<input type="text" class="form-control" id="cc-number" placeholder="0" required="" v-model="dataStreamNotUpdatedFrom.days">
+										<div class="invalid-feedback">
+											Credit card number is required
+										</div>
+									</div>
+									<div class="col-md-2 mb-3">
+										<label for="cc-number">Hours</label>
+										<input type="text" class="form-control" id="cc-number" placeholder="0" required="" v-model="dataStreamNotUpdatedFrom.hours">
+										<div class="invalid-feedback">
+											Credit card number is required
+										</div>
+									</div>
+									<div class="col-md-2 mb-3">
+										<label for="cc-number">Minutes</label>
+										<input type="text" class="form-control" id="cc-number" placeholder="0" required="" v-model="dataStreamNotUpdatedFrom.minutes">
+										<div class="invalid-feedback">
+											Credit card number is required
+										</div>
+									</div>
+									<div class="col-md-2 mb-3">
+										<label for="cc-number">Seconds</label>
+										<input type="text" class="form-control" id="cc-number" placeholder="0" required="" v-model="dataStreamNotUpdatedFrom.seconds">
+										<div class="invalid-feedback">
+											Credit card number is required
+										</div>
+									</div>
+								</div>
+								<label for="triggerName" style="font-style: italic;">For more than {{dataStreamNotUpdatedFrom.months}} months, {{dataStreamNotUpdatedFrom.weeks}} weeks, {{dataStreamNotUpdatedFrom.days}} days, {{dataStreamNotUpdatedFrom.hours}} hours, {{dataStreamNotUpdatedFrom.minutes}} minutes and {{dataStreamNotUpdatedFrom.seconds}} seconds</label>     
+							</div>
+
+							<div v-if="conditionSelected.id==4">
+								<div class="mb-3">
+									<label for="triggerName">From</label>
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text"><i class="fa fa-calendar-plus-o"></i></span>
+										</div>  
+										<input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="a">
+										<div class="invalid-feedback" style="width: 100%;">
+											The Trigger name is required.
+										</div>
+									</div>
+								</div>
+
+								<div class="mb-3" v-if="!renderOneTimeTrigger">
+									<label for="triggerName">To</label>
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text"><i class="fa fa-calendar-times-o"></i></span>
+										</div>  
+										<input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="a">
+										<div class="invalid-feedback" style="width: 100%;">
+											The Trigger name is required.
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+							<div class="row">
+								<div class="col-md-3">
+								</div>
+								<div class="col-md-3">
+								</div>
+								<div class="col-md-3">
+									<button class="btn btn-primary btn-lg btn-block"><strong>Add new condition</strong></button>
+								</div>
+								<div class="col-md-3">
+									<button class="btn btn-danger btn-lg btn-block"><strong>Forget condition</strong></button>
+								</div>
+							</div>
+
+
+
+							<hr class="mb-3">
+							<button class="btn btn-primary btn-lg btn-block" type="submit"><h5><strong>Add trigger</strong></h5></button>
+						</form>
+					</div>
+
+
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		        <button type="button" class="btn btn-primary">Save changes</button>
+		      </div>
+		    </div>
+		  </div>
 		</div>
 
 	</div>

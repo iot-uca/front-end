@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+
+
+	<script src="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css"></script>
+	<script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+
+
+</head>
+<body>
+
+    <div class="container body-content">
+        <div class="page-header">
+            <label class="heading">History</label>
+            <div class="form-group">
+                <fieldset>
+                    <form action="" class="form-group" method="post">
+                        <div class="table-responsive">
+                            <div class="table-responsive">                            
+
+                                <table id="escalation" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Application</th>
+                                            <th>EMOPOP</th>
+                                            <th>Stats</th>
+                                            <th>Statement</th>
+                                            <th>Time</th>
+                                            <th>Updated</th>
+                                            <th>Details</th>
+                                            <th>Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Tiger Nixon</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td>61</td>
+                                            <td>2011/04/25</td>
+                                            <td>$320,800</td>
+                                            <td>2011/04/25</td>
+                                            <td>$320,800</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </form>            <!--END OF FORM ^^-->
+                </fieldset>
+            </div>
+            <hr />
+        </div>
+    </div>
+
+
+<script type="text/javascript">
+	
+	$(document).ready(function () {
+        $('#escalation').DataTable();
+    });
+</script>
+
+</body>
+</html>

@@ -1426,7 +1426,7 @@
 
 	Vue.component('trigger-table-row',{
 		props:['trigger'],
-		template:'<tr><th scope="row">{{trigger.name}}</th><td>{{trigger.action}}</td><td>{{trigger.policy.type}}</td><td>{{trigger.policy.elem}}</td><td>{{trigger.conditions[0]}}</td><td><button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#editTriggerModal"><i class="fa fa-pencil-square-o"></i></button></td><td><button type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#deleteTriggerModal"><i class="fa fa-remove"></i></button></td></tr>'			
+		template:'<tr><th scope="row">{{trigger.name}}</th><td>{{trigger.action}}</td><td>{{trigger.policy.type}}</td><td>{{trigger.policy.elem}}</td><td>{{trigger.conditions}}</td><td><button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#editTriggerModal"><i class="fa fa-pencil-square-o"></i></button></td><td><button type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#deleteTriggerModal"><i class="fa fa-remove"></i></button></td></tr>'			
 	});
 
 
@@ -1680,6 +1680,47 @@
 			      			//check Trigger action 
 			      			filteredField = this.existingTrigggers[i].action;
 			      			this.abc = this.addTriggerToFilteredOnes(filteredField, this.triggerFilter, this.abc, this.existingTrigggers[i]);
+
+
+			      			//check Trigger policy type 
+			      			filteredField = this.existingTrigggers[i].policy.type;
+			      			this.abc = this.addTriggerToFilteredOnes(filteredField, this.triggerFilter, this.abc, this.existingTrigggers[i]);
+
+
+			      			//check Trigger policy 
+			      			filteredField = this.existingTrigggers[i].policy.elem;
+			      			this.abc = this.addTriggerToFilteredOnes(filteredField, this.triggerFilter, this.abc, this.existingTrigggers[i]);
+
+
+			      			//check Trigger conditions 
+			      			conditions = this.existingTrigggers[i].conditions;
+			      			console.log("conditions: " + conditions);
+			      			console.log("conditions length: " + conditions.length);
+			      			console.log("Filter: " + this.triggerFilter);
+
+			      			var alreadyAdded = false;
+
+			      			for(t=0; t<conditions.length;t++){
+			      				if(conditions[t].indexOf(this.triggerFilter) >= 0){
+
+			      					// Check if the trigger was not already added to the filtered ones
+									for(a=0; a<this.abc.length; a++){
+										if(this.abc[a].name == this.existingTrigggers[i].name){
+											alreadyAdded = true;
+											break;
+										}
+									}
+									console.log("alreadyAdded: "  +alreadyAdded);
+									if(!alreadyAdded){
+										this.abc.push(this.existingTrigggers[i]);  
+									}
+			      				}
+			      			}
+
+			      			//console.log("conditions: " + filteredField );
+			      			//console.log("triggerFilter: " + this.triggerFilter );
+			      			//console.log("filteredField matched?: " + filteredField.indexOf(this.triggerFilter));
+			      			//this.abc = this.addTriggerToFilteredOnes(filteredField, this.triggerFilter, this.abc, this.existingTrigggers[i]);
 			      		}
 
 			      		if(this.abc.length>0){ // si tiene triggers para mostrar

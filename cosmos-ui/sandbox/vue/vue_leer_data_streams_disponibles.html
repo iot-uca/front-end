@@ -281,8 +281,8 @@
 
 	  	<div id="app" class="bg-light">
 
-	  		<!-- Side Nav for burguer menu -->
 	  		<div id="mySidenav" class="sidenav" v-bind:style="sideNavStyle">
+	  			<!-- Side Nav for burguer menu -->
 	  			<a href="javascript:void(0)" class="closebtn" v-on:click="closeNav()">&times;</a>
 	  			<a href="#" v-on:click="showDashboardView(); closeNav();"><i class="fa fa-dashboard" style="font-size:20px"></i> DASHBOARD</a>
 
@@ -456,69 +456,71 @@
 	  					</div>
 
 	  					<div class="col-md-8">
-		
-							<h4 class="mb-3 text-center"><strong>Existing data streams</strong></h4>
+
+	  						<h4 class="mb-3 text-center"><strong>Existing data streams</strong></h4>
 	  						<hr>
 
-		  					<div class="row">
-		  						<div class="col-md-10">
-		  							<div class="mb-3">
-		  								<!--label for="triggerSearchName"><strong>Filter trigger</strong></label-->
-		  								<div class="input-group">
-		  									<div class="input-group-prepend">
-		  										<span class="input-group-text"><i class="fa fa-search"></i></span>
-		  									</div>
+	  						<div class="row">
+	  							<div class="col-md-10">
+	  								<div class="mb-3">
+	  									<!--label for="triggerSearchName"><strong>Filter trigger</strong></label-->
+	  									<div class="input-group">
+	  										<div class="input-group-prepend">
+	  											<span class="input-group-text"><i class="fa fa-search"></i></span>
+	  										</div>
 
-		  									<input type="text" class="form-control" v-model="dataStreamFilter" placeholder="Start typing data stream name..." required="true">
+	  										<input type="text" class="form-control" v-model="dataStreamFilter" placeholder="Start typing data stream name..." required="true">
 
-		  								</div>
-		  							</div>
-		  						</div>
-		  						<div class="col-md-2">
-		  							<!-- Button trigger modal -->
-		  							<!--br-->
-		  							<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addDataStreamModal"><strong>Add new data stream</strong></button>	
-		  						</div>
-		  					</div>
+	  									</div>
+	  								</div>
+	  							</div>
+	  							<div class="col-md-2">
+	  								<!-- Button trigger modal -->
+	  								<!--br-->
+	  								<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addDataStreamModal"><strong>Add new data stream</strong></button>	
+	  							</div>
+	  						</div>
 
-		  					<table class="table table-striped table-responsive">
-		  						<thead class="thead-dark">
-		  							<tr>
-		  								<th scope="col">Name</th>
-		  							</tr>
-		  						</thead>
-		  						<tbody class="table-hover">
-		  							<!--tr v-for="t in triggersForPage" v-bind:trigger="t" is="trigger-table-row"></tr--> 
-		  							<!--Refenrenced in ..... https://github.com/vuejs/Discussion/issues/204 -->
+	  						<table class="table table-striped table-responsive">
+	  							<thead class="thead-dark">
+	  								<tr>
+	  									<th scope="col">Name</th>
+	  									<th scope="col"></th>
+	  									<th scope="col"></th>
+	  								</tr>
+	  							</thead>
+	  							<tbody class="table-hover">
+	  								<!--tr v-for="t in triggersForPage" v-bind:trigger="t" is="trigger-table-row"></tr--> 
+	  								<!--Refenrenced in ..... https://github.com/vuejs/Discussion/issues/204 -->
 
-		  							<tr v-for="(dataStream, index) in dataStreamsForPage">
-		  								<td>{{dataStream.name}}</td>
-		  								<td>
-		  									<button type="button" class="btn btn-info btn-block" v-on:click="editDataStream(dataStream)" data-toggle="modal" data-target="#editDataStreamModal">
-		  										<i class="fa fa-pencil-square-o"></i>
-		  									</button>
-		  								</td>
-		  								<td>
-		  									<button type="button" class="btn btn-danger btn-block" data-toggle="modal" @click="removeDataStream(dataStream)" data-target="#deleteDataStreamModal">
-		  										<i class="fa fa-remove"></i>
-		  									</button>
-		  								</td>
-		  							</tr>
-		  						</tbody>
-		  					</table>
+	  								<tr v-for="(dataStream, index) in dataStreamsForPage">
+	  									<td>{{dataStream.name}}</td>
+	  									<td>
+	  										<button type="button" class="btn btn-info btn-block" v-on:click="editDataStream(dataStream)" data-toggle="modal" data-target="#editDataStreamModal">
+	  											<i class="fa fa-pencil-square-o"></i>
+	  										</button>
+	  									</td>
+	  									<td>
+	  										<button type="button" class="btn btn-danger btn-block" data-toggle="modal" @click="removeDataStream(dataStream)" data-target="#deleteDataStreamModal">
+	  											<i class="fa fa-remove"></i>
+	  										</button>
+	  									</td>
+	  								</tr>
+	  							</tbody>
+	  						</table>
 
-		  					<!--     Table pagination     -->
-		  					<nav aria-label="Page navigation data streams">
-		  						<ul class="pagination justify-content-center">
-		  							<li v-if="currentPage>1" class="page-item">
-		  								<a v-on:click="dataStreamsForPage = displayPrevPage(maxDataStreamsPerPage, dataStreamsForPage, filteredDataStreams)" class="page-link" href="#" tabindex="-1">Previous</a>
-		  							</li>
-		  							<li class="page-item" v-for="number in pagesNeededForDataStreams" v-on:click="dataStreamsForPage = getElementsToShowInTable(number, maxDataStreamsPerPage, dataStreamsForPage, filteredDataStreams)"><a class="page-link" href="#">{{number}}</a></li>
-		  							<li v-if="currentPage<pagesNeededForDataStreams" class="page-item">
-		  								<a v-on:click="dataStreamsForPage = displayNextPage(maxDataStreamsPerPage, dataStreamsForPage, filteredDataStreams)" class="page-link" href="#">Next</a>
-		  							</li>
-		  						</ul>
-		  					</nav>
+	  						<!--     Table pagination     -->
+	  						<nav aria-label="Page navigation data streams">
+	  							<ul class="pagination justify-content-center">
+	  								<li v-if="currentPage>1" class="page-item">
+	  									<a v-on:click="dataStreamsForPage = displayPrevPage(maxDataStreamsPerPage, dataStreamsForPage, filteredDataStreams)" class="page-link" href="#" tabindex="-1">Previous</a>
+	  								</li>
+	  								<li class="page-item" v-for="number in pagesNeededForDataStreams" v-on:click="dataStreamsForPage = getElementsToShowInTable(number, maxDataStreamsPerPage, dataStreamsForPage, filteredDataStreams)"><a class="page-link" href="#">{{number}}</a></li>
+	  								<li v-if="currentPage<pagesNeededForDataStreams" class="page-item">
+	  									<a v-on:click="dataStreamsForPage = displayNextPage(maxDataStreamsPerPage, dataStreamsForPage, filteredDataStreams)" class="page-link" href="#">Next</a>
+	  								</li>
+	  							</ul>
+	  						</nav>
 	  					</div>
 
 	  					<div class="col-md-2">
@@ -577,216 +579,111 @@
 
 	  		<!-- div for showing the Actions add view -->
 	  		<div id="actions" v-if="renderActionAddView"> 
-	  			<div class="container">
-	  				<div class="row">
-	  					<br>
+	  			<div class="row">
+	  				<br>
 
-	  					<div class="col-md-2">
-	  					</div>
-
-	  					<div class="col-md-8">
-	  						<h4 class="mb-3 text-center"><strong>Add Action</strong></h4>
-	  						<!--h6 class="text-muted text-center"><em><small>You trigger an ACTION based on a CONDITION that needs to be checked according to some POLICY</em></small></h6-->
-	  						<hr>
-	  						<form class="needs-validation" novalidate="">
-
-	  							<div class="mb-3">
-	  								<label for="actionName">Name</label>
-	  								<div class="input-group">
-	  									<div class="input-group-prepend">
-	  										<span class="input-group-text"><i class="fa fa-font"></i></span>
-	  									</div>
-	  									<input type="text" class="form-control" id="actionName" placeholder="Action Name" required="true">
-	  									<div class="invalid-feedback" style="width: 100%;">
-	  										The Action name is required.
-	  									</div>
-	  								</div>
-	  							</div>
-
-
-	  							<hr>
-	  							<div>
-	  								<label class="custom-control-label" for="triggerPolicy"><h4><strong>HTTP Request</strong></h4></label>
-	  							</div>
-	  							<hr>
-
-
-
-	  							<div class="mb-3">
-	  								<label for="httpMethod">Method</label>
-	  								<div class="input-group">
-	  									<div class="input-group-prepend">
-	  										<span class="input-group-text"><i class="fa fa-star-o"></i></span>
-	  									</div>
-	  									<select class="form-control custom-select" id="days" placeholder="POST" required="true">
-	  										<option value="monday">DELETE</option>
-	  										<option value="tuesday">GET</option>
-	  										<option value="wednesday">HEAD</option>
-	  										<option value="wednesday">OPTIONS</option>
-	  										<option value="wednesday">PATCH</option>
-	  										<option value="wednesday">POST</option>
-	  										<option value="wednesday">PUT</option>
-	  										<option value="wednesday">TRACE</option>
-	  									</select>
-	  									<div class="invalid-feedback" style="width: 100%;">
-	  										The HTTP Method is required.
-	  									</div>
-	  								</div>
-	  							</div>
-
-	  							<div class="mb-3">
-	  								<label for="triggerName">URL</label>
-	  								<div class="input-group">
-	  									<div class="input-group-prepend">
-	  										<span class="input-group-text"><i class="fa fa-external-link"></i></span>
-	  									</div>
-	  									<input type="text" class="form-control" id="triggerName" placeholder="http://foo" required="true">
-	  									<div class="invalid-feedback" style="width: 100%;">
-	  										The Action name is required.
-	  									</div>
-	  								</div>
-	  							</div>
-
-	  							<div class="mb-3">
-	  								<label for="triggerName">Version</label>
-	  								<div class="input-group">
-	  									<div class="input-group-prepend">
-	  										<span class="input-group-text"><i class="fa fa-code"></i></span>
-	  									</div>
-	  									<input type="text" class="form-control" id="triggerName" placeholder="HTTP request version" required="true">
-	  									<div class="invalid-feedback" style="width: 100%;">
-	  										The Action name is required.
-	  									</div>
-	  								</div>
-	  							</div>
-
-
-	  							<div class="mb-3">
-	  								<label for="triggerName">Body</label>
-	  							</div>
-	  							<hr>
-
-
-	  							<div class="row">
-	  								<div class="col-md-3">
-	  									<button class="btn btn-info btn-lg btn-block" v-on:click="addOneMoreElemsForActionRequestBody()"><strong>Add parameter</strong></button>
-	  								</div>
-	  							</div>
-
-
-	  							<div class="row" v-for="(elem, index) in activeIdsForHttpRequestBody">
-
-	  								<div class="col-md-5">
-	  									<div class="mb-3">
-	  										<label for="triggerName">Key</label>
-	  										<div class="input-group">
-	  											<div class="input-group-prepend">
-	  												<span class="input-group-text"><i class="fa fa-key"></i></span>
-	  											</div>
-	  											<input type="text" class="form-control" v-model="elem.key" placeholder="Parameter key" required="true">
-	  											<div class="invalid-feedback" style="width: 100%;">
-	  												The parameter key is required.
-	  											</div>
-	  										</div>
-	  									</div>
-	  								</div>
-
-	  								<div class="col-md-6">
-	  									<div class="mb-3">
-	  										<label for="triggerName">Value</label>
-	  										<div class="input-group">
-	  											<div class="input-group-prepend">
-	  												<span class="input-group-text"><i class="fa fa-pencil-square-o"></i></span>
-	  											</div>
-	  											<input type="text" class="form-control" v-model="elem.value" placeholder="Parameter value" required="true">
-	  											<div class="invalid-feedback" style="width: 100%;">
-	  												The parameter value is required.
-	  											</div>
-	  										</div>
-	  									</div>
-	  								</div>
-
-	  								<div class="col-md-1">
-	  									<div class="mb-3">
-	  										<label></label>
-	  										<button class="btn btn-danger" @click="oneLessElemForActionRequestBody(index)"><strong><i class="fa fa-remove"></i></strong></button>
-	  									</div>
-	  								</div>
-
-	  							</div>
-
-	  							<!--key-value-entry v-for="elem in elemsForActionRequestBody" v-bind:entryId="elem"></key-value-entry-->
-
-
-
-	  							<hr>
-	  							<div>
-	  								<label class="custom-control-label" for="triggerPolicy"><h4><strong>HTTP Headers</strong></h4></label>
-	  							</div>
-	  							<hr>
-
-
-	  							<div class="row">
-	  								<div class="col-md-3">
-	  									<button class="btn btn-info btn-lg btn-block" v-on:click="addOneMoreElemsForActionRequestHeader()"><strong>Add parameter</strong></button>
-	  								</div>
-	  							</div>
-
-
-	  							<div class="row" v-for="(elem, index) in activeIdsForHttpRequestHeader">
-
-	  								<div class="col-md-5">
-	  									<div class="mb-3">
-	  										<label for="triggerName">Key</label>
-	  										<div class="input-group">
-	  											<div class="input-group-prepend">
-	  												<span class="input-group-text"><i class="fa fa-key"></i></span>
-	  											</div>
-	  											<input type="text" class="form-control" v-model="elem.key" placeholder="Parameter key" required="true">
-	  											<div class="invalid-feedback" style="width: 100%;">
-	  												The Action name is required.
-	  											</div>
-	  										</div>
-	  									</div>
-	  								</div>
-
-	  								<div class="col-md-6">
-	  									<div class="mb-3">
-	  										<label for="triggerName">Value</label>
-	  										<div class="input-group">
-	  											<div class="input-group-prepend">
-	  												<span class="input-group-text"><i class="fa fa-pencil-square-o"></i></span>
-	  											</div>
-	  											<input type="text" class="form-control" v-model="elem.value" placeholder="Parameter value" required="true">
-	  											<div class="invalid-feedback" style="width: 100%;">
-	  												The Action name is required.
-	  											</div>
-	  										</div>
-	  									</div>
-	  								</div>
-
-	  								<div class="col-md-1">
-	  									<div class="mb-3">
-	  										<label></label>
-	  										<button class="btn btn-danger" @click="oneLessElemForActionRequestHeader(index)"><strong><i class="fa fa-remove"></i></strong></button>
-	  									</div>
-	  								</div>
-
-	  							</div>
-
-
-	  							<hr class="mb-3">
-	  							<button class="btn btn-primary btn-lg btn-block" type="submit"><h5><strong>Add action</strong></h5></button>
-
-	  						</form>
-	  					</div>
-
-	  					<div class="col-md-2">
-	  					</div>					
+	  				<div class="col-md-1">
 	  				</div>
 
+	  				<div class="col-md-10">
 
+	  					<h4 class="mb-3 text-center"><strong>Existing actions</strong></h4>
+	  					<hr>
+
+	  					<div class="row">
+	  						<div class="col-md-10">
+	  							<div class="mb-3">
+	  								<!--label for="triggerSearchName"><strong>Filter trigger</strong></label-->
+	  								<div class="input-group">
+	  									<div class="input-group-prepend">
+	  										<span class="input-group-text"><i class="fa fa-search"></i></span>
+	  									</div>
+
+	  									<input type="text" class="form-control" v-model="actionFilter" placeholder="Start typing to filter actions..." required="true">
+
+	  								</div>
+	  							</div>
+	  						</div>
+	  						<div class="col-md-2">
+	  							<!-- Button trigger modal -->
+	  							<!--br-->
+	  							<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addActionModal"><strong>Add new data stream</strong></button>	
+	  						</div>
+	  					</div>
+
+	  					<table class="table table-striped table-responsive">
+	  						<thead class="thead-dark">
+	  							<tr>
+	  								<th scope="col">Name</th>
+	  								<th scope="col">Type</th>
+	  								<th scope="col">Priority</th>
+	  								<th scope="col">Method</th>
+	  								<th scope="col">URL</th>
+	  								<th scope="col">Version</th>
+	  								<th scope="col">Body</th>
+	  								<th scope="col">Headers</th>
+	  								<th scope="col"></th>
+	  								<th scope="col"></th>
+	  							</tr>
+	  						</thead>
+	  						<tbody class="table-hover">
+	  							<!--tr v-for="t in triggersForPage" v-bind:trigger="t" is="trigger-table-row"></tr--> 
+	  							<!--Refenrenced in ..... https://github.com/vuejs/Discussion/issues/204 -->
+
+	  							<tr v-for="(action, index) in actionsForPage">
+	  								<td>{{action.name}}</td>
+	  								<td>{{action.type}}</td>
+
+	  								<td v-if="action.priority!=undefined">{{action.priority}}</td>
+	  								<td v-else class="text-center">-</td>
+
+	  								<td v-if="action.method!=undefined">{{action.method}}</td>
+	  								<td v-else class="text-center">-</td>
+
+	  								<td v-if="action.url!=undefined">{{action.url}}</td>
+	  								<td v-else class="text-center">-</td>
+
+	  								<td v-if="action.version!=undefined">{{action.version}}</td>
+	  								<td v-else class="text-center">-</td>
+
+	  								<td v-if="action.body!=undefined">{{action.body}}</td>
+	  								<td v-else class="text-center">-</td>
+
+	  								<td v-if="action.headers!=undefined">{{action.headers}}</td>
+	  								<td v-else class="text-center">-</td>	
+
+	  								<td>
+	  									<button type="button" class="btn btn-info btn-block" v-on:click="editAction(action)" data-toggle="modal" data-target="#editActionModal">
+	  										<i class="fa fa-pencil-square-o"></i>
+	  									</button>
+	  								</td>
+	  								<td>
+	  									<button type="button" class="btn btn-danger btn-block" data-toggle="modal" @click="removeAction(action)" data-target="#deleteActionModal">
+	  										<i class="fa fa-remove"></i>
+	  									</button>
+	  								</td>
+	  							</tr>
+	  						</tbody>
+	  					</table>
+
+	  					<!--     Table pagination     -->
+	  					<nav aria-label="Page navigation data streams">
+	  						<ul class="pagination justify-content-center">
+	  							<li v-if="currentPage>1" class="page-item">
+	  								<a v-on:click="actionsForPage = displayPrevPage(maxActionsPerPage, actionsForPage, filteredActions)" class="page-link" href="#" tabindex="-1">Previous</a>
+	  							</li>
+	  							<li class="page-item" v-for="number in pagesNeededForActions" v-on:click="actionsForPage = getElementsToShowInTable(number, maxActionsPerPage, actionsForPage, filteredActions)"><a class="page-link" href="#">{{number}}</a></li>
+	  							<li v-if="currentPage<pagesNeededForActions" class="page-item">
+	  								<a v-on:click="actionsForPage = displayNextPage(maxActionsPerPage, actionsForPage, filteredActions)" class="page-link" href="#">Next</a>
+	  							</li>
+	  						</ul>
+	  					</nav>
+	  				</div>
+
+	  				<div class="col-md-1">
+	  				</div>
 	  			</div>
+
 	  		</div>
 
 	  		<!-- div for showing the Actions remove view -->
@@ -905,6 +802,73 @@
 	  				</div>
 
 
+	  			</div>
+
+	  			<ul class="nav nav-tabs" id="myTab" role="tablist">
+	  				<li class="nav-item">
+	  					<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
+	  				</li>
+	  				<li class="nav-item">
+	  					<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
+	  				</li>
+	  				<li class="nav-item">
+	  					<a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
+	  				</li>
+	  			</ul>
+	  			<div class="tab-content" id="myTabContent">
+	  				<!--form class="needs-validation" novalidate=""-->
+	  				<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+	  					<!--div class="mb-3"-->
+	  					<label for="actionName">Name</label>
+	  					<div class="input-group">
+	  						<div class="input-group-prepend">
+	  							<span class="input-group-text"><i class="fa fa-font"></i></span>
+	  						</div>
+	  						<input type="text" class="form-control" id="actionName" placeholder="Action Name" required="true">
+	  						<div class="invalid-feedback" style="width: 100%;">
+	  							The Action name is required.
+	  						</div>
+	  					</div>
+	  					<!--/div-->
+	  				</div>
+	  				<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+	  					<!--div class="mb-3"-->
+	  					<label for="httpMethod">Method</label>
+	  					<div class="input-group">
+	  						<div class="input-group-prepend">
+	  							<span class="input-group-text"><i class="fa fa-star-o"></i></span>
+	  						</div>
+	  						<select class="form-control custom-select" id="days" placeholder="POST" required="true">
+	  							<option value="monday">DELETE</option>
+	  							<option value="tuesday">GET</option>
+	  							<option value="wednesday">HEAD</option>
+	  							<option value="wednesday">OPTIONS</option>
+	  							<option value="wednesday">PATCH</option>
+	  							<option value="wednesday">POST</option>
+	  							<option value="wednesday">PUT</option>
+	  							<option value="wednesday">TRACE</option>
+	  						</select>
+	  						<div class="invalid-feedback" style="width: 100%;">
+	  							The HTTP Method is required.
+	  						</div>
+	  					</div>
+	  					<!--/div-->
+	  				</div>
+	  				<div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+	  					<!--div class="mb-3"-->
+	  					<label for="actionURL">URL</label>
+	  					<div class="input-group">
+	  						<div class="input-group-prepend">
+	  							<span class="input-group-text"><i class="fa fa-external-link"></i></span>
+	  						</div>
+	  						<input type="text" class="form-control" id="triggerName" placeholder="http://foo" required="true">
+	  						<div class="invalid-feedback" style="width: 100%;">
+	  							The Action name is required.
+	  						</div>
+	  					</div>
+	  					<!--/div-->
+	  				</div>
+	  				<!--/form-->
 	  			</div>
 	  		</div>
 
@@ -1116,21 +1080,17 @@
 	  			</div>
 	  		</div>
 
-	  		<!-- Modal for addding triggers-->
-	  		<div class="modal fade" id="addTriggerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  		<!-- Modal for addding data streams-->
+	  		<div class="modal fade" id="addDataStreamModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	  			<div class="modal-dialog modal-lg" role="document">
 	  				<div class="modal-content">
 	  					<div class="modal-header">
-	  						<h4 class="modal-title" id="exampleModalLabel"><strong>Add Trigger</strong></h4>
+	  						<h4 class="modal-title" id="exampleModalLabel"><strong>Add Data Stream</strong></h4>
 	  						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	  							<span aria-hidden="true">&times;</span>
 	  						</button>
 	  					</div>
 	  					<div class="modal-body">
-	  						<!--br-->
-	  						<!--h4 class="mb-3 text-center"><strong>Add Trigger</strong></h4-->
-	  						<h6 class="text-muted text-center"><em><small>You trigger an ACTION based on a CONDITION that needs to be checked according to some POLICY</em></small></h6>
-	  						<hr>
 
 	  						<form class="needs-validation" novalidate="">
 
@@ -1147,269 +1107,20 @@
 	  								</div>
 	  							</div>
 
-	  							<div class="mb-3">
-	  								<label for="triggerName">Action associated</label>
-	  								<div class="input-group">
-	  									<div class="input-group-prepend">
-	  										<span class="input-group-text"><i class="fa fa-star-o"></i></span>
-	  									</div>
-	  									<select class="form-control custom-select" id="days" placeholder="" required="true">
-	  										<option value="monday">Tweet</option>
-	  										<option value="tuesday">Make Facebook Post</option>
-	  										<option value="wednesday">Send Email</option>
-	  										<option value="thursday">Start Engine Alfa</option>
-	  										<option value="friday">Sense Temperature</option>
-	  									</select>
-	  									<div class="invalid-feedback" style="width: 100%;">
-	  										The Trigger name is required.
-	  									</div>
-	  								</div>
-	  							</div>
-
-
-	  							<hr>
-	  							<div>
-	  								<label class="custom-control-label" for="triggerPolicy"><h4><strong>Policy</strong></h4></label>
-	  							</div>
-	  							<hr>
-
-	  							<div class="row">
-	  								<div class="col-md-6 mb-3">
-	  									<div class="custom-control custom-radio">
-	  										<input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked="" required="" v-on:click="dataPointPolicy()">
-	  										<label class="custom-control-label" for="credit">Data Point Registration</label>
-	  									</div>
-	  								</div>
-	  								<div class="col-md-6 mb-3">
-	  									<div class="custom-control custom-radio">
-	  										<input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required="" v-on:click="timePeriodPolicy()">
-	  										<label class="custom-control-label" for="debit">Time Period</label>
-	  									</div>
-	  								</div>
-	  							</div>
-
-	  							<div v-if="isTimePeriodPolicy">
-
-	  								<div class="mb-3">
-	  									<label for="triggerName">Starting from</label>
-	  									<div class="input-group">
-	  										<div class="input-group-prepend">
-	  											<span class="input-group-text"><i class="fa fa-calendar-plus-o"></i></span>
-	  										</div>  
-	  										<input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="a">
-	  										<div class="invalid-feedback" style="width: 100%;">
-	  											The Trigger name is required.
-	  										</div>
-	  									</div>
-	  								</div>
-
-
-	  								<div class="mb-3">
-	  									<label for="triggerName">Ending on</label>
-	  									<div class="input-group">
-	  										<div class="input-group-prepend">
-	  											<span class="input-group-text"><i class="fa fa-calendar-times-o"></i></span>
-	  										</div>  
-	  										<input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="a">
-	  										<div class="invalid-feedback" style="width: 100%;">
-	  											The Trigger name is required.
-	  										</div>
-	  									</div>
-	  								</div>
-
-	  							</div>
-
-	  							<div v-else>
-
-	  								<div class="mb-3">
-	  									<label for="triggerName">From Data Stream</label>
-	  									<div class="input-group">
-	  										<div class="input-group-prepend">
-	  											<span class="input-group-text"><i class="fa fa-diamond"></i></span>
-	  										</div>
-	  										<select class="form-control custom-select" id="days" placeholder="" required="true">
-	  											<option v-for="dS in dataStreams" value="dS">{{dS}}</option>
-	  										</select>
-	  										<div class="invalid-feedback" style="width: 100%;">
-	  											The Trigger name is required.
-	  										</div>
-	  									</div>
-	  								</div>
-
-	  							</div>
-
-	  							<hr>
-	  							<div>
-	  								<label class="custom-control-label" for="triggerPolicy"><h4><strong>Condition</strong></h4></label>
-	  							</div>
-	  							<hr>
-
-	  							<div class="mb-3">
-	  								<div class="input-group">
-	  									<div class="input-group-prepend">
-	  										<span class="input-group-text"><i class="fa fa-exclamation"></i></span>
-	  									</div>
-	  									<select class="form-control custom-select" id="days" placeholder="" required="true" v-model="conditionSelected">
-	  										<option v-for="condition in triggerConditions" v-bind:value="{ id: condition.id, text: condition.name }">{{ condition.name }}</option>
-	  									</select>
-	  									<div class="invalid-feedback" style="width: 100%;">
-	  										The Trigger name is required.
-	  									</div>
-	  								</div>
-	  							</div>
-
-	  							<div class="mb-3" v-if="conditionSelected.id==2 || conditionSelected.id==3">
-	  								<label for="dataStreamName">From Data Stream</label>
-	  								<div class="input-group">
-	  									<div class="input-group-prepend">
-	  										<span class="input-group-text"><i class="fa fa-diamond"></i></span>
-	  									</div>
-	  									<select class="form-control custom-select" id="days" placeholder="" required="true">
-	  										<option v-for="dS in dataStreams" value="dS">{{dS}}</option>
-	  									</select>
-	  									<div class="invalid-feedback" style="width: 100%;">
-	  										The Trigger name is required.
-	  									</div>
-	  								</div>
-	  							</div>
-
-
-	  							<div v-if="conditionSelected.id==2">
-	  								<div class="row">
-	  									<div class="col-md-4 mb-3">
-	  										<label for="cc-number">Value</label>
-	  										<input class="form-control" type="text" placeholder="Data-Stream current value" readonly>
-	  									</div>
-	  									<div class="col-md-4 mb-3">
-	  										<label for="cc-name">Condition</label>
-	  										<select class="form-control custom-select" id="currentValueCond" placeholder="" required="true">
-	  											<option value="monday">greater than</option>
-	  											<option value="monday">less than</option>
-	  											<option value="monday">equal to</option>
-	  											<option value="monday">different to</option>
-	  										</select>
-	  										<div class="invalid-feedback">
-	  											Name on card is required
-	  										</div>
-	  									</div>
-	  									<div class="col-md-4 mb-3">
-	  										<label for="cc-number">Defined value</label>
-	  										<input type="text" class="form-control" id="cc-number" placeholder="0" required="">
-	  										<div class="invalid-feedback">
-	  											Credit card number is required
-	  										</div>
-	  									</div>
-	  								</div>
-	  							</div>
-
-
-	  							<div v-if="conditionSelected.id==3">
-	  								<label for="triggerName">For more than...</label>
-	  								<div class="row">
-	  									<div class="col-md-2 mb-3">
-	  										<label for="cc-number">Months</label>
-	  										<input type="text" class="form-control" id="cc-number" placeholder="0" required="" v-model="dataStreamNotUpdatedFrom.months">
-	  										<div class="invalid-feedback">
-	  											Credit card number is required
-	  										</div>
-	  									</div>
-	  									<div class="col-md-2 mb-3">
-	  										<label for="cc-name">Weeks</label>
-	  										<input type="text" class="form-control" id="cc-name" placeholder="0" required="" v-model="dataStreamNotUpdatedFrom.weeks">
-	  										<div class="invalid-feedback">
-	  											Name on card is required
-	  										</div>
-	  									</div>
-	  									<div class="col-md-2 mb-3">
-	  										<label for="cc-number">Days</label>
-	  										<input type="text" class="form-control" id="cc-number" placeholder="0" required="" v-model="dataStreamNotUpdatedFrom.days">
-	  										<div class="invalid-feedback">
-	  											Credit card number is required
-	  										</div>
-	  									</div>
-	  									<div class="col-md-2 mb-3">
-	  										<label for="cc-number">Hours</label>
-	  										<input type="text" class="form-control" id="cc-number" placeholder="0" required="" v-model="dataStreamNotUpdatedFrom.hours">
-	  										<div class="invalid-feedback">
-	  											Credit card number is required
-	  										</div>
-	  									</div>
-	  									<div class="col-md-2 mb-3">
-	  										<label for="cc-number">Minutes</label>
-	  										<input type="text" class="form-control" id="cc-number" placeholder="0" required="" v-model="dataStreamNotUpdatedFrom.minutes">
-	  										<div class="invalid-feedback">
-	  											Credit card number is required
-	  										</div>
-	  									</div>
-	  									<div class="col-md-2 mb-3">
-	  										<label for="cc-number">Seconds</label>
-	  										<input type="text" class="form-control" id="cc-number" placeholder="0" required="" v-model="dataStreamNotUpdatedFrom.seconds">
-	  										<div class="invalid-feedback">
-	  											Credit card number is required
-	  										</div>
-	  									</div>
-	  								</div>
-	  								<label for="triggerName" style="font-style: italic;">For more than {{dataStreamNotUpdatedFrom.months}} months, {{dataStreamNotUpdatedFrom.weeks}} weeks, {{dataStreamNotUpdatedFrom.days}} days, {{dataStreamNotUpdatedFrom.hours}} hours, {{dataStreamNotUpdatedFrom.minutes}} minutes and {{dataStreamNotUpdatedFrom.seconds}} seconds</label>     
-	  							</div>
-
-	  							<div v-if="conditionSelected.id==4">
-	  								<div class="mb-3">
-	  									<label for="triggerName">From</label>
-	  									<div class="input-group">
-	  										<div class="input-group-prepend">
-	  											<span class="input-group-text"><i class="fa fa-calendar-plus-o"></i></span>
-	  										</div>  
-	  										<input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="a">
-	  										<div class="invalid-feedback" style="width: 100%;">
-	  											The Trigger name is required.
-	  										</div>
-	  									</div>
-	  								</div>
-
-	  								<div class="mb-3">
-	  									<label for="triggerName">To</label>
-	  									<div class="input-group">
-	  										<div class="input-group-prepend">
-	  											<span class="input-group-text"><i class="fa fa-calendar-times-o"></i></span>
-	  										</div>  
-	  										<input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="a">
-	  										<div class="invalid-feedback" style="width: 100%;">
-	  											The Trigger name is required.
-	  										</div>
-	  									</div>
-	  								</div>
-	  							</div>
-
-
-	  							<div class="row">
-	  								<div class="col-md-3">
-	  								</div>
-	  								<div class="col-md-3">
-	  								</div>
-	  								<div class="col-md-3">
-	  									<button class="btn btn-primary btn-lg btn-block"><strong>Add new condition</strong></button>
-	  								</div>
-	  								<div class="col-md-3">
-	  									<button class="btn btn-danger btn-lg btn-block"><strong>Forget condition</strong></button>
-	  								</div>
-	  							</div>
-
-
-	  							<hr class="mb-3">
+	  							<hr class="mb-3">	
 	  							<button class="btn btn-primary btn-lg btn-block" type="submit"><h5><strong>Add trigger</strong></h5></button>
 	  						</form>
 	  					</div>
 	  				</div>
 	  			</div>
 	  		</div>
-	  		<!--/div-->
 
-	  		<!-- Modal for editing triggers-->
-	  		<div class="modal fade" id="editTriggerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  		<!-- Modal for editing data streams-->
+	  		<div class="modal fade" id="editDataStreamModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	  			<div class="modal-dialog modal-lg" role="document">
 	  				<div class="modal-content">
 	  					<div class="modal-header">
-	  						<h4 class="modal-title" id="exampleModalLabel"><strong>Edit Trigger</strong></h4>
+	  						<h4 class="modal-title" id="exampleModalLabel"><strong>Edit Data Stream</strong></h4>
 	  						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	  							<span aria-hidden="true">&times;</span>
 	  						</button>
@@ -1419,263 +1130,17 @@
 	  						<form class="needs-validation" novalidate="">
 
 	  							<div class="mb-3">
-	  								<label for="triggerName">Name</label>
+	  								<label for="dataStreamName">Name</label>
 	  								<div class="input-group">
 	  									<div class="input-group-prepend">
 	  										<span class="input-group-text"><i class="fa fa-font"></i></span>
 	  									</div>
-	  									<input type="text" class="form-control" id="triggerName" v-bind:placeholder="this.activeTrigger.name" required="true">
+	  									<input type="text" class="form-control" id="dataStreamName" v-bind:placeholder="this.activeDataStream.name" required="true">
 	  									<div class="invalid-feedback" style="width: 100%;">
-	  										The Trigger name is required.
+	  										The data stream name is required.
 	  									</div>
 	  								</div>
 	  							</div>
-
-	  							<div class="mb-3">
-	  								<label for="triggerName">Action associated</label>
-	  								<div class="input-group">
-	  									<div class="input-group-prepend">
-	  										<span class="input-group-text"><i class="fa fa-star-o"></i></span>
-	  									</div>
-	  									<select class="form-control custom-select" v-model="this.activeTrigger.action" required="true">
-	  										<option v-for="(action, index) in availableActions" v-bind:value="action.name">
-	  											{{action.name}}
-	  										</option>
-	  									</select>
-	  									<div class="invalid-feedback" style="width: 100%;">
-	  										The Trigger name is required.
-	  									</div>
-	  								</div>
-	  							</div>
-
-
-	  							<hr>
-	  							<div>
-	  								<label class="custom-control-label" for="triggerPolicy"><h4><strong>Policy</strong></h4></label>
-	  							</div>
-	  							<hr>
-
-	  							<div class="row">
-	  								<div class="col-md-6 mb-3">
-	  									<div class="custom-control custom-radio">
-	  										<input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked="" required="" v-on:click="dataPointPolicy()">
-	  										<label class="custom-control-label" for="credit">Data Point Registration</label>
-	  									</div>
-	  								</div>
-	  								<div class="col-md-6 mb-3">
-	  									<div class="custom-control custom-radio">
-	  										<input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required="" v-on:click="timePeriodPolicy()">
-	  										<label class="custom-control-label" for="debit">Time Period</label>
-	  									</div>
-	  								</div>
-	  							</div>
-
-	  							<div v-if="isTimePeriodPolicy">
-
-	  								<div class="mb-3">
-	  									<label for="triggerName">Starting from</label>
-	  									<div class="input-group">
-	  										<div class="input-group-prepend">
-	  											<span class="input-group-text"><i class="fa fa-calendar-plus-o"></i></span>
-	  										</div>  
-	  										<input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="a">
-	  										<div class="invalid-feedback" style="width: 100%;">
-	  											The Trigger name is required.
-	  										</div>
-	  									</div>
-	  								</div>
-
-
-	  								<div class="mb-3">
-	  									<label for="triggerName">Ending on</label>
-	  									<div class="input-group">
-	  										<div class="input-group-prepend">
-	  											<span class="input-group-text"><i class="fa fa-calendar-times-o"></i></span>
-	  										</div>  
-	  										<input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="a">
-	  										<div class="invalid-feedback" style="width: 100%;">
-	  											The Trigger name is required.
-	  										</div>
-	  									</div>
-	  								</div>
-
-	  							</div>
-
-	  							<div v-else>
-
-	  								<div class="mb-3">
-	  									<label for="triggerName">From Data Stream</label>
-	  									<div class="input-group">
-	  										<div class="input-group-prepend">
-	  											<span class="input-group-text"><i class="fa fa-diamond"></i></span>
-	  										</div>
-	  										<select class="form-control custom-select" id="days" placeholder="" required="true">
-	  											<option v-for="dS in dataStreams" value="dS">{{dS}}</option>
-	  										</select>
-	  										<div class="invalid-feedback" style="width: 100%;">
-	  											The Trigger name is required.
-	  										</div>
-	  									</div>
-	  								</div>
-
-	  							</div>
-
-	  							<hr>
-	  							<div>
-	  								<label class="custom-control-label" for="triggerPolicy"><h4><strong>Condition</strong></h4></label>
-	  							</div>
-	  							<hr>
-
-	  							<div class="mb-3">
-	  								<div class="input-group">
-	  									<div class="input-group-prepend">
-	  										<span class="input-group-text"><i class="fa fa-exclamation"></i></span>
-	  									</div>
-	  									<select class="form-control custom-select" id="days" placeholder="" required="true" v-model="conditionSelected">
-	  										<option v-for="condition in triggerConditions" v-bind:value="{ id: condition.id, text: condition.name }">{{ condition.name }}</option>
-	  									</select>
-	  									<div class="invalid-feedback" style="width: 100%;">
-	  										The Trigger name is required.
-	  									</div>
-	  								</div>
-	  							</div>
-
-	  							<div class="mb-3" v-if="conditionSelected.id==2 || conditionSelected.id==3">
-	  								<label for="dataStreamName">From Data Stream</label>
-	  								<div class="input-group">
-	  									<div class="input-group-prepend">
-	  										<span class="input-group-text"><i class="fa fa-diamond"></i></span>
-	  									</div>
-	  									<select class="form-control custom-select" id="days" placeholder="" required="true">
-	  										<option v-for="dS in dataStreams" value="dS">{{dS}}</option>
-	  									</select>
-	  									<div class="invalid-feedback" style="width: 100%;">
-	  										The Trigger name is required.
-	  									</div>
-	  								</div>
-	  							</div>
-
-
-	  							<div v-if="conditionSelected.id==2">
-	  								<div class="row">
-	  									<div class="col-md-4 mb-3">
-	  										<label for="cc-number">Value</label>
-	  										<input class="form-control" type="text" placeholder="Data-Stream current value" readonly>
-	  									</div>
-	  									<div class="col-md-4 mb-3">
-	  										<label for="cc-name">Condition</label>
-	  										<select class="form-control custom-select" id="currentValueCond" placeholder="" required="true">
-	  											<option value="monday">greater than</option>
-	  											<option value="monday">less than</option>
-	  											<option value="monday">equal to</option>
-	  											<option value="monday">different to</option>
-	  										</select>
-	  										<div class="invalid-feedback">
-	  											Name on card is required
-	  										</div>
-	  									</div>
-	  									<div class="col-md-4 mb-3">
-	  										<label for="cc-number">Defined value</label>
-	  										<input type="text" class="form-control" id="cc-number" placeholder="0" required="">
-	  										<div class="invalid-feedback">
-	  											Credit card number is required
-	  										</div>
-	  									</div>
-	  								</div>
-	  							</div>
-
-
-	  							<div v-if="conditionSelected.id==3">
-	  								<label for="triggerName">For more than...</label>
-	  								<div class="row">
-	  									<div class="col-md-2 mb-3">
-	  										<label for="cc-number">Months</label>
-	  										<input type="text" class="form-control" id="cc-number" placeholder="0" required="" v-model="dataStreamNotUpdatedFrom.months">
-	  										<div class="invalid-feedback">
-	  											Credit card number is required
-	  										</div>
-	  									</div>
-	  									<div class="col-md-2 mb-3">
-	  										<label for="cc-name">Weeks</label>
-	  										<input type="text" class="form-control" id="cc-name" placeholder="0" required="" v-model="dataStreamNotUpdatedFrom.weeks">
-	  										<div class="invalid-feedback">
-	  											Name on card is required
-	  										</div>
-	  									</div>
-	  									<div class="col-md-2 mb-3">
-	  										<label for="cc-number">Days</label>
-	  										<input type="text" class="form-control" id="cc-number" placeholder="0" required="" v-model="dataStreamNotUpdatedFrom.days">
-	  										<div class="invalid-feedback">
-	  											Credit card number is required
-	  										</div>
-	  									</div>
-	  									<div class="col-md-2 mb-3">
-	  										<label for="cc-number">Hours</label>
-	  										<input type="text" class="form-control" id="cc-number" placeholder="0" required="" v-model="dataStreamNotUpdatedFrom.hours">
-	  										<div class="invalid-feedback">
-	  											Credit card number is required
-	  										</div>
-	  									</div>
-	  									<div class="col-md-2 mb-3">
-	  										<label for="cc-number">Minutes</label>
-	  										<input type="text" class="form-control" id="cc-number" placeholder="0" required="" v-model="dataStreamNotUpdatedFrom.minutes">
-	  										<div class="invalid-feedback">
-	  											Credit card number is required
-	  										</div>
-	  									</div>
-	  									<div class="col-md-2 mb-3">
-	  										<label for="cc-number">Seconds</label>
-	  										<input type="text" class="form-control" id="cc-number" placeholder="0" required="" v-model="dataStreamNotUpdatedFrom.seconds">
-	  										<div class="invalid-feedback">
-	  											Credit card number is required
-	  										</div>
-	  									</div>
-	  								</div>
-	  								<label for="triggerName" style="font-style: italic;">For more than {{dataStreamNotUpdatedFrom.months}} months, {{dataStreamNotUpdatedFrom.weeks}} weeks, {{dataStreamNotUpdatedFrom.days}} days, {{dataStreamNotUpdatedFrom.hours}} hours, {{dataStreamNotUpdatedFrom.minutes}} minutes and {{dataStreamNotUpdatedFrom.seconds}} seconds</label>     
-	  							</div>
-
-	  							<div v-if="conditionSelected.id==4">
-	  								<div class="mb-3">
-	  									<label for="triggerName">From</label>
-	  									<div class="input-group">
-	  										<div class="input-group-prepend">
-	  											<span class="input-group-text"><i class="fa fa-calendar-plus-o"></i></span>
-	  										</div>  
-	  										<input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="a">
-	  										<div class="invalid-feedback" style="width: 100%;">
-	  											The Trigger name is required.
-	  										</div>
-	  									</div>
-	  								</div>
-
-	  								<div class="mb-3">
-	  									<label for="triggerName">To</label>
-	  									<div class="input-group">
-	  										<div class="input-group-prepend">
-	  											<span class="input-group-text"><i class="fa fa-calendar-times-o"></i></span>
-	  										</div>  
-	  										<input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="a">
-	  										<div class="invalid-feedback" style="width: 100%;">
-	  											The Trigger name is required.
-	  										</div>
-	  									</div>
-	  								</div>
-	  							</div>
-
-
-	  							<div class="row">
-	  								<div class="col-md-3">
-	  								</div>
-	  								<div class="col-md-3">
-	  								</div>
-	  								<div class="col-md-3">
-	  									<button class="btn btn-primary btn-lg btn-block">Add new condition</button>
-	  								</div>
-	  								<div class="col-md-3">
-	  									<button class="btn btn-danger btn-block">Forget condition</button>
-	  								</div>
-	  							</div>
-
 	  						</form>
 	  					</div>
 	  					<div class="modal-footer">
@@ -1686,8 +1151,8 @@
 	  			</div>
 	  		</div>
 
-	  		<!-- Modal for removing triggers-->
-	  		<div class="modal fade" id="deleteTriggerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  		<!-- Modal for removing data streams-->
+	  		<div class="modal fade" id="deleteDataStreamModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	  			<div class="modal-dialog modal-lg" role="document">
 	  				<div class="modal-content">
 	  					<div class="modal-header">
@@ -1697,77 +1162,669 @@
 	  						</button>
 	  					</div>
 	  					<div class="modal-body text-center">
-	  						<h4>Are you sure you want to delete <strong>{{activeTrigger.name}}<strong> ?</h4>
+	  						<h4>Are you sure you want to delete <strong>{{activeDataStream.name}}<strong> ?</h4>
 	  					</div>
-	  					<div class="modal-footer">
-	  						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-	  						<button type="button" class="btn btn-danger">Delete</button>
+  						<div class="modal-footer">
+  							<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+  							<button type="button" class="btn btn-danger">Delete</button>
+  						</div>
+  					</div>
+  				</div>
+  			</div>
+
+
+	  			<!-- Modal for addding triggers-->
+	  			<div class="modal fade" id="addTriggerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  				<div class="modal-dialog modal-lg" role="document">
+	  					<div class="modal-content">
+	  						<div class="modal-header">
+	  							<h4 class="modal-title" id="exampleModalLabel"><strong>Add Trigger</strong></h4>
+	  							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	  								<span aria-hidden="true">&times;</span>
+	  							</button>
+	  						</div>
+	  						<div class="modal-body">
+	  							<!--br-->
+	  							<!--h4 class="mb-3 text-center"><strong>Add Trigger</strong></h4-->
+	  							<h6 class="text-muted text-center"><em><small>You trigger an ACTION based on a CONDITION that needs to be checked according to some POLICY</em></small></h6>
+	  							<hr>
+
+	  							<form class="needs-validation" novalidate="">
+
+	  								<div class="mb-3">
+	  									<label for="triggerName">Name</label>
+	  									<div class="input-group">
+	  										<div class="input-group-prepend">
+	  											<span class="input-group-text"><i class="fa fa-font"></i></span>
+	  										</div>
+	  										<input type="text" class="form-control" id="triggerName" placeholder="Trigger Name" required="true">
+	  										<div class="invalid-feedback" style="width: 100%;">
+	  											The Trigger name is required.
+	  										</div>
+	  									</div>
+	  								</div>
+
+	  								<div class="mb-3">
+	  									<label for="triggerName">Action associated</label>
+	  									<div class="input-group">
+	  										<div class="input-group-prepend">
+	  											<span class="input-group-text"><i class="fa fa-star-o"></i></span>
+	  										</div>
+	  										<select class="form-control custom-select" id="days" placeholder="" required="true">
+	  											<option value="monday">Tweet</option>
+	  											<option value="tuesday">Make Facebook Post</option>
+	  											<option value="wednesday">Send Email</option>
+	  											<option value="thursday">Start Engine Alfa</option>
+	  											<option value="friday">Sense Temperature</option>
+	  										</select>
+	  										<div class="invalid-feedback" style="width: 100%;">
+	  											The Trigger name is required.
+	  										</div>
+	  									</div>
+	  								</div>
+
+
+	  								<hr>
+	  								<div>
+	  									<label class="custom-control-label" for="triggerPolicy"><h4><strong>Policy</strong></h4></label>
+	  								</div>
+	  								<hr>
+
+	  								<div class="row">
+	  									<div class="col-md-6 mb-3">
+	  										<div class="custom-control custom-radio">
+	  											<input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked="" required="" v-on:click="dataPointPolicy()">
+	  											<label class="custom-control-label" for="credit">Data Point Registration</label>
+	  										</div>
+	  									</div>
+	  									<div class="col-md-6 mb-3">
+	  										<div class="custom-control custom-radio">
+	  											<input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required="" v-on:click="timePeriodPolicy()">
+	  											<label class="custom-control-label" for="debit">Time Period</label>
+	  										</div>
+	  									</div>
+	  								</div>
+
+	  								<div v-if="isTimePeriodPolicy">
+
+	  									<div class="mb-3">
+	  										<label for="triggerName">Starting from</label>
+	  										<div class="input-group">
+	  											<div class="input-group-prepend">
+	  												<span class="input-group-text"><i class="fa fa-calendar-plus-o"></i></span>
+	  											</div>  
+	  											<input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="a">
+	  											<div class="invalid-feedback" style="width: 100%;">
+	  												The Trigger name is required.
+	  											</div>
+	  										</div>
+	  									</div>
+
+
+	  									<div class="mb-3">
+	  										<label for="triggerName">Ending on</label>
+	  										<div class="input-group">
+	  											<div class="input-group-prepend">
+	  												<span class="input-group-text"><i class="fa fa-calendar-times-o"></i></span>
+	  											</div>  
+	  											<input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="a">
+	  											<div class="invalid-feedback" style="width: 100%;">
+	  												The Trigger name is required.
+	  											</div>
+	  										</div>
+	  									</div>
+
+	  								</div>
+
+	  								<div v-else>
+
+	  									<div class="mb-3">
+	  										<label for="triggerName">From Data Stream</label>
+	  										<div class="input-group">
+	  											<div class="input-group-prepend">
+	  												<span class="input-group-text"><i class="fa fa-diamond"></i></span>
+	  											</div>
+	  											<select class="form-control custom-select" id="days" placeholder="" required="true">
+	  												<option v-for="dS in dataStreams" value="dS">{{dS}}</option>
+	  											</select>
+	  											<div class="invalid-feedback" style="width: 100%;">
+	  												The Trigger name is required.
+	  											</div>
+	  										</div>
+	  									</div>
+
+	  								</div>
+
+	  								<hr>
+	  								<div>
+	  									<label class="custom-control-label" for="triggerPolicy"><h4><strong>Condition</strong></h4></label>
+	  								</div>
+	  								<hr>
+
+	  								<div class="mb-3">
+	  									<div class="input-group">
+	  										<div class="input-group-prepend">
+	  											<span class="input-group-text"><i class="fa fa-exclamation"></i></span>
+	  										</div>
+	  										<select class="form-control custom-select" id="days" placeholder="" required="true" v-model="conditionSelected">
+	  											<option v-for="condition in triggerConditions" v-bind:value="{ id: condition.id, text: condition.name }">{{ condition.name }}</option>
+	  										</select>
+	  										<div class="invalid-feedback" style="width: 100%;">
+	  											The Trigger name is required.
+	  										</div>
+	  									</div>
+	  								</div>
+
+	  								<div class="mb-3" v-if="conditionSelected.id==2 || conditionSelected.id==3">
+	  									<label for="dataStreamName">From Data Stream</label>
+	  									<div class="input-group">
+	  										<div class="input-group-prepend">
+	  											<span class="input-group-text"><i class="fa fa-diamond"></i></span>
+	  										</div>
+	  										<select class="form-control custom-select" id="days" placeholder="" required="true">
+	  											<option v-for="dS in dataStreams" value="dS">{{dS}}</option>
+	  										</select>
+	  										<div class="invalid-feedback" style="width: 100%;">
+	  											The Trigger name is required.
+	  										</div>
+	  									</div>
+	  								</div>
+
+
+	  								<div v-if="conditionSelected.id==2">
+	  									<div class="row">
+	  										<div class="col-md-4 mb-3">
+	  											<label for="cc-number">Value</label>
+	  											<input class="form-control" type="text" placeholder="Data-Stream current value" readonly>
+	  										</div>
+	  										<div class="col-md-4 mb-3">
+	  											<label for="cc-name">Condition</label>
+	  											<select class="form-control custom-select" id="currentValueCond" placeholder="" required="true">
+	  												<option value="monday">greater than</option>
+	  												<option value="monday">less than</option>
+	  												<option value="monday">equal to</option>
+	  												<option value="monday">different to</option>
+	  											</select>
+	  											<div class="invalid-feedback">
+	  												Name on card is required
+	  											</div>
+	  										</div>
+	  										<div class="col-md-4 mb-3">
+	  											<label for="cc-number">Defined value</label>
+	  											<input type="text" class="form-control" id="cc-number" placeholder="0" required="">
+	  											<div class="invalid-feedback">
+	  												Credit card number is required
+	  											</div>
+	  										</div>
+	  									</div>
+	  								</div>
+
+
+	  								<div v-if="conditionSelected.id==3">
+	  									<label for="triggerName">For more than...</label>
+	  									<div class="row">
+	  										<div class="col-md-2 mb-3">
+	  											<label for="cc-number">Months</label>
+	  											<input type="text" class="form-control" id="cc-number" placeholder="0" required="" v-model="dataStreamNotUpdatedFrom.months">
+	  											<div class="invalid-feedback">
+	  												Credit card number is required
+	  											</div>
+	  										</div>
+	  										<div class="col-md-2 mb-3">
+	  											<label for="cc-name">Weeks</label>
+	  											<input type="text" class="form-control" id="cc-name" placeholder="0" required="" v-model="dataStreamNotUpdatedFrom.weeks">
+	  											<div class="invalid-feedback">
+	  												Name on card is required
+	  											</div>
+	  										</div>
+	  										<div class="col-md-2 mb-3">
+	  											<label for="cc-number">Days</label>
+	  											<input type="text" class="form-control" id="cc-number" placeholder="0" required="" v-model="dataStreamNotUpdatedFrom.days">
+	  											<div class="invalid-feedback">
+	  												Credit card number is required
+	  											</div>
+	  										</div>
+	  										<div class="col-md-2 mb-3">
+	  											<label for="cc-number">Hours</label>
+	  											<input type="text" class="form-control" id="cc-number" placeholder="0" required="" v-model="dataStreamNotUpdatedFrom.hours">
+	  											<div class="invalid-feedback">
+	  												Credit card number is required
+	  											</div>
+	  										</div>
+	  										<div class="col-md-2 mb-3">
+	  											<label for="cc-number">Minutes</label>
+	  											<input type="text" class="form-control" id="cc-number" placeholder="0" required="" v-model="dataStreamNotUpdatedFrom.minutes">
+	  											<div class="invalid-feedback">
+	  												Credit card number is required
+	  											</div>
+	  										</div>
+	  										<div class="col-md-2 mb-3">
+	  											<label for="cc-number">Seconds</label>
+	  											<input type="text" class="form-control" id="cc-number" placeholder="0" required="" v-model="dataStreamNotUpdatedFrom.seconds">
+	  											<div class="invalid-feedback">
+	  												Credit card number is required
+	  											</div>
+	  										</div>
+	  									</div>
+	  									<label for="triggerName" style="font-style: italic;">For more than {{dataStreamNotUpdatedFrom.months}} months, {{dataStreamNotUpdatedFrom.weeks}} weeks, {{dataStreamNotUpdatedFrom.days}} days, {{dataStreamNotUpdatedFrom.hours}} hours, {{dataStreamNotUpdatedFrom.minutes}} minutes and {{dataStreamNotUpdatedFrom.seconds}} seconds</label>     
+	  								</div>
+
+	  								<div v-if="conditionSelected.id==4">
+	  									<div class="mb-3">
+	  										<label for="triggerName">From</label>
+	  										<div class="input-group">
+	  											<div class="input-group-prepend">
+	  												<span class="input-group-text"><i class="fa fa-calendar-plus-o"></i></span>
+	  											</div>  
+	  											<input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="a">
+	  											<div class="invalid-feedback" style="width: 100%;">
+	  												The Trigger name is required.
+	  											</div>
+	  										</div>
+	  									</div>
+
+	  									<div class="mb-3">
+	  										<label for="triggerName">To</label>
+	  										<div class="input-group">
+	  											<div class="input-group-prepend">
+	  												<span class="input-group-text"><i class="fa fa-calendar-times-o"></i></span>
+	  											</div>  
+	  											<input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="a">
+	  											<div class="invalid-feedback" style="width: 100%;">
+	  												The Trigger name is required.
+	  											</div>
+	  										</div>
+	  									</div>
+	  								</div>
+
+
+	  								<div class="row">
+	  									<div class="col-md-3">
+	  									</div>
+	  									<div class="col-md-3">
+	  									</div>
+	  									<div class="col-md-3">
+	  										<button class="btn btn-primary btn-lg btn-block"><strong>Add new condition</strong></button>
+	  									</div>
+	  									<div class="col-md-3">
+	  										<button class="btn btn-danger btn-lg btn-block"><strong>Forget condition</strong></button>
+	  									</div>
+	  								</div>
+
+
+	  								<hr class="mb-3">
+	  								<button class="btn btn-primary btn-lg btn-block" type="submit"><h5><strong>Add trigger</strong></h5></button>
+	  							</form>
+	  						</div>
 	  					</div>
 	  				</div>
 	  			</div>
-	  		</div>
+	  			<!--/div-->
 
-	  	</div>
+	  			<!-- Modal for editing triggers-->
+	  			<div class="modal fade" id="editTriggerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  				<div class="modal-dialog modal-lg" role="document">
+	  					<div class="modal-content">
+	  						<div class="modal-header">
+	  							<h4 class="modal-title" id="exampleModalLabel"><strong>Edit Trigger</strong></h4>
+	  							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	  								<span aria-hidden="true">&times;</span>
+	  							</button>
+	  						</div>
+	  						<div class="modal-body">
+
+	  							<form class="needs-validation" novalidate="">
+
+	  								<div class="mb-3">
+	  									<label for="triggerName">Name</label>
+	  									<div class="input-group">
+	  										<div class="input-group-prepend">
+	  											<span class="input-group-text"><i class="fa fa-font"></i></span>
+	  										</div>
+	  										<input type="text" class="form-control" id="triggerName" v-bind:placeholder="this.activeTrigger.name" required="true">
+	  										<div class="invalid-feedback" style="width: 100%;">
+	  											The Trigger name is required.
+	  										</div>
+	  									</div>
+	  								</div>
+
+	  								<div class="mb-3">
+	  									<label for="triggerName">Action associated</label>
+	  									<div class="input-group">
+	  										<div class="input-group-prepend">
+	  											<span class="input-group-text"><i class="fa fa-star-o"></i></span>
+	  										</div>
+	  										<select class="form-control custom-select" v-model="this.activeTrigger.action" required="true">
+	  											<option v-for="(action, index) in existingActions" v-bind:value="action.name">
+	  												{{action.name}}
+	  											</option>
+	  										</select>
+	  										<div class="invalid-feedback" style="width: 100%;">
+	  											The Trigger name is required.
+	  										</div>
+	  									</div>
+	  								</div>
 
 
-	  	<script type="text/javascript">
+	  								<hr>
+	  								<div>
+	  									<label class="custom-control-label" for="triggerPolicy"><h4><strong>Policy</strong></h4></label>
+	  								</div>
+	  								<hr>
 
-	  		Vue.component('trigger-table-row',{
+	  								<div class="row">
+	  									<div class="col-md-6 mb-3">
+	  										<div class="custom-control custom-radio">
+	  											<input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked="" required="" v-on:click="dataPointPolicy()">
+	  											<label class="custom-control-label" for="credit">Data Point Registration</label>
+	  										</div>
+	  									</div>
+	  									<div class="col-md-6 mb-3">
+	  										<div class="custom-control custom-radio">
+	  											<input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required="" v-on:click="timePeriodPolicy()">
+	  											<label class="custom-control-label" for="debit">Time Period</label>
+	  										</div>
+	  									</div>
+	  								</div>
+
+	  								<div v-if="isTimePeriodPolicy">
+
+	  									<div class="mb-3">
+	  										<label for="triggerName">Starting from</label>
+	  										<div class="input-group">
+	  											<div class="input-group-prepend">
+	  												<span class="input-group-text"><i class="fa fa-calendar-plus-o"></i></span>
+	  											</div>  
+	  											<input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="a">
+	  											<div class="invalid-feedback" style="width: 100%;">
+	  												The Trigger name is required.
+	  											</div>
+	  										</div>
+	  									</div>
+
+
+	  									<div class="mb-3">
+	  										<label for="triggerName">Ending on</label>
+	  										<div class="input-group">
+	  											<div class="input-group-prepend">
+	  												<span class="input-group-text"><i class="fa fa-calendar-times-o"></i></span>
+	  											</div>  
+	  											<input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="a">
+	  											<div class="invalid-feedback" style="width: 100%;">
+	  												The Trigger name is required.
+	  											</div>
+	  										</div>
+	  									</div>
+
+	  								</div>
+
+	  								<div v-else>
+
+	  									<div class="mb-3">
+	  										<label for="triggerName">From Data Stream</label>
+	  										<div class="input-group">
+	  											<div class="input-group-prepend">
+	  												<span class="input-group-text"><i class="fa fa-diamond"></i></span>
+	  											</div>
+	  											<select class="form-control custom-select" id="days" placeholder="" required="true">
+	  												<option v-for="dS in dataStreams" value="dS">{{dS}}</option>
+	  											</select>
+	  											<div class="invalid-feedback" style="width: 100%;">
+	  												The Trigger name is required.
+	  											</div>
+	  										</div>
+	  									</div>
+
+	  								</div>
+
+	  								<hr>
+	  								<div>
+	  									<label class="custom-control-label" for="triggerPolicy"><h4><strong>Condition</strong></h4></label>
+	  								</div>
+	  								<hr>
+
+	  								<div class="mb-3">
+	  									<div class="input-group">
+	  										<div class="input-group-prepend">
+	  											<span class="input-group-text"><i class="fa fa-exclamation"></i></span>
+	  										</div>
+	  										<select class="form-control custom-select" id="days" placeholder="" required="true" v-model="conditionSelected">
+	  											<option v-for="condition in triggerConditions" v-bind:value="{ id: condition.id, text: condition.name }">{{ condition.name }}</option>
+	  										</select>
+	  										<div class="invalid-feedback" style="width: 100%;">
+	  											The Trigger name is required.
+	  										</div>
+	  									</div>
+	  								</div>
+
+	  								<div class="mb-3" v-if="conditionSelected.id==2 || conditionSelected.id==3">
+	  									<label for="dataStreamName">From Data Stream</label>
+	  									<div class="input-group">
+	  										<div class="input-group-prepend">
+	  											<span class="input-group-text"><i class="fa fa-diamond"></i></span>
+	  										</div>
+	  										<select class="form-control custom-select" id="days" placeholder="" required="true">
+	  											<option v-for="dS in dataStreams" value="dS">{{dS}}</option>
+	  										</select>
+	  										<div class="invalid-feedback" style="width: 100%;">
+	  											The Trigger name is required.
+	  										</div>
+	  									</div>
+	  								</div>
+
+
+	  								<div v-if="conditionSelected.id==2">
+	  									<div class="row">
+	  										<div class="col-md-4 mb-3">
+	  											<label for="cc-number">Value</label>
+	  											<input class="form-control" type="text" placeholder="Data-Stream current value" readonly>
+	  										</div>
+	  										<div class="col-md-4 mb-3">
+	  											<label for="cc-name">Condition</label>
+	  											<select class="form-control custom-select" id="currentValueCond" placeholder="" required="true">
+	  												<option value="monday">greater than</option>
+	  												<option value="monday">less than</option>
+	  												<option value="monday">equal to</option>
+	  												<option value="monday">different to</option>
+	  											</select>
+	  											<div class="invalid-feedback">
+	  												Name on card is required
+	  											</div>
+	  										</div>
+	  										<div class="col-md-4 mb-3">
+	  											<label for="cc-number">Defined value</label>
+	  											<input type="text" class="form-control" id="cc-number" placeholder="0" required="">
+	  											<div class="invalid-feedback">
+	  												Credit card number is required
+	  											</div>
+	  										</div>
+	  									</div>
+	  								</div>
+
+
+	  								<div v-if="conditionSelected.id==3">
+	  									<label for="triggerName">For more than...</label>
+	  									<div class="row">
+	  										<div class="col-md-2 mb-3">
+	  											<label for="cc-number">Months</label>
+	  											<input type="text" class="form-control" id="cc-number" placeholder="0" required="" v-model="dataStreamNotUpdatedFrom.months">
+	  											<div class="invalid-feedback">
+	  												Credit card number is required
+	  											</div>
+	  										</div>
+	  										<div class="col-md-2 mb-3">
+	  											<label for="cc-name">Weeks</label>
+	  											<input type="text" class="form-control" id="cc-name" placeholder="0" required="" v-model="dataStreamNotUpdatedFrom.weeks">
+	  											<div class="invalid-feedback">
+	  												Name on card is required
+	  											</div>
+	  										</div>
+	  										<div class="col-md-2 mb-3">
+	  											<label for="cc-number">Days</label>
+	  											<input type="text" class="form-control" id="cc-number" placeholder="0" required="" v-model="dataStreamNotUpdatedFrom.days">
+	  											<div class="invalid-feedback">
+	  												Credit card number is required
+	  											</div>
+	  										</div>
+	  										<div class="col-md-2 mb-3">
+	  											<label for="cc-number">Hours</label>
+	  											<input type="text" class="form-control" id="cc-number" placeholder="0" required="" v-model="dataStreamNotUpdatedFrom.hours">
+	  											<div class="invalid-feedback">
+	  												Credit card number is required
+	  											</div>
+	  										</div>
+	  										<div class="col-md-2 mb-3">
+	  											<label for="cc-number">Minutes</label>
+	  											<input type="text" class="form-control" id="cc-number" placeholder="0" required="" v-model="dataStreamNotUpdatedFrom.minutes">
+	  											<div class="invalid-feedback">
+	  												Credit card number is required
+	  											</div>
+	  										</div>
+	  										<div class="col-md-2 mb-3">
+	  											<label for="cc-number">Seconds</label>
+	  											<input type="text" class="form-control" id="cc-number" placeholder="0" required="" v-model="dataStreamNotUpdatedFrom.seconds">
+	  											<div class="invalid-feedback">
+	  												Credit card number is required
+	  											</div>
+	  										</div>
+	  									</div>
+	  									<label for="triggerName" style="font-style: italic;">For more than {{dataStreamNotUpdatedFrom.months}} months, {{dataStreamNotUpdatedFrom.weeks}} weeks, {{dataStreamNotUpdatedFrom.days}} days, {{dataStreamNotUpdatedFrom.hours}} hours, {{dataStreamNotUpdatedFrom.minutes}} minutes and {{dataStreamNotUpdatedFrom.seconds}} seconds</label>     
+	  								</div>
+
+	  								<div v-if="conditionSelected.id==4">
+	  									<div class="mb-3">
+	  										<label for="triggerName">From</label>
+	  										<div class="input-group">
+	  											<div class="input-group-prepend">
+	  												<span class="input-group-text"><i class="fa fa-calendar-plus-o"></i></span>
+	  											</div>  
+	  											<input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="a">
+	  											<div class="invalid-feedback" style="width: 100%;">
+	  												The Trigger name is required.
+	  											</div>
+	  										</div>
+	  									</div>
+
+	  									<div class="mb-3">
+	  										<label for="triggerName">To</label>
+	  										<div class="input-group">
+	  											<div class="input-group-prepend">
+	  												<span class="input-group-text"><i class="fa fa-calendar-times-o"></i></span>
+	  											</div>  
+	  											<input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="a">
+	  											<div class="invalid-feedback" style="width: 100%;">
+	  												The Trigger name is required.
+	  											</div>
+	  										</div>
+	  									</div>
+	  								</div>
+
+
+	  								<div class="row">
+	  									<div class="col-md-3">
+	  									</div>
+	  									<div class="col-md-3">
+	  									</div>
+	  									<div class="col-md-3">
+	  										<button class="btn btn-primary btn-lg btn-block">Add new condition</button>
+	  									</div>
+	  									<div class="col-md-3">
+	  										<button class="btn btn-danger btn-block">Forget condition</button>
+	  									</div>
+	  								</div>
+
+	  							</form>
+	  						</div>
+	  						<div class="modal-footer">
+	  							<button class="btn btn-secondary btn-block" data-dismiss="modal"><strong>Close</strong></button>
+	  							<button class="btn btn-primary btn-lg btn-block"><strong>Save changes</strong></button>
+	  						</div>
+	  					</div>
+	  				</div>
+	  			</div>
+
+	  			<!-- Modal for removing triggers-->
+	  			<div class="modal fade" id="deleteTriggerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  				<div class="modal-dialog modal-lg" role="document">
+	  					<div class="modal-content">
+	  						<div class="modal-header">
+	  							<h4 class="modal-title" id="exampleModalLabel"><strong>Remove Trigger</strong></h4>
+	  							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	  								<span aria-hidden="true">&times;</span>
+	  							</button>
+	  						</div>
+	  						<div class="modal-body text-center">
+	  							<h4>Are you sure you want to delete <strong>{{activeTrigger.name}}<strong> ?</h4>
+	  							</div>
+	  							<div class="modal-footer">
+	  								<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+	  								<button type="button" class="btn btn-danger">Delete</button>
+	  							</div>
+	  						</div>
+	  					</div>
+	  				</div>
+
+	  			</div>
+
+
+	  			<script type="text/javascript">
+
+	  				Vue.component('trigger-table-row',{
 		props:['trigger'],//<th scope="row"></th>
 		template:'<tr><td>{{trigger.name}}</td><td>{{trigger.action}}</td><td>{{trigger.policy.type}}</td><td>{{trigger.policy.elem}}</td><td>{{trigger.conditions}}</td><td><button type="button" class="btn btn-info btn-block" @click.native="displaySomething()" data-toggle="modal" data-target="#editTriggerModal"><i class="fa fa-pencil-square-o"></i></button></td><td><button type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#deleteTriggerModal"><i class="fa fa-remove"></i></button></td></tr>'			
 	});
 
 
-	  		Vue.component('div-canvas-for-chart', {
-	  			props:['id'],
-	  			template:'<div class="col-md-4"><canvas :id="id"></canvas></div>' 
-	  		});
+	  				Vue.component('div-canvas-for-chart', {
+	  					props:['id'],
+	  					template:'<div class="col-md-4"><canvas :id="id"></canvas></div>' 
+	  				});
 
-	  		Vue.component('content-separator', {
-	  			template:'<h1 id="contentSeparator"><strong><slot></slot></strong></h1>'
-	  		});
+	  				Vue.component('content-separator', {
+	  					template:'<h1 id="contentSeparator"><strong><slot></slot></strong></h1>'
+	  				});
 
-	  		Vue.component('data-streams-button', {
-	  			props:['name'],
-	  			template:'<button type="button">{{name}}</button>'
-	  		});
+	  				Vue.component('data-streams-button', {
+	  					props:['name'],
+	  					template:'<button type="button">{{name}}</button>'
+	  				});
 
-	  		Vue.component('data-stream-checkboxes', {
-	  			props:['value'],
-	  			template:'<p><input type="checkbox" :value="value" v-model="caca"><label :for="value">{{value}}</label></p>',
-	  			data() {
-	  				console.log(" data() en componen => " + this.value);
-	  				return { caca: this.value }
-	  			},
-	  			watch: {
-	  				caca(val) {
-	  					console.log(" caca => " + val);
-	  					this.$emit('input', val);
-	  				}
-	  			} 
-	  		});
+	  				Vue.component('data-stream-checkboxes', {
+	  					props:['value'],
+	  					template:'<p><input type="checkbox" :value="value" v-model="caca"><label :for="value">{{value}}</label></p>',
+	  					data() {
+	  						console.log(" data() en componen => " + this.value);
+	  						return { caca: this.value }
+	  					},
+	  					watch: {
+	  						caca(val) {
+	  							console.log(" caca => " + val);
+	  							this.$emit('input', val);
+	  						}
+	  					} 
+	  				});
 
-	  		new Vue({
-	  			el: '#app',
-	  			data: {
-	  				dataStreams: [],
-	  				dataStreamSelected: [],
-	  				hasNotFinishedDS: true,
-	  				hasNotFinishedDPS: true,
-	  				streamWasSelected:false,
-	  				hasToShowCharAndCards: false,
-	  				isTimePeriodPolicy: false,
+	  				new Vue({
+	  					el: '#app',
+	  					data: {
+	  						dataStreams: [],
+	  						dataStreamSelected: [],
+	  						hasNotFinishedDS: true,
+	  						hasNotFinishedDPS: true,
+	  						streamWasSelected:false,
+	  						hasToShowCharAndCards: false,
+	  						isTimePeriodPolicy: false,
 
-	  				renderDashboardView: true,
-	  				renderSecurityView: false,
-	  				renderAboutView: false,
-	  				renderActionAddView: false,
-	  				renderActionRemoveView: false,
-	  				renderCommandAddView: false,
-	  				renderCommandRemoveView: false,
-	  				renderTriggerAddView: false,
-	  				renderTriggerRemoveView: false,
-	  				renderDataStreamView : false,
+	  						renderDashboardView: true,
+	  						renderSecurityView: false,
+	  						renderAboutView: false,
+	  						renderActionAddView: false,
+	  						renderActionRemoveView: false,
+	  						renderCommandAddView: false,
+	  						renderCommandRemoveView: false,
+	  						renderTriggerAddView: false,
+	  						renderTriggerRemoveView: false,
+	  						renderDataStreamView : false,
 	  				//renderOneTimeTrigger: false,
 
 	  				showActionsOptions : false,
@@ -1815,8 +1872,6 @@
 	  				intermediateTriggers:[],
 	  				activeTrigger:[],
 
-
-
 	  				triggerConditions:[
 	  				{id: 1, name: 'Always'},
 	  				{id: 2, name: 'On Data-Stream value'},
@@ -1826,24 +1881,44 @@
 
 
 
-	  				// actions variables
-	  				availableActions:[
-		  				{id: 1, name: 'Tweet'},
-		  				{id: 2, name: 'Make Facebook Post'},
-		  				{id: 3, name: 'Send Email'},
-		  				{id: 4, name: 'Start Engine Alfa'},
-		  				{id: 5, name: 'Sense Temperature'},
-	  				],
+	  				// data stream variables
 
 	  				dataStreamFilter: undefined,
 	  				pagesNeededForDataStreams: 0, 
-	  				maxDataStreamsPerPage: 6, 
+	  				maxDataStreamsPerPage: 4, 
 	  				dataStreamsForPage: [], 
 	  				filteredDataStreams: [],
 
 	  				filteredDataStreams:[],
 	  				intermediateDataStreams:[],
 	  				activeDataStream:[],
+
+
+
+
+	  				// actions variables
+	  				existingActions:[
+	  				{id: 1, name: 'Tweet', type:'http_request', method:'POST', url:'https://twitter.com', version:'1.1', body:[{key:'name', value:'john'}, {key:'last-name', value:'doe'}], headers:[{key:'security-key', value:'f78r3d'}, {key:'email', value:'jnahas@foor.bar'}]},
+	  				{id: 2, name: 'Make Facebook Post', type:'http_request', method:'POST', url:'https://facebook.com', version:'1.1', body:[{key:'name', value:'john'}, {key:'last-name', value:'doe'}], headers:[{key:'security-key', value:'f78r3d'}, {key:'email', value:'jnahas@foor.bar'}]},
+	  				{id: 3, name: 'Send Email', type:'http_request', method:'POST', url:'https://gmail.com', version:'1.1', body:[{key:'name', value:'john'}, {key:'last-name', value:'doe'}], headers:[{key:'security-key', value:'f78r3d'}, {key:'email', value:'jnahas@foor.bar'}]},
+	  				{id: 4, name: 'Start Engine Alfa', type:'http_request', method:'POST', url:'http://device1.com', version:'1.1', body:[{key:'name', value:'john'}, {key:'last-name', value:'doe'}], headers:[{key:'security-key', value:'f78r3d'}, {key:'email', value:'jnahas@foor.bar'}]},
+	  				{id: 5, name: 'Sense Temperature', type:'http_request', method:'GET', url:'http://device2.com', version:'1.1', body:[{key:'name', value:'john'}, {key:'last-name', value:'doe'}], headers:[{key:'security-key', value:'f78r3d'}, {key:'email', value:'jnahas@foor.bar'}]},
+	  				{id: 6, name: 'Command A', type:'command', priority:'high'},
+	  				{id: 7, name: 'Command B', type:'command', priority:'medium'},
+	  				{id: 8, name: 'Command C', type:'command', priority:'low'},
+	  				],
+
+
+	  				actionFilter: undefined,
+	  				pagesNeededForActions: 0, 
+	  				maxActionsPerPage: 4, 
+	  				actionsForPage: [], 
+	  				filteredActions: [],
+
+	  				filteredActions:[],
+	  				intermediateActions:[],
+	  				activeAction:[],
+
 
 	  				elemsForActionRequestBody: 0,
 	  				activeIdsForHttpRequestBody: [],
@@ -1867,16 +1942,16 @@
 	  				// data stream view variables
 
 	  				dataStreamsConfigured:[
-		  				{id: 0, name: 'Solar light in garden'},
-		  				{id: 1, name: 'Temperature inside the house'},		
-		  				{id: 2, name: 'Temperature outside the house'},		
-		  				{id: 3, name: 'Car Volumetric Sensor'},		
-		  				{id: 4, name: 'Pressure inside the house'},		
-		  				{id: 5, name: 'UV-Intensity'},
-		  				{id: 6, name: 'Humidity inside guest-room'},		
-		  				{id: 7, name: 'Humidity outside the house'},		
-		  				{id: 8, name: 'Pressure outside the house'},		
-		  				{id: 9, name: 'Movement sensor in atic'}
+	  				{id: 0, name: 'Solar light in garden'},
+	  				{id: 1, name: 'Temperature inside the house'},		
+	  				{id: 2, name: 'Temperature outside the house'},		
+	  				{id: 3, name: 'Car Volumetric Sensor'},		
+	  				{id: 4, name: 'Pressure inside the house'},		
+	  				{id: 5, name: 'UV-Intensity'},
+	  				{id: 6, name: 'Humidity inside guest-room'},		
+	  				{id: 7, name: 'Humidity outside the house'},		
+	  				{id: 8, name: 'Pressure outside the house'},		
+	  				{id: 9, name: 'Movement sensor in atic'}
 	  				],
 
 
@@ -1985,10 +2060,22 @@
 				dataStreamFilter: function(val, oldVal){ //watch the input for filtering the data streams
 					console.log("Entering dataStreamFilter watcher");
 					this.filterDataStreamToDisplay();
+				},
+				actionFilter: function(val, oldVal){ //watch the input for filtering the actions
+					console.log("Entering actionFilter watcher");
+					this.filterActionToDisplay();
 				}
 			},	
 
 			methods: {
+
+				editDataStream: function(dataStream){
+					this.activeDataStream = dataStream;
+				},
+
+				removeDataStream: function(dataStream){
+					this.activeDataStream = dataStream;
+				},
 
 				removeTrigger(trigger){
 					this.activeTrigger = trigger;
@@ -2000,6 +2087,153 @@
 					console.log("trigger: " + trigger.name);
 					this.activeTrigger = trigger;
 					console.log("activeTrigger: " + this.activeTrigger);
+				},
+
+				filterActionToDisplay: function () {
+					console.log("Entering filterActionToDisplay ");
+					console.log("actionFilter: " + this.actionFilter);
+
+			    	this.intermediateActions = []; // siempre vacío el intermedio
+
+					// check if contains a valid value
+					if(this.actionFilter != undefined){ // uso uno intermedio para recien cambiar el array principal cuando haya identificado todos los triggers que tienen que ser mostrados
+
+			      		// get the amount of existing triggers
+			      		amountOfActions = this.existingActions.length;
+
+			      		for(i=0; i<amountOfActions; i++){
+
+			      			//check Action name 
+			      			filteredField = this.existingActions[i].name;
+			      			this.intermediateActions = this.addElementToFilteredOnes(filteredField, this.actionFilter, this.intermediateActions, this.existingActions[i]);
+
+			      			//check Action type 
+			      			filteredField = this.existingActions[i].type;
+			      			this.intermediateActions = this.addElementToFilteredOnes(filteredField, this.actionFilter, this.intermediateActions, this.existingActions[i]);
+
+			      			if(filteredField=="command"){
+								//check Action command priority
+								filteredField = this.existingActions[i].priority;
+								this.intermediateActions = this.addElementToFilteredOnes(filteredField, this.actionFilter, this.intermediateActions, this.existingActions[i]);			      				
+							}else{
+
+				      			//check Action http request method 
+				      			filteredField = this.existingActions[i].method;
+				      			this.intermediateActions = this.addElementToFilteredOnes(filteredField, this.actionFilter, this.intermediateActions, this.existingActions[i]);
+
+
+				      			//check Action http request url
+				      			filteredField = this.existingActions[i].url;
+				      			this.intermediateActions = this.addElementToFilteredOnes(filteredField, this.actionFilter, this.intermediateActions, this.existingActions[i]);
+
+				      			//check Action http request version
+				      			filteredField = this.existingActions[i].version;
+				      			this.intermediateActions = this.addElementToFilteredOnes(filteredField, this.actionFilter, this.intermediateActions, this.existingActions[i]);
+
+
+				      			//check Action http request body parameters
+				      			body = this.existingActions[i].body;
+				      			console.log("body: " + body);
+				      			console.log("body length: " + body.length);
+				      			console.log("Filter: " + this.actionFilter);
+
+				      			var alreadyAdded = false;
+
+				      			for(t=0; t<body.length;t++){
+				      				if(body[t].key.indexOf(this.actionFilter) >= 0){
+
+				      					// Check if the trigger was not already added to the filtered ones
+				      					for(a=0; a<this.intermediateActions.length; a++){
+				      						if(this.intermediateActions[a].name == this.existingActions[i].name){
+				      							alreadyAdded = true;
+				      							break;
+				      						}
+				      					}
+				      					console.log("alreadyAdded: " + alreadyAdded);
+				      					if(!alreadyAdded){
+				      						this.intermediateActions.push(this.existingActions[i]);  
+				      					}
+				      				}
+				      				alreadyAdded = false;
+				      				if(body[t].value.indexOf(this.actionFilter) >= 0){
+
+				      					// Check if the trigger was not already added to the filtered ones
+				      					for(a=0; a<this.intermediateActions.length; a++){
+				      						if(this.intermediateActions[a].name == this.existingActions[i].name){
+				      							alreadyAdded = true;
+				      							break;
+				      						}
+				      					}
+				      					console.log("alreadyAdded: " + alreadyAdded);
+				      					if(!alreadyAdded){
+				      						this.intermediateActions.push(this.existingActions[i]);  
+				      					}
+				      				}
+
+				      			}
+
+				      			alreadyAdded = false;
+				      			//check Action http request header parameters
+				      			headers = this.existingActions[i].headers;
+				      			console.log("headers: " + headers);
+				      			console.log("headers length: " + headers.length);
+				      			console.log("Filter: " + this.actionFilter);
+
+				      			var alreadyAdded = false;
+
+				      			for(t=0; t<headers.length;t++){
+				      				if(headers[t].key.indexOf(this.actionFilter) >= 0){
+
+				      					// Check if the trigger was not already added to the filtered ones
+				      					for(a=0; a<this.intermediateActions.length; a++){
+				      						if(this.intermediateActions[a].name == this.existingActions[i].name){
+				      							alreadyAdded = true;
+				      							break;
+				      						}
+				      					}
+				      					console.log("alreadyAdded: " + alreadyAdded);
+				      					if(!alreadyAdded){
+				      						this.intermediateActions.push(this.existingActions[i]);  
+				      					}
+				      				}
+
+									alreadyAdded = true;
+
+			      					if(headers[t].value.indexOf(this.actionFilter) >= 0){
+
+				      					// Check if the trigger was not already added to the filtered ones
+				      					for(a=0; a<this.intermediateActions.length; a++){
+				      						if(this.intermediateActions[a].name == this.existingActions[i].name){
+				      							alreadyAdded = true;
+				      							break;
+				      						}
+				      					}
+				      					console.log("alreadyAdded: " + alreadyAdded);
+				      					if(!alreadyAdded){
+				      						this.intermediateActions.push(this.existingActions[i]);  
+				      					}
+				      				}
+				      			}
+				      		}
+				      	}
+
+			      		if(this.intermediateActions.length>0){ // si tiene triggers para mostrar
+			      			this.filteredActions = this.intermediateActions; // ahora ya podría mostrar todos los filtrados
+			      		}else{
+			      			this.filteredActions = [];
+			      		} 		
+
+			      	}else{
+						// copy all the existing triggers, no filtering
+						this.filteredActions =this.existingActions;
+					}
+
+					// Set the pages needed to show the filtered triggers
+					this.pagesNeededForActions = this.getPagesNeeded(this.filteredActions, this.maxActionsPerPage);
+					console.log(" pagesNeededForActions " + this.pagesNeededForActions);
+
+					// Always display first page first to the user
+					this.actionsForPage = this.getElementsToShowInTable(1, this.maxActionsPerPage, this.actionsForPage, this.filteredActions);
 				},
 
 				filterTriggerToDisplay: function () {
@@ -2301,7 +2535,7 @@
 					this.getdataStreamInformation(dS);
 				},
 				showDataStreamView: function(){
-	
+
 					console.log("Entering showDataStreamView ");
 
 					this.renderDashboardView = false;
@@ -2362,6 +2596,16 @@
 					this.renderCommandRemoveView = false;
 					this.renderActionRemoveView = false;
 					this.renderDataStreamView = false;
+
+					// initially you should assume showing all trigger with no fitering
+					this.filteredActions = this.existingActions;
+
+					this.pagesNeededForActions = this.getPagesNeeded(this.filteredActions, this.maxActionsPerPage);
+
+					console.log(" pagesNeededForActions " + this.pagesNeededForActions);
+
+					//this.getElementsToShowInTable(1);
+					this.actionsForPage = this.getElementsToShowInTable(1, this.maxActionsPerPage, this.actionsForPage, this.filteredActions);
 				},
 				showCommandAddView: function(){
 					this.renderDashboardView = false;

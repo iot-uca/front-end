@@ -481,15 +481,15 @@
 	  							</div>
 	  						</div>
 
-	  						<table class="table table-striped table-responsive" style="table-layout: fixed;">
+	  						<table class="table table-striped table-responsive table-sm" style="width: 100%">
 	  							<thead class="thead-dark">
 	  								<tr>
-	  									<th scope="col"  class="text-center" style="width: 98%">Name</th>
-	  									<th scope="col"  class="text-center" style="width: 1%"></th>
-	  									<th scope="col"  class="text-center" style="width: 1%"></th>
+	  									<th scope="col"  class="text-center" style="width: 96%">Name</th>
+	  									<th scope="col"  class="text-center" style="width: 2%"></th>
+	  									<th scope="col"  class="text-center" style="width: 2%"></th>
 	  								</tr>
 	  							</thead>
-	  							<tbody class="table-hover">
+	  							<tbody>
 	  								<!--tr v-for="t in triggersForPage" v-bind:trigger="t" is="trigger-table-row"></tr--> 
 	  								<!--Refenrenced in ..... https://github.com/vuejs/Discussion/issues/204 -->
 
@@ -611,7 +611,7 @@
 	  						</div>
 	  					</div>
 
-	  					<table class="table table-striped table-responsive">
+	  					<table class="table table-striped table-responsive table-sm" style="width: 100%;">
 	  						<thead class="thead-dark">
 	  							<tr>
 	  								<th scope="col" class="text-center" style="width: 20%;">Name</th>
@@ -966,7 +966,7 @@
 	  						</div>
 	  					</div>
 
-	  					<table class="table table-striped table-responsive">
+	  					<table class="table table-striped table-responsive table-sm" style="width: 100%;">
 	  						<thead class="thead-dark">
 	  							<tr>
 	  								<th scope="col" class="text-center" style="width: 25%;">Name</th>
@@ -1174,7 +1174,7 @@
 
 	  							<div class="row">
 	  								<div class="col-md-3">
-	  									<button class="btn btn-info btn-lg btn-block" v-on:click="addOneMoreElemsForActionRequestBody()"><strong>Add parameter</strong></button>
+	  									<button type="button" class="btn btn-info btn-lg btn-block" v-on:click="addOneMoreElemsForActionRequestBody()"><strong>Add parameter</strong></button>
 	  								</div>
 	  							</div>
 
@@ -1233,7 +1233,8 @@
 
 	  							<div class="row">
 	  								<div class="col-md-3">
-	  									<button class="btn btn-info btn-lg btn-block" v-on:click="addOneMoreElemsForActionRequestHeader()"><strong>Add parameter</strong></button>
+	  									<button type="button" class="btn btn-info btn-lg btn-block" v-on:click="addOneMoreElemsForActionRequestHeader()"><strong>Add parameter</strong></button>
+	  									<!--  https://stackoverflow.com/questions/7803814/prevent-refresh-of-page-when-button-inside-form-clicked  -->
 	  								</div>
 	  							</div>
 
@@ -2338,7 +2339,7 @@
 
 	  				dataStreamFilter: undefined,
 	  				pagesNeededForDataStreams: 0, 
-	  				maxDataStreamsPerPage: 4, 
+	  				maxDataStreamsPerPage: 5, 
 	  				dataStreamsForPage: [], 
 	  				filteredDataStreams: [],
 
@@ -2356,9 +2357,9 @@
 	  				{id: 3, name: 'Send Email', type:'http_request', method:'POST', url:'https://gmail.com', version:'1.1', body:[{key:'name', value:'john'}, {key:'last-name', value:'doe'}], headers:[{key:'security-key', value:'f78r3d'}, {key:'email', value:'jnahas@foor.bar'}]},
 	  				{id: 4, name: 'Start Engine Alfa', type:'http_request', method:'POST', url:'http://device1.com', version:'1.1', body:[{key:'name', value:'john'}, {key:'last-name', value:'doe'}], headers:[{key:'security-key', value:'f78r3d'}, {key:'email', value:'jnahas@foor.bar'}]},
 	  				{id: 5, name: 'Sense Temperature', type:'http_request', method:'GET', url:'http://device2.com', version:'1.1', body:[{key:'name', value:'john'}, {key:'last-name', value:'doe'}], headers:[{key:'security-key', value:'f78r3d'}, {key:'email', value:'jnahas@foor.bar'}]},
-	  				{id: 6, name: 'Command A', type:'command', priority:'high'},
-	  				{id: 7, name: 'Command B', type:'command', priority:'medium'},
-	  				{id: 8, name: 'Command C', type:'command', priority:'low'},
+	  				{id: 6, name: 'Command A', type:'command', priority:'High'},
+	  				{id: 7, name: 'Command B', type:'command', priority:'Medium'},
+	  				{id: 8, name: 'Command C', type:'command', priority:'Low'},
 	  				],
 
 

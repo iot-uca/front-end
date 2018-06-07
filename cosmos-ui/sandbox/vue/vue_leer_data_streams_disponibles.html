@@ -461,7 +461,19 @@
 	  						<hr>
 
 	  						<div class="row">
-	  							<div class="col-md-10">
+
+								<div class="col-md-2">
+	  							    <div class="form-group form-inline well">
+									      <label for="sel1" class="text-muted">Entries for page: </label>
+	  										<select class="form-control custom-select" id="httpMethod" v-model="amountOfEntriesPerPage" required="true">
+  												<option v-for="(elem, index) in optionsOfEntriesPerPage" v-bind:value="elem.value">
+  													{{elem.value}}
+  												</option>
+	  										</select>
+									</div>
+								</div>
+
+	  							<div class="col-md-6">
 	  								<div class="mb-3">
 	  									<!--label for="triggerSearchName"><strong>Filter trigger</strong></label-->
 	  									<div class="input-group">
@@ -474,10 +486,13 @@
 	  									</div>
 	  								</div>
 	  							</div>
+	  							
 	  							<div class="col-md-2">
-	  								<!-- Button trigger modal -->
-	  								<!--br-->
 	  								<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addDataStreamModal" style="width: 100%;"><strong>Add stream</strong></button>	
+	  							</div>
+	  							
+	  							<div class="col-md-2">
+	  								<button type="button" class="btn btn-danger disabled" data-toggle="modal" data-target="#addDataStreamModal" style="width: 100%;"><strong>Delete</strong></button>	
 	  							</div>
 	  						</div>
 
@@ -486,9 +501,9 @@
 	  								<tr>
 	  									<th scope="col" style="width: 2%"></th>
 	  									<th scope="col" style="width: 92%">Name</th>
-	  									<th scope="col" style="width: 2%"></th>
-	  									<th scope="col" style="width: 2%"></th>
-	  									<th scope="col" style="width: 2%"></th>
+	  									<th scope="col" style="width: 3%"></th>
+	  									<th scope="col" style="width: 3%"></th>
+	  									<!--th scope="col" style="width: 2%"></th-->
 	  								</tr>
 	  							</thead>
 	  							<tbody>
@@ -504,20 +519,20 @@
 	  									</td>
 	  									<td>{{dataStream.name}}</td>
 	  									<td>
-	  										<button type="button" class="btn btn-warning btn-block" data-toggle="modal" data-target="#editDataStreamModal">
+	  										<button type="button" class="btn btn-warning btn-block" data-toggle="modal" data-target="#editDataStreamModal" style="height: 75%;">
 	  											<i class="fa fa-eye"></i>
 	  										</button>
 	  									</td>
 	  									<td>
-	  										<button type="button" class="btn btn-info btn-block" v-on:click="editDataStream(dataStream)" data-toggle="modal" data-target="#editDataStreamModal">
+	  										<button type="button" class="btn btn-info btn-block" v-on:click="editDataStream(dataStream)" data-toggle="modal" data-target="#editDataStreamModal" style="height: 75%;">
 	  											<i class="fa fa-pencil-square-o"></i>
 	  										</button>
 	  									</td>
-	  									<td>
-	  										<button type="button" class="btn btn-danger btn-block" data-toggle="modal" @click="removeDataStream(dataStream)" data-target="#deleteDataStreamModal">
+	  									<!--td>
+	  										<button type="button" class="btn btn-danger btn-block" data-toggle="modal" @click="removeDataStream(dataStream)" data-target="#deleteDataStreamModal" style="height: 75%;">
 	  											<i class="fa fa-remove"></i>
 	  										</button>
-	  									</td>
+	  									</td-->
 	  								</tr>
 	  							</tbody>
 	  						</table>
@@ -1001,7 +1016,7 @@
 	  								<th scope="col"></th>
 	  							</tr>
 	  						</thead>
-	  						<tbody class="table-hover">
+	  						<tbody class="table-hover">  
 	  							<!--tr v-for="t in triggersForPage" v-bind:trigger="t" is="trigger-table-row"></tr--> 
 	  							<!--Refenrenced in ..... https://github.com/vuejs/Discussion/issues/204 -->
 
@@ -2315,6 +2330,7 @@
 	  						renderTriggerAddView: false,
 	  						renderTriggerRemoveView: false,
 	  						renderDataStreamView : false,
+	  						amountOfEntriesPerPage: 5,
 	  				//renderOneTimeTrigger: false,
 
 	  				showActionsOptions : false,
@@ -2369,6 +2385,14 @@
 	  				{id: 4, name: 'Time interval'},
 	  				],
 
+
+	  				// general pagination
+	  				optionsOfEntriesPerPage:[
+		  				{id:0, value:5},
+		  				{id:1, value:10},
+		  				{id:2, value:15},
+		  				{id:3, value:20}, 				
+	  				],
 
 
 	  				// data stream variables

@@ -1605,20 +1605,38 @@
 	  									<div class="input-group-prepend">
 	  										<span class="input-group-text"><i class="fa fa-font"></i></span>
 	  									</div>
-	  									<input type="text" class="form-control" id="triggerName" placeholder="Trigger Name" required="true">
+	  									<input type="text" class="form-control" id="triggerName" v-model="dataStreamToAdd" required="true">
 	  									<div class="invalid-feedback" style="width: 100%;">
-	  										The Trigger name is required.
+	  										The Stream name is required.
 	  									</div>
 	  								</div>
 	  							</div>
 
 	  							<hr class="mb-3">	
-	  							<button class="btn btn-primary btn-lg btn-block" type="submit"><h5><strong>Add trigger</strong></h5></button>
+	  							<button class="btn btn-primary btn-lg btn-block" type="submit" data-toggle="modal" data-target="#stack3" @click="addDataStream()"><h5><strong>Add stream</strong></h5></button>
 	  						</form>
 	  					</div>
 	  				</div>
 	  			</div>
-	  		</div>
+	  		</div>  
+
+            
+            <div id="stack3" class="modal fade" role="dialog" style="z-index: 1600;">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      
+      <!--div class="modal-body"-->
+        <div class="modal-body alert alert-success" role="alert">
+          <strong>Well done!</strong> You successfully read this important alert message.
+        </div>      	
+      <!--/div-->      
+    </div>
+  </div>
+</div>
+            
+
+
 
 	  		<!-- Modal for editing data streams-->
 	  		<div class="modal fade" id="editDataStreamModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -2407,7 +2425,9 @@
 	  				intermediateDataStreams:[],
 	  				activeDataStream:[],
 
-
+                    dataStreamToAdd:'',
+                    requestWasSuccessful:true,
+                    requestIsInProgress:false,
 
 
 	  				// actions variables
@@ -2602,6 +2622,37 @@
 			},	
 
 			methods: {
+                
+                addDataStream: function(){
+                    console.log("Entering addDataStream !");
+                    console.log("dataStreamToAdd: " + this.dataStreamToAdd);
+
+                    axios.defaults.headers.post['Content-Type'] = 'application/json';
+                    
+					this.hasNotFinishedDS = true;
+                    
+                    axios.post('http://localhost:8090/test/dataStream/', {
+                        name: this.dataStreamToAdd
+                      })
+                      .then(function (response) {
+                        this.hasNotFinishedDS = false;
+
+                        console.log("data: " + response.data);
+                        console.log("status: " + response.status);
+                        console.log("statusText: " + response.statusText);
+                        console.log("headers: " + response.headers);
+                        console.log("config: " + response.config);
+                        
+                        this.requestWasSuccessful = response.status==200;
+                      })
+                      .catch(function (error) {
+                        this.hasNotFinishedDS = false;
+                        console.log("[ERROR] " + error);
+                      });
+
+                    
+                },
+                
 				sasa: function(){
 					console.log(" ABOUT TO ADD AN ACTION!! ");
 					console.log("activeIdsForHttpRequestHeader: " + this.activeIdsForHttpRequestHeader);

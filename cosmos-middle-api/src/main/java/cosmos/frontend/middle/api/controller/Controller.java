@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import cosmos.frontend.middle.api.exception.MiddlewareServiceException;
 import cosmos.frontend.middle.api.model.DataPoint;
 import cosmos.frontend.middle.api.model.DataStream;
+import cosmos.frontend.middle.api.model.RealAction;
 import cosmos.frontend.middle.api.service.MiddlewareService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -74,6 +77,41 @@ public class Controller {
 		return dataStreamNames;
 	}
 
+	@CrossOrigin
+	@RequestMapping(value="/test/dataStream", method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<Void> createDataStream(@RequestBody String name) throws MiddlewareServiceException{
+		
+		log.debug(" Entering createDataStream.");
+		log.debug(" dataStreamName received: " + name);
+		try{
+			Thread.sleep(4000);
+		}catch(Exception e){
+			;
+		}
+
+		System.out.println(" Entering createDataStream.");
+		System.out.println(" dataStreamName received: " + name);
+		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
+
+
+	@CrossOrigin
+	@RequestMapping(value="/test/actions", method = RequestMethod.POST, consumes = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<Void> createAction(@RequestBody RealAction action) throws MiddlewareServiceException{
+		
+		log.debug(" Entering createAction.");
+		log.debug(" action received: " + action);
+		try{
+			Thread.sleep(4000);
+		}catch(Exception e){
+			;
+		}
+
+		System.out.println(" Entering createAction.");
+		System.out.println(" action received: " + action);
+		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
+	
 	
 	/**
 	 * Gets the information associated with an specific {@link DataStream}

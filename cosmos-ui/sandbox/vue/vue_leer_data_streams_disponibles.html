@@ -462,10 +462,10 @@
 
 	  						<div class="row">
 
-								<div class="col-md-2">
+								<div class="col-md-3">
 	  							    <div class="form-group form-inline well">
-									      <label for="sel1" class="text-muted">Entries for page: </label>
-	  										<select class="form-control custom-select" id="httpMethod" v-model="amountOfEntriesPerPage" required="true">
+                                        <label for="httpMethod" class="mr-sm-2 text-muted">Entries for page: </label>
+	  										<select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="httpMethod" v-model="amountOfEntriesPerPage">
   												<option v-for="(elem, index) in optionsOfEntriesPerPage" v-bind:value="elem.value">
   													{{elem.value}}
   												</option>
@@ -473,9 +473,8 @@
 									</div>
 								</div>
 
-	  							<div class="col-md-6">
+	  							<div class="col-md-5">
 	  								<div class="mb-3">
-	  									<!--label for="triggerSearchName"><strong>Filter trigger</strong></label-->
 	  									<div class="input-group">
 	  										<div class="input-group-prepend">
 	  											<span class="input-group-text"><i class="fa fa-search"></i></span>
@@ -512,9 +511,9 @@
 
 	  								<tr v-for="(dataStream, index) in dataStreamsForPage">
 	  									<td>
-											<div class="custom-control custom-checkbox">
-												<input type="checkbox" :id="index" class="custom-control-input">
-												<label :for="index" class="custom-control-label"></label>
+											<div class="custom-control custom-checkbox" @click="editDataStream(dataStream)">
+												<input type="checkbox" :id="dataStream.name" class="custom-control-input">
+												<label :for="dataStream.name" class="custom-control-label"></label>
 											</div>
 	  									</td>
 	  									<td>{{dataStream.name}}</td>
@@ -631,39 +630,53 @@
 	  					<h4 class="mb-3 text-center"><strong>Existing actions</strong></h4>
 	  					<hr>
 
-	  					<div class="row">
-	  						<div class="col-md-10">
-	  							<div class="mb-3">
-	  								<!--label for="triggerSearchName"><strong>Filter trigger</strong></label-->
-	  								<div class="input-group">
-	  									<div class="input-group-prepend">
-	  										<span class="input-group-text"><i class="fa fa-search"></i></span>
+                            <div class="row">
+
+								<div class="col-md-3">
+	  							    <div class="form-group form-inline well">
+                                        <label for="httpMethod" class="mr-sm-2 text-muted">Entries for page: </label>
+	  										<select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="httpMethod" v-model="amountOfEntriesPerPage">
+  												<option v-for="(elem, index) in optionsOfEntriesPerPage" v-bind:value="elem.value">
+  													{{elem.value}}
+  												</option>
+	  										</select>
+									</div>
+								</div>
+
+	  							<div class="col-md-5">
+	  								<div class="mb-3">
+	  									<div class="input-group">
+	  										<div class="input-group-prepend">
+	  											<span class="input-group-text"><i class="fa fa-search"></i></span>
+	  										</div>
+
+	  										<input type="text" class="form-control" v-model="actionFilter" placeholder="Start typing to filter actions..." required="true">
+
 	  									</div>
-
-	  									<input type="text" class="form-control" v-model="actionFilter" placeholder="Start typing to filter actions..." required="true">
-
 	  								</div>
 	  							</div>
+	  							
+	  							<div class="col-md-2">
+	  								<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addActionModal" style="width: 100%;"><strong>Add action</strong></button>	
+	  							</div>
+	  							
+	  							<div class="col-md-2">
+	  								<button type="button" class="btn btn-danger disabled" data-toggle="modal" data-target="#removeElements" style="width: 100%;"><strong>Delete</strong></button>	
+	  							</div>
 	  						</div>
-	  						<div class="col-md-2">
-	  							<!-- Button trigger modal -->
-	  							<!--br-->
-	  							<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addActionModal" style="width: 100%;"><strong>Add action</strong></button>	
-	  						</div>
-	  					</div>
 
 	  					<table class="table table-striped table-responsive table-sm" style="width: 100%;">
 	  						<thead class="thead-dark">
 	  							<tr>
 	  								<th scope="col" style="width: 1%"></th>
-	  								<th scope="col" style="width: 20%;">Name</th>
-	  								<th scope="col" style="width: 10%;">Type</th>
-	  								<th scope="col" style="width: 4%;">Priority</th>
-	  								<th scope="col" style="width: 5%;">Method</th>
-	  								<th scope="col" style="width: 15%;">URL</th>
-	  								<th scope="col" style="width: 5%;">Version</th>
-	  								<th scope="col" style="width: 19%;">Body</th>
-	  								<th scope="col" style="width: 19%;">Headers</th>
+	  								<th scope="col" style="width: 30%;">Name</th>
+	  								<th scope="col" style="width: 11%;">Type</th>
+	  								<th scope="col" style="width: 11%;">Priority</th>
+	  								<th scope="col" style="width: 10%">Method</th>
+	  								<th scope="col" style="width: 28%;">URL</th>
+	  								<th scope="col" style="width: 7%;">Version</th>
+	  								<!--th scope="col" style="width: 19%;">Body</th>
+	  								<th scope="col" style="width: 19%;">Headers</th-->
 	  								<th scope="col" style="width: 1%"></th>
 	  								<th scope="col" style="width: 1%"></th>
 	  							</tr>
@@ -675,8 +688,8 @@
 	  							<tr v-for="(action, index) in actionsForPage">
   									<td>
 										<div class="custom-control custom-checkbox">
-											<input type="checkbox" :id="index" class="custom-control-input">
-											<label :for="index" class="custom-control-label"></label>
+											<input type="checkbox" :id="action.name" class="custom-control-input" @click="addElementToDeleteList(action)">
+											<label :for="action.name" class="custom-control-label"></label>
 										</div>
   									</td>
 	  								<td>{{action.name}}</td>
@@ -694,22 +707,27 @@
 	  								<td v-if="action.version!=undefined">{{action.version}}</td>
 	  								<td v-else class="text-center">-</td>
 
-	  								<td v-if="action.body!=undefined">{{action.body}}</td>
+	  								<!--td v-if="action.body!=undefined">{{action.body}}</td>
 	  								<td v-else class="text-center">-</td>
 
 	  								<td v-if="action.headers!=undefined">{{action.headers}}</td>
-	  								<td v-else class="text-center">-</td>	
+	  								<td v-else class="text-center">-</td-->	
 
+                                    <td>
+                                        <button type="button" class="btn btn-success btn-block" data-toggle="modal" data-target="#showActionDetailModal" style="height: 75%;" @click="assignBodyAndHeader(action)">
+                                            <i class="fa fa-eye"></i>
+                                        </button>
+                                    </td>
 	  								<td>
 	  									<button type="button" class="btn btn-info btn-block" data-toggle="modal" @click="editAction(action)"  data-target="#editActionModal">
 	  										<i class="fa fa-pencil-square-o"></i>
 	  									</button>
 	  								</td>
-	  								<td>
+	  								<!--td>
 	  									<button type="button" class="btn btn-danger btn-block" data-toggle="modal" @click="removeAction(action)" data-target="#deleteActionModal">
 	  										<i class="fa fa-remove"></i>
 	  									</button>
-	  								</td>
+	  								</td-->
 	  							</tr>
 	  						</tbody>
 	  					</table>
@@ -863,32 +881,6 @@
 
 	  			</div>
 
-	  			<ul class="nav nav-tabs" id="myTab" role="tablist">
-	  				<li class="nav-item">
-	  					<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
-	  				</li>
-	  				<li class="nav-item">
-	  					<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
-	  				</li>
-	  				<li class="nav-item">
-	  					<a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
-	  				</li>
-	  			</ul>
-	  			<div class="tab-content" id="myTabContent">
-	  				<!--form class="needs-validation" novalidate=""-->
-	  				<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-
-	  				</div>
-	  				<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-
-	  				</div>
-	  				<div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-
-	  				</div>
-	  				<!--/form-->
-	  			</div>
-
-
 
 	  			<p>
 				  <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
@@ -1023,8 +1015,8 @@
 	  							<tr v-for="(trigger, index) in triggersForPage">
 									<td>
 										<div class="custom-control custom-checkbox">
-											<input type="checkbox" :id="index" class="custom-control-input">
-											<label :for="index" class="custom-control-label"></label>
+											<input type="checkbox" :id="trigger.name" class="custom-control-input">
+											<label :for="trigger.name" class="custom-control-label"></label>
 										</div>
   									</td>
 	  								<td>{{trigger.name}}</td>
@@ -1137,98 +1129,304 @@
 	  			</div>
 	  		</div>
 
+            
+            
+            
+            
+            <!-- Modal for removing elements-->
+  			<div class="modal fade" id="removeElements" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="exampleModalLabel"><strong>Remove Elements</strong></h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body text-center">
+                            <h4><strong>Are you sure you want to delete them ?</strong></h4>
+                            
+                            <ul class="list-group" v-for="(elem, index) in elementsToDelete">
+                              <li class="list-group-item"><strong>{{elem}}</strong></li>
+                            </ul>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-danger">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            
+            
+            <!-- Modal for showing action details -->
+	  		<div class="modal fade" id="showActionDetailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  			<div class="modal-dialog modal-lg" role="document">
+	  				<div class="modal-content">
+                        
+	  					<div class="modal-header">
+                            <h4 class="modal-title" id="exampleModalLabel"><strong>Action details</strong></h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+	  					</div>
+                        
+	  					<div class="modal-body">
+                            
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Action name</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">HTTP request</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Body</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#newone" role="tab" aria-controls="newone" aria-selected="false">Headers</a>
+                                </li>
+                            </ul>
+    
+	  			            <div class="tab-content" id="myTabContent">
+
+                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="mb-3">
+                            <label for="actionName">Name</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-font"></i></span>
+                                </div>
+                                <input disabled type="text" class="form-control" id="actionName" v-model="activeAction.name">
+
+                            </div>
+                        </div>
+	  				</div>
+                    
+	  				<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+                        <div class="mb-3">
+                            <label for="httpMethod">Method</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-star-o"></i></span>
+                                </div>
+                                    <select disabled class="form-control custom-select" id="httpMethod" v-model="activeAction.method">
+                                        <option v-for="(method, index) in existingHttpMethods" v-bind:value="method.name">
+                                            {{method.name}}
+                                        </option>
+                                    </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="triggerName">URL</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-external-link"></i></span>
+                                </div>
+                                <input disabled type="text" class="form-control" id="triggerName" v-model="activeAction.url">
+
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="triggerName">Version</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-code"></i></span>
+                                </div>
+                                <input disabled type="text" class="form-control" id="triggerName" v-model="activeAction.version">
+                            </div>
+                        </div>
+	  				</div>
+                    
+	  				<div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+
+
+	  							<div class="row" v-for="(elem, index) in activeIdsForHttpRequestBody">
+
+	  								<div class="col-md-6">
+	  									<div class="mb-3">
+	  										<label for="triggerName">Key</label>
+	  										<div class="input-group">
+	  											<div class="input-group-prepend">
+	  												<span class="input-group-text"><i class="fa fa-key"></i></span>
+	  											</div>
+	  											<input disabled type="text" class="form-control" v-model="elem.key">
+	  										</div>
+	  									</div>
+	  								</div>
+
+	  								<div class="col-md-6">
+	  									<div class="mb-3">
+	  										<label for="triggerName">Value</label>
+	  										<div class="input-group">
+	  											<div class="input-group-prepend">
+	  												<span class="input-group-text"><i class="fa fa-pencil-square-o"></i></span>
+	  											</div>
+	  											<input disabled type="text" class="form-control" v-model="elem.value">
+	  										</div>
+	  									</div>
+	  								</div>
+
+	  							</div>
+
+	  				</div>
+                    
+                    <div class="tab-pane fade" id="newone" role="tabpanel" aria-labelledby="newone-tab">
+
+                    <div class="row" v-for="(elem, index) in activeIdsForHttpRequestHeader">
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="triggerName">Key</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fa fa-key"></i></span>
+                                        </div>
+                                        <input disabled type="text" class="form-control" v-model="elem.key">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="triggerName">Value</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fa fa-pencil-square-o"></i></span>
+                                        </div>
+                                        <input disabled type="text" class="form-control" v-model="elem.value">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+	  				 </div>
+	  			  </div>
+                            
+                            
+	  					</div>
+	  				</div>
+	  			</div>
+	  		</div>
+            
+            
+            
 
 	  		<!-- Modal for addding actions -->
 	  		<div class="modal fade" id="addActionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	  			<div class="modal-dialog modal-lg" role="document">
 	  				<div class="modal-content">
+                        
 	  					<div class="modal-header">
-	  						<h4 class="modal-title" id="exampleModalLabel"><strong>Add Data Stream</strong></h4>
-	  						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	  							<span aria-hidden="true">&times;</span>
-	  						</button>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h4 class="modal-title" id="exampleModalLabel"><strong>Add Data Stream</strong></h4>
+                                </div>
+                                <div class="col-md-3">
+                                    <button type="button" class="btn btn-primary btn-sm" type="button" @click="sasa()"><strong>Add action</strong></button>
+                                </div>
+                                <div class="col-md-3">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            </div>
 	  					</div>
+                        
 	  					<div class="modal-body">
+                            
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Action name</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">HTTP request</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Body</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#newone" role="tab" aria-controls="newone" aria-selected="false">Headers</a>
+                                </li>
+                            </ul>
+    
+	  			            <div class="tab-content" id="myTabContent">
 
-	  						<form class="needs-validation" novalidate="">
+                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="mb-3">
+                            <label for="actionName">Name</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-font"></i></span>
+                                </div>
+                                <input type="text" class="form-control" id="actionName" placeholder="Action Name" v-model="activeAction.name" required="true">
+                                <div class="invalid-feedback" style="width: 100%;">
+                                    The Action name is required.
+                                </div>
+                            </div>
+                        </div>
+	  				</div>
+                    
+	  				<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                        <!--div>
+                            <label class="custom-control-label" for="triggerPolicy"><h4><strong>HTTP Request</strong></h4></label>
+                        </div>
+                        <hr-->
+                        <div class="mb-3">
+                            <label for="httpMethod">Method</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-star-o"></i></span>
+                                </div>
+                                    <select class="form-control custom-select" id="httpMethod" v-model="activeAction.method" required="true">
+                                        <option v-for="(method, index) in existingHttpMethods" v-bind:value="method.name">
+                                            {{method.name}}
+                                        </option>
+                                    </select>
+                                <div class="invalid-feedback" style="width: 100%;">
+                                    The HTTP Method is required.
+                                </div>
+                            </div>
+                        </div>
 
-	  							<div class="mb-3">
-	  								<label for="actionName">Name</label>
-	  								<div class="input-group">
-	  									<div class="input-group-prepend">
-	  										<span class="input-group-text"><i class="fa fa-font"></i></span>
-	  									</div>
-	  									<input type="text" class="form-control" id="actionName" placeholder="Action Name" v-model="activeAction.name" required="true">
-	  									<div class="invalid-feedback" style="width: 100%;">
-	  										The Action name is required.
-	  									</div>
-	  								</div>
-	  							</div>
+                        <div class="mb-3">
+                            <label for="triggerName">URL</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-external-link"></i></span>
+                                </div>
+                                <input type="text" class="form-control" id="triggerName" placeholder="http://foo" v-model="activeAction.url" required="true">
+                                <div class="invalid-feedback" style="width: 100%;">
+                                    The Action name is required.
+                                </div>
+                            </div>
+                        </div>
 
-
-	  							<hr>
-	  							<div>
-	  								<label class="custom-control-label" for="triggerPolicy"><h4><strong>HTTP Request</strong></h4></label>
-	  							</div>
-	  							<hr>
-
-
-
-	  							<div class="mb-3">
-	  								<label for="httpMethod">Method</label>
-	  								<div class="input-group">
-	  									<div class="input-group-prepend">
-	  										<span class="input-group-text"><i class="fa fa-star-o"></i></span>
-	  									</div>
-	  										<select class="form-control custom-select" id="httpMethod" v-model="activeAction.method" required="true">
-  												<option v-for="(method, index) in existingHttpMethods" v-bind:value="method.name">
-  													{{method.name}}
-  												</option>
-	  										</select>
-	  									<div class="invalid-feedback" style="width: 100%;">
-	  										The HTTP Method is required.
-	  									</div>
-	  								</div>
-	  							</div>
-
-	  							<div class="mb-3">
-	  								<label for="triggerName">URL</label>
-	  								<div class="input-group">
-	  									<div class="input-group-prepend">
-	  										<span class="input-group-text"><i class="fa fa-external-link"></i></span>
-	  									</div>
-	  									<input type="text" class="form-control" id="triggerName" placeholder="http://foo" v-model="activeAction.url" required="true">
-	  									<div class="invalid-feedback" style="width: 100%;">
-	  										The Action name is required.
-	  									</div>
-	  								</div>
-	  							</div>
-
-	  							<div class="mb-3">
-	  								<label for="triggerName">Version</label>
-	  								<div class="input-group">
-	  									<div class="input-group-prepend">
-	  										<span class="input-group-text"><i class="fa fa-code"></i></span>
-	  									</div>
-	  									<input type="text" class="form-control" id="triggerName" placeholder="HTTP request version" v-model="activeAction.version" required="true">
-	  									<div class="invalid-feedback" style="width: 100%;">
-	  										The Action name is required.
-	  									</div>
-	  								</div>
-	  							</div>
-
-
-	  							<div class="mb-3">
-	  								<label for="triggerName">Body</label>
-	  							</div>
-	  							<hr>
-
-
-	  							<div class="row">
-	  								<div class="col-md-3">
-	  									<button type="button" class="btn btn-info btn-lg btn-block" v-on:click="addOneMoreElemsForActionRequestBody()"><strong>Add parameter</strong></button>
-	  								</div>
-	  							</div>
+                        <div class="mb-3">
+                            <label for="triggerName">Version</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-code"></i></span>
+                                </div>
+                                <input type="text" class="form-control" id="triggerName" placeholder="HTTP request version" v-model="activeAction.version" required="true">
+                                <div class="invalid-feedback" style="width: 100%;">
+                                    The Action name is required.
+                                </div>
+                            </div>
+                        </div>
+	  				</div>
+                    
+	  				<div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+ 							<div class="row">
+                                <div class="col-md-3">
+                                    <button type="button" class="btn btn-info btn-lg btn-block" v-on:click="addOneMoreElemsForActionRequestBody()"><strong>Add parameter</strong></button>
+                                </div>
+                            </div>
 
 
 	  							<div class="row" v-for="(elem, index) in activeIdsForHttpRequestBody">
@@ -1272,17 +1470,9 @@
 
 	  							</div>
 
-	  							<!--key-value-entry v-for="elem in elemsForActionRequestBody" v-bind:entryId="elem"></key-value-entry-->
-
-
-
-	  							<hr>
-	  							<div>
-	  								<label class="custom-control-label" for="triggerPolicy"><h4><strong>HTTP Headers</strong></h4></label>
-	  							</div>
-	  							<hr>
-
-
+	  				</div>
+                    
+                    <div class="tab-pane fade" id="newone" role="tabpanel" aria-labelledby="newone-tab">
 	  							<div class="row">
 	  								<div class="col-md-3">
 	  									<button type="button" class="btn btn-info btn-lg btn-block" v-on:click="addOneMoreElemsForActionRequestHeader()"><strong>Add parameter</strong></button>
@@ -1291,53 +1481,51 @@
 	  							</div>
 
 
-	  							<div class="row" v-for="(elem, index) in activeIdsForHttpRequestHeader">
+                    <div class="row" v-for="(elem, index) in activeIdsForHttpRequestHeader">
 
-	  								<div class="col-md-5">
-	  									<div class="mb-3">
-	  										<label for="triggerName">Key</label>
-	  										<div class="input-group">
-	  											<div class="input-group-prepend">
-	  												<span class="input-group-text"><i class="fa fa-key"></i></span>
-	  											</div>
-	  											<input type="text" class="form-control" v-model="elem.key" placeholder="Parameter key" required="true">
-	  											<div class="invalid-feedback" style="width: 100%;">
-	  												The Action name is required.
-	  											</div>
-	  										</div>
-	  									</div>
-	  								</div>
+                            <div class="col-md-5">
+                                <div class="mb-3">
+                                    <label for="triggerName">Key</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fa fa-key"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" v-model="elem.key" placeholder="Parameter key" required="true">
+                                        <div class="invalid-feedback" style="width: 100%;">
+                                            The Action name is required.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-	  								<div class="col-md-6">
-	  									<div class="mb-3">
-	  										<label for="triggerName">Value</label>
-	  										<div class="input-group">
-	  											<div class="input-group-prepend">
-	  												<span class="input-group-text"><i class="fa fa-pencil-square-o"></i></span>
-	  											</div>
-	  											<input type="text" class="form-control" v-model="elem.value" placeholder="Parameter value" required="true">
-	  											<div class="invalid-feedback" style="width: 100%;">
-	  												The Action name is required.
-	  											</div>
-	  										</div>
-	  									</div>
-	  								</div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="triggerName">Value</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fa fa-pencil-square-o"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" v-model="elem.value" placeholder="Parameter value" required="true">
+                                        <div class="invalid-feedback" style="width: 100%;">
+                                            The Action name is required.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-	  								<div class="col-md-1">
-	  									<div class="mb-3">
-	  										<label></label>
-	  										<button class="btn btn-danger" @click="oneLessElemForActionRequestHeader(index)"><strong><i class="fa fa-remove"></i></strong></button>
-	  									</div>
-	  								</div>
+                            <div class="col-md-1">
+                                <div class="mb-3">
+                                    <label></label>
+                                    <button class="btn btn-danger" @click="oneLessElemForActionRequestHeader(index)"><strong><i class="fa fa-remove"></i></strong></button>
+                                </div>
+                            </div>
 
-	  							</div>
+                        </div>
 
-
-	  							<hr class="mb-3">
-	  							<button type="button" class="btn btn-primary btn-lg btn-block" type="submit" @click="sasa()"><h5><strong>Add action</strong></h5></button>
-	  						</form>
-
-
+	  				 </div>
+	  			  </div>
+                            
+                            
 	  					</div>
 	  				</div>
 	  			</div>
@@ -1621,19 +1809,19 @@
 	  		</div>  
 
             
-            <div id="stack3" class="modal fade" role="dialog" style="z-index: 1600;">
-  <div class="modal-dialog">
-    <!-- Modal content-->
-    <div class="modal-content">
-      
-      <!--div class="modal-body"-->
-        <div class="modal-body alert alert-success" role="alert">
-          <strong>Well done!</strong> You successfully read this important alert message.
-        </div>      	
-      <!--/div-->      
-    </div>
-  </div>
-</div>
+            <div id="stack3" class="modal fade" role="dialog" style="z-index: 1400;">
+              <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+
+                  <!--div class="modal-body"-->
+                    <div class="modal-body alert alert-success" role="alert">
+                      <strong>Well done!</strong> You successfully read this important alert message.
+                    </div>      	
+                  <!--/div-->      
+                </div>
+              </div>
+            </div>
             
 
 
@@ -2268,26 +2456,26 @@
 
   			<!-- Modal for removing triggers-->
   			<div class="modal fade" id="deleteTriggerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  				<div class="modal-dialog modal-lg" role="document">
-  					<div class="modal-content">
-  						<div class="modal-header">
-  							<h4 class="modal-title" id="exampleModalLabel"><strong>Remove Trigger</strong></h4>
-  							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-  								<span aria-hidden="true">&times;</span>
-  							</button>
-  						</div>
-  						<div class="modal-body text-center">
-  							<h4>Are you sure you want to delete <strong>{{activeTrigger.name}}</strong> ?</h4>
-  							</div>
-  							<div class="modal-footer">
-  								<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-  								<button type="button" class="btn btn-danger">Delete</button>
-  							</div>
-  						</div>
-  					</div>
-  				</div>
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="exampleModalLabel"><strong>Remove Trigger</strong></h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body text-center">
+                            <h4>Are you sure you want to delete <strong>{{activeTrigger.name}}</strong> ?</h4>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-danger">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-  			</div>
+        </div>
 
 
 	  			<script type="text/javascript">
@@ -2349,8 +2537,9 @@
 	  						renderTriggerRemoveView: false,
 	  						renderDataStreamView : false,
 	  						amountOfEntriesPerPage: 5,
-	  				//renderOneTimeTrigger: false,
 
+                            elementsToDelete:[],
+                            
 	  				showActionsOptions : false,
 	  				showCommandsOptions : false,
 	  				showTriggersOptions : false,
@@ -2417,7 +2606,7 @@
 
 	  				dataStreamFilter: undefined,
 	  				pagesNeededForDataStreams: 0, 
-	  				maxDataStreamsPerPage: 7, 
+	  				maxDataStreamsPerPage: 5, 
 	  				dataStreamsForPage: [], 
 	  				filteredDataStreams: [],
 
@@ -2452,7 +2641,6 @@
 	  				filteredActions:[],
 	  				intermediateActions:[],
 	  				activeAction:[],
-
 
 	  				elemsForActionRequestBody: 0,
 	  				activeIdsForHttpRequestBody: [],
@@ -2623,6 +2811,38 @@
 
 			methods: {
                 
+                addElementToDeleteList: function(elem){
+                    console.log("Entering addElementToDeleteList !");
+                    
+                    console.log("elementsToDelete: " + this.elementsToDelete);
+                    console.log("elem: " + elem);
+                    
+                    //if already exists, delete it; add it otherwise
+                    if(this.elementsToDelete.indexOf(elem.name)>-1){
+                        this.elementsToDelete.splice(this.elementsToDelete.indexOf(elem.name), 1);  
+                    }else{
+                        this.elementsToDelete.push(elem.name);  
+                    }
+                    console.log("elementsToDelete: " + this.elementsToDelete);
+                    console.log("elem: " + elem);
+                },                
+                
+                assignBodyAndHeader: function(action){
+                    console.log("Entering assignBodyAndHeader !");
+                    
+                    this.activeAction = action;
+                    
+                    console.log("activeIdsForHttpRequestHeader: " + this.activeIdsForHttpRequestHeader);
+                    console.log("action.headers: " + action.headers);
+                    console.log("activeIdsForHttpRequestBody: " + this.activeIdsForHttpRequestBody);
+                    console.log("action.body: " + action.body);
+                    
+                    this.activeIdsForHttpRequestHeader = action.headers;
+                    this.activeIdsForHttpRequestBody = action.body;
+                    
+                    console.log("activeIdsForHttpRequestHeader: " + this.activeIdsForHttpRequestHeader);
+                    console.log("activeIdsForHttpRequestBody: " + this.activeIdsForHttpRequestBody);
+                },
                 addDataStream: function(){
                     console.log("Entering addDataStream !");
                     console.log("dataStreamToAdd: " + this.dataStreamToAdd);
@@ -2664,7 +2884,19 @@
 				},
 
 				editAction: function(action){
+                    console.log("Entering editAction!");
 					this.activeAction = action;
+                    
+                    console.log("activeIdsForHttpRequestHeader: " + this.activeIdsForHttpRequestHeader);
+                    console.log("action.headers: " + action.headers);
+                    console.log("activeIdsForHttpRequestBody: " + this.activeIdsForHttpRequestBody);
+                    console.log("action.body: " + action.body);
+                    
+                    this.activeIdsForHttpRequestHeader = action.headers;
+                    this.activeIdsForHttpRequestBody = action.body;
+                    
+                    console.log("activeIdsForHttpRequestHeader: " + this.activeIdsForHttpRequestHeader);
+                    console.log("activeIdsForHttpRequestBody: " + this.activeIdsForHttpRequestBody);
 				},
 
 				removeAction: function(action){
@@ -2672,7 +2904,11 @@
 				},
 
 				editDataStream: function(dataStream){
+                    console.log("Entering editDataStream");
+                    console.log("this.activeDataStream: " + this.activeDataStream);
 					this.activeDataStream = dataStream;
+                    console.log("this.activeDataStream: " + this.activeDataStream);
+
 				},
 
 				removeDataStream: function(dataStream){

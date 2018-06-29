@@ -1323,7 +1323,7 @@
 	  					<div class="modal-header">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <h4 class="modal-title" id="exampleModalLabel"><strong>Add Data Stream</strong></h4>
+                                    <h4 class="modal-title" id="exampleModalLabel"><strong>Add Action</strong></h4>
                                 </div>
                                 <div class="col-md-3">
                                     <button type="button" class="btn btn-primary btn-sm" type="button" @click="sasa()"><strong>Add action</strong></button>
@@ -1420,14 +1420,25 @@
                                 </div>
 
                                 <div class="tab-pane fade" id="actionBody" role="tabpanel" aria-labelledby="actionBody-tab">
+
+
+                                        <div class="mb-3">
+	                                        <label for="actionBody">Body</label>
+	                                        <div class="input-group">
+	                                            <div class="input-group-prepend">
+	                                                <span class="input-group-text"><i class="fa fa-code"></i></span>
+	                                            </div>
+										  	<textarea class="form-control" aria-label="Request body" v-model="actionBody"></textarea>
+	                                        </div>
+	                                    </div>
+
                                         <div class="row">
-                                            <div class="col-md-3">
+                                            <!--div class="col-md-3">
                                                 <button type="button" class="btn btn-info btn-lg btn-block" v-on:click="addOneMoreElemsForActionRequestBody()"><strong>Add parameter</strong></button>
-                                            </div>
+                                            </div-->
+                                            <h6 class="text-muted text-center"><em><small>Enter body in JSON format</small></em></h6>
                                         </div>
-
-
-                                            <div class="row" v-for="(elem, index) in activeIdsForHttpRequestBody">
+                                            <!--div class="row" v-for="(elem, index) in activeIdsForHttpRequestBody">
 
                                                 <div class="col-md-5">
                                                     <div class="mb-3">
@@ -1465,8 +1476,7 @@
                                                         <button type="button" class="btn btn-danger" @click="oneLessElemForActionRequestBody(index)"><strong><i class="fa fa-remove"></i></strong></button>
                                                     </div>
                                                 </div>
-
-                                            </div>
+                                            </div-->
 
                                 </div>
 
@@ -1745,6 +1755,7 @@
 	  						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	  							<span aria-hidden="true">&times;</span>
 	  						</button>
+
 	  					</div>
 	  					<div class="modal-body">
 
@@ -1764,7 +1775,7 @@
 	  							</div>
 
 	  							<hr class="mb-3">	
-	  							<button class="btn btn-primary btn-lg btn-block" type="submit" data-toggle="modal" data-target="#stack3" @click="addDataStream()"><h5><strong>Add stream</strong></h5></button>
+	  							<button class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#stack3" @click="addDataStream()"><h5><strong>Add stream</strong></h5></button>
 	  						</form>
 	  					</div>
 	  				</div>
@@ -1835,20 +1846,17 @@
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
                         
-                        <div class="modal-header">
-                            <div class="row">
-                            	<h4 class="modal-title" id="addTriggerModal"><strong>Add Trigger</strong></h4>
-                            	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                	<span aria-hidden="true">&times;</span>
-                            	</button>
-                            </div>
-                        	<br>
-                        	<h6 class="text-muted text-center"><em><small>You trigger an ACTION based on a CONDITION that needs to be checked according to some POLICY</small></em></h6>
-                        </div>
+	  					<div class="modal-header">
+	  						<h4 class="modal-title" id="exampleModalLabel"><strong>Add Trigger</strong></h4>
+	  						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	  							<span aria-hidden="true">&times;</span>
+	  						</button>
+	  					</div>
+                        <h6 class="text-muted text-center"><em><small>You trigger an ACTION based on a CONDITION that needs to be checked according to some POLICY</small></em></h6>
                         
                         <div class="modal-body">
                             
-                            <ul class="nav nav-tabs" id=" addTriggersTab" role="tablist">
+                            <ul class="nav nav-tabs" id="addTriggersTab" role="tablist">
                                 <li class="nav-item">
                                     <a class="nav-link active" id="triggerActionConfig-tab" data-toggle="tab" href="#triggerActionConfig" role="tab" aria-controls="triggerActionConfig" aria-selected="true">Action config</a>
                                 </li>
@@ -1897,18 +1905,18 @@
                                 </div>
                         
                                 <div class="tab-pane fade" id="triggerPolicy" role="tabpanel" aria-labelledby="triggerPolicy-tab">
-                            		<p></p>
+                            		<br>
                                     <div class="row">
                                         <div class="col-md-6 mb-3">
                                             <div class="custom-control custom-radio">
-                                                <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked="" required="" v-on:click="dataPointPolicy()">
-                                                <label class="custom-control-label" for="credit">Data Point Registration</label>
+                                                <input id="drReg" name="drReg" type="radio" class="custom-control-input" checked="" required="" @click="dataPointPolicy()">
+                                                <label class="custom-control-label" for="drReg">Data Point Registration</label>
                                             </div>
                                         </div>
                                         <div class="col-md-6 mb-3">
                                             <div class="custom-control custom-radio">
-                                                <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required="" v-on:click="timePeriodPolicy()">
-                                                <label class="custom-control-label" for="debit">Time Period</label>
+                                                <input id="timePer" name="timePer" type="radio" class="custom-control-input" required="" @click="timePeriodPolicy()">
+                                                <label class="custom-control-label" for="timePer">Time Period</label>
                                             </div>
                                         </div>
                                     </div>
@@ -1916,6 +1924,21 @@
                                     <div v-if="isTimePeriodPolicy">
 
                                         <div class="mb-3">
+                                            <label for="triggerName">Granularity</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fa fa-calendar-plus-o"></i></span>
+                                                </div>  
+                                                <select class="form-control custom-select" id="timeGranularity" placeholder="" required="true">
+                                                    <option v-for="opt in timeGranularityOptions" value="opt">{{opt.name}}</option>
+                                                </select>
+                                                <div class="invalid-feedback" style="width: 100%;">
+                                                    The Trigger name is required.
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!--div class="mb-3">
                                             <label for="triggerName">Starting from</label>
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
@@ -1940,14 +1963,14 @@
                                                     The Trigger name is required.
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div-->
 
                                     </div>
 
                                     <div v-else>
 
                                         <div class="mb-3">
-                                            <label for="triggerName">From Data Stream</label>
+                                            <label for="dsName">From Data Stream</label>
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="fa fa-diamond"></i></span>
@@ -1964,14 +1987,14 @@
                                 </div>
                         
                                 <div class="tab-pane fade" id="triggerCondition" role="tabpanel" aria-labelledby="triggerCondition-tab">
-                                	<p></p>
+                                	<br>
                                     <div class="mb-3">
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="fa fa-exclamation"></i></span>
                                             </div>
-                                            <select class="form-control custom-select" id="conditions" placeholder="" required="true" v-model="conditionSelected">
-                                                <option v-for="condition in triggerConditions" value="condition.name">{{ condition.name }}</option>
+                                            <select class="form-control custom-select" id="days" placeholder="" required="true" v-model="conditionSelected">
+                                                <option v-for="condition in triggerConditions" v-bind:value="{ id: condition.id, text: condition.name }">{{ condition.name }}</option>
                                             </select>
                                             <div class="invalid-feedback" style="width: 100%;">
                                                 The Trigger name is required.
@@ -1985,7 +2008,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="fa fa-diamond"></i></span>
                                             </div>
-                                            <select class="form-control custom-select" id="days" placeholder="" required="true">
+                                            <select class="form-control custom-select" id="dataStream" placeholder="" required="true">
                                                 <option v-for="dS in dataStreams" value="dS">{{dS}}</option>
                                             </select>
                                             <div class="invalid-feedback" style="width: 100%;">
@@ -1998,24 +2021,24 @@
                                     <div v-if="conditionSelected.id==2">
                                         <div class="row">
                                             <div class="col-md-4 mb-3">
-                                                <label for="cc-number">Value</label>
+                                                <label for="ds-value">Value</label>
                                                 <input class="form-control" type="text" placeholder="Data-Stream current value" readonly>
                                             </div>
                                             <div class="col-md-4 mb-3">
-                                                <label for="cc-name">Condition</label>
+                                                <label for="ds-condition">Condition</label>
                                                 <select class="form-control custom-select" id="currentValueCond" placeholder="" required="true">
-                                                    <option value="monday">greater than</option>
-                                                    <option value="monday">less than</option>
-                                                    <option value="monday">equal to</option>
-                                                    <option value="monday">different to</option>
+                                                    <option value="greater">greater than</option>
+                                                    <option value="less">less than</option>
+                                                    <option value="equal">equal to</option>
+                                                    <option value="different">different to</option>
                                                 </select>
                                                 <div class="invalid-feedback">
                                                     Name on card is required
                                                 </div>
                                             </div>
                                             <div class="col-md-4 mb-3">
-                                                <label for="cc-number">Defined value</label>
-                                                <input type="text" class="form-control" id="cc-number" placeholder="0" required="">
+                                                <label for="ds-defined-value">Defined value</label>
+                                                <input type="text" class="form-control" id="ds-defined-value" placeholder="0" required="">
                                                 <div class="invalid-feedback">
                                                     Credit card number is required
                                                 </div>
@@ -2070,7 +2093,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <label for="triggerName" style="font-style: italic;">For more than {{dataStreamNotUpdatedFrom.months}} months, {{dataStreamNotUpdatedFrom.weeks}} weeks, {{dataStreamNotUpdatedFrom.days}} days, {{dataStreamNotUpdatedFrom.hours}} hours, {{dataStreamNotUpdatedFrom.minutes}} minutes and {{dataStreamNotUpdatedFrom.seconds}} seconds</label>     
+                                        <label for="dSNotUpdated" style="font-style: italic;">For more than {{dataStreamNotUpdatedFrom.months}} months, {{dataStreamNotUpdatedFrom.weeks}} weeks, {{dataStreamNotUpdatedFrom.days}} days, {{dataStreamNotUpdatedFrom.hours}} hours, {{dataStreamNotUpdatedFrom.minutes}} minutes and {{dataStreamNotUpdatedFrom.seconds}} seconds</label>     
                                     </div>
 
                                     <div v-if="conditionSelected.id==4">
@@ -2133,7 +2156,7 @@
                         
                         <div class="modal-body">
                             
-                            <ul class="nav nav-tabs" id=" addTriggersTab" role="tablist">
+                            <ul class="nav nav-tabs" id="editTriggersTab" role="tablist">
                                 <li class="nav-item">
                                     <a class="nav-link active" id="triggerActionEdit-tab" data-toggle="tab" href="#triggerActionEdit" role="tab" aria-controls="triggerActionEdit" aria-selected="true">Action config</a>
                                 </li>
@@ -2148,8 +2171,6 @@
                             <div class="tab-content" id=" editTriggersTabContent">
 
                                 <div class="tab-pane fade show active" id="triggerActionEdit" role="tabpanel" aria-labelledby="triggerActionEdit-tab">
-
-
 
                                     <div class="mb-3">
                                         <label for="triggerName">Name</label>
@@ -2181,9 +2202,6 @@
                                         </div>
                                     </div>
 
-
-
-
                                 </div>
                         
                                 <div class="tab-pane fade" id="triggerPolicyEdit" role="tabpanel" aria-labelledby="triggerPolicyEdit-tab">
@@ -2193,13 +2211,13 @@
                                     <div class="row">
                                         <div class="col-md-6 mb-3">
                                             <div class="custom-control custom-radio">
-                                                <input id="dataPointReg" name="dataPointReg" type="radio" class="custom-control-input" checked="" required="" v-on:click="dataPointPolicy()">
+                                                <input id="dataPointReg" name="dataPointReg" type="radio" class="custom-control-input" required="" @click="dataPointPolicy()">
                                                 <label class="custom-control-label" for="dataPointReg">Data Point Registration</label>
                                             </div>
                                         </div>
                                         <div class="col-md-6 mb-3">
                                             <div class="custom-control custom-radio">
-                                                <input id="timePeriod" name="timePeriod" type="radio" class="custom-control-input" required="" v-on:click="timePeriodPolicy()">
+                                                <input id="timePeriod" name="timePeriod" type="radio" class="custom-control-input" required="" @click="timePeriodPolicy()">
                                                 <label class="custom-control-label" for="timePeriod">Time Period</label>
                                             </div>
                                         </div>
@@ -2254,19 +2272,18 @@
                                         </div>
 
                                     </div>
-
-
                                 </div>
                         
                                 <div class="tab-pane fade" id="triggerConditionEdit" role="tabpanel" aria-labelledby="triggerConditionEdit-tab">
 
+                                	<!-- COMENTADO XQ triggerConditionEdits NO SÉ PARA QUÉ LA USO -->
                                     <div class="mb-3">
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="fa fa-exclamation"></i></span>
                                             </div>
                                             <select class="form-control custom-select" id="days" placeholder="" required="true" v-model="conditionSelected">
-                                                <option v-for="condition in triggerConditionEdits" v-bind:value="{ id: condition.id, text: condition.name }">{{ condition.name }}</option>
+                                                <option v-for="condition in triggerConditions" v-bind:value="{ id: condition.id, text: condition.name }">{{ condition.name }}</option>
                                             </select>
                                             <div class="invalid-feedback" style="width: 100%;">
                                                 The Trigger name is required.
@@ -2409,7 +2426,6 @@
                                             <button class="btn btn-danger btn-block">Forget condition</button>
                                         </div>
                                     </div>
-
                                </div>
                           </div>                            
                         </div>
@@ -2418,7 +2434,7 @@
             </div>
 
   			<!-- Modal for removing triggers-->
-  			<div class="modal fade" id="deleteTriggerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  			<div class="modal fade" id="deleteTriggerModal" tabindex="-1" role="dialog" aria-labelledby="deleteTriggerModal" aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -2567,6 +2583,14 @@
 	  				intermediateTriggers:[],
 	  				activeTrigger:[],
 
+	  				timeGranularityOptions: [
+	  				{id: 1, name: '10 seconds'},
+	  				{id: 2, name: '10 minutes'},
+	  				{id: 3, name: '30 minutes'},
+	  				{id: 4, name: '1 hour'},
+	  				],
+
+
 	  				triggerConditions:[
 	  				{id: 1, name: 'Always'},
 	  				{id: 2, name: 'On Data-Stream value'},
@@ -2626,6 +2650,7 @@
 
 	  				elemsForActionRequestBody: 0,
 	  				activeIdsForHttpRequestBody: [],
+	  				actionBody:'{"foo":"bar", "jane":"doe"}',
 	  				activeIdsForHttpRequestHeader: [],
 
 
@@ -2829,28 +2854,29 @@
                     console.log("Entering addDataStream !");
                     console.log("dataStreamToAdd: " + this.dataStreamToAdd);
 
-                    axios.defaults.headers.post['Content-Type'] = 'application/json';
-                    
-					this.hasNotFinishedDS = true;
-                    
-                    axios.post('http://localhost:8090/test/dataStream/', {
-                        name: this.dataStreamToAdd
-                      })
-                      .then(function (response) {
-                        this.hasNotFinishedDS = false;
+					let headeeers= {
+					  headers: {
+					    "Access-Control-Allow-Origin": '*',
+					    /*"Access-Control-Allow-Methods": 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
+					    "Access-Control-Allow-Headers": 'Origin, Content-Type, X-Auth-Token',*/
+					    //"Content-Type":"application/json"					  
+						}
+					}
 
+					// FALTA QUE FRAN PERMITA CORS
+
+                    axios.post('http://192.168.99.100:8090/data-streams', {
+                    	name: this.dataStreamToAdd
+                    }, headeeers)
+                      .then(function (response) {
                         console.log("data: " + response.data);
                         console.log("status: " + response.status);
                         console.log("statusText: " + response.statusText);
                         console.log("headers: " + response.headers);
                         console.log("config: " + response.config);
-                        
-                        this.requestWasSuccessful = response.status==200;
                       })
-                      .catch(function (error) {
-                        this.hasNotFinishedDS = false;
-                        console.log("[ERROR] " + error);
-                      });
+                      .catch(function (error) {console.log("[ERROR] " + error); 
+                  });
 
                     
                 },
@@ -2863,6 +2889,7 @@
 					console.log("activeAction: " + this.activeAction.method);
 					console.log("activeAction: " + this.activeAction.url);
 					console.log("activeAction: " + this.activeAction.version);
+
 				},
 
 				editAction: function(action){

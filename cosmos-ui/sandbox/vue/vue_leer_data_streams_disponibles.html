@@ -288,15 +288,10 @@
 
 	  			<a href="#" v-on:click="showDataStreamView(); closeNav();"><i class="fa fa-cubes" style="font-size:20px"></i> DATA STREAM</a>
 
-	  			<a href="#" v-on:click="showActionsAddRemoveOptions()"><i class="fa fa-hand-paper-o" style="font-size:20px"></i> ACTIONS</a>
-	  			<div v-if="showActionsOptions">
-	  				<a href="#" v-on:click="showActionAddView(); closeNav();" style="font-size: 15px; padding-left: 70px;"><i class="fa fa-check" style="font-size:15px"></i>  ADD ACTION</a>
-	  				<a href="#" v-on:click="showActionRemoveView(); closeNav();" style="font-size: 15px; padding-left: 70px;"><i class="fa fa-remove" style="font-size:15px"></i>  REMOVE ACTION</a>
-	  			</div>
+	  			<a href="#" v-on:click="showActionAddView(); closeNav()"><i class="fa fa-hand-paper-o" style="font-size:20px"></i> ACTIONS</a>
 
-	  			<a href="#" v-on:click="showTriggersAddRemoveOptions()"><i class="fa fa-bell-o" style="font-size:20px"></i> TRIGGERS</a>
-	  			<a href="#" v-if="showTriggersOptions" v-on:click="showTriggerAddView(); closeNav();" style="font-size: 15px; padding-left: 70px;"><i class="fa fa-plus" style="font-size:15px"></i>  ADD TRIGGER</a>
-	  			<a href="#" v-if="showTriggersOptions" v-on:click="showTriggerRemoveView(); closeNav();" style="font-size: 15px; padding-left: 70px;"><i class="fa fa-remove" style="font-size:15px"></i>  REMOVE TRIGGER</a>
+	  			<a href="#" v-on:click="showTriggerAddView(); closeNav()"><i class="fa fa-bell-o" style="font-size:20px"></i> TRIGGERS</a>
+
 
 	  			<a href="#" v-on:click="showCommandsAddRemoveOptions()"><i class="fa fa-microphone" style="font-size:20px"></i> COMMANDS</a>
 	  			<a href="#" v-if="showCommandsOptions" v-on:click="showCommandAddView(); closeNav();" style="font-size: 15px; padding-left: 70px;"><i class="fa fa-plus" style="font-size:15px"></i>  ADD COMMAND</a>
@@ -511,27 +506,22 @@
 
 	  								<tr v-for="(dataStream, index) in dataStreamsForPage">
 	  									<td>
-											<div class="custom-control custom-checkbox" @click="editDataStream(dataStream)">
+											<div class="custom-control custom-checkbox" @click="addElementToDeleteList(dataStream)">
 												<input type="checkbox" :id="dataStream.name" class="custom-control-input">
 												<label :for="dataStream.name" class="custom-control-label"></label>
 											</div>
 	  									</td>
 	  									<td>{{dataStream.name}}</td>
 	  									<td>
-	  										<button type="button" class="btn btn-success btn-block" data-toggle="modal" data-target="#editDataStreamModal" style="height: 75%;">
+	  										<button type="button" class="btn btn-success btn-block" @click="showDataStream(dataStream)" data-toggle="modal" data-target="#editDataStreamModal" style="height: 75%;">
 	  											<i class="fa fa-eye"></i>
 	  										</button>
 	  									</td>
 	  									<td>
-	  										<button type="button" class="btn btn-info btn-block" v-on:click="editDataStream(dataStream)" data-toggle="modal" data-target="#editDataStreamModal" style="height: 75%;">
+	  										<button type="button" class="btn btn-info btn-block" @click="editDataStreams(dataStream)" data-toggle="modal" data-target="#editDataStreamModal" style="height: 75%;">
 	  											<i class="fa fa-pencil-square-o"></i>
 	  										</button>
 	  									</td>
-	  									<!--td>
-	  										<button type="button" class="btn btn-danger btn-block" data-toggle="modal" @click="removeDataStream(dataStream)" data-target="#deleteDataStreamModal" style="height: 75%;">
-	  											<i class="fa fa-remove"></i>
-	  										</button>
-	  									</td-->
 	  								</tr>
 	  							</tbody>
 	  						</table>
@@ -707,12 +697,6 @@
 	  								<td v-if="action.version!=undefined">{{action.version}}</td>
 	  								<td v-else class="text-center">-</td>
 
-	  								<!--td v-if="action.body!=undefined">{{action.body}}</td>
-	  								<td v-else class="text-center">-</td>
-
-	  								<td v-if="action.headers!=undefined">{{action.headers}}</td>
-	  								<td v-else class="text-center">-</td-->	
-
                                     <td>
                                         <button type="button" class="btn btn-success btn-block" data-toggle="modal" data-target="#showActionDetailModal" style="height: 75%;" @click="assignBodyAndHeader(action)">
                                             <i class="fa fa-eye"></i>
@@ -723,11 +707,6 @@
 	  										<i class="fa fa-pencil-square-o"></i>
 	  									</button>
 	  								</td>
-	  								<!--td>
-	  									<button type="button" class="btn btn-danger btn-block" data-toggle="modal" @click="removeAction(action)" data-target="#deleteActionModal">
-	  										<i class="fa fa-remove"></i>
-	  									</button>
-	  								</td-->
 	  							</tr>
 	  						</tbody>
 	  					</table>
@@ -1351,7 +1330,7 @@
                         
 	  					<div class="modal-body">
                             
-                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <ul class="nav nav-tabs" id="addActionTab" role="tablist">
                                 <li class="nav-item">
                                     <a class="nav-link active" id="actionName-tab" data-toggle="tab" href="#actionName" role="tab" aria-controls="actionName" aria-selected="true">Action name</a>
                                 </li>
@@ -1366,7 +1345,7 @@
                                 </li>
                             </ul>
     
-	  			            <div class="tab-content" id="myTabContent">
+	  			            <div class="tab-content" id="addActionContent">
 
                                 <div class="tab-pane fade show active" id="actionName" role="tabpanel" aria-labelledby="actionName-tab">
                                     <div class="mb-3">
@@ -1550,7 +1529,7 @@
 	  			</div>
 	  		</div>
 
-            <!-- Modal for showing action details -->
+            <!-- Modal for editing action details -->
 	  		<div class="modal fade" id="editActionModal" tabindex="-1" role="dialog" aria-labelledby="editActionModal" aria-hidden="true">
 	  			<div class="modal-dialog modal-lg" role="document">
 	  				<div class="modal-content">
@@ -1564,7 +1543,7 @@
                         
 	  					<div class="modal-body">
                             
-                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <ul class="nav nav-tabs" id="editActionTab" role="tablist">
                                 <li class="nav-item">
                                     <a class="nav-link active" id="editActionName-tab" data-toggle="tab" href="#editActionName" role="tab" aria-controls="editActionName" aria-selected="true">Action name</a>
                                 </li>
@@ -1579,7 +1558,7 @@
                                 </li>
                             </ul>
     
-	  			            <div class="tab-content" id="myTabContent">
+	  			            <div class="tab-content" id="editActionContent">
 
                                 <div class="tab-pane fade show active" id="editActionName" role="tabpanel" aria-labelledby="editActionName-tab">
                                     <div class="mb-3">
@@ -1800,7 +1779,8 @@
 	  			<div class="modal-dialog modal-lg" role="document">
 	  				<div class="modal-content">
 	  					<div class="modal-header">
-	  						<h4 class="modal-title" id="exampleModalLabel"><strong>Edit Data Stream</strong></h4>
+	  						<h4 v-if="editDataStream" class="modal-title" id="editDataStreamLabel"><strong>Edit Data Stream</strong></h4>
+	  						<h4 v-else class="modal-title" id="dataStreamDetailsLabel"><strong>Data Stream details</strong></h4>
 	  						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	  							<span aria-hidden="true">&times;</span>
 	  						</button>
@@ -1815,15 +1795,15 @@
 	  									<div class="input-group-prepend">
 	  										<span class="input-group-text"><i class="fa fa-font"></i></span>
 	  									</div>
-	  									<input type="text" class="form-control" id="dataStreamName" v-bind:placeholder="this.activeDataStream.name" required="true">
-	  									<div class="invalid-feedback" style="width: 100%;">
-	  										The data stream name is required.
-	  									</div>
+
+	  									<input v-if="editDataStream" type="text" class="form-control" id="dataStreamName" v-model="activeDataStream.name" required="true">
+	  									<input v-else disabled type="text" class="form-control" id="dataStreamName" v-model="activeDataStream.name">
+	  									
 	  								</div>
 	  							</div>
 	  						</form>
 	  					</div>
-	  					<div class="modal-footer">
+	  					<div class="modal-footer" v-if="editDataStream">
 	  						<button type="button" class="btn btn-primary" data-dismiss="modal"><strong>Save changes</strong></button>
   							<button type="button" class="btn btn-secondary" data-dismiss="modal"><strong>Close</strong></button>
 	  					</div>
@@ -2913,6 +2893,8 @@
 
 	  				// data stream variables
 
+	  				editDataStream: false,
+
 	  				dataStreamFilter: undefined,
 	  				pagesNeededForDataStreams: 0, 
 	  				maxDataStreamsPerPage: 5, 
@@ -3244,12 +3226,18 @@
 					this.activeAction = action;
 				},
 
-				editDataStream: function(dataStream){
+				editDataStreams: function(dataStream){
                     console.log("Entering editDataStream");
                     console.log("this.activeDataStream: " + this.activeDataStream);
 					this.activeDataStream = dataStream;
+					this.editDataStream = true;
                     console.log("this.activeDataStream: " + this.activeDataStream);
 
+				},
+
+				showDataStream: function(dataStream){
+					this.editDataStream = false;
+					this.activeDataStream = dataStream;
 				},
 
 				removeDataStream: function(dataStream){

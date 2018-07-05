@@ -2799,6 +2799,9 @@
 	  				new Vue({
 	  					el: '#app',
 	  					data: {
+
+	  						backendEndPoint: "http://192.168.99.100:8090",
+
 	  						dataStreams: [],
 	  						dataStreamSelected: [],
 	  						hasNotFinishedDS: true,
@@ -3139,20 +3142,9 @@
                     console.log("Entering addDataStream !");
                     console.log("dataStreamToAdd: " + this.dataStreamToAdd);
 
-					let headeeers= {
-					  headers: {
-					    //"Access-Control-Allow-Origin": '*',
-					    /*"Access-Control-Allow-Methods": 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
-					    "Access-Control-Allow-Headers": 'Origin, Content-Type, X-Auth-Token',*/
-					    //"Content-Type":"application/json"					  
-						}
-					}
-
-					// FALTA QUE FRAN PERMITA CORS
-
-                    axios.post('http://192.168.99.100:8090/data-streams', {
+                    axios.post(this.backendEndPoint + '/data-streams', {
                     	name: this.dataStreamToAdd
-                    }, headeeers)
+                    })
                       .then(function (response) {
                         console.log("data: " + response.data);
                         console.log("status: " + response.status);
@@ -3190,7 +3182,7 @@
 					console.log("request_line: " + request_line);
 					console.log("request: " + request);
 
-                    axios.post('http://192.168.99.100:8090/actions', {
+                    axios.post(this.backendEndPoint + '/actions', {
                     	name: "aName",
                     	request: request
                     })

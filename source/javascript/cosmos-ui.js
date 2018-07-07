@@ -408,19 +408,19 @@
 					var request_line={};
 
 					
-					request_line['url'] = "aUrl";
-					request_line['method'] = "aMethod";
-					request_line['version'] = "aVersion";
+					request_line['url'] = this.activeAction.url;
+					request_line['method'] = this.activeAction.method;
+					request_line['version'] = this.activeAction.version;
 					request['request_line'] = request_line;
 					request['headers'] = this.activeIdsForHttpRequestHeader;
-					request['body'] = this.actionBody;
+					//request['body'] = this.actionBody;
 
 
 					console.log("request_line: " + request_line);
 					console.log("request: " + request);
 
                     axios.post(this.backendEndPoint + '/actions', {
-                    	name: "aName",
+                    	name: this.activeAction.name,
                     	request: request
                     })
                       .then(function (response) {
@@ -1294,6 +1294,8 @@
 						console.log("Entering getdataStreamInformation !");
 						console.log("dS = " + dS);
 						console.log('http://localhost:8090/test/dataStream/' + dS);
+
+						// FALTA AGREGAR EL ORIGIN AL GET REQUEST!!!!!
 
 						axios.get('http://localhost:8090/test/dataStream/' + dS).then(response => {
 

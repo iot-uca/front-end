@@ -244,7 +244,9 @@
 						</div>
 
 						<div class="col-md-2">
-							<button type="button" class="btn btn-danger disabled" data-toggle="modal" data-target="#removeElements" style="width: 100%;"><strong>Delete</strong></button>	
+							<button v-if="elementsToDelete.length<1" type="button" disabled class="btn btn-danger" data-toggle="modal" data-target="#removeElements" style="width: 100%;"><strong>Delete</strong></button>	
+							<button v-else type="button" class="btn btn-danger" data-toggle="modal" data-target="#removeElements" style="width: 100%;"><strong>Delete</strong></button>	
+
 						</div>
 					</div>
 
@@ -264,8 +266,8 @@
 
 							<tr v-for="(dataStream, index) in dataStreamsForPage">
 								<td>
-									<div class="custom-control custom-checkbox" @click="addElementToDeleteList(dataStream)">
-										<input type="checkbox" :id="dataStream.name" class="custom-control-input">
+									<div class="custom-control custom-checkbox" >
+										<input type="checkbox" :id="dataStream.name" class="custom-control-input" @click="addElementToDeleteList(dataStream)">
 										<label :for="dataStream.name" class="custom-control-label"></label>
 									</div>
 								</td>
@@ -409,7 +411,8 @@
 						</div>
 
 						<div class="col-md-2">
-							<button type="button" class="btn btn-danger disabled" data-toggle="modal" data-target="#removeElements" style="width: 100%;"><strong>Delete</strong></button>	
+							<button v-if="elementsToDelete.length<1" type="button" disabled class="btn btn-danger" data-toggle="modal" data-target="#removeElements" style="width: 100%;"><strong>Delete</strong></button>	
+							<button v-else type="button" class="btn btn-danger" data-toggle="modal" data-target="#removeElements" style="width: 100%;"><strong>Delete</strong></button>	
 						</div>
 					</div>
 
@@ -742,7 +745,8 @@
 	  								</div>
 
 	  								<div class="col-md-2">
-	  									<button type="button" class="btn btn-danger disabled" data-toggle="modal" data-target="#removeElements" style="width: 100%;"><strong>Delete</strong></button>	
+	  									<button v-if="elementsToDelete.length<1" type="button" disabled class="btn btn-danger" data-toggle="modal" data-target="#removeElements" style="width: 100%;"><strong>Delete</strong></button>	
+	  									<button v-else type="button" class="btn btn-danger" data-toggle="modal" data-target="#removeElements" style="width: 100%;"><strong>Delete</strong></button>
 	  								</div>
 	  							</div>
 
@@ -908,6 +912,20 @@
 	  					</div>
 	  				</div>
 
+					<!-- ################################################################################################################################ -->
+
+			       <!-- Modal for showing that no element exust already -->
+                    <div class="modal fade" id="noElementsModal" tabindex="-1" role="dialog" aria-labelledby="noElementsModal" aria-hidden="true">
+                    	<div class="modal-dialog modal-lg" role="document">
+                    		<div class="modal-content">
+                    			<div class="modal-header">
+                    				<h4 class="modal-title" id="noElementsModalLabel"><strong>There are currently no elements to show</strong></h4>
+                    			</div>
+                    			<div class="modal-body">
+                    			</div>
+                    		</div>
+                    	</div>
+                    </div>
 
 	  				<!-- ################################################################################################################################ -->
 

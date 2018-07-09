@@ -1295,8 +1295,6 @@
 						console.log("dS = " + dS);
 						console.log('http://localhost:8090/test/dataStream/' + dS);
 
-						// FALTA AGREGAR EL ORIGIN AL GET REQUEST!!!!!
-
 						axios.get('http://localhost:8090/test/dataStream/' + dS).then(response => {
 
 							console.log("Response PLain => " + response);

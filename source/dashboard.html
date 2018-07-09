@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+
+
+<head>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Cosmos GUI</title>
+	<link rel='shortcut icon' type='image/x-icon' href='resources/cosmos.jpg'/> 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.3/vue.js"></script> <!-- Vue as primary JS fwmk -->
+	<!--script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script--> <!-- JQuery for certain DOM elem manipulations -->
+	<!--link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css" /--> <!-- Bootstrap for styling -->
+	<script src= "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script> <!-- ChartJS for dashboard charts -->
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script> <!-- Axios as Http client -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"></script> <!-- Moment JS for Date manipulation -->
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">	 <!--  For calendar icon  -->
+
+
+	<!--   FOR THE TIME PICKER   -->
+	<!--script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script-->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha18/js/tempusdominus-bootstrap-4.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha18/css/tempusdominus-bootstrap-4.min.css" />
+	
+	<!-- Referencing local css file -->
+	<link rel="stylesheet" type="text/css" href="css/cosmos-ui.css">
+	
+</head>
+
+
+<style type="text/css">/* Chart.js */
+@-webkit-keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}@keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}.chartjs-render-monitor{-webkit-animation:chartjs-render-animation 0.001s;animation:chartjs-render-animation 0.001s;}
+</style>
+</head>
+
+
+<body style="background-color: lightgrey">
+
+	<!--div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
+	  <div class="card-header">Header</div>
+	  <div class="card-body">
+	    <h5 class="card-title">Primary card title</h5>
+	    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+	  </div>
+	</div-->
+
+
+	<div class="row" style="padding: 3%;">
+		<div class="col-md-2">
+	<div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
+	  <div class="card-header">Header</div>
+	  <div class="card-body">
+	    <h5 class="card-title">Primary card title</h5>
+	    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+	    <p class="card-footer text-muted">Updated 3 mins ago</p>
+	  </div>
+	</div>
+		</div>
+		<div class="col-md-2">
+			<a href="cosmos-ui.html" class="card" style="width: 18rem; height: 18rem;">
+				  <img class="card-img-top" src="resources/cosmos.jpg" alt="Card image cap">
+				  <div class="card-header">Project 2</div>
+				  <h5 class="card-title text-center">Cosmos Project</h5>
+				  <div class="card-body text-muted">
+				    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+				  </div>
+			</a>
+		</div>
+		<div class="col-md-2">
+			<a href="cosmos-ui.html" class="card" style="width: 18rem; height: 18rem;">
+				  <img class="card-img-top" src="resources/cosmos.jpg" alt="Card image cap">
+				  <div class="card-header">Project 3</div>
+				  <h5 class="card-title text-center">Cosmos Project</h5>
+				  <div class="card-body text-muted">
+				    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+				  </div>
+			</a>
+		</div>
+		<div class="col-md-2">
+			<a href="cosmos-ui.html" class="card" style="width: 18rem; height: 18rem;">
+				  <img class="card-img-top" src="resources/cosmos.jpg" alt="Card image cap">
+				  <div class="card-header">Project 3</div>
+				  <h5 class="card-title text-center">Cosmos Project</h5>
+				  <div class="card-body text-muted">
+				    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+				  </div>
+			</a>
+		</div>
+	</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	<div class="card mb-3" style="height: 80%; width: 80%;">
+        <div class="card-header">
+          <i class="fa fa-bar-chart"></i> Data Points</div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-8 my-auto"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+              <canvas id="myBarChart" width="430" height="215" class="chartjs-render-monitor" style="display: block; width: 430px; height: 215px;"></canvas>
+            </div>
+            <div class="col-sm-4 text-center my-auto">
+              <div class="h4 mb-0 text-primary">$34,693</div>
+              <div class="small text-muted">YTD Revenue</div>
+              <hr>
+              <div class="h4 mb-0 text-warning">$18,474</div>
+              <div class="small text-muted">YTD Expenses</div>
+              <hr>
+              <div class="h4 mb-0 text-success">$16,219</div>
+              <div class="small text-muted">YTD Margin</div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+	</div>
+
+	<div class="col-lg-4">
+	      <!-- Example Pie Chart Card-->
+	      <div class="card mb-3" style="height: 90%; width: 90%;" >
+	        <div class="card-header">
+	          <i class="fa fa-pie-chart"></i> Most Triggered Actions
+	      	</div>
+	        <div class="card-body"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+	          <canvas id="myPieChart" width="294" height="294" class="chartjs-render-monitor" style="display: block; width: 294px; height: 294px;"></canvas>
+	        </div>
+	        <div class="card-footer small text-muted">
+	        	Updated yesterday at 11:59 PM
+	        </div>
+	      </div>
+  	</div>	
+
+
+	<div class="panel panel-default">
+        <div class="panel-heading">
+            <i class="fa fa-bell fa-fw"></i> Notifications Panel
+        </div>
+        <!-- /.panel-heading -->
+        <div class="panel-body">
+            <div class="list-group">
+                <a href="#" class="list-group-item">
+                    <i class="fa fa-comment fa-fw"></i> New Comment
+                    <span class="pull-right text-muted small"><em>4 minutes ago</em>
+                    </span>
+                </a>
+                <a href="#" class="list-group-item">
+                    <i class="fa fa-twitter fa-fw"></i> 3 New Followers
+                    <span class="pull-right text-muted small"><em>12 minutes ago</em>
+                    </span>
+                </a>
+                <a href="#" class="list-group-item">
+                    <i class="fa fa-envelope fa-fw"></i> Message Sent
+                    <span class="pull-right text-muted small"><em>27 minutes ago</em>
+                    </span>
+                </a>
+                <a href="#" class="list-group-item">
+                    <i class="fa fa-tasks fa-fw"></i> New Task
+                    <span class="pull-right text-muted small"><em>43 minutes ago</em>
+                    </span>
+                </a>
+                <a href="#" class="list-group-item">
+                    <i class="fa fa-upload fa-fw"></i> Server Rebooted
+                    <span class="pull-right text-muted small"><em>11:32 AM</em>
+                    </span>
+                </a>
+                <a href="#" class="list-group-item">
+                    <i class="fa fa-bolt fa-fw"></i> Server Crashed!
+                    <span class="pull-right text-muted small"><em>11:13 AM</em>
+                    </span>
+                </a>
+                <a href="#" class="list-group-item">
+                    <i class="fa fa-warning fa-fw"></i> Server Not Responding
+                    <span class="pull-right text-muted small"><em>10:57 AM</em>
+                    </span>
+                </a>
+                <a href="#" class="list-group-item">
+                    <i class="fa fa-shopping-cart fa-fw"></i> New Order Placed
+                    <span class="pull-right text-muted small"><em>9:49 AM</em>
+                    </span>
+                </a>
+                <a href="#" class="list-group-item">
+                    <i class="fa fa-money fa-fw"></i> Payment Received
+                    <span class="pull-right text-muted small"><em>Yesterday</em>
+                    </span>
+                </a>
+            </div>
+            <!-- /.list-group -->
+            <a href="#" class="btn btn-default btn-block">View All Alerts</a>
+        </div>
+        <!-- /.panel-body -->
+    </div> 
+
+
+
+
+
+
+
+
+
+
+	<script type="text/javascript">
+		
+		    var ctx = document.getElementById("myPieChart").getContext('2d');
+		    var actionsChart = new Chart(ctx, {
+		    	type: 'doughnut',
+		    	data: {
+		    		labels: ['Action 1', 'Action 2', 'Action 3', 'Action 4'],
+		    		datasets: [{
+		    			label: 'Population (millions)',
+		    			data: [11, 22, 5, 17],
+		    			backgroundColor: ['#FABB3C', '#32D75E','#D02FC0','#EB0524']
+		    			/*backgroundColor: ['#3e95cd', '#8e5ea2','#3cba9f','#e8c3b9','#c45850']*/
+		    		}]
+		    	},
+		    	options: {
+		    		responsive:true,
+		    		cutoutPercentage:0,
+		    		maintainAspectRatio: true,
+		    		title: {
+		    			display: true,
+		    			text: 'Most Executed actions (times)'
+		    		}
+		    	}
+		    });
+
+		    var ctx = document.getElementById("myBarChart").getContext('2d');
+		    var actionsChart = new Chart(ctx, {
+		    	type: 'doughnut',
+		    	data: {
+		    		labels: ['Action 1', 'Action 2', 'Action 3', 'Action 4'],
+		    		datasets: [{
+		    			label: 'Population (millions)',
+		    			data: [11, 22, 5, 17],
+		    			backgroundColor: ['#FABB3C', '#32D75E','#D02FC0','#EB0524']
+		    			/*backgroundColor: ['#3e95cd', '#8e5ea2','#3cba9f','#e8c3b9','#c45850']*/
+		    		}]
+		    	},
+		    	options: {
+		    		responsive:true,
+		    		cutoutPercentage:0,
+		    		maintainAspectRatio: true,
+		    		title: {
+		    			display: true,
+		    			text: 'Most Executed actions (times)'
+		    		}
+		    	}
+		    });
+
+
+	</script>
+</body>
+</html>

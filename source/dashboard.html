@@ -37,66 +37,120 @@
 
 <style type="text/css">/* Chart.js */
 @-webkit-keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}@keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}.chartjs-render-monitor{-webkit-animation:chartjs-render-animation 0.001s;animation:chartjs-render-animation 0.001s;}
+
+	.ds {
+	    transition: transform .2s; /* Animation */
+	}
+
+	.ds:hover {
+	    transform: scale(1.2); /* (120% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+	}
+
+
 </style>
 </head>
 
 
-<body style="background-color: lightgrey">
+<body style="background-color: lightgrey; padding: 3%">
 
-	<!--div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
-	  <div class="card-header">Header</div>
-	  <div class="card-body">
-	    <h5 class="card-title">Primary card title</h5>
-	    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-	  </div>
-	</div-->
-
-
-	<div class="row" style="padding: 3%;">
-		<div class="col-md-2">
-	<div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
-	  <div class="card-header">Header</div>
-	  <div class="card-body">
-	    <h5 class="card-title">Primary card title</h5>
-	    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-	    <p class="card-footer text-muted">Updated 3 mins ago</p>
-	  </div>
+	<div class="text-center py-2">
+		<h1 class="text-black"><strong>Dashboard</strong></h1>
 	</div>
+	
+	<h4 class="text-black" style="font-style: italic;"><small><strong>Select data stream...</strong></small></h4>
+
+	<div class="row" style="height: 50%;">
+		<div class="col-md-2">
+			<div class="card text-white bg-primary mb-3 ds">
+			  <div class="card-header">Temperature</div>
+			  <div class="card-body">
+			    <h5 class="text-center">25 °C</h5>
+			  </div>
+	  	      <div class="card-footer small">
+		        	Updated 3 mins ago
+		        </div>
+			</div>
 		</div>
 		<div class="col-md-2">
-			<a href="cosmos-ui.html" class="card" style="width: 18rem; height: 18rem;">
-				  <img class="card-img-top" src="resources/cosmos.jpg" alt="Card image cap">
-				  <div class="card-header">Project 2</div>
-				  <h5 class="card-title text-center">Cosmos Project</h5>
-				  <div class="card-body text-muted">
-				    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-				  </div>
-			</a>
+			<div class="card text-white bg-primary mb-3 ds">
+			  <div class="card-header">Pressure</div>
+			  <div class="card-body">
+			    <h5 class="text-center">1024 HPA</h5>
+			  </div>
+	  	      <div class="card-footer small">
+		        	Updated 3 mins ago
+		        </div>
+			</div>
 		</div>
 		<div class="col-md-2">
-			<a href="cosmos-ui.html" class="card" style="width: 18rem; height: 18rem;">
-				  <img class="card-img-top" src="resources/cosmos.jpg" alt="Card image cap">
-				  <div class="card-header">Project 3</div>
-				  <h5 class="card-title text-center">Cosmos Project</h5>
-				  <div class="card-body text-muted">
-				    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-				  </div>
-			</a>
+			<div class="card text-white bg-primary mb-3 ds">
+			  <div class="card-header">Humidity</div>
+			  <div class="card-body">
+			    <h5 class="text-center">59 %</h5>
+			  </div>
+	  	      <div class="card-footer small">
+		        	Updated 3 mins ago
+		        </div>
+			</div>
 		</div>
 		<div class="col-md-2">
-			<a href="cosmos-ui.html" class="card" style="width: 18rem; height: 18rem;">
-				  <img class="card-img-top" src="resources/cosmos.jpg" alt="Card image cap">
-				  <div class="card-header">Project 3</div>
-				  <h5 class="card-title text-center">Cosmos Project</h5>
-				  <div class="card-body text-muted">
-				    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-				  </div>
-			</a>
+			<div class="card text-white bg-primary mb-3 ds">
+			  <div class="card-header">Door sensor</div>
+			  <div class="card-body">
+			    <h5 class="text-center">Open</h5>
+			  </div>
+	  	      <div class="card-footer small">
+		        	Updated 3 mins ago
+		        </div>
+			</div>
 		</div>
+		<div class="col-md-2">
+			<div class="card text-white bg-primary mb-3 ds">
+			  <div class="card-header">Engine Alfa</div>
+			  <div class="card-body">
+			    <h5 class="text-center">Off</h5>
+			  </div>
+	  	      <div class="card-footer small">
+		        	Updated 3 mins ago
+		        </div>
+			</div>
+		</div>
+		
+		<div class="col-md-2">
+			<div class="card text-white bg-primary mb-3 ds">
+			  <div class="card-header">Living Temperature</div>
+			  <div class="card-body">
+			    <h5 class="text-center">7 °C</h5>
+			  </div>
+	  	      <div class="card-footer small">
+		        	Updated 3 mins ago
+		        </div>
+			</div>
+		</div>
+
 	</div>
 
 
-
+<!--div class="col-md-3">
+		<div class="card">
+        <div class="card-header">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-5 my-auto">
+		   	 	<h5>Temperature</h5>
+            </div>
+            <div class="col-sm-7 text-center">
+              <div class="h5 mb-0 text-primary">25 °C</div>
+              <div class="small text-muted">Current value</div>
+              <hr>
+              <div class="h5 mb-0 text-warning">3 mins ago</div>
+              <div class="small text-muted">Last updated</div>
+            </div>
+          </div>
+        </div>
+    </div>
+	</div>
+</div-->
 
 
 
@@ -112,7 +166,7 @@
 
 
 	
-	<div class="card mb-3" style="height: 80%; width: 80%;">
+	<div class="card mb-3" style="height: 80%; width: 100%;">
         <div class="card-header">
           <i class="fa fa-bar-chart"></i> Data Points</div>
         <div class="card-body">
@@ -132,83 +186,87 @@
             </div>
           </div>
         </div>
-        <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+        <!--div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div-->
 	</div>
 
-	<div class="col-lg-4">
-	      <!-- Example Pie Chart Card-->
-	      <div class="card mb-3" style="height: 90%; width: 90%;" >
-	        <div class="card-header">
-	          <i class="fa fa-pie-chart"></i> Most Triggered Actions
-	      	</div>
-	        <div class="card-body"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
-	          <canvas id="myPieChart" width="294" height="294" class="chartjs-render-monitor" style="display: block; width: 294px; height: 294px;"></canvas>
-	        </div>
-	        <div class="card-footer small text-muted">
-	        	Updated yesterday at 11:59 PM
-	        </div>
-	      </div>
-  	</div>	
+	<div class="row">
 
+		<div class="col-lg-4">
+		      <!-- Example Pie Chart Card-->
+		      <div class="card mb-3" style="height: 90%; width: 100%;">
+		        <div class="card-header">
+		          <i class="fa fa-pie-chart"></i> Most Executed Triggers
+		      	</div>
+		        <div class="card-body"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+		          <canvas id="myPieChart" width="294" height="294" class="chartjs-render-monitor" style="display: block; width: 294px; height: 294px;"></canvas>
+		        </div>
+		        <!--div class="card-footer small text-muted">
+		        	Updated yesterday at 11:59 PM
+		        </div-->
+		      </div>
+	  	</div>	
 
-	<div class="panel panel-default">
-        <div class="panel-heading">
-            <i class="fa fa-bell fa-fw"></i> Notifications Panel
-        </div>
-        <!-- /.panel-heading -->
-        <div class="panel-body">
-            <div class="list-group">
-                <a href="#" class="list-group-item">
-                    <i class="fa fa-comment fa-fw"></i> New Comment
-                    <span class="pull-right text-muted small"><em>4 minutes ago</em>
-                    </span>
-                </a>
-                <a href="#" class="list-group-item">
-                    <i class="fa fa-twitter fa-fw"></i> 3 New Followers
-                    <span class="pull-right text-muted small"><em>12 minutes ago</em>
-                    </span>
-                </a>
-                <a href="#" class="list-group-item">
-                    <i class="fa fa-envelope fa-fw"></i> Message Sent
-                    <span class="pull-right text-muted small"><em>27 minutes ago</em>
-                    </span>
-                </a>
-                <a href="#" class="list-group-item">
-                    <i class="fa fa-tasks fa-fw"></i> New Task
-                    <span class="pull-right text-muted small"><em>43 minutes ago</em>
-                    </span>
-                </a>
-                <a href="#" class="list-group-item">
-                    <i class="fa fa-upload fa-fw"></i> Server Rebooted
-                    <span class="pull-right text-muted small"><em>11:32 AM</em>
-                    </span>
-                </a>
-                <a href="#" class="list-group-item">
-                    <i class="fa fa-bolt fa-fw"></i> Server Crashed!
-                    <span class="pull-right text-muted small"><em>11:13 AM</em>
-                    </span>
-                </a>
-                <a href="#" class="list-group-item">
-                    <i class="fa fa-warning fa-fw"></i> Server Not Responding
-                    <span class="pull-right text-muted small"><em>10:57 AM</em>
-                    </span>
-                </a>
-                <a href="#" class="list-group-item">
-                    <i class="fa fa-shopping-cart fa-fw"></i> New Order Placed
-                    <span class="pull-right text-muted small"><em>9:49 AM</em>
-                    </span>
-                </a>
-                <a href="#" class="list-group-item">
-                    <i class="fa fa-money fa-fw"></i> Payment Received
-                    <span class="pull-right text-muted small"><em>Yesterday</em>
-                    </span>
-                </a>
-            </div>
-            <!-- /.list-group -->
-            <a href="#" class="btn btn-default btn-block">View All Alerts</a>
-        </div>
-        <!-- /.panel-body -->
-    </div> 
+	  	<div class="col-lg-8" style="height: 90%; width: 100%;">
+			<div class="card card-default">
+		        <div class="card-header">
+		            <i class="fa fa-bell fa-fw"></i> Recently Triggered Actions
+		        </div>
+		        <!-- /.panel-heading -->
+		        <div class="card-body">
+		            <div class="list-group">
+		                <a href="#" class="list-group-item">
+		                    <i class="fa fa-comment fa-fw"></i> Start Engine Alfa
+		                    <span class="pull-right text-muted small"><em>4 minutes ago</em>
+		                    </span>
+		                </a>
+		                <a href="#" class="list-group-item">
+		                    <i class="fa fa-twitter fa-fw"></i> Make a Facebook Post
+		                    <span class="pull-right text-muted small"><em>12 minutes ago</em>
+		                    </span>
+		                </a>
+		                <a href="#" class="list-group-item">
+		                    <i class="fa fa-envelope fa-fw"></i> Tweet
+		                    <span class="pull-right text-muted small"><em>27 minutes ago</em>
+		                    </span>
+		                </a>
+		                <a href="#" class="list-group-item">
+		                    <i class="fa fa-tasks fa-fw"></i> List DNS entries
+		                    <span class="pull-right text-muted small"><em>43 minutes ago</em>
+		                    </span>
+		                </a>
+		                <a href="#" class="list-group-item">
+		                    <i class="fa fa-upload fa-fw"></i> Server Rebooted
+		                    <span class="pull-right text-muted small"><em>11:32 AM</em>
+		                    </span>
+		                </a>
+		                <a href="#" class="list-group-item">
+		                    <i class="fa fa-bolt fa-fw"></i> Server Crashed!
+		                    <span class="pull-right text-muted small"><em>11:13 AM</em>
+		                    </span>
+		                </a>
+		                <a href="#" class="list-group-item">
+		                    <i class="fa fa-warning fa-fw"></i> Server Not Responding
+		                    <span class="pull-right text-muted small"><em>10:57 AM</em>
+		                    </span>
+		                </a>
+		                <!--a href="#" class="list-group-item">
+		                    <i class="fa fa-shopping-cart fa-fw"></i> New Order Placed
+		                    <span class="pull-right text-muted small"><em>9:49 AM</em>
+		                    </span>
+		                </a>
+		                <a href="#" class="list-group-item">
+		                    <i class="fa fa-money fa-fw"></i> Payment Received
+		                    <span class="pull-right text-muted small"><em>Yesterday</em>
+		                    </span>
+		                </a-->
+		            </div>
+		            <!-- /.list-group -->
+		            <a href="#" class="btn btn-default btn-block">View All Alerts</a>
+		        </div>
+		        <!-- /.panel-body -->
+		    </div> 
+	    </div>
+	</div>
 
 
 
@@ -225,7 +283,7 @@
 		    var actionsChart = new Chart(ctx, {
 		    	type: 'doughnut',
 		    	data: {
-		    		labels: ['Action 1', 'Action 2', 'Action 3', 'Action 4'],
+		    		labels: ['Trigger 1', 'Trigger 2', 'Trigger 3', 'Trigger 4'],
 		    		datasets: [{
 		    			label: 'Population (millions)',
 		    			data: [11, 22, 5, 17],
@@ -239,7 +297,7 @@
 		    		maintainAspectRatio: true,
 		    		title: {
 		    			display: true,
-		    			text: 'Most Executed actions (times)'
+		    			text: 'Most executed triggers (times)'
 		    		}
 		    	}
 		    });

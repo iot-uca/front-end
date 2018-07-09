@@ -217,8 +217,8 @@
 
 						<div class="col-md-3">
 							<div class="form-group form-inline well">
-								<label for="httpMethod" class="mr-sm-2 text-muted">Entries for page: </label>
-								<select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="httpMethod" v-model="amountOfEntriesPerPage">
+								<label for="entriesForPage" class="mr-sm-2 text-muted">Entries for page: </label>
+								<select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="httpMethod" v-model="maxDataStreamsPerPage">
 									<option v-for="(elem, index) in optionsOfEntriesPerPage" v-bind:value="elem.value">
 										{{elem.value}}
 									</option>
@@ -385,7 +385,7 @@
 						<div class="col-md-3">
 							<div class="form-group form-inline well">
 								<label for="httpMethod" class="mr-sm-2 text-muted">Entries for page: </label>
-								<select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="httpMethod" v-model="amountOfEntriesPerPage">
+								<select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="httpMethod" v-model="maxActionsPerPage">
 									<option v-for="(elem, index) in optionsOfEntriesPerPage" v-bind:value="elem.value">
 										{{elem.value}}
 									</option>
@@ -719,7 +719,7 @@
 	  								<div class="col-md-3">
 	  									<div class="form-group form-inline well">
 	  										<label for="httpMethod" class="mr-sm-2 text-muted">Entries for page: </label>
-	  										<select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="httpMethod" v-model="amountOfEntriesPerPage">
+	  										<select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="httpMethod" v-model="maxTriggersPerPage">
 	  											<option v-for="(elem, index) in optionsOfEntriesPerPage" v-bind:value="elem.value">
 	  												{{elem.value}}
 	  											</option>

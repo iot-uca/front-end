@@ -57,7 +57,6 @@
 	  						renderTriggerAddView: false,
 	  						renderTriggerRemoveView: false,
 	  						renderDataStreamView : false,
-	  						amountOfEntriesPerPage: 5,
 
                             elementsToDelete:[],
                             
@@ -338,6 +337,21 @@
 				actionFilter: function(val, oldVal){ //watch the input for filtering the actions
 					console.log("Entering actionFilter watcher");
 					this.filterActionToDisplay();
+				},
+				maxTriggersPerPage: function(val, oldVal){ //watches the amount of triggers per page
+					console.log("Entering maxTriggersPerPage watcher");	
+					this.triggersForPage = this.getElementsToShowInTable(1, this.maxTriggersPerPage, this.triggersForPage, this.filteredTriggers);
+					this.pagesNeededForTriggers = this.getPagesNeeded(this.filteredTriggers, this.maxTriggersPerPage);
+				},
+				maxDataStreamsPerPage: function(val, oldVal){ //watches the amount of triggers per page
+					console.log("Entering maxDataStreamsPerPage watcher");
+					this.dataStreamsForPage = this.getElementsToShowInTable(1, this.maxDataStreamsPerPage, this.dataStreamsForPage, this.filteredDataStreams);
+					this.pagesNeededForDataStreams = this.getPagesNeeded(this.filteredDataStreams, this.maxDataStreamsPerPage);
+				},
+				maxActionsPerPage: function(val, oldVal){ //watches the amount of triggers per page
+					console.log("Entering maxActionsPerPage watcher");
+					this.actionsForPage = this.getElementsToShowInTable(1, this.maxActionsPerPage, this.actionsForPage, this.filteredActions);
+					this.pagesNeededForActions = this.getPagesNeeded(this.filteredActions, this.maxActionsPerPage);
 				}
 			},	
 

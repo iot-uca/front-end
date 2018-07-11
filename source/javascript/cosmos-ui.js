@@ -59,7 +59,9 @@
 	  						renderDataStreamView : false,
 
                             elementsToDelete:[],
-                            
+                            validJson: true,
+
+
 	  				showActionsOptions : false,
 	  				showCommandsOptions : false,
 	  				showTriggersOptions : false,
@@ -352,6 +354,14 @@
 					console.log("Entering maxActionsPerPage watcher");
 					this.actionsForPage = this.getElementsToShowInTable(1, this.maxActionsPerPage, this.actionsForPage, this.filteredActions);
 					this.pagesNeededForActions = this.getPagesNeeded(this.filteredActions, this.maxActionsPerPage);
+				},
+				actionBody: function(val, oldVal){
+					try {
+					        JSON.parse(this.actionBody);
+					        this.validJson=true;
+					    } catch (e) {
+					        this.validJson=false;
+					    }
 				}
 			},	
 
@@ -427,7 +437,7 @@
 					request_line['version'] = this.activeAction.version;
 					request['request_line'] = request_line;
 					request['headers'] = this.activeIdsForHttpRequestHeader;
-					//request['body'] = this.actionBody;
+					request['body'] = this.actionBody;
 
 
 					console.log("request_line: " + request_line);

@@ -1204,7 +1204,16 @@
                                             <!--div class="col-md-3">
                                                 <button type="button" class="btn btn-info btn-lg btn-block" v-on:click="addOneMoreElemsForActionRequestBody()"><strong>Add parameter</strong></button>
                                             </div-->
-                                            <h6 class="text-muted text-center"><em><small>Enter body in JSON format</small></em></h6>
+                                        	<h6 class="text-muted text-center"><em><small>Enter body in JSON format</small></em></h6>
+                                            <!--h6 v-if="validJson" class="bg-success text-center"><em><small>JSON entered is valid</small></em></h6>
+                                            <h6 v-else class="bg-danger text-center"><em><small>JSON entered is invalid</small></em></h6-->
+
+                                            <div v-if="validJson" class="alert alert-success text-center" role="alert">
+											  JSON entered is valid
+											</div>
+											<div v-else class="alert alert-danger text-center" role="alert">
+											  JSON entered is invalid
+											</div>
                                         </div>
                                             <!--div class="row" v-for="(elem, index) in activeIdsForHttpRequestBody">
 

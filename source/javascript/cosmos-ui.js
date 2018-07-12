@@ -191,6 +191,11 @@
 		  				{id:7, name:'TRACE'}, 				
 	  				],
 
+	  				existingHttpVersions:[
+	  					{id:0, name: 'HTTP/1.0'},
+	  					{id:1, name: 'HTTP/1.1'}
+	  				],
+
 	  				existingPriorities:[
 		  				{id:0, name:'High'},
 		  				{id:1, name:'Medium'},
@@ -284,7 +289,7 @@
 
 				console.log("DATE => " + this.data);
 
-				axios.get('http://localhost:8090/test/dataStream/availables').then(response => {
+				axios.get(this.backendEndPoint + '/data-streams').then(response => {
 					this.hasNotFinishedDS = false;
 					this.dataStreams = response.data;	
 					console.log("[SUCCESS] DataStreams =>>>> " + this.dataStreams);

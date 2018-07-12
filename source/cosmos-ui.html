@@ -1179,9 +1179,18 @@
                                     		<div class="input-group-prepend">
                                     			<span class="input-group-text"><i class="fa fa-code"></i></span>
                                     		</div>
-                                    		<input type="text" class="form-control" id="triggerName" placeholder="HTTP request version" v-model="activeAction.version" required="true">
+                                    		<!--input type="text" class="form-control" id="triggerName" placeholder="HTTP request version" v-model="activeAction.version" required="true">
                                     		<div class="invalid-feedback" style="width: 100%;">
                                     			The Action name is required.
+                                    		</div-->
+
+                                    		<select class="form-control custom-select" id="httpVersion" v-model="activeAction.version" required="true">
+                                    			<option v-for="(version, index) in existingHttpVersions" v-bind:value="version.name">
+                                    				{{version.name}}
+                                    			</option>
+                                    		</select>
+                                    		<div class="invalid-feedback" style="width: 100%;">
+                                    			The HTTP Method is required.
                                     		</div>
                                     	</div>
                                     </div>

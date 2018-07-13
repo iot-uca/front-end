@@ -289,7 +289,7 @@
 
 				console.log("DATE => " + this.data);
 
-				axios.get(this.backendEndPoint + '/data-streams').then(response => {
+				axios.get(this.backendEndPoint + '/data-streams',{ headers: { "Accept": "application/vnd.cosmos.data-stream+json; version=1.0.0" } }).then(response => {
 					this.hasNotFinishedDS = false;
 					this.dataStreams = response.data;	
 					console.log("[SUCCESS] DataStreams =>>>> " + this.dataStreams);

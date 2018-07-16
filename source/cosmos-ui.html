@@ -64,138 +64,77 @@
 		<div id="ui-header">
 			<!--span style="font-size:30px;cursor:pointer" v-on:click="openNav()">&#9776;</span--> <!-- &#9776; represents the burguer icon -->
 
-			<div class="row">
-				<div class="col-md-2">
-					<span style="font-size:30px;cursor:pointer" v-on:click="openNav()"><i class="fa fa-bars" style="color:white;"></i></span>
+			<div class="row text-center">
+				<div class="col-md-1 py-2">
+					<span style="font-size:30px;cursor:pointer; padding:10% " v-on:click="openNav()"><i class="fa fa-bars" style="color:white;"></i></span>
 				</div>
-				<div class="col-md-10 text-center py-2">
-					<h1 id="cosmosTitle" style="padding-right: 28%;"><strong>Cosmos GUI</strong></h1>
+				<div class="col-md-10 py-2">
+					<!--h1 id="cosmosTitle" style="padding-right: 28%;"><strong>Cosmos GUI</strong></h1-->
+					<h1 id="cosmosTitle"><strong>Cosmos GUI</strong></h1>
 				</div>
+				<div class="col-md-1"></div>
 			</div>
 		</div>
+
 
 
 		<!-- div for Dashboard view -->
 		<div v-if="renderDashboardView" id="dashboard">
 
-			<content-separator v-if="hasToShowStreams()"><i class="fa fa-line-chart" style="font-size:24px"></i> Data Streams</content-separator>
+			<i v-if="!hasToShowStreams()" class="fa fa-spinner fa-spin" style="font-size: 70px"></i>
 
-			<!-- Div for the stream selection -->
-			<div style="text-align: center;">
-				<div>
-					<!--strong>Select the data streams you want to visualize...</strong-->
-					<br>
-					<i v-if="!hasToShowStreams()" class="fa fa-spinner fa-spin" style="font-size: 70px"></i>
-					<div class="wrapper text-center">
-						<div style="width: auto; margin: 0 auto;" class="btn-group container-fluid" role="group" aria-label="Basic example" v-if="hasToShowStreams()">
-							<data-streams-button v-for="dS in dataStreams" v-bind:name="dS" v-bind:class="[selectedDs == dS ? 'btn btn-primary': 'btn btn-secondary']" v-on:click.native="assignDataStream(dS)"></data-streams-button>
+			<div class="row" style="height: 50%;">
+				<div class="col-md-2">
+					<div class="card text-white bg-secondary mb-3 ds">
+						<div class="card-header">Temperature</div>
+						<div class="card-body">
+							<h5 class="text-center">25 °C</h5>
+						</div>
+						<div class="card-footer small">
+							Updated 3 mins ago
 						</div>
 					</div>
 				</div>
-			</div>
-
-			<br>
-
-			<div v-if="hasToShowCharAndCards">
-				<!-- Div for the Stream chart and stat Cards -->
-				<div class="row" style="margin: 50px auto;">
-					<div class="col-md-8">
-						<canvas id="streamCanvas"></canvas>
-					</div>
-					<div class="col-md-4">
-						<div class="row container-fluid">
-							<div class="card">
-								<div class="card-header bg-primary"><strong style="font-size:13px; color: black;"><i class="fa fa-arrow-circle-right" style="font-size:20px"></i> CURRENT VALUE</strong></div>
-								<div class="card-body text-center">
-									<h2><p class="card-text"><strong>{{currentValue.value}}</strong></p></h2>
-								</div>
-								<div class="card-footer">
-									<small class="text-muted"><strong>WHEN:  </strong>{{currentValue.timestamp}} ago</small>
-								</div>
-							</div>
-							<div style="width: 25px;"> </div>
-							<div class="card">
-								<div class="card-header bg-primary"><strong style="font-size:13px; color: black;"><i class="fa fa-percent" style="font-size:20px"></i> AVERAGE VALUE</strong></div>
-								<div class="card-body text-center">
-									<h2><p class="card-text"><strong>{{averageValue.value}}</strong></p></h2>
-								</div>
-								<div class="card-footer">
-									<small class="text-muted">During {{averageValue.timestamp}} mins</small>
-								</div>
-							</div>
+				<div class="col-md-2">
+					<div class="card text-white bg-primary mb-3 ds">
+						<div class="card-header">Pressure</div>
+						<div class="card-body">
+							<h5 class="text-center">1024 HPA</h5>
 						</div>
-
-						<br>
-
-						<div class="row container-fluid">
-							<div class="card">
-								<div class="card-header bg-primary"><strong style="font-size:13px; color: black;"><i class="fa fa-arrow-circle-down" style="font-size:20px"></i> MIN VALUE</strong></div>
-								<div class="card-body text-center">
-									<h2><p class="card-text"><strong>{{minValue.value}}</strong></p></h2>
-								</div>
-								<div class="card-footer">
-									<small class="text-muted"><strong>WHEN:  </strong>{{minValue.timestamp}} ago</small>
-								</div>
-							</div>
-							<div style="width: 25px;"> </div>			
-							<div class="card">
-								<div class="card-header bg-primary"><strong style="font-size:13px; color: black;"><i class="fa fa-arrow-circle-up" style="font-size:20px"></i> MAX VALUE</strong></div>
-								<div class="card-body text-center">
-									<h2><p class="card-text"><strong>{{maxValue.value}}</strong></p></h2>
-								</div>
-								<div class="card-footer">
-									<small class="text-muted"><strong>WHEN:  </strong>{{maxValue.timestamp}} ago</small>
-								</div>
-							</div>
+						<div class="card-footer small">
+							Updated 3 mins ago
 						</div>
 					</div>
 				</div>
-			</div>
-
-			<!--content-separator v-if="hasToShowStreams()"><i class="fa fa-pie-chart" style="font-size:24px"></i> Actions, Commands & Triggers</content-separator-->
-			<content-separator ><i class="fa fa-pie-chart" style="font-size:24px"></i> Actions, Commands & Triggers</content-separator>
-			<br>
-
-			<!-- Div for showing the recently/most executed actions -->
-			<div class="row" id="actions" v-if="renderDashboardView" style="margin: 50px auto;">
-
-				<div class="col-md-6">
-					<div class="card">
-						<div class="card-header bg-info">
-							<h3 class="card-title"><i class="fa fa-clock-o fa-fw"></i> Last Actions Executed</h3>
+				<div class="col-md-2">
+					<div class="card text-white bg-primary mb-3 ds">
+						<div class="card-header">Humidity
+							<button type="button" class="btn btn-primary btn-sm" style="float: right;" data-toggle="modal" data-target="#addDataStreamModal"><strong>More</strong></button>	
 						</div>
 						<div class="card-body">
-							<div class="list-group">
-								<a href="#" class="list-group-item d-flex justify-content-between align-items-center">
-									<i class="fa fa-fw fa-calendar pull-left"></i> Calendar updated
-									<span class="badge badge-secondary badge-pill">just now</span>
-									<!--span class="badge">just now</span-->
-								</a>
-								<a href="#" class="list-group-item d-flex justify-content-between align-items-center">
-									<!--span class="badge">4 minutes ago</span-->
-									<i class="fa fa-fw fa-comment"></i> Commented on a post
-									<span class="badge badge-secondary badge-pill">4 minutes ago</span>
-								</a>
-								<a href="#" class="list-group-item d-flex justify-content-between align-items-center">
-									<!--span class="badge">23 minutes ago</span-->
-									<i class="fa fa-fw fa-truck"></i> Order 392 shipped
-									<span class="badge badge-secondary badge-pill">23 minutes ago</span>
-								</a>
-								<a href="#" class="list-group-item d-flex justify-content-between align-items-center">
-									<!--span class="badge">46 minutes ago</span-->									
-									<i class="fa fa-fw fa-money"></i> Invoice 653 has been paid
-									<span class="badge badge-secondary badge-pill">46 minutes ago</span>
-								</a>
-							</div>
+							<h5 class="text-center">59 %</h5>
+						</div>
+						<div class="card-footer small">
+							Updated 3 mins ago
 						</div>
 					</div>
 				</div>
-				<!-- div for drawing the actions/commands pie chart -->
-				<div class="col-md-6">
-					<strong>Most Executed Actions</strong>
-					<canvas id="actionsChart"></canvas>
+				<div class="col-md-2">
+					<div class="card text-white bg-primary mb-3 ds">
+						<div class="card-header">Door sensor</div>
+						<div class="card-body">
+							<h5 class="text-center">Open</h5>
+						</div>
+						<div class="card-footer small">
+							Updated 3 mins ago
+						</div>
+					</div>
 				</div>
+
+				<data-stream-card v-for="dS in dataStreams" v-bind:element="dS" @click.native="assignDataStream(dS)"></data-stream-card>
+
 			</div>
+
 		</div>
 
 
@@ -273,12 +212,12 @@
 								</td>
 								<td>{{dataStream.name}}</td>
 								<td>
-									<button type="button" class="btn btn-success btn-block" @click="showDataStream(dataStream)" data-toggle="modal" data-target="#editDataStreamModal" style="height: 75%;">
+									<button type="button" class="btn btn-success btn-sm" @click="showDataStream(dataStream)" data-toggle="modal" data-target="#editDataStreamModal" style="height: 75%;">
 										<i class="fa fa-eye"></i>
 									</button>
 								</td>
 								<td>
-									<button type="button" class="btn btn-info btn-block" @click="editDataStreams(dataStream)" data-toggle="modal" data-target="#editDataStreamModal" style="height: 75%;">
+									<button type="button" class="btn btn-info btn-sm" @click="editDataStreams(dataStream)" data-toggle="modal" data-target="#editDataStreamModal" style="height: 75%;">
 										<i class="fa fa-pencil-square-o"></i>
 									</button>
 								</td>
@@ -459,12 +398,12 @@
 	  										<td v-else class="text-center">-</td>
 
 	  										<td>
-	  											<button type="button" class="btn btn-success btn-block" data-toggle="modal" data-target="#showActionDetailModal" style="height: 75%;" @click="assignBodyAndHeader(action)">
+	  											<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#showActionDetailModal" style="height: 75%;" @click="assignBodyAndHeader(action)">
 	  												<i class="fa fa-eye"></i>
 	  											</button>
 	  										</td>
 	  										<td>
-	  											<button type="button" class="btn btn-info btn-block" data-toggle="modal" @click="editAction(action)"  data-target="#editActionModal">
+	  											<button type="button" class="btn btn-info btn-sm" data-toggle="modal" @click="editAction(action)"  data-target="#editActionModal">
 	  												<i class="fa fa-pencil-square-o"></i>
 	  											</button>
 	  										</td>
@@ -779,12 +718,12 @@
 	  										<td>{{trigger.policy.elem}}</td>
 
 	  										<td>
-	  											<button type="button" class="btn btn-success btn-block" @click="editTrigger(trigger)" data-toggle="modal" data-target="#showTriggerModal" style="height: 75%;">
+	  											<button type="button" class="btn btn-success btn-sm" @click="editTrigger(trigger)" data-toggle="modal" data-target="#showTriggerModal" style="height: 75%;">
 	  												<i class="fa fa-eye"></i>
 	  											</button>
 	  										</td>
 	  										<td>
-	  											<button type="button" class="btn btn-info btn-block" @click="editTrigger(trigger)" data-toggle="modal" data-target="#editTriggerModal" style="height: 75%;">
+	  											<button type="button" class="btn btn-info btn-sm" @click="editTrigger(trigger)" data-toggle="modal" data-target="#editTriggerModal" style="height: 75%;">
 	  												<i class="fa fa-pencil-square-o"></i>
 	  											</button>
 	  										</td>

@@ -1,0 +1,122 @@
+		<!-- div for Dashboard view -->
+		<div v-if="renderDashboardView" id="dashboard">
+
+			<content-separator v-if="hasToShowStreams()"><i class="fa fa-line-chart" style="font-size:24px"></i> Data Streams</content-separator>
+
+			<!-- Div for the stream selection -->
+			<div style="text-align: center;">
+				<div>
+					<!--strong>Select the data streams you want to visualize...</strong-->
+					<br>
+					<i v-if="!hasToShowStreams()" class="fa fa-spinner fa-spin" style="font-size: 70px"></i>
+					<div class="wrapper text-center">
+						<div style="width: auto; margin: 0 auto;" class="btn-group container-fluid" role="group" aria-label="Basic example" v-if="hasToShowStreams()">
+							<data-streams-button v-for="dS in dataStreams" v-bind:name="dS" v-bind:class="[selectedDs == dS ? 'btn btn-primary': 'btn btn-secondary']" v-on:click.native="assignDataStream(dS)"></data-streams-button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<br>
+
+			<div v-if="hasToShowCharAndCards">
+				<!-- Div for the Stream chart and stat Cards -->
+				<div class="row" style="margin: 50px auto;">
+					<div class="col-md-8">
+						<canvas id="streamCanvas"></canvas>
+					</div>
+					<div class="col-md-4">
+						<div class="row container-fluid">
+							<div class="card">
+								<div class="card-header bg-primary"><strong style="font-size:13px; color: black;"><i class="fa fa-arrow-circle-right" style="font-size:20px"></i> CURRENT VALUE</strong></div>
+								<div class="card-body text-center">
+									<h2><p class="card-text"><strong>{{currentValue.value}}</strong></p></h2>
+								</div>
+								<div class="card-footer">
+									<small class="text-muted"><strong>WHEN:  </strong>{{currentValue.timestamp}} ago</small>
+								</div>
+							</div>
+							<div style="width: 25px;"> </div>
+							<div class="card">
+								<div class="card-header bg-primary"><strong style="font-size:13px; color: black;"><i class="fa fa-percent" style="font-size:20px"></i> AVERAGE VALUE</strong></div>
+								<div class="card-body text-center">
+									<h2><p class="card-text"><strong>{{averageValue.value}}</strong></p></h2>
+								</div>
+								<div class="card-footer">
+									<small class="text-muted">During {{averageValue.timestamp}} mins</small>
+								</div>
+							</div>
+						</div>
+
+						<br>
+
+						<div class="row container-fluid">
+							<div class="card">
+								<div class="card-header bg-primary"><strong style="font-size:13px; color: black;"><i class="fa fa-arrow-circle-down" style="font-size:20px"></i> MIN VALUE</strong></div>
+								<div class="card-body text-center">
+									<h2><p class="card-text"><strong>{{minValue.value}}</strong></p></h2>
+								</div>
+								<div class="card-footer">
+									<small class="text-muted"><strong>WHEN:  </strong>{{minValue.timestamp}} ago</small>
+								</div>
+							</div>
+							<div style="width: 25px;"> </div>			
+							<div class="card">
+								<div class="card-header bg-primary"><strong style="font-size:13px; color: black;"><i class="fa fa-arrow-circle-up" style="font-size:20px"></i> MAX VALUE</strong></div>
+								<div class="card-body text-center">
+									<h2><p class="card-text"><strong>{{maxValue.value}}</strong></p></h2>
+								</div>
+								<div class="card-footer">
+									<small class="text-muted"><strong>WHEN:  </strong>{{maxValue.timestamp}} ago</small>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!--content-separator v-if="hasToShowStreams()"><i class="fa fa-pie-chart" style="font-size:24px"></i> Actions, Commands & Triggers</content-separator-->
+			<content-separator ><i class="fa fa-pie-chart" style="font-size:24px"></i> Actions, Commands & Triggers</content-separator>
+			<br>
+
+			<!-- Div for showing the recently/most executed actions -->
+			<div class="row" id="actions" v-if="renderDashboardView" style="margin: 50px auto;">
+
+				<div class="col-md-6">
+					<div class="card">
+						<div class="card-header bg-info">
+							<h3 class="card-title"><i class="fa fa-clock-o fa-fw"></i> Last Actions Executed</h3>
+						</div>
+						<div class="card-body">
+							<div class="list-group">
+								<a href="#" class="list-group-item d-flex justify-content-between align-items-center">
+									<i class="fa fa-fw fa-calendar pull-left"></i> Calendar updated
+									<span class="badge badge-secondary badge-pill">just now</span>
+									<!--span class="badge">just now</span-->
+								</a>
+								<a href="#" class="list-group-item d-flex justify-content-between align-items-center">
+									<!--span class="badge">4 minutes ago</span-->
+									<i class="fa fa-fw fa-comment"></i> Commented on a post
+									<span class="badge badge-secondary badge-pill">4 minutes ago</span>
+								</a>
+								<a href="#" class="list-group-item d-flex justify-content-between align-items-center">
+									<!--span class="badge">23 minutes ago</span-->
+									<i class="fa fa-fw fa-truck"></i> Order 392 shipped
+									<span class="badge badge-secondary badge-pill">23 minutes ago</span>
+								</a>
+								<a href="#" class="list-group-item d-flex justify-content-between align-items-center">
+									<!--span class="badge">46 minutes ago</span-->									
+									<i class="fa fa-fw fa-money"></i> Invoice 653 has been paid
+									<span class="badge badge-secondary badge-pill">46 minutes ago</span>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- div for drawing the actions/commands pie chart -->
+				<div class="col-md-6">
+					<strong>Most Executed Actions</strong>
+					<canvas id="actionsChart"></canvas>
+				</div>
+			</div>
+		</div>

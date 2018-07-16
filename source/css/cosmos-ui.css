@@ -1,3 +1,48 @@
+	/* Chart.js */
+	@-webkit-keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}@keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}.chartjs-render-monitor{-webkit-animation:chartjs-render-animation 0.001s;animation:chartjs-render-animation 0.001s;}
+
+
+	/* Styling for the cards zoom upon hover */
+
+	.ds {
+		transition: transform .2s; /* Animation */
+	}
+
+	.ds:hover {
+		transform: scale(1.2); /* (120% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+	}
+
+
+	/* Flip card */
+	
+	.card-flip > div {
+		backface-visibility: hidden;
+		transition: transform 500ms;
+		transition-timing-function: linear;
+		width: 100%;
+		height: 100%;
+		margin: 0;
+		display: flex;
+	}
+
+	.card-front {
+		transform: rotateY(0deg);
+	}
+
+	.card-back {
+		transform: rotateY(180deg);
+		position: absolute;
+		top: 0;
+	}
+
+	.card-flip:hover .card-front {
+		transform: rotateY(-180deg);
+	}
+
+	.card-flip:hover .card-back {
+		transform: rotateY(0deg);
+	}
+
 	#contentSeparator{
 		color: "#2b2c37";
 		text-align: left;
@@ -132,7 +177,7 @@
 	/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
 	#ui-header {
 		/*transition: margin-left .5s; --- esta opción es para desplazar el contenido a la derecha*/
-		padding: 20px;
+		border: 1%;
 		/*background-color: #290B6E;*/
 		/*background-color: #151E21;   EL MAS PARECIDO Y MEJOR COLOR!!!!*/
 		/*background-color: #1E2B2F;*/
@@ -166,7 +211,7 @@
 		border-color: #1f7e9a;
 	}
 
-	.btn {
+	/*.btn {
 		display: inline-block;
 		margin-bottom: 0;
 		font-weight: normal;
@@ -193,7 +238,7 @@
 
 	.btn:hover{
 		background-color: #229BC0;
-	}
+	}*/
 	#lineChart{
 		max-height: 90%;
 		max-width: 90%;

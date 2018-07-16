@@ -83,7 +83,7 @@
 </head>
 
 
-<body style="background-color: lightgrey; padding: 1%">
+<body style="background-color: lightgrey; margin: 1%">
 
 	<div class="text-center py-2">
 		<h1 class="text-black"><strong>Dashboard</strong></h1>
@@ -114,7 +114,9 @@
 		</div>
 		<div class="col-md-2">
 			<div class="card text-white bg-primary mb-3 ds">
-				<div class="card-header">Humidity</div>
+				<div class="card-header">Humidity
+					<button type="button" class="btn btn-primary btn-sm" style="float: right;" data-toggle="modal" data-target="#addDataStreamModal"><strong>More</strong></button>	
+				</div>
 				<div class="card-body">
 					<h5 class="text-center">59 %</h5>
 				</div>
@@ -247,22 +249,22 @@
 				<i class="fa fa-pie-chart"></i> Most Executed Triggers
 			</div>
 			<div class="card-body"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
-				<canvas id="myPieChart" width="100" height="100" class="chartjs-render-monitor" style="display: block; width: 100px; height: 100px;"></canvas>
-			</div>
+			<canvas id="myPieChart" width="100" height="100" class="chartjs-render-monitor" style="display: block; width: 100px; height: 100px;"></canvas>
 		</div>
 	</div>
-	
-	<div class="col-lg-4" style="height: 92%; width: 80%;">
-		<!-- Example Pie Chart Card-->
-		<div class="card mb-3" style="height: 92%; width: 80%;">
-			<div class="card-header">
-				<i class="fa fa-pie-chart"></i> Most Executed Triggers
-			</div>
-			<div class="card-body"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
-				<canvas id="myPieChart2" width="100" height="100" class="chartjs-render-monitor" style="display: block; width: 100px; height: 100px;"></canvas>
-			</div>
+</div>
+
+<div class="col-lg-4" style="height: 92%; width: 80%;">
+	<!-- Example Pie Chart Card-->
+	<div class="card mb-3" style="height: 92%; width: 80%;">
+		<div class="card-header">
+			<i class="fa fa-pie-chart"></i> Most Executed Triggers
 		</div>
-	</div>	
+		<div class="card-body"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+		<canvas id="myPieChart2" width="100" height="100" class="chartjs-render-monitor" style="display: block; width: 100px; height: 100px;"></canvas>
+	</div>
+</div>
+</div>	
 	<!--div class="col-lg-4" style="height: 92%; width: 80%;">
 		<div class="card mb-3" style="height: 92%; width: 80%;">
 			<div class="card-header">
@@ -311,10 +313,102 @@
 						<span class="pull-right text-muted small"><em>11:32 AM</em>
 						</span>
 					</a>
-	            </div>
-	        </div>
-	    </div> 
+				</div>
+			</div>
+		</div> 
 	</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<!-- Modal for addding data streams-->
+	<div class="modal fade" id="addDataStreamModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="exampleModalLabel"><strong>Data Points</strong></h4>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+
+				</div>
+				<div class="modal-body">
+
+
+					<div class="card mb-3" style="height: 80%; width: 100%;">
+						<div class="card-header">
+							<i class="fa fa-bar-chart"></i> Data Points
+							<select  style="float: right;" id="days" placeholder="Latest" required="true">
+								<option value="Latest">Latest</option>
+								<option value="day">Day</option>
+								<option value="week">Week</option>
+								<option value="month">Month</option>
+							</select>
+						</div>
+						<div class="card-body">
+							<div class="row">
+								<div class="col-sm-8 my-auto"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+								<canvas id="line-chart" width="430" height="215" class="chartjs-render-monitor" style="display: block; width: 430px; height: 215px;"></canvas>
+
+								<script type="text/javascript">
+
+
+									new Chart(document.getElementById("line-chart"), {
+										type: 'line',
+										data: {
+											labels: [1500,1600,1700,1750,1800,1850,1900,1950,1999,2050],
+											datasets: [{ 
+												data: [86,114,106,106,107,111,133,221,783,2478],
+												label: "Africa",
+												borderColor: "#3e95cd",
+												fill: false
+											}]
+										},
+										options: {
+											title: {
+												display: true,
+												text: 'World population per region (in millions)'
+											}
+										}
+									});
+
+								</script>
+
+							</div>
+							<div class="col-sm-4 text-center my-auto">
+								<div class="h4 mb-0 text-primary">$34,693</div>
+								<div class="small text-muted">YTD Revenue</div>
+								<hr>
+								<div class="h4 mb-0 text-warning">$18,474</div>
+								<div class="small text-muted">YTD Expenses</div>
+								<hr>
+								<div class="h4 mb-0 text-success">$16,219</div>
+								<div class="small text-muted">YTD Margin</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+</div>  
+
+
+
+
+
+
 </div>
 
 
@@ -326,77 +420,77 @@
 
 
 
-	<script type="text/javascript">
-		
-		var ctx = document.getElementById("myPieChart").getContext('2d');
-		var actionsChart = new Chart(ctx, {
-			type: 'doughnut',
-			data: {
-				labels: ['Trigger 1', 'Trigger 2', 'Trigger 3', 'Trigger 4'],
-				datasets: [{
-					label: 'Population (millions)',
-					data: [11, 22, 5, 17],
-					backgroundColor: ['#FABB3C', '#32D75E','#D02FC0','#EB0524']
-					/*backgroundColor: ['#3e95cd', '#8e5ea2','#3cba9f','#e8c3b9','#c45850']*/
-				}]
-			},
-			options: {
-				responsive:true,
-				cutoutPercentage:0,
-				maintainAspectRatio: true,
-				title: {
-					display: false,
-					text: 'Most executed triggers (times)'
-				}
-			}
-		});
+<script type="text/javascript">
 
-		var ctx = document.getElementById("myPieChart2").getContext('2d');
-		var actionsChart = new Chart(ctx, {
-			type: 'doughnut',
-			data: {
-				labels: ['Action 1', 'Action 2', 'Action 3', 'Action 4'],
-				datasets: [{
-					label: 'Population (millions)',
-					data: [11, 22, 5, 17],
-					backgroundColor: ['#FABB3C', '#32D75E','#D02FC0','#EB0524']
-					/*backgroundColor: ['#3e95cd', '#8e5ea2','#3cba9f','#e8c3b9','#c45850']*/
-				}]
-			},
-			options: {
-				responsive:true,
-				cutoutPercentage:0,
-				maintainAspectRatio: true,
-				title: {
-					display: false,
-					text: 'Most Executed actions (times)'
-				}
+	var ctx = document.getElementById("myPieChart").getContext('2d');
+	var actionsChart = new Chart(ctx, {
+		type: 'doughnut',
+		data: {
+			labels: ['Trigger 1', 'Trigger 2', 'Trigger 3', 'Trigger 4'],
+			datasets: [{
+				label: 'Population (millions)',
+				data: [11, 22, 5, 17],
+				backgroundColor: ['#FABB3C', '#32D75E','#D02FC0','#EB0524']
+				/*backgroundColor: ['#3e95cd', '#8e5ea2','#3cba9f','#e8c3b9','#c45850']*/
+			}]
+		},
+		options: {
+			responsive:true,
+			cutoutPercentage:0,
+			maintainAspectRatio: true,
+			title: {
+				display: false,
+				text: 'Most executed triggers (times)'
 			}
-		});
+		}
+	});
 
-		var ctx = document.getElementById("myPieChart3").getContext('2d');
-		var actionsChart = new Chart(ctx, {
-			type: 'doughnut',
-			data: {
-				labels: ['Action 1', 'Action 2', 'Action 3', 'Action 4'],
-				datasets: [{
-					label: 'Population (millions)',
-					data: [11, 22, 5, 17],
-					backgroundColor: ['#FABB3C', '#32D75E','#D02FC0','#EB0524']
-					/*backgroundColor: ['#3e95cd', '#8e5ea2','#3cba9f','#e8c3b9','#c45850']*/
-				}]
-			},
-			options: {
-				responsive:true,
-				cutoutPercentage:75,
-				maintainAspectRatio: true,
-				title: {
-					display: false,
-					text: 'Most Executed actions (times)'
-				}
+	var ctx = document.getElementById("myPieChart2").getContext('2d');
+	var actionsChart = new Chart(ctx, {
+		type: 'doughnut',
+		data: {
+			labels: ['Action 1', 'Action 2', 'Action 3', 'Action 4'],
+			datasets: [{
+				label: 'Population (millions)',
+				data: [11, 22, 5, 17],
+				backgroundColor: ['#FABB3C', '#32D75E','#D02FC0','#EB0524']
+				/*backgroundColor: ['#3e95cd', '#8e5ea2','#3cba9f','#e8c3b9','#c45850']*/
+			}]
+		},
+		options: {
+			responsive:true,
+			cutoutPercentage:0,
+			maintainAspectRatio: true,
+			title: {
+				display: false,
+				text: 'Most Executed actions (times)'
 			}
-		});
+		}
+	});
 
-	</script>
+	var ctx = document.getElementById("myPieChart3").getContext('2d');
+	var actionsChart = new Chart(ctx, {
+		type: 'doughnut',
+		data: {
+			labels: ['Action 1', 'Action 2', 'Action 3', 'Action 4'],
+			datasets: [{
+				label: 'Population (millions)',
+				data: [11, 22, 5, 17],
+				backgroundColor: ['#FABB3C', '#32D75E','#D02FC0','#EB0524']
+				/*backgroundColor: ['#3e95cd', '#8e5ea2','#3cba9f','#e8c3b9','#c45850']*/
+			}]
+		},
+		options: {
+			responsive:true,
+			cutoutPercentage:75,
+			maintainAspectRatio: true,
+			title: {
+				display: false,
+				text: 'Most Executed actions (times)'
+			}
+		}
+	});
+
+</script>
 </body>
 </html>

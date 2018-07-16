@@ -1,7 +1,12 @@
 	  				Vue.component('trigger-table-row',{
 		props:['trigger'],//<th scope="row"></th>
 		template:'<tr><td>{{trigger.name}}</td><td>{{trigger.action}}</td><td>{{trigger.policy.type}}</td><td>{{trigger.policy.elem}}</td><td>{{trigger.conditions}}</td><td><button type="button" class="btn btn-info btn-block" @click.native="displaySomething()" data-toggle="modal" data-target="#editTriggerModal"><i class="fa fa-pencil-square-o"></i></button></td><td><button type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#deleteTriggerModal"><i class="fa fa-remove"></i></button></td></tr>'			
-	});
+	});				
+	  				// Cards for each Data Stream 	
+	  				Vue.component("data-stream-card",{
+	  					props:['element'],
+	  					template:'<div class="col-md-2"><div class="card text-white bg-primary mb-3 ds"><div class="card-header">{{element.name}}</div><div class="card-body"> <h5 class="text-center">{{element.value}}</h5></div><div class="card-footer small">{{element.timestamp}</div> </div> </div>'
+	  				});
 
 
 	  				Vue.component('div-canvas-for-chart', {

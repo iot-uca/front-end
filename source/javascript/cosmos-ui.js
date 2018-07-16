@@ -4,8 +4,8 @@
 	});				
 	  				// Cards for each Data Stream 	
 	  				Vue.component("data-stream-card",{
-	  					props:['element'],
-	  					template:'<div class="col-md-2"><div class="card text-white bg-primary mb-3 ds"><div class="card-header">{{element.name}}</div><div class="card-body"> <h5 class="text-center">{{element.value}}</h5></div><div class="card-footer small">{{element.timestamp}</div> </div> </div>'
+	  					props:['name', 'value', 'timestamp'],
+	  					template:'<div class="col-md-2"><div class="card text-white bg-primary mb-3 ds"><div class="card-header">{{name}}</div><div class="card-body"> <h5 class="text-center">{{value}}</h5></div><div class="card-footer small">{{timestamp}</div> </div> </div>'
 	  				});
 
 
@@ -298,6 +298,7 @@
 					this.hasNotFinishedDS = false;
 					this.dataStreams = response.data;	
 					console.log("[SUCCESS] DataStreams =>>>> " + this.dataStreams);
+
 				}, (error) => {
 					this.hasNotFinishedDS=false;
 					console.log(error);

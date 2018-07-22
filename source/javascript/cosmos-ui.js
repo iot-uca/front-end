@@ -5,7 +5,7 @@
 	  				// Cards for each Data Stream 	
 	  				Vue.component("data-stream-card",{
 	  					props:['name', 'value', 'timestamp'],
-	  					template:'<div class="col-md-2"><div class="card text-white bg-primary mb-3 ds"><div class="card-header">{{name}}</div><div class="card-body"> <h5 class="text-center">{{value}}</h5></div><div class="card-footer small">{{timestamp}</div> </div> </div>'
+	  					template:'<div class="col-md-2"><div class="card text-white bg-primary mb-3 ds"><div class="card-header">{{name}}<button type="button" class="btn btn-primary btn-sm" style="float: right;" data-toggle="modal" data-target="#dataPointsForStreamModal"><strong>More</strong></button></div><div class="card-body"> <h5 class="text-center">{{value}}</h5></div><div class="card-footer small">{{timestamp}}</div> </div> </div>'
 	  				});
 
 
@@ -62,6 +62,10 @@
 	  						renderTriggerAddView: false,
 	  						renderTriggerRemoveView: false,
 	  						renderDataStreamView : false,
+
+	  						displayLoadingFeedback: false,
+	  						displayLoadingFeedbackDataStreams: false,
+	  						errorInInteraction: false,       // flag to activate the success/failure modal content
 
                             elementsToDelete:[],
                             validJson: true,
@@ -290,20 +294,35 @@
 				this.streamWasSelected = false;
 				this.isTimePeriodPolicy = false;
 
+				this.displayLoadingFeedback = true; // user starts seeing the loading spinner
+				this.displayLoadingFeedbackDataStreams = false;
+
 				this.data = new Date();
 
 				console.log("DATE => " + this.data);
 
 				axios.get(this.backendEndPoint + '/data-streams',{ headers: { "Accept": "application/vnd.cosmos.data-stream+json; version=1.0.0" } }).then(response => {
 					this.hasNotFinishedDS = false;
+					this.errorInInteraction = false;
+					this.displayLoadingFeedback = false;
 					this.dataStreams = response.data;	
 					console.log("[SUCCESS] DataStreams =>>>> " + this.dataStreams);
 
 				}, (error) => {
 					this.hasNotFinishedDS=false;
+					this.displayLoadingFeedback = false; // we stop showing the loading spinner
+					this.errorInInteraction = true;
+					$("successModal").modal(); // we display the modal saying it was a problem
+
 					console.log(error);
-					this.dataStreams = ["Temperature","Pressure","Humidity","UV-Intensity"];
-					console.log("[ERROR] DataStreams > " + this.dataStreams);
+					this.dataStreams = [
+						{name: 'Temperature', current_value: '25', last_updated: '2 secs ago'},
+						{name: 'Pressure', current_value: '1023', last_updated: '1 sec ago'},
+						{name: 'Humidity', current_value: '90%', last_updated: '11 mins ago'},
+						{name: 'UV-Intensity', current_value: '0.78', last_updated: '3 mins ago'},
+						{name: 'Door Sensor', current_value: 'Open', last_updated: '53 secs ago'}
+					];
+					console.log("[ERROR] DataStreams >>> " + this.dataStreams);
 				})
 
 				console.log("Width => " + this.sideNavStyle.backgroundColor);
@@ -311,7 +330,7 @@
 
 
 			    // Drawing the chart for Actions -> FIXME <-
-			    var ctx = document.getElementById("actionsChart").getContext('2d');
+			    /*var ctx = document.getElementById("actionsChart").getContext('2d');
 			    var actionsChart = new Chart(ctx, {
 			    	type: 'doughnut',
 			    	data: {
@@ -320,21 +339,15 @@
 			    			label: 'Population (millions)',
 			    			data: [11, 22, 5, 17, 15],
 			    			backgroundColor: ['#FABB3C', '#32D75E','#D02FC0','#EB0524','#848B7A']
-			    			/*backgroundColor: ['#3e95cd', '#8e5ea2','#3cba9f','#e8c3b9','#c45850']*/
 			    		}]
 			    	},
 			    	options: {
 			    		responsive:true,
 			    		cutoutPercentage:75,
 			    		maintainAspectRatio: true,
-						/*title: {
-							display: false,
-							text: 'Most Executed Actions'
-						}*/
 						title: false,
-						//legend:false
 					}
-				});
+				});*/
 
 			},
 
@@ -377,7 +390,37 @@
 			},	
 
 			methods: {
-                
+				updateDataStream: function(){
+                    console.log("Entering updateDataStream!");
+                    console.log("activeDataStream: " + this.activeDataStream);
+
+                    /*  Commented until the backend implementation is ready 
+
+                    axios.put(this.backendEndPoint + '/data-streams', {
+                    	name: this.activeDataStream.name
+                    })
+                      .then(function (response) {
+                      	this.displayLoadingFeedbackDataStreams = false; // user stops seeing the loading spinner
+                      	this.errorInInteraction = false;				// since it was a succesful request
+
+                      	$("#successModal").modal();						// trigger modal for announcing the request result
+
+                        console.log("data: " + response.data);
+                        console.log("status: " + response.status);
+                        console.log("statusText: " + response.statusText);
+                        console.log("headers: " + response.headers);
+                        console.log("config: " + response.config);
+
+                      })
+                      .catch(function (error) {
+                      	console.log("[ERROR] : " + error); 
+                      	this.displayLoadingFeedbackDataStreams = false; 
+                      	this.errorInInteraction = true; 
+                      	$("#successModal").modal();
+                  });  */
+
+
+				},                
                 addElementToDeleteList: function(elem){
                     console.log("Entering addElementToDeleteList !");
                     
@@ -414,20 +457,35 @@
                     console.log("Entering addDataStream !");
                     console.log("dataStreamToAdd: " + this.dataStreamToAdd);
 
-                    axios.post(this.backendEndPoint + '/data-streams', {
-                    	name: this.dataStreamToAdd
-                    })
-                      .then(function (response) {
-                        console.log("data: " + response.data);
-                        console.log("status: " + response.status);
-                        console.log("statusText: " + response.statusText);
-                        console.log("headers: " + response.headers);
-                        console.log("config: " + response.config);
-                      })
-                      .catch(function (error) {console.log("[ERROR] " + error); 
-                  });
+                    if(this.dataStreamToAdd.length>0){
 
-                    
+	                    $("#addDataStreamModal").modal("hide");  			// close the modal
+
+	                    this.displayLoadingFeedbackDataStreams = true; // user starts seeing the loading spinner
+
+	                    axios.post(this.backendEndPoint + '/data-streams', {
+	                    	name: this.dataStreamToAdd
+	                    })
+	                      .then(function (response) {
+	                      	this.displayLoadingFeedbackDataStreams = false;
+	                      	this.errorInInteraction = false;
+	                      	$("#successModal").modal();
+	                        console.log("data: " + response.data);
+	                        console.log("status: " + response.status);
+	                        console.log("statusText: " + response.statusText);
+	                        console.log("headers: " + response.headers);
+	                        console.log("config: " + response.config);
+	                        this.dataStreamToAdd = "";
+	                      })
+	                      .catch(function (error) {
+	                      	console.log("[ERROR] " + error); 
+	                      	this.displayLoadingFeedbackDataStreams = false; 
+	                      	this.errorInInteraction = true; 
+	                      	$("#successModal").modal();
+	                      	this.dataStreamToAdd = "";
+	                  });
+
+                  }
                 },
                 
 				sasa: function(){

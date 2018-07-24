@@ -97,67 +97,42 @@
 
 				<data-stream-card v-for="dS in dataStreams" v-bind:name="dS.name" v-bind:value="dS.current_value" v-bind:timestamp="dS.last_updated" @click.native="assignDataStream(dS)"></data-stream-card>
 
+				<div v-if="showAddDataStream" class="col-md-2">
+					<button @click="showDataStreamView(); displayDataStreamModal()"><i class="fa fa-plus text-center" style="font-size: 3rem; color: lightblue;"></i></button>
+				</div>
+					
+
+
 			</div>
 
 			<div class="row">
 
-				<div class="col-lg-4">
+				<div class="col-lg-4" style="height: 92%;  width: 90%;">
 					<!-- Example Pie Chart Card-->
-					<div class="card mb-3">
+					<div class="card mb-3" style="height: 92%; width: 90%;">
 						<div class="card-header">
 							<i class="fa fa-pie-chart"></i> Most Executed Triggers
 						</div>
-							<div class="card-body">
-								<div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
-							<canvas id="myPieChart" width="100%" height="70%" class="chartjs-render-monitor" style="display: block; width: 100%; height: 70%;"></canvas>
+						<div class="card-body"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+							<canvas id="myPieChart2" width="100" height="100" class="chartjs-render-monitor" style="display: block; width: 100px; height: 100px;"></canvas>
 						</div>
 					</div>
-				</div>
+				</div>	
 
 
-				<div class="col-lg-4">
+				<div class="col-lg-4" style="height: 92%; width: 90%;">
 					<!-- Example Pie Chart Card-->
-					<div class="card mb-3">
+					<div class="card mb-3" style="height: 92%; width: 90%;">
 						<div class="card-header">
-							<i class="fa fa-pie-chart"></i> Most Triggered Actions
+							<i class="fa fa-pie-chart"></i> Most Executed Triggers
 						</div>
-						<div class="card-body">
-							<!--div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div-->
-								<canvas id="bar-chart-horizontal" width="100%" height="70%" class="chartjs-render-monitor" style="display: block; width: 100%; height: 70%;"></canvas>
-
-
-
-								<script type="text/javascript">
-
-									new Chart(document.getElementById("bar-chart-horizontal"), {
-										type: 'horizontalBar',
-										data: {
-											labels: ["Action_1", "Action_2", "Action_3", "Action_4", "Action_5"],
-											datasets: [
-											{
-												label: "Population (millions)",
-												backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
-												data: [2478,5267,734,784,433]
-											}
-											]
-										},
-										options: {
-											legend: { display: false },
-											title: {
-												display: false,
-												text: 'Predicted world population (millions) in 2050'
-											}
-										}
-									});
-
-								</script>
-
-							</div>
+						<div class="card-body"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+							<canvas id="barChart" width="100" height="100" class="chartjs-render-monitor" style="display: block; width: 100px; height: 100px;"></canvas>
 						</div>
 					</div>
+				</div>	
 
-
-				<div class="col-lg-4" style="width: 100%; height: 75%;">
+				<div class="col-lg-4" style="width: 100%;">
 					<div class="card card-default">
 						<div class="card-header">
 							<i class="fa fa-bell fa-fw"></i> Commands in queue
@@ -198,241 +173,239 @@
 						</div>
 					</div> 
 				</div>
-
-
 			</div>
 		</div>
 
 
-	<!-- div for showing the Data Stream add view -->
-	<div v-if="renderDataStreamView">
+		<!-- div for showing the Data Stream add view -->
+		<div v-if="renderDataStreamView">
 
-		<i v-if="displayLoadingFeedbackDataStreams" class="fa fa-spinner fa-spin" style="font-size: 5rem; padding-left: 50%; padding-right: 50%;"></i>
-		<!--div class="container"-->
-		<div class="row">
-			<br>
-
-			<div class="col-md-1">
-			</div>
-
-			<div class="col-md-10">
-
-				<h4 class="mb-3"><small><strong>Existing data streams</strong></small></h4>
-				<hr>
-
-				<div class="row">
-
-					<div class="col-md-3">
-						<div class="form-group form-inline well">
-							<label for="entriesForPage" class="mr-sm-2 text-muted">Entries for page: </label>
-							<select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="httpMethod" v-model="maxDataStreamsPerPage">
-								<option v-for="(elem, index) in optionsOfEntriesPerPage" v-bind:value="elem.value">
-									{{elem.value}}
-								</option>
-							</select>
-						</div>
-					</div>
-
-					<div class="col-md-5">
-						<div class="mb-3">
-							<div class="input-group">
-								<div class="input-group-prepend">
-									<span class="input-group-text"><i class="fa fa-search"></i></span>
-								</div>
-
-								<input type="text" class="form-control" v-model="dataStreamFilter" placeholder="Start typing to filter data streams..." required="true">
-
-							</div>
-						</div>
-					</div>
-
-					<div class="col-md-2">
-						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addDataStreamModal" style="width: 100%;"><strong>Add stream</strong></button>	
-					</div>
-
-					<div class="col-md-2">
-						<button v-if="elementsToDelete.length<1" type="button" disabled class="btn btn-danger" data-toggle="modal" data-target="#removeElements" style="width: 100%;"><strong>Delete</strong></button>	
-						<button v-else type="button" class="btn btn-danger" data-toggle="modal" data-target="#removeElements" style="width: 100%;"><strong>Delete</strong></button>	
-
-					</div>
-				</div>
-
-				<table class="table table-striped table-responsive table-sm" style="width: 100%">
-					<thead class="thead-dark">
-						<tr>
-							<th scope="col" style="width: 2%"></th>
-							<th scope="col" style="width: 92%">Name</th>
-							<th scope="col" style="width: 3%"></th>
-							<th scope="col" style="width: 3%"></th>
-							<!--th scope="col" style="width: 2%"></th-->
-						</tr>
-					</thead>
-					<tbody>
-						<!--tr v-for="t in triggersForPage" v-bind:trigger="t" is="trigger-table-row"></tr--> 
-						<!--Refenrenced in ..... https://github.com/vuejs/Discussion/issues/204 -->
-
-						<tr v-for="(dataStream, index) in dataStreamsForPage">
-							<td>
-								<div class="custom-control custom-checkbox" >
-									<input type="checkbox" :id="dataStream.name" class="custom-control-input" @click="addElementToDeleteList(dataStream)">
-									<label :for="dataStream.name" class="custom-control-label"></label>
-								</div>
-							</td>
-							<td>{{dataStream.name}}</td>
-							<td>
-								<button type="button" class="btn btn-success btn-sm" @click="showDataStream(dataStream)" data-toggle="modal" data-target="#editDataStreamModal" style="height: 75%;">
-									<i class="fa fa-eye"></i>
-								</button>
-							</td>
-							<td>
-								<button type="button" class="btn btn-info btn-sm" @click="editDataStreams(dataStream)" data-toggle="modal" data-target="#editDataStreamModal" style="height: 75%;">
-									<i class="fa fa-pencil-square-o"></i>
-								</button>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-
-				<div class="row">
-					<br>
-					<p></p>
-					<br>
-					<div class="col-md-4 text-muted">
-						<p>Showing <strong>{{dataStreamsForPage.length}}</strong> out of <strong>{{dataStreamsConfigured.length}}</strong> entries</p>
-					</div>
-					<div class="col-md-8">
-						<!--     Table pagination     -->
-						<nav aria-label="Page navigation data streams">
-							<ul class="pagination justify-content-end">
-								<li v-bind:class="[currentPage > 1 ? 'page-item': 'page-item disabled']">
-									<a v-on:click="dataStreamsForPage = displayPrevPage(maxDataStreamsPerPage, dataStreamsForPage, filteredDataStreams)" class="page-link" href="#" tabindex="-1">Previous</a>
-								</li>
-								<li v-for="number in pagesNeededForDataStreams" v-bind:class="[currentPage == number ? 'page-item active': 'page-item']" v-on:click="dataStreamsForPage = getElementsToShowInTable(number, maxDataStreamsPerPage, dataStreamsForPage, filteredDataStreams)"><a class="page-link" href="#">{{number}}</a></li>
-								<li v-bind:class="[currentPage<pagesNeededForDataStreams ? 'page-item': 'page-item disabled']">
-									<a v-on:click="dataStreamsForPage = displayNextPage(maxDataStreamsPerPage, dataStreamsForPage, filteredDataStreams)" class="page-link" href="#">Next</a>
-								</li>
-							</ul>
-						</nav>
-					</div>
-
-				</div>
-
-
-			</div>
-
-			<div class="col-md-1">
-			</div>
-		</div>
-		<!--/div-->
-	</div>
-
-
-	<!-- div for showing the Keys menu view -->
-	<div id="keys" v-if="renderSecurityView"> 
-		<div class="container">
+			<i v-if="displayLoadingFeedbackDataStreams" class="fa fa-spinner fa-spin" style="font-size: 5rem; padding-left: 50%; padding-right: 50%;"></i>
+			<!--div class="container"-->
 			<div class="row">
-				<div class="col-md-2">
+				<br>
+
+				<div class="col-md-1">
 				</div>
 
-				<div class="col-md-8">
-					<h4 class="mb-3 text-center"><strong>Associate the actions required</strong></h4>
+				<div class="col-md-10">
+
+					<h4 class="mb-3"><small><strong>Existing data streams</strong></small></h4>
 					<hr>
-					<form class="needs-validation" novalidate="">
 
-						<div class="custom-control custom-checkbox">
-							<input type="checkbox" class="custom-control-input" id="same-address">
-							<label class="custom-control-label" for="same-address">Read</label>
-						</div>
+					<div class="row">
 
-						<div class="custom-control custom-checkbox">
-							<input type="checkbox" class="custom-control-input" id="save-info">
-							<label class="custom-control-label" for="save-info">Write</label>
-						</div>
-
-						<div class="custom-control custom-checkbox">
-							<input type="checkbox" class="custom-control-input" id="delete-info">
-							<label class="custom-control-label" for="delete-info">Delete</label>
-						</div>
-
-						<br>
-
-						<button class="btn btn-primary btn-lg btn-block" type="submit"><h5><strong>Generate Key</strong></h5></button>
-
-						<div class="text-muted text-center">
-							<br>
-							<span><em><h3>{{securityKey}}</h3></em></span>
-						</div>
-
-					</form>
-				</div>
-
-				<div class="col-md-2">
-				</div>
-			</div>
-		</div>
-
-	</div>
-
-
-	<!-- div for showing the Actions add view -->
-	<div id="actions" v-if="renderActionAddView"> 
-		<div class="row">
-			<br>
-
-			<div class="col-md-1">
-			</div>
-
-			<div class="col-md-10">
-
-				<h4 class="mb-3"><small><strong>Existing actions</strong></small></h4>
-				<hr>
-
-				<div class="row">
-
-					<div class="col-md-3">
-						<div class="form-group form-inline well">
-							<label for="httpMethod" class="mr-sm-2 text-muted">Entries for page: </label>
-							<select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="httpMethod" v-model="maxActionsPerPage">
-								<option v-for="(elem, index) in optionsOfEntriesPerPage" v-bind:value="elem.value">
-									{{elem.value}}
-								</option>
-							</select>
-						</div>
-					</div>
-
-					<div class="col-md-5">
-						<div class="mb-3">
-							<div class="input-group">
-								<div class="input-group-prepend">
-									<span class="input-group-text"><i class="fa fa-search"></i></span>
-								</div>
-
-								<input type="text" class="form-control" v-model="actionFilter" placeholder="Start typing to filter actions..." required="true">
-
+						<div class="col-md-3">
+							<div class="form-group form-inline well">
+								<label for="entriesForPage" class="mr-sm-2 text-muted">Entries for page: </label>
+								<select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="httpMethod" v-model="maxDataStreamsPerPage">
+									<option v-for="(elem, index) in optionsOfEntriesPerPage" v-bind:value="elem.value">
+										{{elem.value}}
+									</option>
+								</select>
 							</div>
 						</div>
+
+						<div class="col-md-5">
+							<div class="mb-3">
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"><i class="fa fa-search"></i></span>
+									</div>
+
+									<input type="text" class="form-control" v-model="dataStreamFilter" placeholder="Start typing to filter data streams..." required="true">
+
+								</div>
+							</div>
+						</div>
+
+						<div class="col-md-2">
+							<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addDataStreamModal" style="width: 100%;"><strong>Add stream</strong></button>	
+						</div>
+
+						<div class="col-md-2">
+							<button v-if="elementsToDelete.length<1" type="button" disabled class="btn btn-danger" data-toggle="modal" data-target="#removeElements" style="width: 100%;"><strong>Delete</strong></button>	
+							<button v-else type="button" class="btn btn-danger" data-toggle="modal" data-target="#removeElements" style="width: 100%;"><strong>Delete</strong></button>	
+
+						</div>
 					</div>
 
-					<div class="col-md-2">
-						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addActionModal" style="width: 100%;"><strong>Add action</strong></button>	
+					<table class="table table-striped table-responsive table-sm" style="width: 100%">
+						<thead class="thead-dark">
+							<tr>
+								<th scope="col" style="width: 2%"></th>
+								<th scope="col" style="width: 92%">Name</th>
+								<th scope="col" style="width: 3%"></th>
+								<th scope="col" style="width: 3%"></th>
+								<!--th scope="col" style="width: 2%"></th-->
+							</tr>
+						</thead>
+						<tbody>
+							<!--tr v-for="t in triggersForPage" v-bind:trigger="t" is="trigger-table-row"></tr--> 
+							<!--Refenrenced in ..... https://github.com/vuejs/Discussion/issues/204 -->
+
+							<tr v-for="(dataStream, index) in dataStreamsForPage">
+								<td>
+									<div class="custom-control custom-checkbox" >
+										<input type="checkbox" :id="dataStream.name" class="custom-control-input" @click="addElementToDeleteList(dataStream)">
+										<label :for="dataStream.name" class="custom-control-label"></label>
+									</div>
+								</td>
+								<td>{{dataStream.name}}</td>
+								<td>
+									<button type="button" class="btn btn-success btn-sm" @click="showDataStream(dataStream)" data-toggle="modal" data-target="#editDataStreamModal" style="height: 75%;">
+										<i class="fa fa-eye"></i>
+									</button>
+								</td>
+								<td>
+									<button type="button" class="btn btn-info btn-sm" @click="editDataStreams(dataStream)" data-toggle="modal" data-target="#editDataStreamModal" style="height: 75%;">
+										<i class="fa fa-pencil-square-o"></i>
+									</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+					<div class="row">
+						<br>
+						<p></p>
+						<br>
+						<div class="col-md-4 text-muted">
+							<p>Showing <strong>{{dataStreamsForPage.length}}</strong> out of <strong>{{dataStreamsConfigured.length}}</strong> entries</p>
+						</div>
+						<div class="col-md-8">
+							<!--     Table pagination     -->
+							<nav aria-label="Page navigation data streams">
+								<ul class="pagination justify-content-end">
+									<li v-bind:class="[currentPage > 1 ? 'page-item': 'page-item disabled']">
+										<a v-on:click="dataStreamsForPage = displayPrevPage(maxDataStreamsPerPage, dataStreamsForPage, filteredDataStreams)" class="page-link" href="#" tabindex="-1">Previous</a>
+									</li>
+									<li v-for="number in pagesNeededForDataStreams" v-bind:class="[currentPage == number ? 'page-item active': 'page-item']" v-on:click="dataStreamsForPage = getElementsToShowInTable(number, maxDataStreamsPerPage, dataStreamsForPage, filteredDataStreams)"><a class="page-link" href="#">{{number}}</a></li>
+									<li v-bind:class="[currentPage<pagesNeededForDataStreams ? 'page-item': 'page-item disabled']">
+										<a v-on:click="dataStreamsForPage = displayNextPage(maxDataStreamsPerPage, dataStreamsForPage, filteredDataStreams)" class="page-link" href="#">Next</a>
+									</li>
+								</ul>
+							</nav>
+						</div>
+
 					</div>
 
-					<div class="col-md-2">
-						<button v-if="elementsToDelete.length<1" type="button" disabled class="btn btn-danger" data-toggle="modal" data-target="#removeElements" style="width: 100%;"><strong>Delete</strong></button>	
-						<button v-else type="button" class="btn btn-danger" data-toggle="modal" data-target="#removeElements" style="width: 100%;"><strong>Delete</strong></button>	
-					</div>
+
 				</div>
 
-				<table class="table table-striped table-responsive table-sm" style="width: 100%;">
-					<thead class="thead-dark">
-						<tr>
-							<th scope="col" style="width: 1%"></th>
-							<th scope="col" style="width: 30%;">Name</th>
-							<th scope="col" style="width: 11%;">Type</th>
-							<th scope="col" style="width: 11%;">Priority</th>
-							<th scope="col" style="width: 10%">Method</th>
-							<th scope="col" style="width: 28%;">URL</th>
-							<th scope="col" style="width: 7%;">Version</th>
+				<div class="col-md-1">
+				</div>
+			</div>
+			<!--/div-->
+		</div>
+
+
+		<!-- div for showing the Keys menu view -->
+		<div id="keys" v-if="renderSecurityView"> 
+			<div class="container">
+				<div class="row">
+					<div class="col-md-2">
+					</div>
+
+					<div class="col-md-8">
+						<h4 class="mb-3 text-center"><strong>Associate the actions required</strong></h4>
+						<hr>
+						<form class="needs-validation" novalidate="">
+
+							<div class="custom-control custom-checkbox">
+								<input type="checkbox" class="custom-control-input" id="same-address">
+								<label class="custom-control-label" for="same-address">Read</label>
+							</div>
+
+							<div class="custom-control custom-checkbox">
+								<input type="checkbox" class="custom-control-input" id="save-info">
+								<label class="custom-control-label" for="save-info">Write</label>
+							</div>
+
+							<div class="custom-control custom-checkbox">
+								<input type="checkbox" class="custom-control-input" id="delete-info">
+								<label class="custom-control-label" for="delete-info">Delete</label>
+							</div>
+
+							<br>
+
+							<button class="btn btn-primary btn-lg btn-block" type="submit"><h5><strong>Generate Key</strong></h5></button>
+
+							<div class="text-muted text-center">
+								<br>
+								<span><em><h3>{{securityKey}}</h3></em></span>
+							</div>
+
+						</form>
+					</div>
+
+					<div class="col-md-2">
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+
+		<!-- div for showing the Actions add view -->
+		<div id="actions" v-if="renderActionAddView"> 
+			<div class="row">
+				<br>
+
+				<div class="col-md-1">
+				</div>
+
+				<div class="col-md-10">
+
+					<h4 class="mb-3"><small><strong>Existing actions</strong></small></h4>
+					<hr>
+
+					<div class="row">
+
+						<div class="col-md-3">
+							<div class="form-group form-inline well">
+								<label for="httpMethod" class="mr-sm-2 text-muted">Entries for page: </label>
+								<select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="httpMethod" v-model="maxActionsPerPage">
+									<option v-for="(elem, index) in optionsOfEntriesPerPage" v-bind:value="elem.value">
+										{{elem.value}}
+									</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="col-md-5">
+							<div class="mb-3">
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"><i class="fa fa-search"></i></span>
+									</div>
+
+									<input type="text" class="form-control" v-model="actionFilter" placeholder="Start typing to filter actions..." required="true">
+
+								</div>
+							</div>
+						</div>
+
+						<div class="col-md-2">
+							<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addActionModal" style="width: 100%;"><strong>Add action</strong></button>	
+						</div>
+
+						<div class="col-md-2">
+							<button v-if="elementsToDelete.length<1" type="button" disabled class="btn btn-danger" data-toggle="modal" data-target="#removeElements" style="width: 100%;"><strong>Delete</strong></button>	
+							<button v-else type="button" class="btn btn-danger" data-toggle="modal" data-target="#removeElements" style="width: 100%;"><strong>Delete</strong></button>	
+						</div>
+					</div>
+
+					<table class="table table-striped table-responsive table-sm" style="width: 100%;">
+						<thead class="thead-dark">
+							<tr>
+								<th scope="col" style="width: 1%"></th>
+								<th scope="col" style="width: 30%;">Name</th>
+								<th scope="col" style="width: 11%;">Type</th>
+								<th scope="col" style="width: 11%;">Priority</th>
+								<th scope="col" style="width: 10%">Method</th>
+								<th scope="col" style="width: 28%;">URL</th>
+								<th scope="col" style="width: 7%;">Version</th>
 	  								<!--th scope="col" style="width: 19%;">Body</th>
 	  									<th scope="col" style="width: 19%;">Headers</th-->
 	  										<th scope="col" style="width: 1%"></th>
@@ -1557,13 +1530,13 @@
                     							<input type="text" class="form-control" id="triggerName" v-model="dataStreamToAdd" required>
                     							<div class="invalid-feedback" style="width: 100%;">
                     								<em>The Stream name cannot be empty<em>
+                    								</div>
                     							</div>
                     						</div>
-                    					</div>
-                    					<hr>
-                    					<button class="btn btn-primary btn-sm" type="submit" @click="addDataStream()" style="float: right; font-size: 1.1rem;"><strong>Add stream</strong></button>
-                    				</form>
-                    			</div>
+                    						<hr>
+                    						<button class="btn btn-primary btn-sm" type="submit" @click="addDataStream()" style="float: right; font-size: 1.1rem;"><strong>Add stream</strong></button>
+                    					</form>
+                    				</div>
 
                     			<!--div class="modal-footer">
                     				<button class="btn btn-primary btn-sm" type="submit" data-toggle="modal" data-target="#stack3" @click="addDataStream()"><h5><strong>Add stream</strong></h5></button>
@@ -2564,98 +2537,146 @@
             			</div>
             			<div class="modal-body text-center">
 
-					<div class="card mb-3" style="height: 80%; width: 100%;">
-						<div class="card-header">
-							<i class="fa fa-bar-chart"></i> Data Points
-							<select  style="float: right;" id="days" placeholder="Latest" required="true">
-								<option value="Latest">Latest</option>
-								<option value="day">Day</option>
-								<option value="week">Week</option>
-								<option value="month">Month</option>
-							</select>
-						</div>
-						<div class="card-body">
-							<div class="row">
-								<div class="col-sm-8 my-auto"><!--div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div-->
-								<canvas id="line-chart" class="chartjs-render-monitor"></canvas>
+            				<div class="card mb-3" style="height: 80%; width: 100%;">
+            					<div class="card-header">
+            						<i class="fa fa-bar-chart"></i> Data Points
+            						<select  style="float: right;" id="days" placeholder="Latest" required="true">
+            							<option value="Latest">Latest</option>
+            							<option value="day">Day</option>
+            							<option value="week">Week</option>
+            							<option value="month">Month</option>
+            						</select>
+            					</div>
+            					<div class="card-body">
+            						<div class="row">
+            							<div class="col-sm-8 my-auto"><!--div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div-->
+            							<canvas id="line-chart" class="chartjs-render-monitor"></canvas>
 
-								<script type="text/javascript">
-
-
-									new Chart(document.getElementById("line-chart"), {
-										type: 'line',
-										data: {
-											labels: [1500,1600,1700,1750,1800,1850,1900,1950,1999,2050],
-											datasets: [{ 
-												data: [86,114,106,106,107,111,133,221,783,2478],
-												label: "Africa",
-												borderColor: "#3e95cd",
-												fill: false
-											}]
-										},
-										options: {
-											title: {
-												display: true,
-												text: 'World population per region (in millions)'
-											}
-										}
-									});
-
-								</script>
-
-							</div>
-							<div class="col-sm-4 text-center my-auto">
-								<div class="h4 mb-0 text-primary">$34,693</div>
-								<div class="small text-muted">YTD Revenue</div>
-								<hr>
-								<div class="h4 mb-0 text-warning">$18,474</div>
-								<div class="small text-muted">YTD Expenses</div>
-								<hr>
-								<div class="h4 mb-0 text-success">$16,219</div>
-								<div class="small text-muted">YTD Margin</div>
-							</div>
-						</div>
-					</div>
-				</div>
+            							<script type="text/javascript">
 
 
+            								new Chart(document.getElementById("line-chart"), {
+            									type: 'line',
+            									data: {
+            										labels: [1500,1600,1700,1750,1800,1850,1900,1950,1999,2050],
+            										datasets: [{ 
+            											data: [86,114,106,106,107,111,133,221,783,2478],
+            											label: "Africa",
+            											borderColor: "#3e95cd",
+            											fill: false
+            										}]
+            									},
+            									options: {
+            										title: {
+            											display: true,
+            											text: 'World population per region (in millions)'
+            										}
+            									}
+            								});
 
+            							</script>
+
+            						</div>
+            						<div class="col-sm-4 text-center my-auto">
+            							<div class="h4 mb-0 text-primary">$34,693</div>
+            							<div class="small text-muted">YTD Revenue</div>
+            							<hr>
+            							<div class="h4 mb-0 text-warning">$18,474</div>
+            							<div class="small text-muted">YTD Expenses</div>
+            							<hr>
+            							<div class="h4 mb-0 text-success">$16,219</div>
+            							<div class="small text-muted">YTD Margin</div>
+            						</div>
+            					</div>
+            				</div>
             			</div>
+
+
+
             		</div>
             	</div>
             </div>
-
-            <!-- ################################################################################################################################ -->
-
         </div>
 
-        <!-- Referencing local js file -->
-        <script type="text/javascript" src="javascript/cosmos-ui.js" ></script>
-        <script type="text/javascript">
+        <!-- ################################################################################################################################ -->
+
+    </div>
+
+    <!-- Referencing local js file -->
+    <script type="text/javascript" src="javascript/cosmos-ui.js" ></script>
+    <script type="text/javascript">
 
 	      // Example starter JavaScript for disabling form submissions if there are invalid fields
 	      (function() {
-	        'use strict';
+	      	'use strict';
 
-	        window.addEventListener('load', function() {
+	      	window.addEventListener('load', function() {
 	          // Fetch all the forms we want to apply custom Bootstrap validation styles to
 	          var forms = document.getElementsByClassName('needs-validation');
 
 	          // Loop over them and prevent submission
 	          var validation = Array.prototype.filter.call(forms, function(form) {
-	            form.addEventListener('submit', function(event) {
-	              if (form.checkValidity() === false) {
-	                event.preventDefault();
-	                event.stopPropagation();
-	              }
-	              form.classList.add('was-validated');
-	            }, false);
+	          	form.addEventListener('submit', function(event) {
+	          		if (form.checkValidity() === false) {
+	          			event.preventDefault();
+	          			event.stopPropagation();
+	          		}
+	          		form.classList.add('was-validated');
+	          	}, false);
 	          });
-	        }, false);
+	      }, false);
 	      })();
 
-  		</script>
-    
 
-    </body>
-    </html>
+	      	var ctx = document.getElementById("myPieChart2").getContext('2d');
+			var actionsChart = new Chart(ctx, {
+				type: 'doughnut',
+				data: {
+					labels: ['Action 1', 'Action 2', 'Action 3', 'Action 4'],
+					datasets: [{
+						data: [11, 22, 5, 17],
+						backgroundColor: ['#FABB3C', '#32D75E','#D02FC0','#EB0524']
+						/*backgroundColor: ['#3e95cd', '#8e5ea2','#3cba9f','#e8c3b9','#c45850']*/
+					}]
+				},
+				options: {
+					title: false,
+					responsive:true,
+					cutoutPercentage:0,
+					maintainAspectRatio: true,
+					title: {
+						display: false,
+						text: 'Most Executed actions (times)'
+					}
+				}
+			});
+
+	      	var ctx = document.getElementById("barChart").getContext('2d');
+			var myBarChart = new Chart(ctx, {
+			    type: 'horizontalBar',
+				data: {
+					labels: ['Action 1', 'Action 2', 'Action 3', 'Action 4'],
+					datasets: [{
+						data: [11, 22, 9, 17],
+						backgroundColor: ['#FABB3C', '#32D75E','#D02FC0','#EB0524']
+						/*backgroundColor: ['#3e95cd', '#8e5ea2','#3cba9f','#e8c3b9','#c45850']*/
+					}]
+				},
+				options: {
+					title: false,
+					responsive:true,
+					cutoutPercentage:0,
+					maintainAspectRatio: true,
+					title: {
+						display: false,
+						text: 'Most Executed actions (times)'
+					}
+				}
+			});
+
+
+	  </script>
+
+
+	</body>
+	</html>

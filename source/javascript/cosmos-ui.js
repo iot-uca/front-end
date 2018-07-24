@@ -62,6 +62,7 @@
 	  						renderTriggerAddView: false,
 	  						renderTriggerRemoveView: false,
 	  						renderDataStreamView : false,
+	  						showAddDataStream: false,
 
 	  						displayLoadingFeedback: false,
 	  						displayLoadingFeedbackDataStreams: false,
@@ -275,6 +276,8 @@
 	  			},
 
 	  			mounted(){
+	  			this.showAddDataStream = false; // user does not see the "add" button
+
 				//Chart.defaults.global.legend.display = false; // avoid showing dataset labels on any chart
 				this.hasNotFinishedDS = true;
 				this.isSideNavActive = false;
@@ -302,6 +305,7 @@
 				console.log("DATE => " + this.data);
 
 				axios.get(this.backendEndPoint + '/data-streams',{ headers: { "Accept": "application/vnd.cosmos.data-stream+json; version=1.0.0" } }).then(response => {
+					this.showAddDataStream = true; // user sees the "add" button
 					this.hasNotFinishedDS = false;
 					this.errorInInteraction = false;
 					this.displayLoadingFeedback = false;
@@ -309,10 +313,12 @@
 					console.log("[SUCCESS] DataStreams =>>>> " + this.dataStreams);
 
 				}, (error) => {
+					this.showAddDataStream = true; // user sees the "add" button
 					this.hasNotFinishedDS=false;
 					this.displayLoadingFeedback = false; // we stop showing the loading spinner
 					this.errorInInteraction = true;
 					$("successModal").modal(); // we display the modal saying it was a problem
+
 
 					console.log(error);
 					this.dataStreams = [
@@ -386,10 +392,14 @@
 					    } catch (e) {
 					        this.validJson=false;
 					    }
-				}
+				},
 			},	
 
 			methods: {
+
+				displayDataStreamModal: function(){
+                    $("#addDataStreamModal").modal();  			// open the modal
+				},
 				updateDataStream: function(){
                     console.log("Entering updateDataStream!");
                     console.log("activeDataStream: " + this.activeDataStream);

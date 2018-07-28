@@ -5,7 +5,7 @@
 	  				// Cards for each Data Stream 	
 	  				Vue.component("data-stream-card",{
 	  					props:['name', 'value', 'timestamp'],
-	  					template:'<div class="col-md-2"><div class="card text-white bg-primary mb-3 ds"><div class="card-header">{{name}}<button type="button" class="btn btn-primary btn-sm" style="float: right;" data-toggle="modal" data-target="#dataPointsForStreamModal"><strong>More</strong></button></div><div class="card-body"> <h5 class="text-center">{{value}}</h5></div><div class="card-footer small">{{timestamp}}</div> </div> </div>'
+	  					template:'<div class="col-md-2"><div class="card text-white bg-primary mb-3 ds shadow"><div class="card-header">{{name}}<button type="button" class="btn btn-primary btn-sm" style="float: right;" data-toggle="modal" data-target="#dataPointsForStreamModal"><strong>More</strong></button></div><div class="card-body"> <h5 class="text-center">{{value}}</h5></div><div class="card-footer small">{{timestamp}}</div> </div> </div>'
 	  				});
 
 

@@ -26,6 +26,8 @@
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha18/js/tempusdominus-bootstrap-4.min.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha18/css/tempusdominus-bootstrap-4.min.css" />
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/spinkit/1.2.5/spinkit.min.css" />
 	
 	<!-- Referencing local css file -->
 	<link rel="stylesheet" type="text/css" href="css/cosmos-ui.css">
@@ -37,7 +39,7 @@
 
 <body>
 
-	<div id="app" class="bg-light">
+	<div id="app" class="bg-light" v-cloak>
 
 		<div id="mySidenav" class="sidenav" v-bind:style="sideNavStyle">
 			<!-- Side Nav for burguer menu -->
@@ -76,42 +78,66 @@
 
 		<!-- div for Dashboard view -->
 		<div v-if="renderDashboardView" id="dashboard" style="margin: 1.5%;">
+            
+         <div v-if="displayLoadingFeedback" class="sk-circle">
+            <div class="sk-circle1 sk-child"></div>
+            <div class="sk-circle2 sk-child"></div>
+            <div class="sk-circle3 sk-child"></div>
+            <div class="sk-circle4 sk-child"></div>
+            <div class="sk-circle5 sk-child"></div>
+            <div class="sk-circle6 sk-child"></div>
+            <div class="sk-circle7 sk-child"></div>
+            <div class="sk-circle8 sk-child"></div>
+            <div class="sk-circle9 sk-child"></div>
+            <div class="sk-circle10 sk-child"></div>
+            <div class="sk-circle11 sk-child"></div>
+            <div class="sk-circle12 sk-child"></div>
+          </div>
 			
-			<i v-if="displayLoadingFeedback" class="fa fa-spinner fa-spin" style="font-size: 5rem; padding-left: 50%; padding-right: 50%;"></i>
 
 			<div class="row">
 
-				<!--div class="col-md-2">
-					<div class="card text-white bg-primary mb-3 ds">
-						<div class="card-header">Humidity
-							<button type="button" class="btn btn-primary btn-sm" style="float: right;" data-toggle="modal" data-target="#addDataStreamModal"><strong>More</strong></button>	
-						</div>
-						<div class="card-body">
-							<h5 class="text-center">59 %</h5>
-						</div>
-						<div class="card-footer small">
-							Updated 3 mins ago
-						</div>
-					</div>
-				</div-->
-
-				<data-stream-card v-for="dS in dataStreams" v-bind:name="dS.name" v-bind:value="dS.current_value" v-bind:timestamp="dS.last_updated" @click.native="assignDataStream(dS)"></data-stream-card>
-
+				    <data-stream-card v-for="dS in dataStreams" v-bind:name="dS.name" v-bind:value="dS.current_value" v-bind:timestamp="dS.last_updated" @click.native="assignDataStream(dS)"></data-stream-card>
 				<div v-if="showAddDataStream" class="col-md-2">
 					<button @click="showDataStreamView(); displayDataStreamModal()"><i class="fa fa-plus text-center" style="font-size: 3rem; color: lightblue;"></i></button>
 				</div>
-					
-
-
+                
 			</div>
+            
+            <div class="row" style="font-family: sans-serif; margin-top: inherit;">
+                <div class="col-md-4" >
+                    <div class="card shadow">
+                      <div class="card-body text-center">
+                        <h3 class="card-title text-primary">31</h3>
+                        <p class="card-text">Actions</p>
+                      </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card shadow">
+                      <div class="card-body text-center">
+                        <h3 class="card-title text-primary">12</h3>
+                        <p class="card-text">Triggers</p>
+                      </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card shadow">
+                      <div class="card-body text-center">
+                        <h3 class="card-title text-primary">9</h3>
+                        <p class="card-text">Data Streams</p>
+                      </div>
+                    </div>
+                </div>
+            </div>
 
-			<div class="row">
+			<div class="row" style="margin-top: inherit; font-family: sans-serif;">
 
-				<div class="col-lg-4" style="height: 92%;  width: 90%;">
+				<div class="col-lg-4" style="height: 92%;">
 					<!-- Example Pie Chart Card-->
-					<div class="card mb-3" style="height: 92%; width: 90%;">
+					<div class="card mb-3 shadow" style="height: 92%;">
 						<div class="card-header">
-							<i class="fa fa-pie-chart"></i> Most Executed Triggers
+							<i class="fa fa-pie-chart"></i> Most Triggered Actions
 						</div>
 						<div class="card-body"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
 							<canvas id="myPieChart2" width="100" height="100" class="chartjs-render-monitor" style="display: block; width: 100px; height: 100px;"></canvas>
@@ -120,9 +146,9 @@
 				</div>	
 
 
-				<div class="col-lg-4" style="height: 92%; width: 90%;">
+				<div class="col-lg-4" style="height: 92%;">
 					<!-- Example Pie Chart Card-->
-					<div class="card mb-3" style="height: 92%; width: 90%;">
+					<div class="card mb-3 shadow" style="height: 92%;">
 						<div class="card-header">
 							<i class="fa fa-pie-chart"></i> Most Executed Triggers
 						</div>
@@ -132,8 +158,8 @@
 					</div>
 				</div>	
 
-				<div class="col-lg-4" style="width: 100%;">
-					<div class="card card-default">
+				<div class="col-lg-4">
+					<div class="card card-default shadow">
 						<div class="card-header">
 							<i class="fa fa-bell fa-fw"></i> Commands in queue
 						</div>
@@ -166,6 +192,11 @@
 								</a>
 								<a href="#" class="list-group-item">
 									<i class="fa fa-upload fa-fw"></i> Sense Temp
+									<span class="pull-right text-muted small"><em>11:32 AM</em>
+									</span>
+								</a>
+                                <a href="#" class="list-group-item">
+                                    <i class="fa fa-upload fa-fw"></i> Sense Temp
 									<span class="pull-right text-muted small"><em>11:32 AM</em>
 									</span>
 								</a>

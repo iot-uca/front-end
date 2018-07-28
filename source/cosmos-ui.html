@@ -2701,7 +2701,19 @@
 					title: {
 						display: false,
 						text: 'Most Executed actions (times)'
-					}
+					},
+                    scales: {
+                        xAxes: [{
+                                    gridLines: {
+                                        display:false
+                                    }
+                                }],
+                        yAxes: [{
+                                    gridLines: {
+                                        display:false
+                                    }   
+                                }]
+                    }
 				}
 			});
 

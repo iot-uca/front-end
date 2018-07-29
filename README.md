@@ -1,6 +1,6 @@
 # Cosmos Front-end
 
-Internet of Things platform UI
+Internet of Things platform GUI
 
 ## License
 The project source code is [MIT](LICENSE) licensed. Any contribution submitted to the code repository is considered to be under the same license.

@@ -119,6 +119,88 @@ export default {
 
   mounted(){
 
+    let ctx = document.getElementById("barChart").getContext('2d');
+    new Chart(ctx, {
+      type: 'horizontalBar',
+      data: {
+        labels: ['Trigger 1', 'Trigger 2', 'Trigger 3', 'Trigger 4', 'Trigger 5'],
+        datasets: [{
+          data: [11, 22, 9, 17, 15],
+          backgroundColor: ['#FABB3C', '#32D75E','#D02FC0','#EB0524','#3e95cd']
+          /*backgroundColor: ['#3e95cd', '#8e5ea2','#3cba9f','#e8c3b9','#c45850']*/
+        }]
+      },
+      options: {
+        legend: {
+          display: false
+        },
+        responsive:true,
+        maintainAspectRatio: false,
+        title: {
+          display: false,
+          text: 'Most Executed actions (times)'
+        },
+        scales: {
+          xAxes: [{
+            gridLines: {
+              display:false
+            }
+          }],
+          yAxes: [{
+            gridLines: {
+              display:false
+            }
+          }]
+        }
+      }
+    });
+
+    ctx = document.getElementById("myPieChart2").getContext('2d');
+    new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Action 1', 'Action 2', 'Action 3', 'Action 4'],
+        datasets: [{
+          data: [11, 22, 5, 17],
+          backgroundColor: ['#FABB3C', '#32D75E','#D02FC0','#EB0524']
+          /*backgroundColor: ['#3e95cd', '#8e5ea2','#3cba9f','#e8c3b9','#c45850']*/
+        }]
+      },
+      options: {
+        /*legend: {
+            display: false
+        },*/
+        title: false,
+        responsive:true,
+        cutoutPercentage:0,
+        maintainAspectRatio: true,
+        title: {
+          display: false,
+          text: 'Most Executed actions (times)'
+        }
+      }
+    });
+
+    ctx = document.getElementById("percentageBar").getContext('2d');
+    new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Data Point Reg', 'Time Interval'],
+        datasets: [{
+          data: [11, 22,],
+          backgroundColor: ['#0000FF', '#32D75E']
+        }]
+      },
+      options: {
+        /*legend: {
+            display: false
+        },*/
+        title: false,
+        responsive:true,
+        cutoutPercentage:70,
+        maintainAspectRatio: true,
+      }
+    });
 
   },
 
@@ -135,6 +217,7 @@ export default {
     dataStreams(){
       return this.$store.state.dataStreams;
     },
+
   },
 
   methods: {

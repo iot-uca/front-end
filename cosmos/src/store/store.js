@@ -1,6 +1,9 @@
 import Vue from 'vue';
 import Vuex from 'vuex'
 
+import { addElementToFilteredOnes, getPagesNeeded, getElementsToShowInTable} from './store-helpers'
+
+
 Vue.use(Vuex); // tell Vue you want to use Vuex plugin
 
 export const store = new Vuex.Store({ // we need to export it to make it avaibla for other components to use the store
@@ -144,6 +147,67 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       {id:2, name:'Low'},
     ],
 
+//##########################################################################################
+// Triggers model
+//##########################################################################################
+
+    validJson: true,
+    showTriggersOptions : false,
+
+    existingTriggers: [
+      { name: 'Trigger1', action : 'Tweet', policy: {type: 'data_point_registration', elem: 'Temperature'}, conditions: ['Temperature current value > 24 Celsius', 'Temperature current value > 24 Celsius', 'Time interval' ]},
+
+      {name: 'Trigger2', action: 'Make Facebook Post', policy: {type: 'data_point_registration',	elem: 'Temperature' }, conditions: ['Always']	},
+
+      {name: 'Trigger3', action: 'Send Email', policy: {type: 'data_point_registration', elem: 'Temperature'}, conditions: ['Temperature current value > 24 Celsius']},
+
+      {name: 'Trigger4', action: 'Start Engine Alfa', policy: {type:'data_point_registration', elem: 'Temperature'}, conditions: ['Always']},
+
+      {name: 'Trigger5', action: 'Sense Temperature', policy: {type: 'time_interval', elem: 'Fridays' }, conditions: ['Always']},
+
+      { name: 'Trigger6', action : 'Start Engine Alfa', policy: {type: 'data_point_registration', elem: 'Temperature'}, conditions: ['Temperature current value > 24 Celsius', 'Temperature current value > 24 Celsius', 'Time interval' ]},
+
+      {name: 'Trigger7', action: 'Start Engine Alfa', policy: {type: 'data_point_registration',	elem: 'Temperature' }, conditions: ['Always']	},
+
+      {name: 'Trigger8', action: 'Start Engine Alfa', policy: {type: 'data_point_registration', elem: 'Temperature'}, conditions: ['Temperature current value > 24 Celsius']},
+
+      {name: 'Trigger9', action: 'Make Facebook Post', policy: {type:'data_point_registration', elem: 'Temperature'}, conditions: ['Always']},
+
+      {name: 'Trigger10', action: 'Make Facebook Post', policy: {type: 'time_interval', elem: 'Fridays' }, conditions: ['Always']},
+
+      { name: 'Trigger11', action : 'Make Facebook Post', policy: {type: 'data_point_registration', elem: 'Temperature'}, conditions: ['Temperature current value > 24 Celsius', 'Temperature current value > 24 Celsius', 'Time interval' ]},
+
+      {name: 'Trigger12', action: 'Send Email', policy: {type: 'data_point_registration',	elem: 'Temperature' }, conditions: ['Always']	},
+
+      {name: 'Trigger13', action: 'Send Email', policy: {type: 'data_point_registration', elem: 'Temperature'}, conditions: ['Temperature current value > 24 Celsius']},
+
+      {name: 'Trigger14', action: 'Send Email', policy: {type:'data_point_registration', elem: 'Temperature'}, conditions: ['Always']},
+
+      {name: 'Trigger15', action: 'Send Email', policy: {type: 'time_interval', elem: 'Fridays' }, conditions: ['Always']},
+    ],
+
+    triggersForPage: [],
+    maxTriggersPerPage: 5,
+    pagesNeededForTriggers: 0,
+    triggerFilter: undefined,
+    filteredTriggers:[],
+    intermediateTriggers:[],
+    activeTrigger:[],
+
+    timeGranularityOptions: [
+      {id: 1, name: '10 seconds'},
+      {id: 2, name: '10 minutes'},
+      {id: 3, name: '30 minutes'},
+      {id: 4, name: '1 hour'},
+    ],
+
+
+    triggerConditions:[
+      {id: 1, name: 'Always'},
+      {id: 2, name: 'On Data-Stream value'},
+      {id: 3, name: 'When Data-Stream has not been updated'},
+      {id: 4, name: 'Time interval'},
+    ],
 
 //##########################################################################################
 // Pagination model
@@ -268,89 +332,42 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       state.filteredActions= state.existingActions;
     },
 
+    setFilteredTriggersToAllConfigured: state =>{
+      console.log("### Entering  setFilteredTriggersToAllConfigured");
+      state.filteredTriggers= state.existingTriggers;
+    },
+
     getPagesNeededForDataStreams: state => {
       console.log("### Entering  getPagesNeededForDataStreams");
-      let allExistingElements = state.filteredDataStreams;
-      let maxPerPage = state.maxDataStreamsPerPage;
-      console.log(" Existing elements length: " + allExistingElements.length);
-      console.log(" MaxPerPage: " + maxPerPage);
-      let pagesNeeded = allExistingElements.length / maxPerPage;
-      console.log(" pagesNeeded " + pagesNeeded);
-
-      // if number is int, that's it
-      if(pagesNeeded % 1 === 0){
-        state.pagesNeededForDataStreams = pagesNeeded;
-      }
-      else{
-        // if not, we need the next since at least one element will be shown on the 'n' page
-        state.pagesNeededForDataStreams = Math.ceil(pagesNeeded);
-      }
+      state.pagesNeededForDataStreams = getPagesNeeded(state.filteredDataStreams, state.maxDataStreamsPerPage);
     },
 
     getPagesNeededForActions: state => {
       console.log("### Entering  getPagesNeededForActions");
+      state.pagesNeededForActions = getPagesNeeded(state.filteredActions, state.maxActionsPerPage);
+    },
 
-      let allExistingElements = state.filteredActions;
-      let maxPerPage = state.maxActionsPerPage;
-      console.log(" Existing elements length: " + allExistingElements.length);
-      console.log(" MaxPerPage: " + maxPerPage);
-      let pagesNeeded = allExistingElements.length / maxPerPage;
-
-      // if number is int, that's it
-      if(pagesNeeded % 1 === 0){
-        state.pagesNeededForActions = pagesNeeded;
-      }
-      else{
-        // if not, we need the next since at least one element will be shown on the 'n' page
-        state.pagesNeededForActions = Math.ceil(pagesNeeded);
-      }
-      console.log(" pagesNeeded " + state.pagesNeededForActions);
+    getPagesNeededForTriggers: state => {
+      console.log("### Entering  getPagesNeededForTriggers");
+      state.pagesNeededForTriggers = getPagesNeeded(state.filteredTriggers, state.maxTriggersPerPage);
     },
 
     getActionsToShowInTable: state => {
       console.log("#### Entering getActionsToShowInTable");
-      console.log(" currentPage: "  + state.currentPage);
+      state.actionsForPage = getElementsToShowInTable(state.currentPage, state.maxActionsPerPage, state.filteredActions);
+      console.log(" actionsPerPage: "  + state.actionsForPage);
+    },
 
-      let maxPerPage = state.maxActionsPerPage;
-      let allElements = state.filteredActions;
-      let elementsInCurrentPage=[];
-
-      console.log(" maxPerPage: "  + maxPerPage);
-      console.log(" allElements: "  + allElements);
-
-      for (let i=(state.currentPage-1)*maxPerPage; i<state.currentPage*maxPerPage; i++){
-
-        if(allElements[i] !== undefined){
-          elementsInCurrentPage.push(allElements[i]);
-          console.log("elementsInCurrentPage length " + elementsInCurrentPage.length);
-        }
-      }
-
-      state.actionsForPage = elementsInCurrentPage;
-      console.log(" actionsPerPage: "  + elementsInCurrentPage);
+    getTriggersToShowInTable: state => {
+      console.log("#### Entering getTriggersToShowInTable");
+      state.triggersForPage = getElementsToShowInTable(state.currentPage, state.maxTriggersPerPage, state.filteredTriggers);
+      console.log(" triggersForPage: "  + state.triggersForPage);
     },
 
     getDataStreamsToShowInTable: state=> {
       console.log("#### Entering getDataStreamsToShowInTable");
-      console.log(" currentPage: "  + state.currentPage);
-
-      let maxPerPage = state.maxDataStreamsPerPage;
-      let allElements = state.filteredDataStreams;
-      let elementsInCurrentPage=[];
-
-      console.log(" maxPerPage: "  + maxPerPage);
-      console.log(" allElements: "  + allElements);
-
-      for (let i=(state.currentPage-1)*maxPerPage; i<state.currentPage*maxPerPage; i++){
-
-        if(allElements[i] !== undefined){
-          elementsInCurrentPage.push(allElements[i]);
-          console.log("elementsInCurrentPage length " + elementsInCurrentPage.length);
-        }
-      }
-
-      state.dataStreamsForPage = elementsInCurrentPage;
-      console.log(" dataStreamsForPage: "  + elementsInCurrentPage);
+      state.dataStreamsForPage = getElementsToShowInTable(state.currentPage, state.maxDataStreamsPerPage, state.filteredDataStreams);
+      console.log(" actionsPerPage: "  + state.dataStreamsForPage);
     },
 
     setCurrentPage: (state, payload) =>{
@@ -408,55 +425,106 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     filterActionsToDisplay: (state, filterValue) => {
       console.log("Entering filterActionsToDisplay ");
 
-      state.actionFiler = filterValue;
-      console.log("actionFiler: " + state.actionFiler);
+      state.actionFilter = filterValue;
+      console.log("actionFilter: " + state.actionFilter);
 
-      let intermediateDataStreams = []; // siempre vacío el intermedio
+      let intermmediateActions = []; // siempre vacío el intermedio
 
       // check if contains a valid value
-      if(state.dataStreamFilter != undefined){ // uso uno intermedio para recien cambiar el array principal cuando haya identificado todos los triggers que tienen que ser mostrados
+      if(state.actionFilter !== undefined){ // uso uno intermedio para recien cambiar el array principal cuando haya identificado todos los triggers que tienen que ser mostrados
 
         // get the amount of existing triggers
-        let amountOfDataStreams = state.dataStreamsConfigured.length;
+        let amountOfActions = state.existingActions.length;
 
-        for(let i=0; i<amountOfDataStreams; i++){
+        for(let i=0; i<amountOfActions; i++){
 
-          //check Data stream name
-          let filteredField = state.dataStreamsConfigured[i].name;
+          //check Action name
+          let filteredField = state.existingActions[i].name;
+          intermmediateActions = addElementToFilteredOnes(filteredField, state.actionFilter, intermmediateActions, state.existingActions[i]);
 
-          var alreadyAdded = false;
-          if (filteredField.indexOf(state.dataStreamFilter) >= 0) {
+          //check Action type
+          filteredField = state.existingActions[i].type;
+          intermmediateActions = addElementToFilteredOnes(filteredField, state.actionFilter, intermmediateActions, state.existingActions[i]);
 
-            for (let a = 0; a < intermediateDataStreams.length; a++) {
-              if (intermediateDataStreams[a].name == state.dataStreamsConfigured[i].name) {
-                alreadyAdded = true;
-                break;
-              }
-            }
-            console.log("alreadyAdded: " + alreadyAdded);
-            if (!alreadyAdded) {
-              intermediateDataStreams.push(state.dataStreamsConfigured[i]);
-            }
-            console.log("existingElems: " + intermediateDataStreams);
+          if(filteredField==="command"){
+            //check Action command priority
+            filteredField = state.existingActions[i].priority;
+            intermmediateActions = addElementToFilteredOnes(filteredField, state.actionFilter, intermmediateActions, state.existingActions[i]);
+          }else{
+
+            //check Action http request method
+            filteredField = state.existingActions[i].method;
+            intermmediateActions = addElementToFilteredOnes(filteredField, state.actionFilter, intermmediateActions, state.existingActions[i]);
+
+            //check Action http request url
+            filteredField = state.existingActions[i].url;
+            intermmediateActions = addElementToFilteredOnes(filteredField, state.actionFilter, intermmediateActions, state.existingActions[i]);
+
+            //check Action http request version
+            filteredField = state.existingActions[i].version;
+            intermmediateActions = addElementToFilteredOnes(filteredField, state.actionFilter, intermmediateActions, state.existingActions[i]);
+
           }
+        }
+
+        if(intermmediateActions.length>0){ // si tiene triggers para mostrar
+          state.filteredActions = intermmediateActions; // ahora ya podría mostrar todos los filtrados
+        }else{
+          state.filteredActions = [];
+        }
+
+      }else {
+        // copy all the existing triggers, no filtering
+        state.filteredActions = state.existingActions;
+      }
+    },
+
+    filterTriggersToDisplay: (state, filterValue) => {
+      console.log("Entering filterTriggersToDisplay ");
+
+      state.triggerFilter = filterValue;
+      console.log("triggerFilter: " + state.triggerFilter);
+
+      let intermediateTriggers = []; // siempre vacío el intermedio
+
+      // check if contains a valid value
+      if(state.triggerFilter !== undefined){ // uso uno intermedio para recien cambiar el array principal cuando haya identificado todos los triggers que tienen que ser mostrados
+
+        // get the amount of existing triggers
+        let amountOfTriggers = state.existingTriggers.length;
+
+        for(let i=0; i<amountOfTriggers; i++){
+
+          //check Trigger name
+          let filteredField = state.existingTriggers[i].name;
+          intermediateTriggers = addElementToFilteredOnes(filteredField, state.triggerFilter, intermediateTriggers, state.existingTriggers[i]);
+
+          //check Trigger action
+          filteredField = state.existingTriggers[i].action;
+          intermediateTriggers = addElementToFilteredOnes(filteredField, state.triggerFilter, intermediateTriggers, state.existingTriggers[i]);
+
+          //check Trigger policy type
+          filteredField = state.existingTriggers[i].policy.type;
+          intermediateTriggers = addElementToFilteredOnes(filteredField, state.triggerFilter, intermediateTriggers, state.existingTriggers[i]);
+
+
+          //check Trigger policy
+          filteredField = state.existingTriggers[i].policy.elem;
+          intermediateTriggers = addElementToFilteredOnes(filteredField, state.triggerFilter, intermediateTriggers, state.existingTriggers[i]);
 
         }
 
-        if(intermediateDataStreams.length>0){ // si tiene triggers para mostrar
-          state.filteredDataStreams = intermediateDataStreams; // ahora ya podría mostrar todos los filtrados
+        if(intermediateTriggers.length>0){ // si tiene triggers para mostrar
+          state.filteredTriggers = intermediateTriggers; // ahora ya podría mostrar todos los filtrados
         }else{
-          state.filteredDataStreams = [];
+          state.filteredTriggers = [];
         }
 
       }else{
         // copy all the existing triggers, no filtering
-        state.filteredDataStreams = state.dataStreamsConfigured;
+        state.filteredTriggers = state.existingTriggers;
       }
-
     },
-
-
-
 
     filterDataStreamToDisplay: (state, filterValue) => {
       console.log("Entering filterDataStreamToDisplay ");
@@ -467,7 +535,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       let intermediateDataStreams = []; // siempre vacío el intermedio
 
       // check if contains a valid value
-      if(state.dataStreamFilter != undefined){ // uso uno intermedio para recien cambiar el array principal cuando haya identificado todos los triggers que tienen que ser mostrados
+      if(state.dataStreamFilter !== undefined){ // uso uno intermedio para recien cambiar el array principal cuando haya identificado todos los triggers que tienen que ser mostrados
 
         // get the amount of existing triggers
         let amountOfDataStreams = state.dataStreamsConfigured.length;
@@ -476,23 +544,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
           //check Data stream name
           let filteredField = state.dataStreamsConfigured[i].name;
-
-          var alreadyAdded = false;
-          if (filteredField.indexOf(state.dataStreamFilter) >= 0) {
-
-            for (let a = 0; a < intermediateDataStreams.length; a++) {
-              if (intermediateDataStreams[a].name == state.dataStreamsConfigured[i].name) {
-                alreadyAdded = true;
-                break;
-              }
-            }
-            console.log("alreadyAdded: " + alreadyAdded);
-            if (!alreadyAdded) {
-              intermediateDataStreams.push(state.dataStreamsConfigured[i]);
-            }
-            console.log("existingElems: " + intermediateDataStreams);
-          }
-
+          intermediateDataStreams = addElementToFilteredOnes(filteredField, state.dataStreamFilter, intermediateDataStreams, state.dataStreamsConfigured[i]);
         }
 
         if(intermediateDataStreams.length>0){ // si tiene triggers para mostrar
@@ -510,6 +562,10 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
     setMaxDataStreamsPerPage: (state, value) => {
       state.maxDataStreamsPerPage = value;
+    },
+
+    setMaxTriggersPerPage: (state, value) => {
+      state.maxTriggersPerPage = value;
     },
 
     setMaxActionsPerPage: (state, value) => {
@@ -626,19 +682,11 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
     showTriggerView: context =>{
       console.log("Entering showTriggerView ");
-      //this.renderOneTimeTrigger = false;
-
-      // initially you should assume showing all trigger with no fitering
-      // this.filteredTriggers = this.existingTriggers;
-
-      //this.pagesNeededForTriggers = this.getPagesNeeded(this.filteredTriggers, this.maxTriggersPerPage);
-
-      //console.log(" pagesNeededForTriggers " + this.pagesNeededForTriggers);
-
-      //this.getElementsToShowInTable(1);
-      //this.triggersForPage = this.getElementsToShowInTable(1, this.maxTriggersPerPage, this.triggersForPage, this.filteredTriggers);
-
       context.commit('showTriggerView');
+      context.commit('setFilteredTriggersToAllConfigured');
+      context.commit('setCurrentPage', 1);
+      context.commit('getTriggersToShowInTable');
+      context.commit('getPagesNeededForTriggers');
     },
 
     showSecurityView: context =>{
@@ -670,9 +718,42 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     getDataStreamsToShowInTable: (context, number) => {
-      console.log("Entering getElementsToShowInTable ");
+      console.log("Entering getDataStreamsToShowInTable ");
       context.commit('setCurrentPage', number);
       context.commit('getDataStreamsToShowInTable');
+    },
+
+    getTriggersToShowInTable: (context, number) =>{
+      console.log("Entering getTriggersToShowInTable ");
+      context.commit('setCurrentPage', number);
+      context.commit('getTriggersToShowInTable');
+    },
+
+    displayPrevPageTriggers: context => {
+      console.log("Entering displayPrevPageDataStream ");
+      context.commit('setCurrentPagePreviousPage');
+      context.commit('getTriggersToShowInTable');
+    },
+
+    displayNextPageTriggers: context => {
+      console.log("Entering displayNextPageDataStream ");
+      context.commit('setCurrentPageNextPage');
+      context.commit('getTriggersToShowInTable');
+    },
+
+    setMaxTriggersPerPage: (context, value) => {
+      console.log("Entering setMaxTriggersPerPage ");
+      context.commit('setMaxTriggersPerPage', value);
+      context.commit('setCurrentPage', 1);
+      context.commit('getTriggersToShowInTable');
+      context.commit('getPagesNeededForTriggers');
+    },
+
+    filterTriggersToDisplay: (context, value) => {
+      console.log("Entering filterTriggersToDisplay");
+      context.commit('filterTriggersToDisplay', value);
+      context.commit('getPagesNeededForTriggers');
+      context.commit('getTriggersToShowInTable');
     },
 
     displayPrevPageDataStream: context => {
@@ -705,13 +786,14 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     updateDataStreamsForPage: (context, value) =>{
       console.log("Entering updateDataStreamsForPage");
       context.commit('updateDataStreamsForPage', value);
+    },
+
+    filterActionsToDisplay: (context, value) => {
+      console.log("Entering filterActionsToDisplay");
+      context.commit('filterActionsToDisplay', value);
+      context.commit('getPagesNeededForActions');
+      context.commit('getActionsToShowInTable');
     }
 
   }
 })
-
-/*store.watch((state) => state.dataStreamFilter, (oldValue, newValue) => {
-  console.log('search string is changing');
-  console.log(oldValue);
-  console.log(newValue);
-})*/

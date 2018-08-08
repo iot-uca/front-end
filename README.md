@@ -7,7 +7,11 @@ The project source code is [MIT](LICENSE) licensed. Any contribution submitted t
 
 ## Get started!
 
-Download a web container (such as Apache Tomcat) and deploy the project. Start up the container, reach the UI and enjoy :)
+1) Download the code
+
+2) npm install
+
+3) npm run dev
 
 ## Coming soon
 1) Cosmos UI provided as a Docker image

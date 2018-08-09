@@ -16,14 +16,14 @@
           <form class="needs-validation" novalidate onsubmit="return false;">
 
             <div class="mb-3">
-              <label for="triggerName">Name</label>
+              <label for="streamName">Name</label>
               <div class="input-group">
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="fa fa-font"></i></span>
                 </div>
-                <input type="text" class="form-control" id="triggerName" v-model="dataStreamToAdd" required>
+                <input type="text" class="form-control" id="streamName" v-model="dataStreamToAdd" required>
                 <div class="invalid-feedback" style="width: 100%;">
-                  <em>The Stream name cannot be empty<em>
+                  <em>The Stream name cannot be empty</em>
                 </div>
               </div>
             </div>
@@ -42,6 +42,29 @@
 </template>
 
 <script>
+
+  export default {
+    computed:{
+
+      dataStreamToAdd: {
+        // getter
+        get: function () {
+          return this.$store.state.dataStreamToAdd;
+        },
+        // setter
+        set: function (newValue) {
+          this.$store.dispatch('setDataStreamToAdd', newValue);
+        }
+      }
+    },
+    methods:{
+      addDataStream: function () {
+        this.$store.dispatch('addDataStream');
+      },
+
+    }
+
+  }
 
 
 </script>

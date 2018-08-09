@@ -10,8 +10,7 @@
     <trigger-view></trigger-view>
     <security-view></security-view>
 
-    <edit-stream-modal></edit-stream-modal>
-
+    <add-stream-modal></add-stream-modal>
 
     <!--trigger-bar-chart></trigger-bar-chart-->
 
@@ -27,7 +26,7 @@
   import Header from './components/Header.vue'
   import SecurityView from './components/SecurityView.vue'
   import DataStreamView from './components/DataStreamView.vue'
-  import EditStreamModal from './components/EditStreamModal.vue'
+  import AddStreamModal from './components/AddStreamModal.vue'
   import Dashboard from './components/Dashboard.vue'
   import ActionView from './components/ActionView.vue'
   import TriggerView from './components/TriggerView.vue'
@@ -43,7 +42,7 @@
       'trigger-view': TriggerView,
       'action-view': ActionView,
       'dashboard': Dashboard,
-      'edit-stream-modal': EditStreamModal,
+      'add-stream-modal': AddStreamModal,
       'data-stream-view': DataStreamView,
       'security-view': SecurityView,
       'cosmos-header': Header,

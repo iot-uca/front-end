@@ -7,7 +7,7 @@ import { addElementToFilteredOnes, getPagesNeeded, getElementsToShowInTable} fro
 Vue.use(Vuex); // tell Vue you want to use Vuex plugin
 
 export const store = new Vuex.Store({ // we need to export it to make it avaibla for other components to use the store
-  strict: true, // no permite que se hagan cambios de estado por fuera del store
+  strict: false, // no permite que se hagan cambios de estado por fuera del store
 
   state:{
     options:[
@@ -579,7 +579,51 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       state.showAddDataStreamModal=false;
     },
 
+
+    addDataStream: state => {
+      console.log("### Entering addDataStream");
+      console.log("dataStreamToAdd: " + state.dataStreamToAdd);
+
+      if(state.dataStreamToAdd.length>0){
+
+        $("#addDataStreamModal").modal("hide");  			// close the modal
+
+        state.displayLoadingFeedbackDataStreams = true; // user starts seeing the loading spinner
+
+        axios.post(state.backendEndPoint + '/data-streams', {
+          name: state.dataStreamToAdd
+        })
+          .then(function (response) {
+            state.displayLoadingFeedbackDataStreams = false;
+            state.errorInInteraction = false;
+            $("#successModal").modal();
+            console.log("data: " + response.data);
+            console.log("status: " + response.status);
+            console.log("statusText: " + response.statusText);
+            console.log("headers: " + response.headers);
+            console.log("config: " + response.config);
+            state.dataStreamToAdd = "";
+          })
+          .catch(function (error) {
+            console.log("[ERROR] " + error);
+            state.displayLoadingFeedbackDataStreams = false;
+            state.errorInInteraction = true;
+            $("#successModal").modal();
+            state.dataStreamToAdd = "";
+          });
+
+      }
+    },
+
+    setDataStreamToAdd: (state, value) =>{
+        state.dataStreamToAdd = value;
+    },
+
   },
+
+  //#####################################################################
+  // ACTIONS
+  //#####################################################################
 
   actions:{ // es una BUENA PRACTICA que todas sean acciones y commiteen mutaciones, aún éstas no sean asíncronas
 
@@ -793,7 +837,16 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       context.commit('filterActionsToDisplay', value);
       context.commit('getPagesNeededForActions');
       context.commit('getActionsToShowInTable');
-    }
+    },
+
+    addDataStream: context => {
+      context.commit('addDataStream');
+    },
+
+    setDataStreamToAdd: (context, value) => {
+      context.commit('setDataStreamToAdd', value);
+    },
+
 
   }
 })

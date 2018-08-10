@@ -1,17 +1,27 @@
-# Cosmos Front-end
+# my-first-app
 
-Internet of Things platform GUI
+> A Vue.js project
 
-## License
-The project source code is [MIT](LICENSE) licensed. Any contribution submitted to the code repository is considered to be under the same license.
+## Build Setup
 
-## Get started!
+``` bash
+# install dependencies
+npm install
 
-1) Download the code
+# serve with hot reload at localhost:8080
+npm run dev
 
-2) npm install
+# build for production with minification
+npm run build
 
-3) npm run dev
+# build for production and view the bundle analyzer report
+npm run build --report
 
-## Coming soon
-1) Cosmos UI provided as a Docker image
+# run unit tests
+npm run unit
+
+# run all tests
+npm test
+```
+
+For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).

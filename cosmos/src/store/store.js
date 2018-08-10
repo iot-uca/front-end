@@ -153,6 +153,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
     validJson: true,
     showTriggersOptions : false,
+    isTimePeriodPolicy : false,
 
     existingTriggers: [
       { name: 'Trigger1', action : 'Tweet', policy: {type: 'data_point_registration', elem: 'Temperature'}, conditions: ['Temperature current value > 24 Celsius', 'Temperature current value > 24 Celsius', 'Time interval' ]},
@@ -208,6 +209,20 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       {id: 3, name: 'When Data-Stream has not been updated'},
       {id: 4, name: 'Time interval'},
     ],
+
+    conditionSelected:{
+      id:1,
+      text:''
+    },
+
+    dataStreamNotUpdatedFrom:{
+      months:0,
+      weeks:0,
+      days:0,
+      hours:0,
+      minutes:0,
+      seconds:0,
+    },
 
 //##########################################################################################
 // Pagination model
@@ -322,19 +337,19 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 // Pagination mutations
 //##########################################################################################
 
-    setFilteredDataStreamsToAllConfigured:  state => {
+    setFilteredDataStreamsToAllConfigured: state => {
       console.log("### Entering  setFilteredDataStreamsToAllConfigured");
       state.filteredDataStreams = state.dataStreamsConfigured;
     },
 
-    setFilteredActionsToAllConfigured:  state => {
+    setFilteredActionsToAllConfigured: state => {
       console.log("### Entering  setFilteredActionsToAllConfigured");
-      state.filteredActions= state.existingActions;
+      state.filteredActions = state.existingActions;
     },
 
-    setFilteredTriggersToAllConfigured: state =>{
+    setFilteredTriggersToAllConfigured: state => {
       console.log("### Entering  setFilteredTriggersToAllConfigured");
-      state.filteredTriggers= state.existingTriggers;
+      state.filteredTriggers = state.existingTriggers;
     },
 
     getPagesNeededForDataStreams: state => {
@@ -355,31 +370,31 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     getActionsToShowInTable: state => {
       console.log("#### Entering getActionsToShowInTable");
       state.actionsForPage = getElementsToShowInTable(state.currentPage, state.maxActionsPerPage, state.filteredActions);
-      console.log(" actionsPerPage: "  + state.actionsForPage);
+      console.log(" actionsPerPage: " + state.actionsForPage);
     },
 
     getTriggersToShowInTable: state => {
       console.log("#### Entering getTriggersToShowInTable");
       state.triggersForPage = getElementsToShowInTable(state.currentPage, state.maxTriggersPerPage, state.filteredTriggers);
-      console.log(" triggersForPage: "  + state.triggersForPage);
+      console.log(" triggersForPage: " + state.triggersForPage);
     },
 
-    getDataStreamsToShowInTable: state=> {
+    getDataStreamsToShowInTable: state => {
       console.log("#### Entering getDataStreamsToShowInTable");
       state.dataStreamsForPage = getElementsToShowInTable(state.currentPage, state.maxDataStreamsPerPage, state.filteredDataStreams);
-      console.log(" actionsPerPage: "  + state.dataStreamsForPage);
+      console.log(" actionsPerPage: " + state.dataStreamsForPage);
     },
 
-    setCurrentPage: (state, payload) =>{
+    setCurrentPage: (state, payload) => {
       state.currentPage = payload;
     },
 
     setCurrentPageNextPage: state => {
-      state.currentPage +=1;
+      state.currentPage += 1;
     },
 
     setCurrentPagePreviousPage: state => {
-      state.currentPage -=1;
+      state.currentPage -= 1;
     },
 
 
@@ -387,17 +402,21 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 // Datas Stream mutations
 //##########################################################################################
 
-    addElementToDeleteList: (state, elem) => {
+  cleanElementsToDelete: state => {
+    state.elementsToDelete = [];
+  },
+
+  addElementToDeleteList: (state, elem) => {
       console.log(" Entering addElementToDeleteList!");
 
       console.log("elementsToDelete: " + state.elementsToDelete);
       console.log("elem: " + elem);
 
       //if already exists, delete it; add it otherwise
-      if (this.elementsToDelete.indexOf(elem.name) > -1) {
-        this.elementsToDelete.splice(state.elementsToDelete.indexOf(elem.name), 1);
+      if (state.elementsToDelete.indexOf(elem.name) > -1) {
+        state.elementsToDelete.splice(state.elementsToDelete.indexOf(elem.name), 1);
       } else {
-        this.elementsToDelete.push(elem.name);
+        state.elementsToDelete.push(elem.name);
       }
       console.log("elementsToDelete: " + state.elementsToDelete);
       console.log("elem: " + elem);
@@ -616,7 +635,128 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     setDataStreamToAdd: (state, value) =>{
-        state.dataStreamToAdd = value;
+      state.dataStreamToAdd = value;
+    },
+
+    setActiveDataStream: (state, value) => {
+      state.activeDataStream = value;
+    },
+
+    addOneMoreElemForActionRequestHeader: state => {
+      state.activeIdsForHttpRequestHeader.push({
+        key: '',
+        value: ''
+      });
+    },
+
+    oneLessElemForActionRequestHeader: (state, index) => {
+      state.activeIdsForHttpRequestHeader.splice(index,1);
+    },
+
+    addAction: state => {
+      console.log("##### ABOUT TO ADD AN ACTION!! ");
+      console.log("activeIdsForHttpRequestHeader: " + state.activeIdsForHttpRequestHeader);
+      console.log("activeIdsForHttpRequestBody: " + state.actionBody);
+      console.log("activeAction - Name: " + state.activeAction.name);
+      console.log("activeAction - Method: " + state.activeAction.method);
+      console.log("activeAction - URL: " + state.activeAction.url);
+      console.log("activeAction - Version: " + state.activeAction.version);
+
+      let request={};
+      let request_line={};
+
+
+      request_line['url'] = state.activeAction.url;
+      request_line['method'] = state.activeAction.method;
+      request_line['version'] = state.activeAction.version;
+      request['request_line'] = request_line;
+      request['headers'] = state.activeIdsForHttpRequestHeader;
+      request['body'] = state.actionBody;
+
+
+      console.log("request_line: " + request_line);
+      console.log("request: " + request);
+
+      axios.post(state.backendEndPoint + '/actions', {
+        name: state.activeAction.name,
+        request: request
+      })
+        .then(function (response) {
+          console.log("data: " + response.data);
+          console.log("status: " + response.status);
+          console.log("statusText: " + response.statusText);
+          console.log("headers: " + response.headers);
+          console.log("config: " + response.config);
+        })
+        .catch(function (error) {console.log("[ERROR] " + error);
+        });
+    },
+
+
+    setActionBody: (state, value) => {
+      state.actionBody = value;
+      try {
+        JSON.parse(state.actionBody);
+        state.validJson=true;
+      } catch (e) {
+        state.validJson=false;
+      }
+    },
+
+    assignBodyAndHeader: (state, action) => {
+      console.log("Entering assignBodyAndHeader !");
+
+      state.activeAction = action;
+
+      console.log("activeIdsForHttpRequestHeader: " + state.activeIdsForHttpRequestHeader);
+      console.log("action.headers: " + action.headers);
+      console.log("activeIdsForHttpRequestBody: " + state.activeIdsForHttpRequestBody);
+      console.log("action.body: " + action.body);
+
+      state.activeIdsForHttpRequestHeader = action.headers;
+      state.activeIdsForHttpRequestBody = action.body;
+
+      console.log("activeIdsForHttpRequestHeader: " + state.activeIdsForHttpRequestHeader);
+      console.log("activeIdsForHttpRequestBody: " + state.activeIdsForHttpRequestBody);
+    },
+
+    updateAction: state =>{
+      console.log("##### ABOUT TO UPDATE AN ACTION!! ");
+      console.log("activeIdsForHttpRequestHeader: " + state.activeIdsForHttpRequestHeader);
+      console.log("activeIdsForHttpRequestBody: " + state.actionBody);
+      console.log("activeAction - Name: " + state.activeAction.name);
+      console.log("activeAction - Method: " + state.activeAction.method);
+      console.log("activeAction - URL: " + state.activeAction.url);
+      console.log("activeAction - Version: " + state.activeAction.version);
+
+      // FIXME => FALTA HACER EL UDPATE
+
+    },
+
+    dataPointPolicy: state => {
+      console.log("### Entering DataPointPolicy");
+      console.log(state.isTimePeriodPolicy);
+      state.isTimePeriodPolicy = false;
+      console.log(state.isTimePeriodPolicy);
+    },
+
+    timePeriodPolicy: state => {
+      console.log("### Entering TimePeriodPolicy");
+      console.log(state.isTimePeriodPolicy);
+      state.isTimePeriodPolicy = true;
+    },
+
+
+    setConditionSelected: (state, value) => {
+      state.conditionSelected = value;
+    },
+
+    editTrigger: (state, trigger) => {
+      console.log("...Entering editTrigger!");
+      console.log("activeTrigger: " + state.activeTrigger);
+      console.log("trigger: " + trigger.name);
+      state.activeTrigger = trigger;
+      console.log("activeTrigger: " + state.activeTrigger);
     },
 
   },
@@ -697,6 +837,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     showDashboardView: context => {
       console.log("Entering showDashboardView");
       context.commit('showDashboardView');
+      context.commit('cleanElementsToDelete');
     },
 
     closeNav: context => {
@@ -712,6 +853,8 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       context.commit('setCurrentPage', 1);
       context.commit('getDataStreamsToShowInTable');
       context.commit('getPagesNeededForDataStreams');
+      context.commit('cleanElementsToDelete');
+
     },
 
     showActionView: context =>{
@@ -722,6 +865,8 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       context.commit('setCurrentPage', 1);
       context.commit('getActionsToShowInTable');
       context.commit('getPagesNeededForActions');
+      context.commit('cleanElementsToDelete');
+
     },
 
     showTriggerView: context =>{
@@ -731,16 +876,22 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       context.commit('setCurrentPage', 1);
       context.commit('getTriggersToShowInTable');
       context.commit('getPagesNeededForTriggers');
+      context.commit('cleanElementsToDelete');
+
     },
 
     showSecurityView: context =>{
       console.log("Entering showSecurityView ");
       context.commit('showSecurityView');
+      context.commit('cleanElementsToDelete');
+
     },
 
     showAboutView: context =>{
       console.log("Entering showAboutView ");
       context.commit('showAboutView');
+      context.commit('cleanElementsToDelete');
+
     },
 
     displayPrevPageActions: context => {
@@ -847,6 +998,49 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       context.commit('setDataStreamToAdd', value);
     },
 
+    setActiveDataStream: (context, value) => {
+      context.commit('setActiveDataStream', value);
+    },
+
+    addOneMoreElemForActionRequestHeader: context => {
+      context.commit('addOneMoreElemForActionRequestHeader');
+    },
+
+    oneLessElemForActionRequestHeader: (context, index) => {
+      context.commit('oneLessElemForActionRequestHeader', index);
+    },
+
+    addAction: context => {
+      context.commit('addAction');
+    },
+
+    setActionBody: (context, value) => {
+      context.commit('setActionBody', value);
+    },
+
+    assignBodyAndHeader: (context, action) => {
+      context.commit('assignBodyAndHeader', action);
+    },
+
+    updateAction: context => {
+      context.commit('updateAction');
+    },
+
+    dataPointPolicy: context => {
+      context.commit('dataPointPolicy');
+    },
+
+    timePeriodPolicy: context => {
+      context.commit('timePeriodPolicy');
+    },
+
+    setConditionSelected: (context, value) => {
+      context.commit('setConditionSelected', value);
+    },
+
+    editTrigger: (context, trigger) => {
+      context.commit('editTrigger', trigger);
+    },
 
   }
 })

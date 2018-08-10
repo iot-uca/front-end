@@ -192,6 +192,14 @@
         console.log("ENTERING WITH: " + number);
         this.$store.dispatch('getTriggersToShowInTable', number);
       },
+
+      addElementToDeleteList: function (trigger) {
+        this.$store.dispatch('addElementToDeleteList', trigger);
+      },
+
+      editTrigger: function (trigger) {
+        this.$store.dispatch('editTrigger', trigger);
+      }
     }
   }
 

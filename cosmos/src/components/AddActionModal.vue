@@ -1,0 +1,249 @@
+<template>
+
+  <!-- Modal for addding actions -->
+  <div class="modal fade" id="addActionModal" tabindex="-1" role="dialog" aria-labelledby="addActionModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h4 class="modal-title" id="addActionModalLabel"><strong>Add Action</strong></h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+
+          <ul class="nav nav-tabs" id="addActionTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="actionName-tab" data-toggle="tab" href="#actionNameTab" role="tab" aria-controls="actionNameTab" aria-selected="true">Action name</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="httpRequest-tab" data-toggle="tab" href="#httpRequest" role="tab" aria-controls="httpRequest" aria-selected="false">HTTP request</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="actionBody-tab" data-toggle="tab" href="#actionBody" role="tab" aria-controls="actionBody" aria-selected="false">Body</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="actionHeaders-tab" data-toggle="tab" href="#actionHeaders" role="tab" aria-controls="actionHeaders" aria-selected="false">Headers</a>
+            </li>
+          </ul>
+
+          <div class="tab-content" id="addActionContent">
+
+            <div class="tab-pane fade show active" id="actionNameTab" role="tabpanel" aria-labelledby="actionName-tab">
+              <div class="mb-3">
+                <label for="actionName">Name</label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fa fa-font"></i></span>
+                  </div>
+                  <input type="text" class="form-control" id="actionName" placeholder="Action Name" v-model="activeAction.name" required="true">
+                  <div class="invalid-feedback" style="width: 100%;">
+                    The Action name is required.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane fade" id="httpRequest" role="tabpanel" aria-labelledby="httpRequest-tab">
+
+              <div class="mb-3">
+                <label for="httpMethod">Method</label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fa fa-star-o"></i></span>
+                  </div>
+                  <select class="form-control custom-select" id="httpMethod" v-model="activeAction.method" required="true">
+                    <option v-for="(method, index) in existingHttpMethods" v-bind:value="method.name">
+                      {{method.name}}
+                    </option>
+                  </select>
+                  <div class="invalid-feedback" style="width: 100%;">
+                    The HTTP Method is required.
+                  </div>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="actionUrl">URL</label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fa fa-external-link"></i></span>
+                  </div>
+                  <input type="text" class="form-control" id="actionUrl" placeholder="http://foo" v-model="activeAction.url" required="true">
+                  <div class="invalid-feedback" style="width: 100%;">
+                    The Action name is required.
+                  </div>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="actionVersion">Version</label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fa fa-code"></i></span>
+                  </div>
+
+                  <select class="form-control custom-select" id="actionVersion" v-model="activeAction.version" required="true">
+                    <option v-for="(version, index) in existingHttpVersions" v-bind:value="version.name">
+                      {{version.name}}
+                    </option>
+                  </select>
+                  <div class="invalid-feedback" style="width: 100%;">
+                    The HTTP Method is required.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane fade" id="actionBody" role="tabpanel" aria-labelledby="actionBody-tab">
+
+              <div class="mb-3">
+                <label for="actionBody">Body</label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fa fa-code"></i></span>
+                  </div>
+                  <textarea class="form-control" aria-label="Request body" v-model="actionBody"></textarea>
+                </div>
+              </div>
+
+              <div class="mb-3">
+
+                <div v-if="validJson" class="alert alert-success text-center py-2" role="alert">
+                  JSON entered is valid
+                </div>
+                <div v-else class="alert alert-danger text-center py-2" role="alert">
+                  JSON entered is invalid
+                </div>
+              </div>
+
+            </div>
+
+            <div class="tab-pane fade" id="actionHeaders" role="tabpanel" aria-labelledby="actionHeaders-tab">
+              <div class="row">
+                <div class="col-md-3">
+                  <button type="button" class="btn btn-info btn-sm" @click="addOneMoreElemForActionRequestHeader()"><strong>Add parameter</strong></button>
+                  <!--  https://stackoverflow.com/questions/7803814/prevent-refresh-of-page-when-button-inside-form-clicked  -->
+                </div>
+              </div>
+              <br>
+
+              <div class="row" v-for="(elem, index) in activeIdsForHttpRequestHeader">
+
+                <div class="col-md-5">
+                  <div class="mb-3">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fa fa-key"></i></span>
+                      </div>
+                      <input type="text" class="form-control" v-model="elem.key" placeholder="Parameter key" required="true">
+                      <div class="invalid-feedback" style="width: 100%;">
+                        The Action name is required.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fa fa-pencil-square-o"></i></span>
+                      </div>
+                      <input type="text" class="form-control" v-model="elem.value" placeholder="Parameter value" required="true">
+                      <div class="invalid-feedback" style="width: 100%;">
+                        The Action name is required.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-1">
+                  <div class="mb-3">
+                    <label></label>
+                    <button type="button" class="btn btn-danger btn-sm" @click="oneLessElemForActionRequestHeader(index)"><strong><i class="fa fa-remove"></i></strong></button>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal"  @click="addAction()"><strong>Add action</strong></button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</template>
+
+<script>
+
+  export default{
+
+    computed:{
+
+      existingHttpVersions(){
+        return this.$store.state.existingHttpVersions;
+      },
+
+      activeAction(){
+        return this.$store.state.activeAction;
+      },
+
+      existingHttpMethods(){
+        return this.$store.state.existingHttpMethods;
+      },
+
+      activeIdsForHttpRequestHeader(){
+        return this.$store.state.activeIdsForHttpRequestHeader;
+      },
+
+      actionBody: {
+        // getter
+        get: function () {
+          return this.$store.state.actionBody;
+        },
+        // setter
+        set: function (newValue) {
+          this.$store.dispatch('setActionBody', newValue);
+        }
+      },
+
+      validJson() {
+        return this.$store.state.validJson;
+      }
+
+
+    },
+
+    methods:{
+
+      addOneMoreElemForActionRequestHeader: function () {
+        this.$store.dispatch('addOneMoreElemForActionRequestHeader');
+      },
+      oneLessElemForActionRequestHeader: function (index) {
+        this.$store.dispatch('oneLessElemForActionRequestHeader', index);
+      },
+
+      addAction: function () {
+        this.$store.dispatch('addAction');
+      }
+    }
+  }
+
+
+</script>
+
+
+<style scoped>
+
+
+
+</style>

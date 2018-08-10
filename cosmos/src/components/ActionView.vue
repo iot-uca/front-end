@@ -92,7 +92,7 @@
               </button>
             </td>
             <td>
-              <button type="button" class="btn btn-info btn-sm" data-toggle="modal" @click="editAction(action)"  data-target="#editActionModal">
+              <button type="button" class="btn btn-info btn-sm" data-toggle="modal" @click="assignBodyAndHeader(action)"  data-target="#editActionModal">
                 <i class="fa fa-pencil-square-o"></i>
               </button>
             </td>
@@ -200,6 +200,16 @@
         console.log("ENTERING WITH: " + number);
         this.$store.dispatch('getActionsToShowInTable', number);
       },
+
+      addElementToDeleteList: function (action) {
+        this.$store.dispatch('addElementToDeleteList', action);
+      },
+
+      assignBodyAndHeader: function(action){
+        this.$store.dispatch('assignBodyAndHeader', action);
+      },
+
+
     }
 
   }

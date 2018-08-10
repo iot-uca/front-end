@@ -74,7 +74,7 @@
             </td>
             <td>{{dataStream.name}}</td>
             <td>
-              <button type="button" class="btn btn-success btn-sm" @click="showDataStream(dataStream)" data-toggle="modal" data-target="#editDataStreamModal" style="height: 75%;">
+              <button type="button" class="btn btn-success btn-sm" @click="showDataStream(dataStream)" data-toggle="modal" data-target="#dataPointsForStreamModal" style="height: 75%;">
                 <i class="fa fa-bar-chart"></i>
               </button>
             </td>
@@ -208,10 +208,10 @@
         console.log("ENTERING WITH: " + number);
         this.$store.dispatch('getDataStreamsToShowInTable', number);
       },
-/*
+
       editDataStreams: function (dataStream) {
         this.$store.dispatch('editDataStreams',dataStream);
-      },*/
+      },
 
 /*      addElementToDeleteList: function (dataStream) {
         this.$store.state.dispatch('updateDataStreamsForPage', currentElems);
@@ -226,7 +226,7 @@
       }*/
 
       ...mapActions([
-        'addElementToDeleteList', 'showDataStream', 'editDataStreams'
+        'addElementToDeleteList', 'showDataStream'//, 'editDataStreams'
       ]),
 
   }

@@ -11,6 +11,17 @@
     <security-view></security-view>
 
     <add-stream-modal></add-stream-modal>
+    <edit-stream-modal></edit-stream-modal>
+
+    <remove-elements-modal></remove-elements-modal>
+
+    <data-points-modal></data-points-modal>
+
+    <add-action-modal></add-action-modal>
+    <show-action-modal></show-action-modal>
+    <edit-action-modal></edit-action-modal>
+
+    <add-trigger-modal></add-trigger-modal>
 
     <!--trigger-bar-chart></trigger-bar-chart-->
 
@@ -30,6 +41,13 @@
   import Dashboard from './components/Dashboard.vue'
   import ActionView from './components/ActionView.vue'
   import TriggerView from './components/TriggerView.vue'
+  import EditStreamModal from './components/EditStreamModal.vue'
+  import RemoveElementsModal from './components/RemoveElementsModal.vue'
+  import DataPointsModal from './components/DataPointsModal.vue'
+  import AddActionModal from './components/AddActionModal.vue'
+  import ShowActionModal from './components/ShowActionModal.vue'
+  import EditActionModal from './components/EditActionModal.vue'
+  import AddTriggerModal from './components/AddTriggerModal.vue'
   //import TriggersBarChart from './components/TriggersBarChart.vue'
 
   import Chart from 'chart.js';
@@ -39,6 +57,13 @@
   name: 'App',
     components: {
       //'trigger-bar-chart': TriggersBarChart,
+      'add-trigger-modal': AddTriggerModal,
+      'edit-action-modal': EditActionModal,
+      'show-action-modal': ShowActionModal,
+      'add-action-modal': AddActionModal,
+      'data-points-modal': DataPointsModal,
+      'remove-elements-modal': RemoveElementsModal,
+      'edit-stream-modal' : EditStreamModal,
       'trigger-view': TriggerView,
       'action-view': ActionView,
       'dashboard': Dashboard,

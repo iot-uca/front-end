@@ -79,7 +79,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     showAddDataStream: true,
     dataStreamFilter: undefined,
     pagesNeededForDataStreams: 0,
-    maxDataStreamsPerPage: 5,
+    maxDataStreamsPerPage: 10,
     dataStreamsForPage: [],
     filteredDataStreams: [],
     intermediateDataStreams:[],
@@ -101,11 +101,11 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
     // actions variables
     existingActions:[
-      {id: 1, name: 'Tweet', type:'http_request', method:'POST', url:'https://twitter.com', version:'1.1', body:[{key:'name', value:'john'}, {key:'last-name', value:'doe'}], headers:[{key:'security-key', value:'f78r3d'}, {key:'email', value:'jnahas@foor.bar'}]},
-      {id: 2, name: 'Make Facebook Post', type:'http_request', method:'POST', url:'https://facebook.com', version:'1.1', body:[{key:'name', value:'john'}, {key:'last-name', value:'doe'}], headers:[{key:'security-key', value:'f78r3d'}, {key:'email', value:'jnahas@foor.bar'}]},
-      {id: 3, name: 'Send Email', type:'http_request', method:'POST', url:'https://gmail.com', version:'1.1', body:[{key:'name', value:'john'}, {key:'last-name', value:'doe'}], headers:[{key:'security-key', value:'f78r3d'}, {key:'email', value:'jnahas@foor.bar'}]},
-      {id: 4, name: 'Start Engine Alfa', type:'http_request', method:'POST', url:'http://device1.com', version:'1.1', body:[{key:'name', value:'john'}, {key:'last-name', value:'doe'}], headers:[{key:'security-key', value:'f78r3d'}, {key:'email', value:'jnahas@foor.bar'}]},
-      {id: 5, name: 'Sense Temperature', type:'http_request', method:'GET', url:'http://device2.com', version:'1.1', body:[{key:'name', value:'john'}, {key:'last-name', value:'doe'}], headers:[{key:'security-key', value:'f78r3d'}, {key:'email', value:'jnahas@foor.bar'}]},
+      {id: 1, name: 'Tweet', type:'http_request', method:'POST', url:'https://twitter.com', version:'1.1', body:"{\"foo\":\"bar\", \"jane\":\"doe\"}", headers:[{key:'security-key', value:'f78r3d'}, {key:'email', value:'jnahas@foor.bar'}]},
+      {id: 2, name: 'Make Facebook Post', type:'http_request', method:'POST', url:'https://facebook.com', version:'1.1', body:"{\"foo\":\"bar\", \"jane\":\"doe\"}", headers:[{key:'security-key', value:'f78r3d'}, {key:'email', value:'jnahas@foor.bar'}]},
+      {id: 3, name: 'Send Email', type:'http_request', method:'POST', url:'https://gmail.com', version:'1.1', body:"{\"foo\":\"bar\", \"jane\":\"doe\"}", headers:[{key:'security-key', value:'f78r3d'}, {key:'email', value:'jnahas@foor.bar'}]},
+      {id: 4, name: 'Start Engine Alfa', type:'http_request', method:'POST', url:'http://device1.com', version:'1.1', body:"{\"foo\":\"bar\", \"jane\":\"doe\"}", headers:[{key:'security-key', value:'f78r3d'}, {key:'email', value:'jnahas@foor.bar'}]},
+      {id: 5, name: 'Sense Temperature', type:'http_request', method:'GET', url:'http://device2.com', version:'1.1', body:"{\"foo\":\"bar\", \"jane\":\"doe\"}", headers:[{key:'security-key', value:'f78r3d'}, {key:'email', value:'jnahas@foor.bar'}]},
       {id: 6, name: 'Command A', type:'command', priority:'High'},
       {id: 7, name: 'Command B', type:'command', priority:'Medium'},
       {id: 8, name: 'Command C', type:'command', priority:'Low'},
@@ -113,7 +113,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
     actionFilter: undefined,
     pagesNeededForActions: 0,
-    maxActionsPerPage: 5,
+    maxActionsPerPage: 10,
     actionsForPage: [],
     filteredActions:[],
     intermediateActions:[],
@@ -188,7 +188,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     ],
 
     triggersForPage: [],
-    maxTriggersPerPage: 5,
+    maxTriggersPerPage: 10,
     pagesNeededForTriggers: 0,
     triggerFilter: undefined,
     filteredTriggers:[],
@@ -223,6 +223,25 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       minutes:0,
       seconds:0,
     },
+
+    newTriggerConditions: [], // this will contain all the Triggers nested conditions.
+
+    dataStreamNotUpdatedCondition:{
+      dataStream: undefined,
+      dataStreamNotUpdatedFrom: undefined,
+    },
+
+    onDataStreamValueCondition:{
+      dataStream: undefined,
+      condition: undefined,
+      value: undefined
+    },
+
+    timeIntervalCondition: {
+      from: undefined,
+      to: undefined
+    },
+
 
 //##########################################################################################
 // Pagination model
@@ -270,7 +289,8 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 //##########################################################################################
 
     openNav: state => {
-      state.sideNavStyle.backgroundColor = "#111";
+      state.sideNavStyle.backgroundColor = "#111"; //Background color BLACK
+      //state.sideNavStyle.backgroundColor = "#2b2c37"; // Cosmos Title background color
       state.sideNavStyle.width = "250px";
     },
 
@@ -295,6 +315,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       state.renderTriggerAddView = false;
       state.renderSecurityView = false;
       state.renderAboutView = false;
+
     },
 
     showActionView: state => {
@@ -630,7 +651,8 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
             $("#successModal").modal();
             state.dataStreamToAdd = "";
           });
-
+      }else{
+        console.log("Length is not valid!!");
       }
     },
 
@@ -643,6 +665,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     addOneMoreElemForActionRequestHeader: state => {
+      console.log("### Entering addOneMoreElemForActionRequestHeader ");
       state.activeIdsForHttpRequestHeader.push({
         key: '',
         value: ''
@@ -694,6 +717,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
 
     setActionBody: (state, value) => {
+      console.log("Entering setActionBody!");
       state.actionBody = value;
       try {
         JSON.parse(state.actionBody);
@@ -756,8 +780,111 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       console.log("activeTrigger: " + state.activeTrigger);
       console.log("trigger: " + trigger.name);
       state.activeTrigger = trigger;
+      state.isTimePeriodPolicy = trigger.policy.type === "data_point_registration";
       console.log("activeTrigger: " + state.activeTrigger);
     },
+
+    cleanActiveAction: state => {
+      console.log(" Entering cleanActiveAction!");
+      state.activeAction = [];
+      state.activeIdsForHttpRequestHeader = [];
+      state.actionBody = '{"foo":"bar", "jane":"doe"}';
+
+    },
+
+
+    drawMosTriggeredActionsChart: state => {
+      console.log("Entering drawMosTriggeredActionsChart!!");
+
+      let ctx = document.getElementById("myPieChart2").getContext('2d');
+      new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: ['Action 1', 'Action 2', 'Action 3'],
+          datasets: [{
+            data: [7, 9, 5],
+            backgroundColor: ['#ffc107', '#007bff', '#28a745']
+            /*backgroundColor: ['#3e95cd', '#8e5ea2','#3cba9f','#e8c3b9','#c45850']*/
+          }]
+        },
+        options: {
+          legend: { // Para no mostrar la leyenda de cada set de datos
+            display: false
+          },
+          title: false,
+          responsive:true,
+          cutoutPercentage:0,
+          maintainAspectRatio: false,
+        }
+      });
+
+    },
+
+    drawTriggerTypesPercentagesChart: state => {
+      let ctx = document.getElementById("percentageBar").getContext('2d');
+      new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: ['Data Point Reg', 'Time Interval'],
+          datasets: [{
+            data: [11, 22,],
+            backgroundColor: ['#0000FF', '#32D75E']
+          }]
+        },
+        options: {
+          legend: {
+            display: false
+          },
+          title: false,
+          responsive:true,
+          cutoutPercentage:70,
+          maintainAspectRatio: false,
+        }
+      });
+    },
+
+    drawMostExecutedTriggersChart: state => {
+      let ctx = document.getElementById("barChart").getContext('2d');
+      new Chart(ctx, {
+        type: 'horizontalBar',
+        data: {
+          labels: ['Trigger 1', 'Trigger 2', 'Trigger 3', 'Trigger 4', 'Trigger 5'],
+          datasets: [{
+            data: [11, 22, 9, 17, 15],
+            backgroundColor: ['#FABB3C', '#32D75E','#D02FC0','#EB0524','#3e95cd']
+            /*backgroundColor: ['#3e95cd', '#8e5ea2','#3cba9f','#e8c3b9','#c45850']*/
+          }]
+        },
+        options: {
+          legend: {
+            display: false
+          },
+          responsive:true,
+          maintainAspectRatio: true,
+          title: {
+            display: false,
+            text: 'Most Executed actions (times)'
+          },
+          scales: {
+            xAxes: [{
+              gridLines: {
+                display:false
+              },
+              ticks: {
+                display: false //this will remove only the label
+              },
+              display: false
+            }],
+            yAxes: [{
+              gridLines: {
+                display:false
+              }
+            }]
+          }
+        }
+      });
+    },
+
 
   },
 
@@ -838,6 +965,16 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       console.log("Entering showDashboardView");
       context.commit('showDashboardView');
       context.commit('cleanElementsToDelete');
+
+      setTimeout(function () { // This setTimeout is needed due to a race condition between the DOM rendering and the Chart drawing events
+        console.log("Entering drawMosTriggeredActionsChart");
+
+        context.commit('drawMostExecutedTriggersChart');
+        context.commit('drawTriggerTypesPercentagesChart');
+        context.commit('drawMosTriggeredActionsChart');
+
+      }, 100);
+
     },
 
     closeNav: context => {
@@ -854,7 +991,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       context.commit('getDataStreamsToShowInTable');
       context.commit('getPagesNeededForDataStreams');
       context.commit('cleanElementsToDelete');
-
     },
 
     showActionView: context =>{
@@ -1040,6 +1176,24 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
     editTrigger: (context, trigger) => {
       context.commit('editTrigger', trigger);
+    },
+
+    cleanActiveAction: context => {
+      context.commit('cleanActiveAction');
+    },
+
+    createConditionObject: context => {
+
+    },
+
+    addNewCondition: context => {
+
+    },
+
+    drawCharts: context => {
+      context.commit('drawMosTriggeredActionsChart');
+      context.commit('drawTriggerTypesPercentagesChart');
+      context.commit('drawMostExecutedTriggersChart');
     },
 
   }

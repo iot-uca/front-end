@@ -94,6 +94,25 @@
 
             <div class="tab-pane fade" id="editActionBody" role="tabpanel" aria-labelledby="editActionBody-tab">
 
+              <div class="mb-3">
+                <label>Body</label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fa fa-code"></i></span>
+                  </div>
+                  <textarea class="form-control" aria-label="Request body" v-model="activeAction.body"></textarea>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <div v-if="validJson" class="alert alert-success text-center py-2" role="alert">
+                  JSON entered is valid
+                </div>
+                <div v-else class="alert alert-danger text-center py-2" role="alert">
+                  JSON entered is invalid
+                </div>
+              </div>
+
             </div>
 
             <div class="tab-pane fade" id="editActionHeader" role="tabpanel" aria-labelledby="editActionHeader-tab">

@@ -46,7 +46,7 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fa fa-star-o"></i></span>
                   </div>
-                  <select disabled class="form-control custom-select" v-model="this.activeTrigger.action" required="true">
+                  <select disabled class="form-control custom-select" v-model="activeTrigger.action" required="true">
                     <option v-for="(action, index) in existingActions" :value="action.name">
                       {{action.name}}
                     </option>
@@ -61,13 +61,13 @@
               <div class="row">
                 <div class="col-md-6 mb-3">
                   <div class="custom-control custom-radio">
-                    <input id="dataPointReg" name="dataPointReg" type="radio" class="custom-control-input" required="" @click="dataPointPolicy()">
+                    <input id="dataPointReg" name="dataPointReg" type="radio" class="custom-control-input" :checked="!isTimePeriodPolicy">
                     <label class="custom-control-label" for="dataPointReg">Data Point Registration</label>
                   </div>
                 </div>
                 <div class="col-md-6 mb-3">
                   <div class="custom-control custom-radio">
-                    <input id="timePeriod" name="timePeriod" type="radio" class="custom-control-input" required="" @click="timePeriodPolicy()">
+                    <input id="timePeriod" name="timePeriod" type="radio" class="custom-control-input" :checked="isTimePeriodPolicy">
                     <label class="custom-control-label" for="timePeriod">Time Period</label>
                   </div>
                 </div>
@@ -81,12 +81,10 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="fa fa-calendar-plus-o"></i></span>
                     </div>
-                    <select class="form-control custom-select" id="timeGranularity" required="true">
-                      <option v-for="opt in timeGranularityOptions" value="opt">{{opt.name}}</option>
+                    <select class="form-control custom-select" id="timeGranularity">
+                      <option :value="activeTrigger.policy.elem">{{activeTrigger.policy.elem}}</option>
                     </select>
-                    <div class="invalid-feedback" style="width: 100%;">
-                      The Trigger name is required.
-                    </div>
+
                   </div>
                 </div>
 
@@ -101,11 +99,8 @@
                       <span class="input-group-text"><i class="fa fa-diamond"></i></span>
                     </div>
                     <select class="form-control custom-select" id="days" placeholder="" required="true">
-                      <option v-for="dS in dataStreams" value="dS">{{dS}}</option>
+                      <option :value="activeTrigger.policy.elem">{{activeTrigger.policy.elem}}</option>
                     </select>
-                    <div class="invalid-feedback" style="width: 100%;">
-                      The Trigger name is required.
-                    </div>
                   </div>
                 </div>
 
@@ -114,7 +109,6 @@
 
             <div class="tab-pane fade" id="triggerConditionDetail" role="tabpanel" aria-labelledby="triggerConditionDetail-tab">
 
-              <!-- COMENTADO XQ triggerConditionEdits NO SÉ PARA QUÉ LA USO -->
               <div class="mb-3">
                 <div class="input-group">
                   <div class="input-group-prepend">

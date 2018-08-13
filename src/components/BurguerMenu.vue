@@ -1,5 +1,7 @@
 <template>
 
+  <!-- ANOTHER POSSIBILITY IS https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_navbar_collapse&stacked=h -->
+
   <div id="mySidenav" class="sidenav" v-bind:style="getSideNavStyle()">
     <!-- Side Nav for burguer menu -->
     <a href="javascript:void(0)" class="closebtn" @click="closeNav()">&times;</a>

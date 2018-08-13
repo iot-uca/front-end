@@ -1,17 +1,17 @@
 <template>
 
   <!-- div for showing the Triggers add view -->
-  <div id="triggers" v-if="renderTriggerAddView">
+  <div id="triggers" v-if="renderTriggerAddView" style="margin: 1.5%;">
 
     <div class="row">
       <br>
 
-      <div class="col-md-1">
-      </div>
+      <!--div class="col-md-1">
+      </div-->
 
-      <div class="col-md-10">
-        <h4 class="mb-3"><small><strong>Existing triggers</strong></small></h4>
-        <hr>
+      <div class="col-md-12">
+        <!--h4 class="mb-3"><small><strong>Existing triggers</strong></small></h4>
+        <hr-->
 
         <div class="row">
 
@@ -117,8 +117,8 @@
 
       </div>
 
-      <div class="col-md-1">
-      </div>
+      <!--div class="col-md-1">
+      </div-->
     </div>
   </div>
 

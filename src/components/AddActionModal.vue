@@ -16,22 +16,23 @@
 
           <ul class="nav nav-tabs" id="addActionTab" role="tablist">
             <li class="nav-item">
-              <a class="nav-link active" id="actionName-tab" data-toggle="tab" href="#actionNameTab" role="tab" aria-controls="actionNameTab" aria-selected="true">Action name</a>
+              <a class="nav-link active" id="actionNameAdd-tab" data-toggle="tab" href="#actionNameAddTab" role="tab" aria-controls="actionNameAddTab" aria-selected="true">Action name</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" id="httpRequest-tab" data-toggle="tab" href="#httpRequest" role="tab" aria-controls="httpRequest" aria-selected="false">HTTP request</a>
+              <a class="nav-link" id="httpRequestAdd-tab" data-toggle="tab" href="#httpRequestAdd" role="tab" aria-controls="httpRequestAdd" aria-selected="false">HTTP request</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" id="actionBody-tab" data-toggle="tab" href="#actionBody" role="tab" aria-controls="actionBody" aria-selected="false">Body</a>
+              <a class="nav-link" id="actionBodyAdd-tab" data-toggle="tab" href="#actionBodyAdd" role="tab" aria-controls="actionBodyAdd" aria-selected="false">Body</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" id="actionHeaders-tab" data-toggle="tab" href="#actionHeaders" role="tab" aria-controls="actionHeaders" aria-selected="false">Headers</a>
+              <a class="nav-link" id="actionHeadersAdd-tab" data-toggle="tab" href="#actionHeadersAdd" role="tab" aria-controls="actionHeadersAdd" aria-selected="false">Headers</a>
             </li>
           </ul>
 
           <div class="tab-content" id="addActionContent">
 
-            <div class="tab-pane fade show active" id="actionNameTab" role="tabpanel" aria-labelledby="actionName-tab">
+            <div class="tab-pane fade show active" id="actionNameAddTab" role="tabpanel" aria-labelledby="actionNameAdd-tab">
+
               <div class="mb-3">
                 <label for="actionName">Name</label>
                 <div class="input-group">
@@ -44,9 +45,10 @@
                   </div>
                 </div>
               </div>
+
             </div>
 
-            <div class="tab-pane fade" id="httpRequest" role="tabpanel" aria-labelledby="httpRequest-tab">
+            <div class="tab-pane fade" id="httpRequestAdd" role="tabpanel" aria-labelledby="httpRequestAdd-tab">
 
               <div class="mb-3">
                 <label for="httpMethod">Method</label>
@@ -71,7 +73,7 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fa fa-external-link"></i></span>
                   </div>
-                  <input type="text" class="form-control" id="actionUrl" placeholder="http://foo" v-model="activeAction.url" required="true">
+                  <input type="url" class="form-control" id="actionUrl" placeholder="http://foo" v-model="activeAction.url" required="true">
                   <div class="invalid-feedback" style="width: 100%;">
                     The Action name is required.
                   </div>
@@ -95,12 +97,13 @@
                   </div>
                 </div>
               </div>
+
             </div>
 
-            <div class="tab-pane fade" id="actionBody" role="tabpanel" aria-labelledby="actionBody-tab">
+            <div class="tab-pane fade" id="actionBodyAdd" role="tabpanel" aria-labelledby="actionBodyAdd-tab">
 
               <div class="mb-3">
-                <label for="actionBody">Body</label>
+                <label for="actionBodyAdd">Body</label>
                 <div class="input-group">
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fa fa-code"></i></span>
@@ -121,7 +124,7 @@
 
             </div>
 
-            <div class="tab-pane fade" id="actionHeaders" role="tabpanel" aria-labelledby="actionHeaders-tab">
+            <div class="tab-pane fade" id="actionHeadersAdd" role="tabpanel" aria-labelledby="actionHeadersAdd-tab">
               <div class="row">
                 <div class="col-md-3">
                   <button type="button" class="btn btn-info btn-sm" @click="addOneMoreElemForActionRequestHeader()"><strong>Add parameter</strong></button>
@@ -212,6 +215,7 @@
         },
         // setter
         set: function (newValue) {
+          console.log(" Entering set Action Body watcher!! ");
           this.$store.dispatch('setActionBody', newValue);
         }
       },

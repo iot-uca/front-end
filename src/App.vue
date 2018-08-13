@@ -22,8 +22,7 @@
     <edit-action-modal></edit-action-modal>
 
     <add-trigger-modal></add-trigger-modal>
-
-    <!--trigger-bar-chart></trigger-bar-chart-->
+    <!-- FORM VALIDATIONS IN VUE JS => https://vuejs.org/v2/cookbook/form-validation.html -->
 
   </div>
 </template>
@@ -78,28 +77,27 @@
   },
   mounted () {
 
-      new Chart(document.getElementById("line-chart"), {
-      type: 'line',
-      data: {
-        labels: [1500,1600,1700,1750,1800,1850,1900,1950,1999,2050],
-        datasets: [{
-          data: [86,114,106,106,107,111,133,221,783,2478],
-          label: "Africa",
-          borderColor: "#3e95cd",
-          fill: false
-        }]
-      },
-      options: {
-        title:false,
-        title: {
-          display: false,
-          text: 'World population per region (in millions)'
-        },
-        /*legend: {
-            display: false
-        }*/
-      }
-    });
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function() {
+      'use strict';
+
+      window.addEventListener('load', function() {
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.getElementsByClassName('needs-validation');
+
+        // Loop over them and prevent submission
+        var validation = Array.prototype.filter.call(forms, function(form) {
+          form.addEventListener('submit', function(event) {
+            if (form.checkValidity() === false) {
+              event.preventDefault();
+              event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+          }, false);
+        });
+      }, false);
+    })();
+
   },
 
   }

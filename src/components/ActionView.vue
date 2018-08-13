@@ -1,17 +1,17 @@
 <template>
 
   <!-- div for showing the Actions add view -->
-  <div id="actions" v-if="renderActionAddView">
+  <div id="actions" v-if="renderActionAddView" style="margin: 1.5%;">
     <div class="row">
       <br>
 
-      <div class="col-md-1">
-      </div>
+      <!--div class="col-md-1">
+      </div-->
 
-      <div class="col-md-10">
+      <div class="col-md-12">
 
-        <h4 class="mb-3"><small><strong>Existing actions</strong></small></h4>
-        <hr>
+        <!--h4 class="mb-3"><small><strong>Existing actions</strong></small></h4>
+        <hr-->
 
         <div class="row">
 
@@ -40,7 +40,7 @@
           </div>
 
           <div class="col-md-2">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addActionModal" style="width: 100%;"><strong>Add action</strong></button>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addActionModal" @click="cleanActiveAction()" style="width: 100%;"><strong>Add action</strong></button>
           </div>
 
           <div class="col-md-2">
@@ -125,8 +125,9 @@
         </div>
       </div>
 
-      <div class="col-md-1">
-      </div>
+      <!--div class="col-md-1">
+      </div-->
+
     </div>
 
   </div>
@@ -207,6 +208,10 @@
 
       assignBodyAndHeader: function(action){
         this.$store.dispatch('assignBodyAndHeader', action);
+      },
+
+      cleanActiveAction: function () {
+        this.$store.dispatch('cleanActiveAction');
       },
 
 

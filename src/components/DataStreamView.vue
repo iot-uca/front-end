@@ -1,20 +1,20 @@
 <template>
 
   <!-- div for showing the Data Stream add view -->
-  <div v-if="renderDataStreamView">
+  <div v-if="renderDataStreamView" style="margin: 1.5%;">
 
     <i v-if="hasToDisplayLoadingFeedback()" class="fa fa-spinner fa-spin" style="font-size: 5rem; padding-left: 50%; padding-right: 50%;"></i>
 
     <div class="row">
       <br>
 
-      <div class="col-md-1">
-      </div>
+      <!--div class="col-md-1">
+      </div-->
 
-      <div class="col-md-10">
+      <div class="col-md-12">
 
-        <h4 class="mb-3"><small><strong>Existing data streams</strong></small></h4>
-        <hr>
+        <!--h4 class="mb-3"><small><strong>Existing data streams</strong></small></h4>
+        <hr-->
 
         <div class="row">
 
@@ -114,10 +114,11 @@
 
       </div>
 
-      <div class="col-md-1">
-      </div>
+      <!--div class="col-md-1">
+      </div-->
+
     </div>
-    <!--/div-->
+
   </div>
 
 </template>

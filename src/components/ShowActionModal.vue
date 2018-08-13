@@ -84,35 +84,15 @@
 
             <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
 
-                <!--  FIXME => DEBERIA MOSTART EL JSON, Y NO KEY-VALUE  -->
-
-              <!--div class="row" v-for="(elem, index) in activeIdsForHttpRequestBody">
-
-                <div class="col-md-6">
-                  <div class="mb-3">
-                    <label for="triggerName">Key</label>
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fa fa-key"></i></span>
-                      </div>
-                      <input disabled type="text" class="form-control" v-model="elem.key">
-                    </div>
+              <div class="mb-3">
+                <label>Body</label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fa fa-code"></i></span>
                   </div>
+                  <textarea disabled class="form-control" aria-label="Request body" v-model="activeAction.body"></textarea>
                 </div>
-
-                <div class="col-md-6">
-                  <div class="mb-3">
-                    <label for="triggerName">Value</label>
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fa fa-pencil-square-o"></i></span>
-                      </div>
-                      <input disabled type="text" class="form-control" v-model="elem.value">
-                    </div>
-                  </div>
-                </div>
-
-              </div-->
+              </div>
 
             </div>
 

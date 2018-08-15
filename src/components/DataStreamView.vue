@@ -74,14 +74,17 @@
             </td>
             <td>{{dataStream.name}}</td>
             <td>
-              <button type="button" class="btn btn-success btn-sm" @click="showDataStream(dataStream)" data-toggle="modal" data-target="#dataPointsForStreamModal" style="height: 75%;">
+              <!--button type="button" class="btn btn-success btn-sm" @click="showDataStream(dataStream)" data-toggle="modal" data-target="#dataPointsForStreamModal" style="height: 75%;">
                 <i class="fa fa-bar-chart"></i>
-              </button>
+              </button-->
+              <a @click="showDataStream(dataStream)" data-toggle="modal" data-target="#dataPointsForStreamModal"><i class="fa fa-bar-chart"></i></a>
             </td>
             <td>
-              <button type="button" class="btn btn-info btn-sm" @click="editDataStreams(dataStream)" data-toggle="modal" data-target="#editDataStreamModal" style="height: 75%;">
+              <!--button type="button" class="btn btn-info btn-sm" @click="editDataStreams(dataStream)" data-toggle="modal" data-target="#editDataStreamModal" style="height: 75%;">
                 <i class="fa fa-pencil-square-o"></i>
-              </button>
+              </button-->
+              <a @click="editDataStreams(dataStream)" data-toggle="modal" data-target="#editDataStreamModal" style="color:darkcyan"><i class="fa fa-pencil-square-o"></i></a>
+
             </td>
           </tr>
           </tbody>

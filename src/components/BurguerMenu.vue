@@ -2,16 +2,85 @@
 
   <!-- ANOTHER POSSIBILITY IS https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_navbar_collapse&stacked=h -->
 
-  <div id="mySidenav" class="sidenav" v-bind:style="getSideNavStyle()">
+  <!--div id="mySidenav" class="sidenav" v-bind:style="getSideNavStyle()"-->
+
     <!-- Side Nav for burguer menu -->
-    <a href="javascript:void(0)" class="closebtn" @click="closeNav()">&times;</a>
+
+    <!--a href="javascript:void(0)" class="closebtn" @click="closeNav()">&times;</a>
     <a href="#" v-on:click="showDashboardView(); closeNav();"><i class="fa fa-dashboard"></i>DASHBOARD</a>
     <a href="#" @click="showDataStreamView(); closeNav();"><i class="fa fa-cubes"></i>DATA STREAM</a>
     <a href="#" @click="showActionView(); closeNav();"><i class="fa fa-hand-paper-o"></i>ACTIONS</a>
     <a href="#" @click="showTriggerView(); closeNav();"><i class="fa fa-bell-o"></i>TRIGGERS</a>
     <a href="#" @click="showSecurityView(); closeNav();"><i class="fa fa-lock"></i>SECURITY</a>
     <a href="#" @click="showAboutView(); closeNav();"><i class="fa fa-info"></i>ABOUT</a>
+  </div-->
+
+  <div class="bg-dark">
+    <div class="text-center" style="color: white;">
+      <h1><strong>Cosmos</strong></h1>
+    </div>
+
+    <div class="justify-content-md-center">
+      <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+          <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+
+            <li class="nav-item active" @click="showDashboardView()">
+              <a class="nav-link">
+                <router-link to="/dashboard" exact>
+                  Dashboard
+                </router-link>
+              </a>
+            </li>
+            <li class="nav-item" @click="showDataStreamView()">
+              <a class="nav-link">
+                <router-link to="/dataStreams" exact>
+                  Data Streams
+                </router-link>
+              </a>
+            </li>
+            <li class="nav-item" @click="showActionView()">
+              <a class="nav-link">
+                <router-link to="/actions" exact>
+                  Actions
+                </router-link>
+              </a>
+            </li>
+            <li class="nav-item" @click="showTriggerView()">
+              <a class="nav-link">
+                <router-link to="/triggers" exact>
+                  Triggers
+                </router-link>
+              </a>
+            </li>
+            <li class="nav-item" @click="showSecurityView()">
+              <a class="nav-link">
+                <router-link to="/security" exact>
+                  Security
+                </router-link>
+              </a>
+            </li>
+            <li class="nav-item" @click="showAboutView()">
+              <a class="nav-link">
+                <router-link to="/about" exact>
+                  About
+                </router-link>
+              </a>
+            </li>
+
+
+          </ul>
+
+        </div>
+      </nav>
+
+    </div>
+
   </div>
+
 
 </template>
 
@@ -45,7 +114,7 @@
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<!--style scoped>
 
   /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
   @media screen and (max-height: 450px) {
@@ -101,6 +170,24 @@
     font-size: 36px;
     margin-left: 50px;
   }
-</style>
+</style-->
+<style scoped>
 
+  a{
+    color: #fff;
+    text-decoration: none;
+    padding: 6px 8px;
+    border-radius: 10px;
+  }
+
+  .router-link-active{
+    background: #eee;
+    color: #444;
+  }
+
+  h1{
+    margin-bottom: 0;
+  }
+
+</style>
 

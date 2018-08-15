@@ -1,28 +1,37 @@
 <template>
   <div id="app" class="bg-light" v-cloak>
 
-    <cosmos-header></cosmos-header>
+    <!--cosmos-header></cosmos-header-->
     <burguer-menu></burguer-menu>
-
-    <dashboard></dashboard>
-    <data-stream-view></data-stream-view>
-    <action-view></action-view>
-    <trigger-view></trigger-view>
-    <security-view></security-view>
-
     <add-stream-modal></add-stream-modal>
     <edit-stream-modal></edit-stream-modal>
-
     <remove-elements-modal></remove-elements-modal>
-
-    <data-points-modal></data-points-modal>
-
     <add-action-modal></add-action-modal>
     <show-action-modal></show-action-modal>
     <edit-action-modal></edit-action-modal>
 
     <add-trigger-modal></add-trigger-modal>
+    <data-points-modal></data-points-modal>
+
+    <router-view></router-view>
+
+
+    <!--spinner></spinner-->
+
+    <!--dashboard></dashboard>
+    <data-stream-view></data-stream-view>
+    <action-view></action-view>
+    <trigger-view></trigger-view>
+    <security-view></security-view-->
+
+
+
     <!-- FORM VALIDATIONS IN VUE JS => https://vuejs.org/v2/cookbook/form-validation.html -->
+
+    <!--  SPINNER VERY COSMOS STYLE https://epic-spinners.epicmax.co/#/  -->
+
+    <!--  Dependencies defined in package-lock.json 907  -->
+    <!--  Dependencies defined in package.json 57 -->
 
   </div>
 </template>
@@ -35,11 +44,8 @@
   import Sarasa from './components/Sarasa.vue'
   import Header from './components/Header.vue'
   import SecurityView from './components/SecurityView.vue'
-  import DataStreamView from './components/DataStreamView.vue'
   import AddStreamModal from './components/AddStreamModal.vue'
   import Dashboard from './components/Dashboard.vue'
-  import ActionView from './components/ActionView.vue'
-  import TriggerView from './components/TriggerView.vue'
   import EditStreamModal from './components/EditStreamModal.vue'
   import RemoveElementsModal from './components/RemoveElementsModal.vue'
   import DataPointsModal from './components/DataPointsModal.vue'
@@ -47,15 +53,16 @@
   import ShowActionModal from './components/ShowActionModal.vue'
   import EditActionModal from './components/EditActionModal.vue'
   import AddTriggerModal from './components/AddTriggerModal.vue'
-  //import TriggersBarChart from './components/TriggersBarChart.vue'
+  //import Spinner from './components/Spinner.vue'
 
-  import Chart from 'chart.js';
+  //import Chart from 'chart.js';
 
   export default {
 
   name: 'App',
     components: {
-      //'trigger-bar-chart': TriggersBarChart,
+
+      //'spinner' : Spinner,
       'add-trigger-modal': AddTriggerModal,
       'edit-action-modal': EditActionModal,
       'show-action-modal': ShowActionModal,
@@ -63,11 +70,11 @@
       'data-points-modal': DataPointsModal,
       'remove-elements-modal': RemoveElementsModal,
       'edit-stream-modal' : EditStreamModal,
-      'trigger-view': TriggerView,
-      'action-view': ActionView,
+      //'trigger-view': TriggerView,
+      //'action-view': ActionView,
       'dashboard': Dashboard,
       'add-stream-modal': AddStreamModal,
-      'data-stream-view': DataStreamView,
+      //'data-stream-view': DataStreamView,
       'security-view': SecurityView,
       'cosmos-header': Header,
       'burguer-menu': BurguerMenu,

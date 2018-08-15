@@ -21,7 +21,8 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 // Backend details
 //##########################################################################################
 
-    backendEndPoint: "http://192.168.99.100:8090",
+    //backendEndPoint: "http://192.168.99.100:8090",
+    backendEndPoint: "http://localhost:8090",
 
 //##########################################################################################
 // Burguer menu model
@@ -42,7 +43,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 // Data Stream model
 //##########################################################################################
 
-    dataStreamsConfigured:[
+    /*dataStreamsConfigured:[
       {id: 0, name: 'Solar light in garden'},
       {id: 1, name: 'Temperature inside the house'},
       {id: 2, name: 'Temperature outside the house'},
@@ -53,7 +54,9 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       {id: 7, name: 'Humidity outside the house'},
       {id: 8, name: 'Pressure outside the house'},
       {id: 9, name: 'Movement sensor in atic'}
-    ],
+    ],*/
+
+    dataStreamsConfigured:[],
 
     dataStreams : [
       {name: 'Temperature', current_value: '25', last_updated: '2 secs ago'},
@@ -361,6 +364,8 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     setFilteredDataStreamsToAllConfigured: state => {
       console.log("### Entering  setFilteredDataStreamsToAllConfigured");
       state.filteredDataStreams = state.dataStreamsConfigured;
+      console.log(" state.filteredDataStreams: " + state.filteredDataStreams);
+      console.log(" state.dataStreamsConfigured: "+ state.dataStreamsConfigured);
     },
 
     setFilteredActionsToAllConfigured: state => {
@@ -403,7 +408,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     getDataStreamsToShowInTable: state => {
       console.log("#### Entering getDataStreamsToShowInTable");
       state.dataStreamsForPage = getElementsToShowInTable(state.currentPage, state.maxDataStreamsPerPage, state.filteredDataStreams);
-      console.log(" actionsPerPage: " + state.dataStreamsForPage);
+      console.log(" dataStreamsForPage: " + state.dataStreamsForPage);
     },
 
     setCurrentPage: (state, payload) => {
@@ -428,16 +433,16 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
   },
 
   addElementToDeleteList: (state, elem) => {
-      console.log(" Entering addElementToDeleteList!");
+      console.log("### Entering addElementToDeleteList!");
 
       console.log("elementsToDelete: " + state.elementsToDelete);
       console.log("elem: " + elem);
 
       //if already exists, delete it; add it otherwise
-      if (state.elementsToDelete.indexOf(elem.name) > -1) {
-        state.elementsToDelete.splice(state.elementsToDelete.indexOf(elem.name), 1);
+      if (state.elementsToDelete.indexOf(elem) > -1) {
+        state.elementsToDelete.splice(state.elementsToDelete.indexOf(elem), 1);
       } else {
-        state.elementsToDelete.push(elem.name);
+        state.elementsToDelete.push(elem);
       }
       console.log("elementsToDelete: " + state.elementsToDelete);
       console.log("elem: " + elem);
@@ -885,6 +890,126 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       });
     },
 
+    getDataStreamsConfigured: state => {
+      console.log(" Entering getDataStreamsConfigured!! ");
+
+      state.displayLoadingFeedback = true;
+
+      axios.get(state.backendEndPoint + '/data-streams',{ headers: { "Accept": "application/vnd.cosmos.data-stream-snapshot+json; version=1.0.0" } }).then(response => {
+        //this.showAddDataStream = true; // user sees the "add" button
+        //this.hasNotFinishedDS = false;
+        //this.errorInInteraction = false;
+        console.log(" RESPONSE: " + response);
+        state.displayLoadingFeedback = false;
+        let dataStreams = response.data;
+        console.log("[SUCCESS] DataStreams =>>>> " + dataStreams);
+
+        state.dataStreamsConfigured = [];
+
+        for(let i=0; i<dataStreams.length; i++){
+          state.dataStreamsConfigured.push(dataStreams[i]);
+          console.log("DataStreams =>" + state.dataStreamsConfigured);
+        }
+
+      }, (error) => {
+        //this.showAddDataStream = true; // user sees the "add" button
+        //this.hasNotFinishedDS=false;
+        state.displayLoadingFeedback = false; // we stop showing the loading spinner
+        //this.errorInInteraction = true;
+        //$("successModal").modal(); // we display the modal saying it was a problem
+
+        console.log(error);
+
+      });
+
+      /*axios.get(state.backendEndPoint + '/data-streams/4cuvu7vjro0tbqz7arztpt657/data-points',{ headers: { "Accept": "application/vnd.cosmos.data-points+json; version=1.0.0" } }).then(response => {
+
+        console.log(" RESPONSE: " + response);
+        state.displayLoadingFeedback = false;
+        let dataStreams = response.data;
+        console.log("[SUCCESS] DataPoints =>>>> " + dataStreams);
+
+
+      }, (error) => {
+
+        state.displayLoadingFeedback = false; // we stop showing the loading spinner
+        console.log(error);
+
+      })*/
+
+
+    },
+
+    getActionsConfigured: state  => {
+
+      console.log(" Entering getActionsConfigured!! ");
+
+      state.displayLoadingFeedback = true;
+
+      axios.get(state.backendEndPoint + '/actions',{ headers: { "Accept": "application/vnd.cosmos.action+json; version=1.0.0" } }).then(response => {
+
+          console.log(" RESPONSE: " + response);
+          state.displayLoadingFeedback = false;
+          let actions = response.data;
+          console.log("[SUCCESS] actions =>>>> " + actions);
+
+          state.existingActions = [];
+
+          for(let i=0; i<actions.length; i++){
+            state.existingActions.push(actions[i]);
+            console.log("DataStreams =>" + state.existingActions);
+          }
+
+        }, (error) => {
+
+        state.displayLoadingFeedback = false; // we stop showing the loading spinner
+        console.log(error);
+
+      });
+    },
+
+
+    getDataPointForDataStream: state => {
+
+
+
+    },
+
+    deleteElements: state => {
+
+      if(state.renderDataStreamView){
+
+        for(let i=0; i<state.elementsToDelete.length; i++){
+
+          axios.delete(state.backendEndPoint + '/data-streams/' + state.elementsToDelete[i].metadata[0].identifier,{ headers: { "Accept": "application/vnd.cosmos.data-stream+json; version=1.0.0" } }).then(response => {
+
+            console.log(" RESPONSE: " + response);
+            state.displayLoadingFeedback = false;
+            let dataStreams = response.data;
+            console.log("[SUCCESS] DataPoints =>>>> " + dataStreams);
+
+
+          }, (error) => {
+
+            state.displayLoadingFeedback = false; // we stop showing the loading spinner
+            console.log(error);
+
+          })
+        }
+
+      }else{
+        if(state.renderActionAddView){
+
+        }else{
+          if(state.renderTriggerAddView){
+
+          }else{
+
+          }
+        }
+      }
+
+    }
 
   },
 
@@ -986,6 +1111,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       console.log("Entering showDataStreamView ");
 
       context.commit('showDataStreamView');
+      context.commit('getDataStreamsConfigured');
       context.commit('setFilteredDataStreamsToAllConfigured');
       context.commit('setCurrentPage', 1);
       context.commit('getDataStreamsToShowInTable');
@@ -997,6 +1123,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       console.log("Entering showActionView ");
 
       context.commit('showActionView');
+      context.commit('getActionsConfigured');
       context.commit('setFilteredActionsToAllConfigured');
       context.commit('setCurrentPage', 1);
       context.commit('getActionsToShowInTable');
@@ -1194,6 +1321,10 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       context.commit('drawMosTriggeredActionsChart');
       context.commit('drawTriggerTypesPercentagesChart');
       context.commit('drawMostExecutedTriggersChart');
+    },
+
+    deleteElements: context =>{
+      context.commit('deleteElements');
     },
 
   }

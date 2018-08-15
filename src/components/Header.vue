@@ -2,12 +2,12 @@
 
   <!-- GUI Header -->
   <div id="ui-header">
-    <div class="row text-center">
-      <div class="col-md-1 py-2">
+    <div class="text-center">
+      <!--div class="col-md-1 py-2">
         <span style="font-size:30px;cursor:pointer; padding:2% " @click="openNav()"><i class="fa fa-bars" style="color:white;"></i></span>
-      </div>
-      <div class="col-md-10 py-2">
-        <h1 id="cosmosTitle"><strong>Cosmos GUI</strong></h1>
+      </div-->
+      <div>
+        <h1 id="cosmosTitle"><strong>Cosmos</strong></h1>
       </div>
     </div>
   </div>

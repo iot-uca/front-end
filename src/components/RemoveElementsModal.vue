@@ -18,7 +18,7 @@
           </ul>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-danger">Delete</button>
+          <button type="button" class="btn btn-danger" @click="deleteElements()">Delete</button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
         </div>
       </div>
@@ -36,8 +36,12 @@
       elementsToDelete() {
           return this.$store.state.elementsToDelete;
       },
+    },
 
-
+    methods:{
+      deleteElements: function(){
+        this.$store.dispatch('deleteElements');
+      },
     }
 
   }

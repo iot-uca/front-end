@@ -12,8 +12,11 @@
 
     <add-trigger-modal></add-trigger-modal>
     <data-points-modal></data-points-modal>
+    <status-modal></status-modal>
+
 
     <router-view></router-view>
+
 
 
     <!--spinner></spinner-->
@@ -53,6 +56,10 @@
   import ShowActionModal from './components/ShowActionModal.vue'
   import EditActionModal from './components/EditActionModal.vue'
   import AddTriggerModal from './components/AddTriggerModal.vue'
+  import SuccessFailureModal from './components/SuccessFailureModal.vue'
+  //import AboutView from './components/AboutView.vue'
+
+
   //import Spinner from './components/Spinner.vue'
 
   //import Chart from 'chart.js';
@@ -63,6 +70,8 @@
     components: {
 
       //'spinner' : Spinner,
+      //'about-view':AboutView,
+      'status-modal' : SuccessFailureModal,
       'add-trigger-modal': AddTriggerModal,
       'edit-action-modal': EditActionModal,
       'show-action-modal': ShowActionModal,

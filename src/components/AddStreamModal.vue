@@ -59,7 +59,7 @@
     },
     methods:{
       addDataStream: function () {
-        this.$store.dispatch('addDataStream');
+        this.$store.dispatch('addDataStream', this.$store.state.backendEndPoint);
       },
 
     }

@@ -2,11 +2,14 @@
 
   <!-- div for showing the Actions add view -->
   <div id="actions" v-if="renderActionAddView" style="margin: 1.5%;">
-    <div class="row">
-      <br>
 
-      <!--div class="col-md-1">
-      </div-->
+    <div v-if="hasToDisplayLoadingFeedback">
+
+      <spinner id="spinner"></spinner>
+
+    </div>
+
+    <div v-else class="row">
 
       <div class="col-md-12">
 
@@ -71,19 +74,22 @@
                 <label :for="action.name" class="custom-control-label"></label>
               </div>
             </td>
+
             <td>{{action.name}}</td>
-            <td>{{action.type}}</td>
 
-            <td v-if="action.priority!=undefined">{{action.priority}}</td>
+            <td v-if="action.http_request!==undefined">HTTP Request</td>
+            <td v-else>Command</td>
+
+            <td v-if="action.http_request.priority!==undefined">{{action.http_request.priority}}</td>
+            <td v-else >-</td>
+
+            <td v-if="action.http_request.request_line.method!==undefined">{{action.http_request.request_line.method}}</td>
             <td v-else class="text-center">-</td>
 
-            <td v-if="action.method!=undefined">{{action.method}}</td>
+            <td v-if="action.http_request.request_line.url!=undefined">{{action.http_request.request_line.url}}</td>
             <td v-else class="text-center">-</td>
 
-            <td v-if="action.url!=undefined">{{action.url}}</td>
-            <td v-else class="text-center">-</td>
-
-            <td v-if="action.version!=undefined">{{action.version}}</td>
+            <td v-if="action.http_request.request_line.version!=undefined">{{action.http_request.request_line.version}}</td>
             <td v-else class="text-center">-</td>
 
             <td>
@@ -125,9 +131,6 @@
         </div>
       </div>
 
-      <!--div class="col-md-1">
-      </div-->
-
     </div>
 
   </div>
@@ -135,12 +138,25 @@
 </template>
 
 <script>
+  import Spinner from './Spinner.vue'
 
   export default {
+
+    components:{
+      'spinner' : Spinner,
+    },
+
+    mounted(){
+      this.$store.dispatch('showActionView', this.$store.state.backendEndPoint);
+    },
 
     computed:{
       renderActionAddView(){
         return this.$store.state.renderActionAddView;
+      },
+
+      hasToDisplayLoadingFeedback() {
+        return this.$store.state.displayLoadingFeedback;
       },
 
       maxActionsPerPage: {

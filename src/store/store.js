@@ -25,6 +25,14 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     backendEndPoint: "http://localhost:8090",
 
 //##########################################################################################
+// Error Handling
+//##########################################################################################
+
+    errorMessage: "There was a problem... Please try again!",
+    errorInInteraction: false,
+    successMessage: "Your action was succesfully done!",
+
+//##########################################################################################
 // Burguer menu model
 //##########################################################################################
 
@@ -55,6 +63,8 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       {id: 8, name: 'Pressure outside the house'},
       {id: 9, name: 'Movement sensor in atic'}
     ],*/
+
+    dataStreamsResponseFromBackend:[],
 
     dataStreamsConfigured:[],
 
@@ -88,14 +98,13 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     intermediateDataStreams:[],
     activeDataStream:[],
     dataStreamSelected: [],
-    displayLoadingFeedbackDataStreams: false,
+    displayLoadingFeedback: false,
 
     showAddDataStreamModal: false,
 
 
 
     elementsToDelete: [],
-    displayLoadingFeedback: false,
 
 
 //##########################################################################################
@@ -113,6 +122,19 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       {id: 7, name: 'Command B', type:'command', priority:'Medium'},
       {id: 8, name: 'Command C', type:'command', priority:'Low'},
     ],
+
+
+    trueActions: [
+      {name:'Action1', created_on:'2018-08-19T19:33:3400:00', http_request:{
+          request_line:{method:'GET', url:'http://facebook.com/', version:'HTTP/1.0'},
+          body: '',
+          headers:[{key:'Name',value:'jorge'},{key:'Surname',value:'nahas'}],
+        }
+      }
+
+    ],
+
+
 
     actionFilter: undefined,
     pagesNeededForActions: 0,
@@ -312,6 +334,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     showDataStreamView: state => {
+      console.log("## Entering showDataStreamView !!");
       state.renderDashboardView = false;
       state.renderDataStreamView = true;
       state.renderActionAddView = false;
@@ -429,6 +452,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 //##########################################################################################
 
   cleanElementsToDelete: state => {
+    console.log("### ENTERING cleanElementsToDelete");
     state.elementsToDelete = [];
   },
 
@@ -633,28 +657,52 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
         $("#addDataStreamModal").modal("hide");  			// close the modal
 
-        state.displayLoadingFeedbackDataStreams = true; // user starts seeing the loading spinner
+        state.displayLoadingFeedback = true; // user starts seeing the loading spinner
 
         axios.post(state.backendEndPoint + '/data-streams', {
           name: state.dataStreamToAdd
         })
           .then(function (response) {
-            state.displayLoadingFeedbackDataStreams = false;
+            state.displayLoadingFeedback = false;
             state.errorInInteraction = false;
+            state.successMessage = state.dataStreamToAdd + " added succesfully.";
             $("#successModal").modal();
-            console.log("data: " + response.data);
-            console.log("status: " + response.status);
-            console.log("statusText: " + response.statusText);
-            console.log("headers: " + response.headers);
-            console.log("config: " + response.config);
             state.dataStreamToAdd = "";
+
           })
           .catch(function (error) {
             console.log("[ERROR] " + error);
-            state.displayLoadingFeedbackDataStreams = false;
+
+            state.displayLoadingFeedback = false;
             state.errorInInteraction = true;
+
+
+            // Error
+            if (error.response) {
+              // The request was made and the server responded with a status code
+              // that falls out of the range of 2xx
+              console.log(error.response.data);
+              console.log(error.response.data.message);
+
+              state.errorMessage = error.response.data.message;
+
+              console.log(error.response.status);
+              console.log(error.response.headers);
+            } else if (error.request) {
+              // The request was made but no response was received
+              // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+              // http.ClientRequest in node.js
+              console.log(error.request);
+              state.errorMessage = "There was a problem adding " + state.dataStreamToAdd + ". Please try again!";
+            } else {
+              // Something happened in setting up the request that triggered an Error
+              console.log('Error', error.message);
+              state.errorMessage = "There was a problem adding " + state.dataStreamToAdd + ". Please try again!";
+            }
+
             $("#successModal").modal();
             state.dataStreamToAdd = "";
+
           });
       }else{
         console.log("Length is not valid!!");
@@ -693,7 +741,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       let request={};
       let request_line={};
 
-
       request_line['url'] = state.activeAction.url;
       request_line['method'] = state.activeAction.method;
       request_line['version'] = state.activeAction.version;
@@ -701,9 +748,10 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       request['headers'] = state.activeIdsForHttpRequestHeader;
       request['body'] = state.actionBody;
 
-
       console.log("request_line: " + request_line);
       console.log("request: " + request);
+
+      state.displayLoadingFeedback = true; // user starts seeing the loading spinner
 
       axios.post(state.backendEndPoint + '/actions', {
         name: state.activeAction.name,
@@ -715,9 +763,49 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
           console.log("statusText: " + response.statusText);
           console.log("headers: " + response.headers);
           console.log("config: " + response.config);
+
+          state.displayLoadingFeedback = false;
+          state.errorInInteraction = false;
+          state.successMessage = state.activeAction.name + " added succesfully.";
+          $("#successModal").modal();
+
+
         })
-        .catch(function (error) {console.log("[ERROR] " + error);
+        .catch(function (error) {
+          console.log("[ERROR] " + error);
+
+          state.displayLoadingFeedback = false;
+          state.errorInInteraction = true;
+
+          // Error
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.data.message);
+
+            state.errorMessage = error.response.data.message;
+
+            console.log(error.response.status);
+            console.log(error.response.headers);
+
+          } else if (error.request) {
+            // The request was made but no response was received
+            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+            // http.ClientRequest in node.js
+            console.log(error.request);
+            state.errorMessage = "There was a problem adding " + state.activeAction.name + ". Please try again!";
+
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log('Error', error.message);
+            state.errorMessage = "There was a problem adding " + state.activeAction.name + ". Please try again!";
+          }
+
+          $("#successModal").modal();
+
         });
+
     },
 
 
@@ -855,7 +943,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
         data: {
           labels: ['Trigger 1', 'Trigger 2', 'Trigger 3', 'Trigger 4', 'Trigger 5'],
           datasets: [{
-            data: [11, 22, 9, 17, 15],
+            data: [22, 17, 15, 11, 9],
             backgroundColor: ['#FABB3C', '#32D75E','#D02FC0','#EB0524','#3e95cd']
             /*backgroundColor: ['#3e95cd', '#8e5ea2','#3cba9f','#e8c3b9','#c45850']*/
           }]
@@ -890,37 +978,52 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       });
     },
 
-    getDataStreamsConfigured: state => {
-      console.log(" Entering getDataStreamsConfigured!! ");
+    /*getDataStreamsConfigured: state => {
+      console.log("##### Entering getDataStreamsConfigured!! ");
 
-      state.displayLoadingFeedback = true;
+      //state.displayLoadingFeedback = true;
 
       axios.get(state.backendEndPoint + '/data-streams',{ headers: { "Accept": "application/vnd.cosmos.data-stream-snapshot+json; version=1.0.0" } }).then(response => {
-        //this.showAddDataStream = true; // user sees the "add" button
-        //this.hasNotFinishedDS = false;
-        //this.errorInInteraction = false;
+
         console.log(" RESPONSE: " + response);
-        state.displayLoadingFeedback = false;
-        let dataStreams = response.data;
-        console.log("[SUCCESS] DataStreams =>>>> " + dataStreams);
+        //state.displayLoadingFeedback = false;
+        state.dataStreamsResponseFromBackend = response.data;
+        console.log("[SUCCESS] DataStreams =>>>> " + state.dataStreamsResponseFromBackend);
 
         state.dataStreamsConfigured = [];
 
-        for(let i=0; i<dataStreams.length; i++){
-          state.dataStreamsConfigured.push(dataStreams[i]);
+        for(let i=0; i<state.dataStreamsResponseFromBackend.length; i++){
+          state.dataStreamsConfigured.push(state.dataStreamsResponseFromBackend[i]);
           console.log("DataStreams =>" + state.dataStreamsConfigured);
         }
+        console.log(" Finishing getDataStreamsConfigured ######");
 
       }, (error) => {
-        //this.showAddDataStream = true; // user sees the "add" button
-        //this.hasNotFinishedDS=false;
-        state.displayLoadingFeedback = false; // we stop showing the loading spinner
-        //this.errorInInteraction = true;
-        //$("successModal").modal(); // we display the modal saying it was a problem
-
+        // state.displayLoadingFeedback = false; // we stop showing the loading spinner
         console.log(error);
-
       });
+
+    },*/
+
+    processActionsConfigured: (state, response)  => {
+      console.log(" Entering processActionsConfigured!!");
+
+      console.log(" RESPONSE: " + response);
+      state.displayLoadingFeedback = false;
+      let actions = response.data;
+      console.log("[SUCCESS] actions =>>>> " + actions);
+
+      state.existingActions = [];
+
+      for(let i=0; i<actions.length; i++){
+        state.existingActions.push(actions[i]);
+        console.log("DataStreams =>" + state.existingActions);
+      }
+
+    },
+
+
+    getDataPointForDataStream: state => {
 
       /*axios.get(state.backendEndPoint + '/data-streams/4cuvu7vjro0tbqz7arztpt657/data-points',{ headers: { "Accept": "application/vnd.cosmos.data-points+json; version=1.0.0" } }).then(response => {
 
@@ -936,42 +1039,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
         console.log(error);
 
       })*/
-
-
-    },
-
-    getActionsConfigured: state  => {
-
-      console.log(" Entering getActionsConfigured!! ");
-
-      state.displayLoadingFeedback = true;
-
-      axios.get(state.backendEndPoint + '/actions',{ headers: { "Accept": "application/vnd.cosmos.action+json; version=1.0.0" } }).then(response => {
-
-          console.log(" RESPONSE: " + response);
-          state.displayLoadingFeedback = false;
-          let actions = response.data;
-          console.log("[SUCCESS] actions =>>>> " + actions);
-
-          state.existingActions = [];
-
-          for(let i=0; i<actions.length; i++){
-            state.existingActions.push(actions[i]);
-            console.log("DataStreams =>" + state.existingActions);
-          }
-
-        }, (error) => {
-
-        state.displayLoadingFeedback = false; // we stop showing the loading spinner
-        console.log(error);
-
-      });
-    },
-
-
-    getDataPointForDataStream: state => {
-
-
 
     },
 
@@ -1009,8 +1076,82 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
         }
       }
 
-    }
+    },
 
+    displayLoadingFeedback: state => {
+      console.log("### ENTERING  displayLoadingFeedback");
+      state.displayLoadingFeedback = true;
+    },
+
+    hideLoadingFeedback: state => {
+      console.log("### ENTERING  hideLoadingFeedback");
+      state.displayLoadingFeedback = false;
+    },
+
+    processDataStreamsConfigured: (state, response) => {
+      console.log(" RESPONSE: " + response);
+      //state.displayLoadingFeedback = false;
+      state.dataStreamsResponseFromBackend = response.data;
+      console.log("[SUCCESS] DataStreams =>>>> " + state.dataStreamsResponseFromBackend);
+
+      state.dataStreamsConfigured = [];
+
+      for(let i=0; i<state.dataStreamsResponseFromBackend.length; i++){
+        state.dataStreamsConfigured.push(state.dataStreamsResponseFromBackend[i]);
+        console.log("DataStreams =>" + state.dataStreamsConfigured);
+      }
+      console.log(" Finishing getDataStreamsConfigured ######");
+    },
+
+    treatErrorForAddingDataStream: (state, error) => {
+
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        console.log(error.response.data);
+        console.log(error.response.data.message);
+
+        state.errorMessage = error.response.data.message;
+
+        console.log(error.response.status);
+        console.log(error.response.headers);
+      } else if (error.request) {
+        // The request was made but no response was received
+        // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+        // http.ClientRequest in node.js
+        console.log(error.request);
+        state.errorMessage = "There was a problem adding " + state.dataStreamToAdd + ". Please try again!";
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error', error.message);
+        state.errorMessage = "There was a problem adding " + state.dataStreamToAdd + ". Please try again!";
+      }
+    },
+
+    treatErrorForAddingAction: (state, error) => {
+
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        console.log(error.response.data);
+        console.log(error.response.data.message);
+
+        state.errorMessage = error.response.data.message;
+
+        console.log(error.response.status);
+        console.log(error.response.headers);
+      } else if (error.request) {
+        // The request was made but no response was received
+        // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+        // http.ClientRequest in node.js
+        console.log(error.request);
+        state.errorMessage = "There was a problem adding " + state.dataStreamToAdd + ". Please try again!";
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error', error.message);
+        state.errorMessage = "There was a problem adding " + state.dataStreamToAdd + ". Please try again!";
+      }
+    },
   },
 
   //#####################################################################
@@ -1018,6 +1159,31 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
   //#####################################################################
 
   actions:{ // es una BUENA PRACTICA que todas sean acciones y commiteen mutaciones, aún éstas no sean asíncronas
+
+    showDataStreamView: (context, url) => {
+      context.commit('showDataStreamView');
+      context.commit('cleanElementsToDelete');
+      context.commit('displayLoadingFeedback');
+      axios.get(url + '/data-streams',{ headers: { "Accept": "application/vnd.cosmos.data-stream-snapshot+json; version=1.0.0" } }).then(response => {
+        context.commit('processDataStreamsConfigured', response);
+        context.commit('setFilteredDataStreamsToAllConfigured');
+        context.commit('setCurrentPage', 1);
+        context.commit('getDataStreamsToShowInTable');
+        context.commit('getPagesNeededForDataStreams');
+        context.commit('hideLoadingFeedback');
+      }, (err) => {
+        console.log("[ERROR] => " + err);
+        //context.commit('treatErrorForDataStream', err);
+      })
+    },
+
+    LOAD_PROJECT_LIST: function ({ commit }) {
+      axios.get('/secured/projects').then((response) => {
+        commit('SET_PROJECT_LIST', { list: response.data })
+      }, (err) => {
+        console.log(err)
+      })
+    },
 
     showAddDataStreamModal: context => {
       context.commit('showAddDataStreamModal');
@@ -1035,7 +1201,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
           name: this.activeDataStream.name
       })
         .then(function (response) {
-            this.displayLoadingFeedbackDataStreams = false; // user stops seeing the loading spinner
+            this.displayLoadingFeedback = false; // user stops seeing the loading spinner
             this.errorInInteraction = false;				// since it was a succesful request
 
             $("#successModal").modal();						// trigger modal for announcing the request result
@@ -1049,7 +1215,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
         })
         .catch(function (error) {
             console.log("[ERROR] : " + error);
-            this.displayLoadingFeedbackDataStreams = false;
+            this.displayLoadingFeedback = false;
             this.errorInInteraction = true;
             $("#successModal").modal();
       });  */
@@ -1106,29 +1272,41 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       context.commit('closeNav');
     },
 
-    showDataStreamView: context => {
-
+/*    showDataStreamView: context => {
       console.log("Entering showDataStreamView ");
 
       context.commit('showDataStreamView');
+      context.commit('displayLoadingFeedback');
       context.commit('getDataStreamsConfigured');
-      context.commit('setFilteredDataStreamsToAllConfigured');
-      context.commit('setCurrentPage', 1);
-      context.commit('getDataStreamsToShowInTable');
-      context.commit('getPagesNeededForDataStreams');
-      context.commit('cleanElementsToDelete');
-    },
 
-    showActionView: context =>{
+      setTimeout(function () {
+        context.commit('setFilteredDataStreamsToAllConfigured');
+        context.commit('setCurrentPage', 1);
+        context.commit('getDataStreamsToShowInTable');
+        context.commit('getPagesNeededForDataStreams');
+        context.commit('hideLoadingFeedback');
+      }, 1000);
+
+      context.commit('cleanElementsToDelete');
+    },*/
+
+    showActionView: (context, url) =>{
       console.log("Entering showActionView ");
 
       context.commit('showActionView');
-      context.commit('getActionsConfigured');
-      context.commit('setFilteredActionsToAllConfigured');
-      context.commit('setCurrentPage', 1);
-      context.commit('getActionsToShowInTable');
-      context.commit('getPagesNeededForActions');
       context.commit('cleanElementsToDelete');
+      context.commit('displayLoadingFeedback');
+      axios.get(url + '/actions',{ headers: { "Accept": "application/vnd.cosmos.action+json; version=1.0.0" } }).then(response => {
+        context.commit('processActionsConfigured', response);
+        context.commit('setFilteredActionsToAllConfigured');
+        context.commit('setCurrentPage', 1);
+        context.commit('getActionsToShowInTable');
+        context.commit('getPagesNeededForActions');
+        context.commit('hideLoadingFeedback');
+      }, (err) => {
+        console.log("[ERROR] => " + err);
+        //context.commit('treatErrorForActions', err);
+      });
 
     },
 
@@ -1253,8 +1431,19 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       context.commit('getActionsToShowInTable');
     },
 
-    addDataStream: context => {
+    addDataStream: (context, url) => {
       context.commit('addDataStream');
+      axios.get(url + '/data-streams',{ headers: { "Accept": "application/vnd.cosmos.data-stream-snapshot+json; version=1.0.0" } }).then(response => {
+        context.commit('processDataStreamsConfigured', response);
+        context.commit('setFilteredDataStreamsToAllConfigured');
+        context.commit('setCurrentPage', 1);
+        context.commit('getDataStreamsToShowInTable');
+        context.commit('getPagesNeededForDataStreams');
+        //context.commit('hideLoadingFeedback');
+      }, (err) => {
+        console.log("[ERROR] => " + err);
+        //context.commit('treatErrorForDataStream', err);
+      })
     },
 
     setDataStreamToAdd: (context, value) => {
@@ -1273,8 +1462,19 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       context.commit('oneLessElemForActionRequestHeader', index);
     },
 
-    addAction: context => {
+    addAction: (context, url) => {
       context.commit('addAction');
+      axios.get(url + '/actions',{ headers: { "Accept": "application/vnd.cosmos.action+json; version=1.0.0" } }).then(response => {
+        context.commit('processActionsConfigured', response);
+        context.commit('setFilteredActionsToAllConfigured');
+        context.commit('setCurrentPage', 1);
+        context.commit('getActionsToShowInTable');
+        context.commit('getPagesNeededForActions');
+        //context.commit('hideLoadingFeedback');
+      }, (err) => {
+        console.log("[ERROR] => " + err);
+        //context.commit('treatErrorForActions', err);
+      });
     },
 
     setActionBody: (context, value) => {
@@ -1325,6 +1525,14 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
     deleteElements: context =>{
       context.commit('deleteElements');
+    },
+
+    displayLoadingFeedback: context => {
+      context.commit('displayLoadingFeedback');
+    },
+
+    hideLoadingFeedback: context => {
+      context.commit('hideLoadingFeedback');
     },
 
   }

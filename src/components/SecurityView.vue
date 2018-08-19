@@ -2,10 +2,8 @@
   <div id="keys" v-if="hasToShowSecurityView()">
     <div class="container">
       <div class="row">
-        <div class="col-md-2">
-        </div>
 
-        <div class="col-md-8">
+        <div class="col-md-12">
           <h4 class="mb-3 text-center"><strong>Associate the actions required</strong></h4>
           <hr>
           <form class="needs-validation" novalidate="">
@@ -37,7 +35,6 @@
           </form>
         </div>
 
-        <div class="col-md-2"></div>
       </div>
     </div>
   </div>
@@ -47,6 +44,10 @@
 <script>
 
   export default {
+
+    mounted(){
+      this.$store.dispatch('showSecurityView');
+    },
 
     methods:{
       hasToShowSecurityView: function(){

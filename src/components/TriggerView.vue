@@ -130,6 +130,10 @@
 
   export default {
 
+    mounted(){
+      this.$store.dispatch('showTriggerView');
+    },
+
     computed: {
       renderTriggerAddView() {
         return this.$store.state.renderTriggerAddView;

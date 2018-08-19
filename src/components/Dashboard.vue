@@ -204,6 +204,7 @@ export default {
 
   mounted(){
 
+    this.$store.dispatch('showDashboardView');
     this.drawCharts();
 
   },

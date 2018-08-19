@@ -3,18 +3,16 @@
   <!-- div for showing the Data Stream add view -->
   <div v-if="renderDataStreamView" style="margin: 1.5%;">
 
-    <i v-if="hasToDisplayLoadingFeedback()" class="fa fa-spinner fa-spin" style="font-size: 5rem; padding-left: 50%; padding-right: 50%;"></i>
+    <!--i v-if="hasToDisplayLoadingFeedback()" class="fa fa-spinner fa-spin" style="font-size: 5rem; padding-left: 50%; padding-right: 50%;"></i-->
+    <div v-if="hasToDisplayLoadingFeedback">
 
-    <div class="row">
-      <br>
+      <spinner id="spinner"></spinner>
 
-      <!--div class="col-md-1">
-      </div-->
+    </div>
+
+    <div v-else class="row">
 
       <div class="col-md-12">
-
-        <!--h4 class="mb-3"><small><strong>Existing data streams</strong></small></h4>
-        <hr-->
 
         <div class="row">
 
@@ -53,19 +51,20 @@
           </div>
         </div>
 
-        <table class="table table-striped table-responsive table-sm" style="width: 100%">
+        <table class="table table-striped table-responsive table-sm w-100">
           <thead class="thead-dark">
             <tr>
               <th scope="col" style="width: 2%"></th>
-              <th scope="col" style="width: 92%">Name</th>
-              <th scope="col" style="width: 3%"></th>
-              <th scope="col" style="width: 3%"></th>
+              <th scope="col" style="width: 79%">Name</th>
+              <th scope="col" style="width: 15%">Current Value</th>
+              <th scope="col" style="width: 2%"></th>
+              <th scope="col" style="width: 2%"></th>
             </tr>
           </thead>
           <tbody>
 
 
-          <tr v-for="dataStream in getDataStreamsForPage()">
+          <tr v-for="dataStream in dataStreamsForPage">
             <td>
               <div class="custom-control custom-checkbox" >
                 <input type="checkbox" :id="dataStream.name" class="custom-control-input" @click="addElementToDeleteList(dataStream)">
@@ -73,6 +72,7 @@
               </div>
             </td>
             <td>{{dataStream.name}}</td>
+            <td>{{dataStream.current_value}}</td>
             <td>
               <!--button type="button" class="btn btn-success btn-sm" @click="showDataStream(dataStream)" data-toggle="modal" data-target="#dataPointsForStreamModal" style="height: 75%;">
                 <i class="fa fa-bar-chart"></i>
@@ -95,7 +95,7 @@
           <p></p>
           <br>
           <div class="col-md-4 text-muted">
-            <p>Showing <strong>{{getDataStreamsForPage().length}}</strong> out of <strong>{{getDataStreamsConfigured().length}}</strong> entries</p>
+            <p>Showing <strong>{{dataStreamsForPage.length}}</strong> out of <strong>{{getDataStreamsConfigured().length}}</strong> entries</p>
           </div>
           <div class="col-md-8">
             <!--     Table pagination     -->
@@ -114,11 +114,7 @@
 
         </div>
 
-
       </div>
-
-      <!--div class="col-md-1">
-      </div-->
 
     </div>
 
@@ -129,10 +125,25 @@
 <script>
 
   import {mapActions} from 'vuex';
+  import Spinner from './Spinner.vue'
 
   export default{
 
+    components:{
+      'spinner' : Spinner,
+    },
+
+    mounted(){
+      console.log(" ########### TU VIEJA ###########");
+      this.$store.dispatch('showDataStreamView', this.$store.state.backendEndPoint);
+    },
+
     computed:{
+
+      hasToDisplayLoadingFeedback() {
+        return this.$store.state.displayLoadingFeedback;
+      },
+
       maxDataStreamsPerPage: {
         // getter
         get: function () {
@@ -144,9 +155,18 @@
           this.$store.dispatch('setMaxDataStreamsPerPage', newValue);
         }
       },
+
+      dataStreamsForPage: {
+        // getter
+        get: function () {
+          return this.$store.state.dataStreamsForPage;
+        },
+      },
+
       renderDataStreamView(){
         return this.$store.state.renderDataStreamView;
       },
+
       dataStreamFilter: {
         // getter
         get: function () {
@@ -164,10 +184,6 @@
 
     methods: {
 
-      hasToDisplayLoadingFeedback: function () {
-        return this.$store.state.displayLoadingFeedbackDataStreams;
-      },
-
       getMaxDataStreamsPerPage: function () {
         return this.$store.state.maxDataStreamsPerPage;
       },
@@ -182,10 +198,6 @@
 
       getElementsToDelete: function () {
         return this.$store.state.elementsToDelete;
-      },
-
-      getDataStreamsForPage: function () {
-        return this.$store.state.dataStreamsForPage;
       },
 
       getDataStreamsConfigured: function(){
@@ -242,5 +254,11 @@
 
 <style scoped>
 
+  #spinner{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-50%);
+  }
 
 </style>

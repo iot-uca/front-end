@@ -28,42 +28,48 @@
         <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
           <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
 
-            <li class="nav-item active" @click="showDashboardView()">
+            <!--li class="nav-item active" @click="showDashboardView()"-->
+            <li class="nav-item active">
               <a class="nav-link">
                 <router-link to="/dashboard" exact>
                   Dashboard
                 </router-link>
               </a>
             </li>
-            <li class="nav-item" @click="showDataStreamView()">
+            <!--li class="nav-item" @click="showDataStreamView()"-->
+            <li class="nav-item">
               <a class="nav-link">
                 <router-link to="/dataStreams" exact>
                   Data Streams
                 </router-link>
               </a>
             </li>
-            <li class="nav-item" @click="showActionView()">
+            <!--li class="nav-item" @click="showActionView()"-->
+            <li class="nav-item">
               <a class="nav-link">
                 <router-link to="/actions" exact>
                   Actions
                 </router-link>
               </a>
             </li>
-            <li class="nav-item" @click="showTriggerView()">
+            <!--li class="nav-item" @click="showTriggerView()"-->
+            <li class="nav-item">
               <a class="nav-link">
                 <router-link to="/triggers" exact>
                   Triggers
                 </router-link>
               </a>
             </li>
-            <li class="nav-item" @click="showSecurityView()">
+            <!--li class="nav-item" @click="showSecurityView()"-->
+            <li class="nav-item">
               <a class="nav-link">
                 <router-link to="/security" exact>
                   Security
                 </router-link>
               </a>
             </li>
-            <li class="nav-item" @click="showAboutView()">
+            <!--li class="nav-item" @click="showAboutView()"-->
+            <li class="nav-item">
               <a class="nav-link">
                 <router-link to="/about" exact>
                   About

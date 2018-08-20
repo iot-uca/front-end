@@ -52,7 +52,7 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fa fa-star-o"></i></span>
                   </div>
-                  <select disabled class="form-control custom-select" id="httpMethod" v-model="activeAction.method">
+                  <select disabled class="form-control custom-select" id="httpMethod" v-model="activeAction.http_request.request_line.method">
                     <option v-for="(method, index) in existingHttpMethods" v-bind:value="method.name">
                       {{method.name}}
                     </option>
@@ -66,7 +66,7 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fa fa-external-link"></i></span>
                   </div>
-                  <input disabled type="text" class="form-control" id="actionUrl" v-model="activeAction.url">
+                  <input disabled type="text" class="form-control" id="actionUrl" v-model="activeAction.http_request.request_line.url">
 
                 </div>
               </div>
@@ -77,7 +77,7 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fa fa-code"></i></span>
                   </div>
-                  <input disabled type="text" class="form-control" id="actionVersion" v-model="activeAction.version">
+                  <input disabled type="text" class="form-control" id="actionVersion" v-model="activeAction.http_request.request_line.version">
                 </div>
               </div>
             </div>
@@ -98,7 +98,8 @@
 
             <div class="tab-pane fade" id="newone" role="tabpanel" aria-labelledby="newone-tab">
 
-              <div class="row" v-for="(elem, index) in activeIdsForHttpRequestHeader">
+              <!--div class="row" v-for="(elem, index) in activeIdsForHttpRequestHeader"-->
+              <div class="row" v-for="(elem, index) in activeAction.http_request.headers">
 
                 <div class="col-md-6">
                   <div class="mb-3">

@@ -492,7 +492,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
 
     filterActionsToDisplay: (state, filterValue) => {
-      console.log("Entering filterActionsToDisplay ");
+      console.log("### Entering filterActionsToDisplay ");
 
       state.actionFilter = filterValue;
       console.log("actionFilter: " + state.actionFilter);
@@ -512,28 +512,28 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
           intermmediateActions = addElementToFilteredOnes(filteredField, state.actionFilter, intermmediateActions, state.existingActions[i]);
 
           //check Action type
-          filteredField = state.existingActions[i].type;
-          intermmediateActions = addElementToFilteredOnes(filteredField, state.actionFilter, intermmediateActions, state.existingActions[i]);
+          /*filteredField = state.existingActions[i].type;
+          intermmediateActions = addElementToFilteredOnes(filteredField, state.actionFilter, intermmediateActions, state.existingActions[i]);*/
 
-          if(filteredField==="command"){
-            //check Action command priority
-            filteredField = state.existingActions[i].priority;
+          // FIXME: Need to check COMMANDS structure!!
+
+          if(state.existingActions[i].http_request!== undefined){
+            filteredField = "HTTP Request";
             intermmediateActions = addElementToFilteredOnes(filteredField, state.actionFilter, intermmediateActions, state.existingActions[i]);
-          }else{
 
             //check Action http request method
-            filteredField = state.existingActions[i].method;
+            filteredField = state.existingActions[i].http_request.request_line.method;
             intermmediateActions = addElementToFilteredOnes(filteredField, state.actionFilter, intermmediateActions, state.existingActions[i]);
 
             //check Action http request url
-            filteredField = state.existingActions[i].url;
+            filteredField = state.existingActions[i].http_request.request_line.url;
             intermmediateActions = addElementToFilteredOnes(filteredField, state.actionFilter, intermmediateActions, state.existingActions[i]);
 
             //check Action http request version
-            filteredField = state.existingActions[i].version;
+            filteredField = state.existingActions[i].http_request.request_line.version;
             intermmediateActions = addElementToFilteredOnes(filteredField, state.actionFilter, intermmediateActions, state.existingActions[i]);
-
           }
+
         }
 
         if(intermmediateActions.length>0){ // si tiene triggers para mostrar

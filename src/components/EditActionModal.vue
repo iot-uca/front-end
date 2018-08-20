@@ -54,7 +54,7 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fa fa-star-o"></i></span>
                   </div>
-                  <select class="form-control custom-select" id="httpMethod" v-model="activeAction.method" required="true">
+                  <select class="form-control custom-select" id="httpMethod" v-model="activeAction.http_request.request_line.method" required="true">
                     <option v-for="(method, index) in existingHttpMethods" v-bind:value="method.name">
                       {{method.name}}
                     </option>
@@ -71,7 +71,7 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fa fa-external-link"></i></span>
                   </div>
-                  <input type="text" class="form-control" id="actionUrl" v-model="activeAction.url" required="true">
+                  <input type="text" class="form-control" id="actionUrl" v-model="activeAction.http_request.request_line.url" required="true">
                   <div class="invalid-feedback" style="width: 100%;">
                     The Action url is required.
                   </div>
@@ -84,7 +84,7 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fa fa-code"></i></span>
                   </div>
-                  <input type="text" class="form-control" id="actionVersion" v-model="activeAction.version" required="true">
+                  <input type="text" class="form-control" id="actionVersion" v-model="activeAction.http_request.request_line.version" required="true">
                   <div class="invalid-feedback" style="width: 100%;">
                     The Action name is required.
                   </div>
@@ -121,7 +121,8 @@
                   <button class="btn btn-info btn-sm" style="float:right;"  @click="addOneMoreElemForActionRequestHeader()"><strong>Add parameter</strong></button>
               </div>
 
-              <div class="row" v-for="(elem, index) in activeIdsForHttpRequestHeader">
+              <!--div class="row" v-for="(elem, index) in activeIdsForHttpRequestHeader"-->
+              <div class="row" v-for="(elem, index) in activeAction.http_request.headers">
 
                 <div class="col-md-5">
                   <div class="mb-3">

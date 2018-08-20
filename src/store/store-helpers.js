@@ -22,7 +22,7 @@ export function addElementToFilteredOnes(param, filter, existingElems, elem) {
     }
     console.log("existingElems: " + existingElems);
   }
-
+  console.log("##After filtering the existingElems: " + existingElems);
   return existingElems;
 }
 

@@ -5,6 +5,79 @@
 
     <div class="row d-flex align-items-stretch" style="font-family: sans-serif;">
 
+
+      <div class="col-md-4" style="font-family: sans-serif;">
+
+        <div class="card shadow clickable-card" >
+          <div class="card-body text-center">
+            <div class="row">
+              <div class="col-sm-12">
+                <h4 class="card-title text-primary">12</h4>
+                <div class="text-muted">Data Streams</div>
+              </div>
+              <!--div class="col-sm-6 text-center">
+
+              </div-->
+            </div>
+          </div>
+        </div>
+
+
+        <div class="card shadow my-4 clickable-card"><!-- my-5 da margen en el eje Y : 1.5 rem -->
+          <div class="card-body text-center">
+            <div class="row">
+              <div class="col-sm-4">
+                <h4 class="card-title text-primary">23</h4>
+                <div class="small text-muted">Actions</div>
+              </div>
+              <div class="col-sm-4 text-center">
+                <div class="h5 mb-0 text-info">17</div>
+                <div class="small text-muted">Commands</div>
+              </div>
+              <div class="col-sm-4 text-center">
+                <div class="h5 mb-0 text-info">5</div>
+                <div class="small text-muted">HTTP Requests</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card shadow clickable-card">
+          <div class="card-body text-center">
+            <div class="row">
+              <div class="col-sm-4">
+                <h4 class="card-title text-primary">7</h4>
+                <div class="small text-muted">Triggers</div>
+              </div>
+              <div class="col-sm-8 text-center">
+                <!--div class="h5 mb-0 text-info">4</div>
+                <div class="small text-muted">Time Interval</div>
+              </div>
+              <div class="col-sm-4 text-center">
+                <div class="h5 mb-0 text-info">3</div>
+                <div class="small text-muted">Data Point Registration</div-->
+
+                <div class="small text-muted">Time Interval</div>
+                <div class="progress">
+                  <div class="progress-bar bg-info" role="progressbar" style="width: 58%;" aria-valuenow="58" aria-valuemin="0" aria-valuemax="100">4</div>
+                </div>
+
+
+                <div class="small text-muted">Data Point Registration</div>
+                <div class="progress">
+                  <div class="progress-bar bg-info" role="progressbar" style="width: 42%;" aria-valuenow="42" aria-valuemin="0" aria-valuemax="100">3</div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+      </div>
+
+
       <div class="col-md-8">
 
         <div class="card mb-3 shadow h-100">
@@ -38,6 +111,15 @@
         </div>
       </div>
 
+    </div>
+
+    <div class="row" style="font-family: sans-serif; margin-top: 2%;">
+
+      <!--data-stream-card v-for="dS in dataStreams" v-bind:name="dS.name" v-bind:value="dS.current_value" v-bind:timestamp="dS.last_updated" @click.native="assignDataStream(dS)"></data-stream-card>
+      <div v-if="showAddDataStream" class="col-md-2">
+          <button @click="showDataStreamView(); displayDataStreamModal()"><i class="fa fa-plus text-center" style="font-size: 3rem; color: lightblue;"></i></button>
+      </div-->
+
       <div class="col-md-4">
         <!-- Example Pie Chart Card-->
         <div class="card mb-3 shadow h-100">
@@ -65,34 +147,7 @@
         </div>
       </div>
 
-      <!--/div-->
-
-    </div>
-
-    <div class="row" style="font-family: sans-serif; margin-top: 2%;">
-
-      <!--data-stream-card v-for="dS in dataStreams" v-bind:name="dS.name" v-bind:value="dS.current_value" v-bind:timestamp="dS.last_updated" @click.native="assignDataStream(dS)"></data-stream-card>
-      <div v-if="showAddDataStream" class="col-md-2">
-          <button @click="showDataStreamView(); displayDataStreamModal()"><i class="fa fa-plus text-center" style="font-size: 3rem; color: lightblue;"></i></button>
-      </div-->
-
-
       <div class="col-md-8" style="font-family: sans-serif; width:100%;" >
-
-        <div v-if="displayLoadingFeedback" class="sk-circle">
-          <div class="sk-circle1 sk-child"></div>
-          <div class="sk-circle2 sk-child"></div>
-          <div class="sk-circle3 sk-child"></div>
-          <div class="sk-circle4 sk-child"></div>
-          <div class="sk-circle5 sk-child"></div>
-          <div class="sk-circle6 sk-child"></div>
-          <div class="sk-circle7 sk-child"></div>
-          <div class="sk-circle8 sk-child"></div>
-          <div class="sk-circle9 sk-child"></div>
-          <div class="sk-circle10 sk-child"></div>
-          <div class="sk-circle11 sk-child"></div>
-          <div class="sk-circle12 sk-child"></div>
-        </div>
 
         <div v-if="showAddDataStream" class="card shadow h-100" style="font-family: sans-serif;">
           <div class="card-header">
@@ -121,76 +176,6 @@
         </div>
       </div>
 
-      <div class="col-md-4" style="font-family: sans-serif;">
-
-        <div class="card shadow">
-          <div class="card-body text-center">
-            <div class="row">
-              <div class="col-sm-12">
-                <h4 class="card-title text-primary">12</h4>
-                <div class="text-muted">Data Streams</div>
-              </div>
-              <!--div class="col-sm-6 text-center">
-
-              </div-->
-            </div>
-          </div>
-        </div>
-
-
-        <div class="card shadow my-4"><!-- my-5 da margen en el eje Y : 1.5 rem -->
-          <div class="card-body text-center">
-            <div class="row">
-              <div class="col-sm-4">
-                <h4 class="card-title text-primary">23</h4>
-                <div class="small text-muted">Actions</div>
-              </div>
-              <div class="col-sm-4 text-center">
-                <div class="h5 mb-0 text-info">17</div>
-                <div class="small text-muted">Commands</div>
-              </div>
-              <div class="col-sm-4 text-center">
-                <div class="h5 mb-0 text-info">5</div>
-                <div class="small text-muted">HTTP Requests</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card shadow">
-          <div class="card-body text-center">
-            <div class="row">
-              <div class="col-sm-4">
-                <h4 class="card-title text-primary">7</h4>
-                <div class="small text-muted">Triggers</div>
-              </div>
-              <div class="col-sm-8 text-center">
-                <!--div class="h5 mb-0 text-info">4</div>
-                <div class="small text-muted">Time Interval</div>
-              </div>
-              <div class="col-sm-4 text-center">
-                <div class="h5 mb-0 text-info">3</div>
-                <div class="small text-muted">Data Point Registration</div-->
-
-                  <div class="small text-muted">Time Interval</div>
-                  <div class="progress">
-                    <div class="progress-bar bg-info" role="progressbar" style="width: 58%;" aria-valuenow="58" aria-valuemin="0" aria-valuemax="100">4</div>
-                  </div>
-
-
-                  <div class="small text-muted">Data Point Registration</div>
-                  <div class="progress">
-                    <div class="progress-bar bg-info" role="progressbar" style="width: 42%;" aria-valuenow="42" aria-valuemin="0" aria-valuemax="100">3</div>
-                  </div>
-
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-
-      </div>
 
     </div>
 
@@ -236,6 +221,8 @@ export default {
 
 <style scoped>
 
-
+  .clickable-card card:hover{
+    transform: scale(1.2); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+  }
 
 </style>

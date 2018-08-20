@@ -34,7 +34,9 @@
                   <span class="input-group-text"><i class="fa fa-search"></i></span>
                 </div>
 
-                <input type="text" class="form-control" v-model="dataStreamFilter" placeholder="Start typing to filter data streams...">
+                <input v-if="getDataStreamsConfigured().length>0" type="text" class="form-control" v-model="dataStreamFilter" placeholder="Start typing to filter data streams...">
+                <input v-else type="text" readonly class="form-control" v-model="dataStreamFilter" placeholder="Start typing to filter data streams...">
+
 
               </div>
             </div>

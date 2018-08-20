@@ -36,7 +36,8 @@
                   <span class="input-group-text"><i class="fa fa-search"></i></span>
                 </div>
 
-                <input type="text" class="form-control" v-model="actionFilter" placeholder="Start typing to filter actions..." required="true">
+                <input v-if="getExistingActions().length>0" type="text" class="form-control" v-model="actionFilter" placeholder="Start typing to filter actions...">
+                <input v-else type="text" class="form-control" v-model="actionFilter" placeholder="Start typing to filter actions..." readonly>
 
               </div>
             </div>
@@ -241,7 +242,12 @@
 
 <style scoped>
 
-
+  #spinner{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+  }
 
 
 </style>

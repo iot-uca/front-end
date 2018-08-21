@@ -161,31 +161,51 @@
                 </div>
               </div>
 
-              <div class="mb-3" v-if="conditionSelected.id==2 || conditionSelected.id==3">
+              <!--div class="mb-3" v-if="conditionSelected.id==2">
                 <label for="dataStreamName">From Data Stream</label>
                 <div class="input-group">
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fa fa-diamond"></i></span>
                   </div>
                   <select class="form-control custom-select" id="dataStreamName" placeholder="" required="true">
-                    <option v-for="dS in dataStreamsConfigured" value="dS.name">{{dS.name}}</option>
+                    <option v-for="dS in dataStreamsConfigured" value="dS.name" v-model="onDataStreamValueCondition.dataStream">{{dS.name}}</option>
                   </select>
                   <div class="invalid-feedback" style="width: 100%;">
                     The Trigger name is required.
                   </div>
                 </div>
-              </div>
+              </div-->
 
 
               <div v-if="conditionSelected.id==2">
                 <div class="row">
-                  <div class="col-md-4 mb-3">
+
+                  <div class="col-md-7 mb-3">
+                    <label for="dataStreamName">From Data Stream</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fa fa-diamond"></i></span>
+                      </div>
+                      <select class="form-control custom-select" id="dataStreamName" v-model="dataStreamValue">
+                        <option v-for="dS in dataStreamsConfigured" :id="dS.name" :value="dS.name">{{dS.name}}</option>
+                        <!--option v-for="dS in dataStreamsConfigured" value="dS.name">{{dS.name}}</option-->
+                      </select>
+                      <div class="invalid-feedback" style="width: 100%;">
+                        The Trigger name is required.
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <!--div class="col-md-4 mb-3">
                     <label>Value</label>
                     <input class="form-control" type="text" placeholder="Data-Stream current value" readonly>
-                  </div>
-                  <div class="col-md-4 mb-3">
+                  </div-->
+
+
+                  <div class="col-md-3 mb-3">
                     <label>Condition</label>
-                    <select class="form-control custom-select" id="currentValueCond" placeholder="" required="true">
+                    <select class="form-control custom-select" id="currentValueCond" v-model="dataStreamCondition">
                       <option value="greater">greater than</option>
                       <option value="less">less than</option>
                       <option value="equal">equal to</option>
@@ -195,12 +215,27 @@
                       Condition is required
                     </div>
                   </div>
-                  <div class="col-md-4 mb-3">
+                  <div class="col-md-2 mb-3">
                     <label for="ds-defined-value">Defined value</label>
-                    <input type="text" class="form-control" id="ds-defined-value" placeholder="0" required="">
+                    <input type="text" class="form-control" id="ds-defined-value" placeholder="0" required="" v-model="dataStreamReferenceValue">
                     <div class="invalid-feedback">
                       A value is required
                     </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mb-3" v-if="conditionSelected.id==3">
+                <label for="dataStreamName">From Data Stream</label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fa fa-diamond"></i></span>
+                  </div>
+                  <select class="form-control custom-select" id="dataStreamNameNotUpdated" v-model="dataStreamNotUpdated">
+                    <option v-for="dS in dataStreamsConfigured" :value="dS.name">{{dS.name}}</option>
+                  </select>
+                  <div class="invalid-feedback" style="width: 100%;">
+                    The Trigger name is required.
                   </div>
                 </div>
               </div>
@@ -283,15 +318,24 @@
                 </div>
               </div>
 
-
               <div class="row">
                 <div class="col-md-10">
-                  <button type="button" class="btn btn-primary btn-sm" style="float: right;">Add new condition</button>
+                  <button type="button" class="btn btn-primary btn-sm" @click="addNewCondition()" style="float: right;">Add new condition</button>
                 </div>
                 <div class="col-md-2">
                   <button type="button" class="btn btn-danger btn-sm" style="float: right;">Forget condition</button>
                 </div>
               </div>
+
+
+
+
+              <ul class="list-group list-group-flush">
+                <li v-for="condition in conditionsForTrigger" class="list-group-item">{{condition}}</li>
+              </ul>
+
+
+
 
             </div>
           </div>
@@ -311,6 +355,56 @@
   export default {
 
     computed:{
+
+      conditionsForTrigger: function() {
+        return this.$store.state.conditionsForTrigger;
+      },
+
+      dataStreamValue: {
+        // getter
+        get: function () {
+          return this.$store.state.onDataStreamValueCondition.dataStream;
+        },
+        // setter
+        set: function (newValue) {
+          this.$store.dispatch('setOnDataStreamValue', newValue);
+        }
+      },
+
+      dataStreamCondition: {
+        // getter
+        get: function () {
+          return this.$store.state.onDataStreamValueCondition.condition;
+        },
+        // setter
+        set: function (newValue) {
+          this.$store.dispatch('setOnDataStreamCondition', newValue);
+        }
+      },
+
+      dataStreamReferenceValue: {
+        // getter
+        get: function () {
+          return this.$store.state.onDataStreamValueCondition.value;
+        },
+        // setter
+        set: function (newValue) {
+          this.$store.dispatch('setOnDataStreamReferenceValue', newValue);
+        }
+      },
+
+
+      dataStreamNotUpdated: {
+        // getter
+        get: function () {
+          return this.$store.state.dataStreamNotUpdatedCondition.dataStream;
+        },
+        // setter
+        set: function (newValue) {
+          this.$store.dispatch('setDataStreamNotUpdated', newValue);
+        }
+      },
+
       existingActions(){
         return this.$store.state.existingActions;
       },
@@ -349,6 +443,10 @@
     },
 
     methods: {
+
+      addNewCondition: function () {
+        this.$store.dispatch('addNewCondition');
+      },
 
       dataPointPolicy: function () {
         this.$store.dispatch('dataPointPolicy');

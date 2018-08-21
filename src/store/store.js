@@ -240,6 +240,13 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       text:''
     },
 
+    conditionsForTrigger:[], // it will contain an array of 'condition's selected for a trigger
+
+    condition:{               // it will contain each condition selected for a trigger
+      condition: undefined,   // it will contain the conditionSelected
+      details: undefined,     // it will contain either dataStreamNotUpdatedCondition, onDataStreamValueCondition or timeIntervalCondition
+    },
+
     dataStreamNotUpdatedFrom:{
       months:0,
       weeks:0,
@@ -1152,6 +1159,71 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
         state.errorMessage = "There was a problem adding " + state.dataStreamToAdd + ". Please try again!";
       }
     },
+
+
+    setOnDataStreamValue: (state, newValue) =>{
+      console.log("### Entering setOnDataStreamValue");
+      state.onDataStreamValueCondition.dataStream = newValue;
+      console.log("# " + state.onDataStreamValueCondition.dataStream + " #");
+    },
+
+    setOnDataStreamCondition: (state, newValue) =>{
+      console.log("### Entering setOnDataStreamCondition");
+      state.onDataStreamValueCondition.condition = newValue;
+      console.log("# " + state.onDataStreamValueCondition.condition + " #");
+    },
+
+    setOnDataStreamReferenceValue: (state, newValue) =>{
+      console.log("### Entering setOnDataStreamReferenceValue");
+      state.onDataStreamValueCondition.value = newValue;
+      console.log("# " + state.onDataStreamValueCondition.value + " #");
+    },
+
+    setDataStreamNotUpdated: (state, newValue) =>{
+      console.log("### Entering setDataStreamNotUpdated");
+      state.dataStreamNotUpdatedCondition.dataStream = newValue;
+      console.log("# " + state.dataStreamNotUpdatedCondition.dataStream + " #");
+    },
+
+    addNewCondition: state => {
+      console.log("### Entering addNewCondition");
+
+      let condition = {};
+
+      //state.condition.condition = state.conditionSelected.text;
+      condition.condition = state.conditionSelected.text;
+
+      if(state.conditionSelected.id === 1){
+          // DO NOTHING
+      }else {
+        if (state.conditionSelected.id === 2) {
+          //state.condition.details = state.onDataStreamValueCondition;
+          condition.details = state.onDataStreamValueCondition;
+
+        } else {
+          if (state.conditionSelected.id === 3) {
+            state.dataStreamNotUpdatedCondition.dataStreamNotUpdatedFrom = state.dataStreamNotUpdatedFrom;
+            //state.condition.details = state.dataStreamNotUpdatedCondition;
+            condition.details = state.dataStreamNotUpdatedCondition;
+
+          } else {
+            //state.condition.details = state.timeIntervalCondition;
+            condition.details = state.timeIntervalCondition;
+          }
+        }
+      }
+
+      //state.conditionsForTrigger.push(state.condition);
+      state.conditionsForTrigger.push(condition);
+
+      console.log("### state.conditionsForTrigger: " + state.conditionsForTrigger);
+
+      // Cleaning the variables
+      //state.condition.condition = "";
+      //state.condition.details = "";
+      //state.conditionSelected = undefined;
+    },
+
   },
 
   //#####################################################################
@@ -1513,10 +1585,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
     },
 
-    addNewCondition: context => {
-
-    },
-
     drawCharts: context => {
       context.commit('drawMosTriggeredActionsChart');
       context.commit('drawTriggerTypesPercentagesChart');
@@ -1533,6 +1601,26 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
     hideLoadingFeedback: context => {
       context.commit('hideLoadingFeedback');
+    },
+
+    setOnDataStreamValue: (context, newValue) => {
+      context.commit('setOnDataStreamValue', newValue);
+    },
+
+    setOnDataStreamCondition: (context, newValue) => {
+      context.commit('setOnDataStreamCondition', newValue);
+    },
+
+    setOnDataStreamReferenceValue: (context, newValue) => {
+      context.commit('setOnDataStreamReferenceValue', newValue);
+    },
+
+    addNewCondition: context => {
+      context.commit('addNewCondition');
+    },
+
+    setDataStreamNotUpdated: (context, newValue) => {
+      context.commit('setDataStreamNotUpdated', newValue);
     },
 
   }

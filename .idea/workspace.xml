@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BookmarkManager">
+    <bookmark url="file://$PROJECT_DIR$/src/store/store.js" line="1199" mnemonic="7" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="92de441b-966a-4264-9fdd-1f36a4e62499" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ActionView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ActionView.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Dashboard.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Dashboard.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/DataPointsModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/DataPointsModal.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/DataStreamView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/DataStreamView.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/EditActionModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/EditActionModal.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ShowActionModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ShowActionModal.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/store-helpers.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/store-helpers.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/AddTriggerModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AddTriggerModal.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/store/store.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/store.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -27,6 +24,7 @@
         <counts>
           <entry key="project.closed" value="3" />
           <entry key="project.open.time.24" value="1" />
+          <entry key="project.open.time.31" value="1" />
           <entry key="project.open.time.36" value="1" />
           <entry key="project.open.time.37" value="1" />
           <entry key="project.open.time.40" value="1" />
@@ -36,7 +34,7 @@
           <entry key="project.open.time.63" value="1" />
           <entry key="project.open.time.65" value="1" />
           <entry key="project.open.time.66" value="1" />
-          <entry key="project.opened" value="10" />
+          <entry key="project.opened" value="11" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -45,7 +43,7 @@
           <entry key="html" value="4" />
           <entry key="js" value="19" />
           <entry key="json" value="13" />
-          <entry key="vue" value="113" />
+          <entry key="vue" value="116" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
@@ -54,91 +52,47 @@
           <entry key="JSON" value="13" />
           <entry key="JavaScript" value="19" />
           <entry key="PLAIN_TEXT" value="1" />
-          <entry key="Vue.js" value="113" />
+          <entry key="Vue.js" value="116" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="html" value="37" />
-          <entry key="js" value="8481" />
+          <entry key="js" value="9784" />
           <entry key="json" value="10" />
-          <entry key="vue" value="8979" />
+          <entry key="vue" value="9500" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="HTML" value="37" />
           <entry key="JSON" value="10" />
-          <entry key="JavaScript" value="8481" />
-          <entry key="Vue.js" value="8979" />
+          <entry key="JavaScript" value="9784" />
+          <entry key="Vue.js" value="9500" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/store/store.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="400">
-              <caret line="528" column="79" selection-start-line="528" selection-start-column="79" selection-end-line="528" selection-end-column="79" />
+            <state relative-caret-position="405">
+              <caret line="1216" column="38" selection-start-line="1216" selection-start-column="38" selection-end-line="1216" selection-end-column="38" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/AddActionModal.vue">
+        <entry file="file://$PROJECT_DIR$/src/components/AddTriggerModal.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2380">
-              <caret line="239" column="39" selection-start-line="239" selection-start-column="30" selection-end-line="239" selection-end-column="39" />
+            <state relative-caret-position="85">
+              <caret line="333" column="60" selection-start-line="333" selection-start-column="40" selection-end-line="333" selection-end-column="60" />
               <folding>
-                <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#div#0;n#div#1;n#div#1;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#div#0;n#div#2;n#div#1;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#3;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#1;n#div#3;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" />
+                <element signature="n#div#1;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/ActionView.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="280">
-              <caret line="89" column="105" selection-start-line="89" selection-start-column="80" selection-end-line="89" selection-end-column="105" />
-              <folding>
-                <element signature="n#style#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#button#0;n#td#12;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#1;n#div#0;n#template#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/ShowActionModal.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="54" column="107" lean-forward="true" selection-start-line="54" selection-start-column="107" selection-end-line="54" selection-end-column="133" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/components/EditActionModal.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="124" column="88" selection-start-line="124" selection-start-column="88" selection-end-line="124" selection-end-column="88" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/store/store-helpers.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="24" column="17" selection-start-line="24" selection-start-column="17" selection-end-line="24" selection-end-column="17" />
             </state>
           </provider>
         </entry>
@@ -147,36 +101,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>state</find>
-      <find>showDataStreamView</find>
-      <find>example</find>
-      <find>getDataStreamsConfigured</find>
-      <find>application/vnd.cosmos.data-stream-s</find>
-      <find>addDataStream</find>
-      <find>showAction</find>
-      <find>getActionsConfigured</find>
-      <find>processActionsConfigured</find>
-      <find>displayLoadingFeedbackDataStreams</find>
-      <find>hideLoadingFeedback</find>
-      <find>hasToDisplayLoadingFeedback</find>
-      <find>hasTo</find>
-      <find>hide</find>
-      <find>hideLoadingFeedbackDataStreams</find>
-      <find>processDataStreamsConfigured</find>
-      <find>addDataStream: con</find>
-      <find>addAction: state</find>
-      <find>showActionView:</find>
-      <find>addAction</find>
-      <find>dataStreamToAdd</find>
-      <find>showActionView</find>
-      <find>addDataStream:</find>
-      <find>addAction:</find>
-      <find>addDataStream: sta</find>
-      <find>showDataStream:</find>
-      <find>showDataStream</find>
-      <find>actionFilter</find>
-      <find>filterActionsToDisplay</find>
       <find>addElementToFilteredOnes</find>
+      <find>onDataStreamValueCondition</find>
+      <find>activeAction.http_request</find>
+      <find>activeaction:</find>
+      <find>dataStreamValueCondition</find>
+      <find>setOnDataStreamValueCondition</find>
+      <find>dataStreamCondition</find>
+      <find>setOnDataStreamValue</find>
+      <find>addNewCondition</find>
+      <find>conditions</find>
+      <find>onDataStreamValueCondition:</find>
+      <find>conditions:</find>
+      <find>state.conditions:</find>
+      <find>triggerConditions:</find>
+      <find>dataStreamReferenceValue</find>
+      <find>setOnDataStreamReferenceValue</find>
+      <find>dataStreamNotUpdatedFrom</find>
+      <find>dataStreamNotUpdatedCondition:</find>
+      <find>dataStreamNotUpdated:</find>
+      <find>dataStreamNotUpdated</find>
+      <find>conditionSelected</find>
+      <find>conditionSelected:</find>
+      <find>conditionSelected.naam</find>
+      <find>setDataStreamNotUpdated</find>
+      <find>condition.details</find>
+      <find>condition:</find>
+      <find>condition</find>
+      <find>condition in</find>
+      <find>conditionsForTrigger</find>
+      <find>conditionsForTrigger:</find>
     </findStrings>
     <replaceStrings>
       <replace>amountOfActions</replace>
@@ -199,6 +153,8 @@
       <replace>processDataStreamsConfigured</replace>
       <replace>displayLoadingFeedback</replace>
       <replace>hideLoadingFeedback</replace>
+      <replace>setOnDataStreamValueCondition</replace>
+      <replace>setOnDataStreamValue</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -251,9 +207,10 @@
         <option value="$PROJECT_DIR$/src/components/DataStreamView.vue" />
         <option value="$PROJECT_DIR$/src/components/ActionView.vue" />
         <option value="$PROJECT_DIR$/src/store/store-helpers.js" />
-        <option value="$PROJECT_DIR$/src/store/store.js" />
         <option value="$PROJECT_DIR$/src/components/ShowActionModal.vue" />
         <option value="$PROJECT_DIR$/src/components/EditActionModal.vue" />
+        <option value="$PROJECT_DIR$/src/components/AddTriggerModal.vue" />
+        <option value="$PROJECT_DIR$/src/store/store.js" />
       </list>
     </option>
   </component>
@@ -362,12 +319,13 @@
       <workItem from="1534298047705" duration="9082000" />
       <workItem from="1534615678670" duration="7276000" />
       <workItem from="1534693749414" duration="24574000" />
-      <workItem from="1534786111052" duration="4943000" />
+      <workItem from="1534786111052" duration="5543000" />
+      <workItem from="1534803193456" duration="14902000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="157606000" />
+    <option name="totallyTimeSpent" value="173108000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="64" y="-11" width="1303" height="780" extended-state="6" />
@@ -441,16 +399,6 @@
     <entry file="file://$PROJECT_DIR$/cosmos/src/components/AddTriggerModal.vue" />
     <entry file="file://$PROJECT_DIR$/cosmos/index.html" />
     <entry file="file://$PROJECT_DIR$/src/components/Cover.vue" />
-    <entry file="file://$PROJECT_DIR$/src/components/AddTriggerModal.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="193">
-          <caret line="70" column="147" selection-start-line="70" selection-start-column="132" selection-end-line="70" selection-end-column="147" />
-          <folding>
-            <element signature="n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/ShowTriggerModal.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="183">
@@ -527,9 +475,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
           <caret line="16" column="41" selection-start-line="16" selection-start-column="41" selection-end-line="16" selection-end-column="41" />
-          <folding>
-            <element signature="e#0#51#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -571,10 +516,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
           <caret line="50" column="67" selection-start-line="50" selection-start-column="67" selection-end-line="50" selection-end-column="67" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#button#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -625,31 +566,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/store/store.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="528" column="79" selection-start-line="528" selection-start-column="79" selection-end-line="528" selection-end-column="79" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/AddActionModal.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2380">
-          <caret line="239" column="39" selection-start-line="239" selection-start-column="30" selection-end-line="239" selection-end-column="39" />
-          <folding>
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#1;n#div#1;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#2;n#div#1;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#3;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#1;n#div#3;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/ActionView.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
+        <state relative-caret-position="1335">
           <caret line="89" column="105" selection-start-line="89" selection-start-column="80" selection-end-line="89" selection-end-column="105" />
           <folding>
             <element signature="n#style#0;n#div#0;n#template#0;n#!!top" expanded="true" />
@@ -660,15 +579,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/store/store-helpers.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
+        <state relative-caret-position="360">
           <caret line="24" column="17" selection-start-line="24" selection-start-column="17" selection-end-line="24" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/ShowActionModal.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="54" column="107" lean-forward="true" selection-start-line="54" selection-start-column="107" selection-end-line="54" selection-end-column="133" />
         </state>
       </provider>
     </entry>
@@ -676,6 +588,50 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
           <caret line="124" column="88" selection-start-line="124" selection-start-column="88" selection-end-line="124" selection-end-column="88" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/ShowActionModal.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="520">
+          <caret line="101" column="80" selection-start-line="101" selection-start-column="55" selection-end-line="101" selection-end-column="80" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/AddActionModal.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="417">
+          <caret line="239" column="39" selection-start-line="239" selection-start-column="30" selection-end-line="239" selection-end-column="39" />
+          <folding>
+            <element signature="n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#div#1;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#1;n#div#1;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#2;n#div#1;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#div#2;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" />
+            <element signature="n#div#3;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#3;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#1;n#div#3;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/AddTriggerModal.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="333" column="60" selection-start-line="333" selection-start-column="40" selection-end-line="333" selection-end-column="60" />
+          <folding>
+            <element signature="n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" />
+            <element signature="n#div#1;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/store/store.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="1216" column="38" selection-start-line="1216" selection-start-column="38" selection-end-line="1216" selection-end-column="38" />
         </state>
       </provider>
     </entry>

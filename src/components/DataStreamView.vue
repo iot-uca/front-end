@@ -136,7 +136,7 @@
     },
 
     mounted(){
-      console.log(" ########### TU VIEJA ###########");
+      console.log(" ########### Entering mounted ###########");
       this.$store.dispatch('showDataStreamView', this.$store.state.backendEndPoint);
     },
 

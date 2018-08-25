@@ -218,7 +218,18 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     triggerFilter: undefined,
     filteredTriggers:[],
     intermediateTriggers:[],
-    activeTrigger:[],
+
+    activeTrigger:{
+      name:'',
+      action:'',
+      dataPointRegistration:{
+        dataStream:''
+      },
+      timePeriod:{
+        granularity:''
+      },
+      conditions:[],
+    },
 
     timeGranularityOptions: [
       {id: 1, name: '10 seconds'},
@@ -270,10 +281,17 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     timeIntervalCondition: {
-      from: undefined,
-      to: undefined
+      from:{
+        hours: '00',
+        minutes: '00'
+      },
+      to:{
+        hours: '00',
+        minutes: '00'
+      }
     },
 
+    conditionsCounter:1 ,
 
 //##########################################################################################
 // Pagination model
@@ -672,7 +690,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
           .then(function (response) {
             state.displayLoadingFeedback = false;
             state.errorInInteraction = false;
-            state.successMessage = state.dataStreamToAdd + " added succesfully.";
+            state.successMessage = state.dataStreamToAdd + " added successfully.";
             $("#successModal").modal();
             state.dataStreamToAdd = "";
 
@@ -773,7 +791,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
           state.displayLoadingFeedback = false;
           state.errorInInteraction = false;
-          state.successMessage = state.activeAction.name + " added succesfully.";
+          state.successMessage = state.activeAction.name + " added successfully.";
           $("#successModal").modal();
 
 
@@ -1189,40 +1207,122 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       console.log("### Entering addNewCondition");
 
       let condition = {};
+      let elemId = state.conditionsCounter;
 
-      //state.condition.condition = state.conditionSelected.text;
-      condition.condition = state.conditionSelected.text;
+      condition.condition =  state.conditionSelected.text;
+      condition.id = state.conditionSelected.id;
+      condition.elemId = elemId;
+
+      console.log("condition.id: " + condition.id);
+      console.log("condition.elemId: " + condition.elemId);
 
       if(state.conditionSelected.id === 1){
           // DO NOTHING
       }else {
         if (state.conditionSelected.id === 2) {
-          //state.condition.details = state.onDataStreamValueCondition;
-          condition.details = state.onDataStreamValueCondition;
+          condition.details = Object.assign({}, state.onDataStreamValueCondition);   // This prevents binding the variables, since you are copying the initial object
 
         } else {
           if (state.conditionSelected.id === 3) {
-            state.dataStreamNotUpdatedCondition.dataStreamNotUpdatedFrom = state.dataStreamNotUpdatedFrom;
-            //state.condition.details = state.dataStreamNotUpdatedCondition;
-            condition.details = state.dataStreamNotUpdatedCondition;
+            state.dataStreamNotUpdatedCondition.dataStreamNotUpdatedFrom = Object.assign({}, state.dataStreamNotUpdatedFrom);
+            condition.details = Object.assign({}, state.dataStreamNotUpdatedCondition);
 
           } else {
-            //state.condition.details = state.timeIntervalCondition;
-            condition.details = state.timeIntervalCondition;
+            console.log("state.timeIntervalCondition: " +state.timeIntervalCondition);
+            console.log("state.timeIntervalCondition.from: " + state.timeIntervalCondition.from);
+            console.log("state.timeIntervalCondition.to: " + state.timeIntervalCondition.to);
+            condition.details = Object.assign({}, state.timeIntervalCondition);
           }
         }
       }
 
-      //state.conditionsForTrigger.push(state.condition);
-      state.conditionsForTrigger.push(condition);
+      state.conditionsForTrigger.push(Object.assign({}, condition));
+      state.conditionsCounter+=1;
 
       console.log("### state.conditionsForTrigger: " + state.conditionsForTrigger);
+      console.log("### conditionsCounter: " + state.conditionsCounter);
 
-      // Cleaning the variables
-      //state.condition.condition = "";
-      //state.condition.details = "";
-      //state.conditionSelected = undefined;
     },
+
+
+    addTrigger: state => {
+      console.log("##### ABOUT TO ADD A TRIGGER!! ");
+
+      let policy = {};
+
+      if(state.isTimePeriodPolicy){
+        policy = {type: "time_interval", granularity: state.activeTrigger.timePeriod.granularity};
+      }else{
+        policy= {type: "data_point_registration", data_stream: state.activeTrigger.dataPointRegistration.dataStream};
+      }
+
+      state.displayLoadingFeedback = true; // user starts seeing the loading spinner
+
+      axios.post(state.backendEndPoint + '/triggers', {
+        name: state.activeTrigger.name,
+        action: state.activeTrigger.action,
+        policy: policy,
+        conditions: state.conditionsForTrigger,
+      })
+        .then(function (response) {
+          console.log("data: " + response.data);
+          console.log("status: " + response.status);
+          console.log("statusText: " + response.statusText);
+          console.log("headers: " + response.headers);
+          console.log("config: " + response.config);
+
+          state.displayLoadingFeedback = false;
+          state.errorInInteraction = false;
+          state.successMessage = state.activeTrigger.name + " added successfully.";
+          $("#successModal").modal();
+
+        })
+        .catch(function (error) {
+          console.log("[ERROR] " + error);
+
+          state.displayLoadingFeedback = false;
+          state.errorInInteraction = true;
+
+          // Error
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.data.message);
+
+            state.errorMessage = error.response.data.message;
+
+            console.log(error.response.status);
+            console.log(error.response.headers);
+
+          } else if (error.request) {
+            // The request was made but no response was received
+            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+            // http.ClientRequest in node.js
+            console.log(error.request);
+            state.errorMessage = "There was a problem adding " + state.activeTrigger.name + ". Please try again!";
+
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log('Error', error.message);
+            state.errorMessage = "There was a problem adding " + state.activeTrigger.name + ". Please try again!";
+          }
+
+          $("#successModal").modal();
+
+        });
+
+    },
+
+
+
+
+
+
+
+
+
+
 
   },
 
@@ -1621,6 +1721,10 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
     setDataStreamNotUpdated: (context, newValue) => {
       context.commit('setDataStreamNotUpdated', newValue);
+    },
+
+    addTrigger: context => {
+      context.commit('addTrigger');
     },
 
   }

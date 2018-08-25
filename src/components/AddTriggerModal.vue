@@ -28,6 +28,7 @@
           </ul>
 
           <div class="tab-content" id=" addTriggersTabContent">
+
             <div class="tab-pane fade show active" id="triggerActionConfig" role="tabpanel" aria-labelledby="triggerActionConfig-tab">
               <p></p>
               <div class="mb-3">
@@ -36,7 +37,7 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fa fa-font"></i></span>
                   </div>
-                  <input type="text" class="form-control" id="triggerName" placeholder="Trigger Name" required="true">
+                  <input type="text" class="form-control" id="triggerName" placeholder="Trigger Name" required="true" v-model="activeTrigger.name">
                   <div class="invalid-feedback" style="width: 100%;">
                     The Trigger name is required.
                   </div>
@@ -49,11 +50,7 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fa fa-star-o"></i></span>
                   </div>
-                  <select class="form-control custom-select" id="triggerAction" placeholder="" required="true">
-                    <!--option value="monday">Tweet</option>
-                    <option value="tuesday">Make Facebook Post</option>
-                    <option value="wednesday">Send Email</option>
-                    <option value="thursday">Start Engine Alfa</option-->
+                  <select class="form-control custom-select" id="triggerAction" placeholder="" required="true" v-model="activeTrigger.action">
                     <option v-for="(action, index) in existingActions" :value="action.name">{{action.name}}</option>
                   </select>
                   <div class="invalid-feedback" style="width: 100%;">
@@ -88,41 +85,11 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="fa fa-calendar-plus-o"></i></span>
                     </div>
-                    <select class="form-control custom-select" id="timeGranularity" required="true">
-                      <option v-for="opt in timeGranularityOptions" value="opt">{{opt.name}}</option>
+                    <select class="form-control custom-select" id="timeGranularity" required="true" v-model="activeTrigger.timePeriod.granularity">
+                      <option v-for="opt in timeGranularityOptions" :value="opt.name">{{opt.name}}</option>
                     </select>
-                    <div class="invalid-feedback" style="width: 100%;">
-                      The Trigger name is required.
-                    </div>
                   </div>
                 </div>
-
-                <!--div class="mb-3">
-                    <label for="triggerName">Starting from</label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fa fa-calendar-plus-o"></i></span>
-                        </div>
-                        <input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="a">
-                        <div class="invalid-feedback" style="width: 100%;">
-                            The Trigger name is required.
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="mb-3">
-                    <label for="triggerName">Ending on</label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fa fa-calendar-times-o"></i></span>
-                        </div>
-                        <input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="a">
-                        <div class="invalid-feedback" style="width: 100%;">
-                            The Trigger name is required.
-                        </div>
-                    </div>
-                </div-->
 
               </div>
 
@@ -134,7 +101,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="fa fa-diamond"></i></span>
                     </div>
-                    <select class="form-control custom-select" id="dsName" placeholder="" required="true">
+                    <select class="form-control custom-select" id="dsName" placeholder="" required="true" v-model="activeTrigger.dataPointRegistration.dataStream">
                       <option v-for="dS in dataStreamsConfigured" value="dS.name">{{dS.name}}</option>
                     </select>
                     <div class="invalid-feedback" style="width: 100%;">
@@ -291,49 +258,48 @@
               </div>
 
               <div v-if="conditionSelected.id==4">
-                <div class="mb-3">
-                  <label for="triggerName">From</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="fa fa-calendar-plus-o"></i></span>
-                    </div>
-                    <input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="from">
-                    <div class="invalid-feedback" style="width: 100%;">
-                      The Trigger name is required.
+
+                <div class="row">
+
+                  <div class="col-md-3">
+                    <div class="mb-3">
+                      <label for="dSHoursFrom">From: Hour (24hs)</label>
+                      <input type="text" class="form-control" id="dSHoursFrom" placeholder="0" required="" v-model="timeIntervalCondition.from.hours">
                     </div>
                   </div>
-                </div>
-
-                <div class="mb-3">
-                  <label for="triggerName">To</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="fa fa-calendar-times-o"></i></span>
-                    </div>
-                    <input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="to">
-                    <div class="invalid-feedback" style="width: 100%;">
-                      The Trigger name is required.
+                  <div class="col-md-3">
+                      <div class="mb-3">
+                        <label for="dSMinutesFrom">From: Minutes</label>
+                        <input type="text" class="form-control" id="dSMinutesFrom" placeholder="0" required="" v-model="timeIntervalCondition.from.minutes">
+                      </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="mb-3">
+                      <label for="dSHoursTo">To: Hour (24hs)</label>
+                      <input type="text" class="form-control" id="dSHoursTo" placeholder="0" required="" v-model="timeIntervalCondition.to.hours">
                     </div>
                   </div>
+                  <div class="col-md-3">
+                    <div class="mb-3">
+                      <label for="dSMinutesTo">To: Minutes</label>
+                      <input type="text" class="form-control" id="dSMinutesTo" placeholder="0" required="" v-model="timeIntervalCondition.to.minutes">
+                    </div>
+                  </div>
+
                 </div>
+
               </div>
 
-              <div class="row">
-                <div class="col-md-10">
-                  <button type="button" class="btn btn-primary btn-sm" @click="addNewCondition()" style="float: right;">Add new condition</button>
-                </div>
-                <div class="col-md-2">
-                  <button type="button" class="btn btn-danger btn-sm" style="float: right;">Forget condition</button>
-                </div>
+              <div class="row" style="margin: inherit;">
+                <button type="button" class="btn btn-primary btn-sm" @click="addNewCondition()" style="float: right;">Add condition</button>
               </div>
 
 
-
-
-              <ul class="list-group list-group-flush">
+              <!--ul class="list-group list-group-flush">
                 <li v-for="condition in conditionsForTrigger" class="list-group-item">{{condition}}</li>
-              </ul>
+              </ul-->
 
+              <conditions-accordion v-if="conditionsForTrigger!==undefined"></conditions-accordion>
 
 
 
@@ -352,9 +318,29 @@
 
 <script>
 
+  import TriggerConditionsAccordion from './TriggerConditionsAccordion'
+
   export default {
 
+    components: {
+      'conditions-accordion': TriggerConditionsAccordion
+    },
+
+    mounted(){
+      /*$(function () {
+        $('#datetimepicker1').datetimepicker();
+        $('#datetimepicker2').datetimepicker();
+
+        console.log($("#datetimepicker1").datetimepicker('date'));
+        console.log($('#datetimepicker').datetimepicker('viewDate'));
+      });*/
+    },
+
     computed:{
+
+      activeTrigger: function() {
+        return this.$store.state.activeTrigger;
+      },
 
       conditionsForTrigger: function() {
         return this.$store.state.conditionsForTrigger;
@@ -438,6 +424,10 @@
 
       dataStreamNotUpdatedFrom(){
         return this.$store.state.dataStreamNotUpdatedFrom;
+      },
+
+      timeIntervalCondition(){
+        return this.$store.state.timeIntervalCondition;
       }
 
     },
@@ -457,8 +447,7 @@
       },
 
       addTrigger: function () {
-
-
+        this.$store.dispatch('addTrigger');
       },
     }
 

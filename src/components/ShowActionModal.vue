@@ -1,7 +1,7 @@
 <template>
 
   <!-- Modal for showing action details -->
-  <div class="modal fade" id="showActionDetailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="showActionDetailModal" v-if="activeAction.http_request!==undefined" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
 

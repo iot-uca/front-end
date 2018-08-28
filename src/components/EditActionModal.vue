@@ -1,7 +1,7 @@
 <template>
 
   <!-- Modal for editing action details -->
-  <div class="modal fade" id="editActionModal" tabindex="-1" role="dialog" aria-labelledby="editActionModal" aria-hidden="true">
+  <div class="modal fade" id="editActionModal" tabindex="-1" role="dialog" v-if="activeAction.http_request!==undefined" aria-labelledby="editActionModal" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
 

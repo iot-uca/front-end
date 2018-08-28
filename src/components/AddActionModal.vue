@@ -237,7 +237,7 @@
       },
 
       addAction: function () {
-        this.$store.dispatch('addAction', this.$store.state.backendEndPoint);
+        this.$store.dispatch('addAction', this.$store.state.backendEndPoint, this.$store.state.request, this.$store.state.activeAction.name);
       }
     }
   }

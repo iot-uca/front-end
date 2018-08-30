@@ -26,6 +26,6 @@ script:
 - npm run build
 
 after_success:
-  - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-  - docker build -f Dockerfile -t $IMAGE_NAME:latest .
-  - docker push $IMAGE_NAME
+  - docker login -u $DOCKER_USER -p $DOCKER_PASS
+  - docker build -f Dockerfile -t "$IMAGE_NAME":latest .
+  - docker push "$IMAGE_NAME"

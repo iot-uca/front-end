@@ -1,4 +1,4 @@
-<p align="center"><img src="src/assets/cosmos.jpg">
+<p align="center"><img src="src/assets/cosmos-gui.jpg">
  <h1 align="center">Cosmos</h1>
   <p align="center">
       X is particular Cosmos graphical user interface written in Vue.js.

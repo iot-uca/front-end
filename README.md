@@ -1,27 +1,42 @@
-# my-first-app
+<p align="center"><img src="src/assets/cosmos.jpg">
+ <h1 align="center">Cosmos</h1>
+  <p align="center">
+      X is particular Cosmos graphical user interface written in Vue.js.
+    <br>
+    <a href="docs/"><strong>Explore the docs »</strong></a>
+    <br>
+    <br>
+    <a href="https://github.com/iot-uca/front-end/issues/new?labels=Type%3A+Defect">Report defect</a>
+    |
+    <a href="https://github.com/iot-uca/front-end/issues/new?labels=Type%3A+Feature">Request feature</a>
+  </p>
+</p>
 
-> A Vue.js project
+[![GitHub release](https://img.shields.io/github/release/ba-st/Cannon.svg)](https://github.com/ba-st/Cannon/releases/latest)
+[![Build Status](https://travis-ci.org/iot-uca/front-end.svg?branch=master)](https://travis-ci.org/iot-uca/front-end)
 
-## Build Setup
 
-``` bash
-# install dependencies
-npm install
 
-# serve with hot reload at localhost:8080
-npm run dev
+> *Name origin*: 
 
-# build for production with minification
-npm run build
+With X, we aim to provide a simple, light-weight, powerfull platform to interact with Cosmos.
 
-# build for production and view the bundle analyzer report
-npm run build --report
 
-# run unit tests
-npm run unit
+> Structural Projects
 
-# run all tests
-npm test
-```
+- [Vue JS 2](https://github.com/vuejs/vue)
+- [Vue Router](https://github.com/vuejs/vue-router)
+- [Vue X](https://github.com/vuejs/vuex)
+- [Bootstrap 4.1](https://getbootstrap.com/docs/4.1/getting-started/introduction/)..
+- [Chart Js](https://github.com/chartjs/Chart.js)
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
+## License
+- The code is licensed under [MIT](LICENSE).
+
+
+## Get started!
+
+* Clone repository
+* Open project on your favorite IDE/Text-Editor
+* Enjoy!

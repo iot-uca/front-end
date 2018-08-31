@@ -30,6 +30,12 @@ With X, we aim to provide a simple, light-weight, powerfull platform to interact
 - [Bootstrap 4.1](https://getbootstrap.com/docs/4.1/getting-started/introduction/)
 - [Chart Js](https://github.com/chartjs/Chart.js)
 
+> Production Components
+
+- [Docker](https://www.docker.com/)
+- [Nginx](https://www.nginx.com/)
+
+
 
 ## License
 - The code is licensed under [MIT](LICENSE).

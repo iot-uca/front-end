@@ -12,7 +12,7 @@
   </p>
 </p>
 
-[![GitHub release](https://img.shields.io/github/release/ba-st/Cannon.svg)](https://github.com/ba-st/Cannon/releases/latest)
+[![GitHub release]](https://github.com/iot-uca/front-end/releases/latest)
 [![Build Status](https://travis-ci.org/iot-uca/front-end.svg?branch=master)](https://travis-ci.org/iot-uca/front-end)
 
 

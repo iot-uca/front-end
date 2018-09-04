@@ -1,4 +1,4 @@
-<p align="center"><img src="src/assets/cosmos.jpg">
+<p align="center"><img src="src/assets/cosmos-gui.jpg">
  <h1 align="center">Cosmos</h1>
   <p align="center">
       X is particular Cosmos graphical user interface written in Vue.js.
@@ -12,7 +12,7 @@
   </p>
 </p>
 
-[![GitHub release](https://img.shields.io/github/release/ba-st/Cannon.svg)](https://github.com/ba-st/Cannon/releases/latest)
+[![GitHub release](https://img.shields.io/github/release/ba-st/Cannon.svg)](https://github.com/iot-uca/front-end/releases/latest)
 [![Build Status](https://travis-ci.org/iot-uca/front-end.svg?branch=master)](https://travis-ci.org/iot-uca/front-end)
 
 

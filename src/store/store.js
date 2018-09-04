@@ -12,9 +12,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
   state:{
     options:[
       {name: 'uno', value: 1},
-      {name: 'dos', value: 2},
-      {name: 'tres', value: 3},
-      {name: 'cuatro', value: 4},
     ],
 
 //##########################################################################################
@@ -328,7 +325,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     // por ejemplo, si miro en vue tools, voy a ver que se ejecutó la mutación X, pero la vista no se va a actualizar
     // hasta tanto el backend haya respondido. Si tengo N mutaciones asincronas, es un lío poder detectar cual se ejcutó
     // y el resultado de la misma (la mutación no se lista cuando terminó sino cuando se lanzó).
-    reduceOptions: state => {
+    increaseOptions: state => {
       state.options.forEach(option => {
         option.value += 1;
 

@@ -44,11 +44,11 @@ With X, we aim to provide a simple, light-weight, powerfull platform to interact
 
 A Docker image is pushed to Docker Hub every time CI runs successfully. 
 
-First download the latest docker image:
+> *First download the latest docker image*:
 
   docker pull jnahas/cosmos-ui
 
-From CLI run:
+> *Second, open CLI and run*:
 
   docker run -it -p 8080:80 --rm --name cosmos-gui jnahas/cosmos-ui
 

@@ -40,8 +40,20 @@ With X, we aim to provide a simple, light-weight, powerfull platform to interact
 ## License
 - The code is licensed under [MIT](LICENSE).
 
+## How to run
 
-## Get started!
+A Docker image is pushed to Docker Hub every time CI runs successfully. 
+
+First download the latest docker image:
+
+  docker pull jnahas/cosmos-ui
+
+From CLI run:
+
+  docker run -it -p 8080:80 --rm --name cosmos-gui jnahas/cosmos-ui
+
+
+## Contibute
 
 * Clone repository
 * Open project on your favorite IDE/Text-Editor

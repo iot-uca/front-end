@@ -52,8 +52,16 @@
             <button v-else type="button" class="btn btn-danger" data-toggle="modal" data-target="#removeElements" style="width: 100%;"><strong>Delete</strong></button>
           </div>
         </div>
-
-        <table class="table table-striped table-responsive table-sm" style="width: 100%;">
+        
+        <div v-if="getActionsForPage().length==0">
+        <br>
+        <br>
+        <p class="text-center"><strong><em>There are currently no actions configured in the system</em></strong></p>
+        <br>
+        <br>
+        </div>
+        
+        <table v-if="getActionsForPage().length>0" class="table table-striped table-responsive table-sm" style="width: 100%;">
           <thead class="thead-dark">
           <tr>
             <th scope="col" style="width: 1%"></th>
@@ -114,7 +122,7 @@
           <div class="col-md-4 text-muted">
             <p>Showing <strong>{{getActionsForPage().length}}</strong> out of <strong>{{getExistingActions().length}}</strong> entries</p>
           </div>
-          <div class="col-md-8">
+          <div v-if="getActionsForPage().length>0" class="col-md-8">
 
             <!--     Table pagination     -->
             <nav aria-label="Page navigation actions">

@@ -52,8 +52,16 @@
 
           </div>
         </div>
+        
+        <div v-if="dataStreamsForPage.length==0">
+        <br>
+        <br>
+        <p class="text-center"><strong>There are currently no data streams configured in the system</strong></p>
+        <br>
+        <br>
+        </div>
 
-        <table class="table table-striped table-responsive table-sm w-100">
+        <table v-if="dataStreamsForPage.length>0"  class="table table-striped table-responsive table-sm w-100">
           <thead class="thead-dark">
             <tr>
               <th scope="col" style="width: 2%"></th>
@@ -99,7 +107,7 @@
           <div class="col-md-4 text-muted">
             <p>Showing <strong>{{dataStreamsForPage.length}}</strong> out of <strong>{{getDataStreamsConfigured().length}}</strong> entries</p>
           </div>
-          <div class="col-md-8">
+          <div v-if="dataStreamsForPage.length>0" class="col-md-8">
             <!--     Table pagination     -->
             <nav aria-label="Page navigation data streams">
               <ul class="pagination justify-content-end">

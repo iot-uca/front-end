@@ -1385,7 +1385,8 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       context.commit('showDataStreamView');
       context.commit('cleanElementsToDelete');
       context.commit('displayLoadingFeedback');
-      axios.get(url + '/data-streams',{ headers: { "Accept": "application/vnd.cosmos.data-stream-snapshot+json; version=1.0.0" } }).then(response => {
+      /*axios.get(url + '/data-streams',{ headers: { "Accept": "application/vnd.cosmos.data-stream-snapshot+json; version=1.0.0" } }).then(response => {*/
+      axios.get(url + '/data-streams').then(response => {
         context.commit('processDataStreamsConfigured', response);
         context.commit('setFilteredDataStreamsToAllConfigured');
         context.commit('setCurrentPage', 1);
@@ -1395,6 +1396,8 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       }, (err) => {
         console.log("[ERROR] => " + err);
         //context.commit('treatErrorForDataStream', err);
+        context.commit('hideLoadingFeedback');
+
       })
     },
 
@@ -1526,6 +1529,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
         context.commit('hideLoadingFeedback');
       }, (err) => {
         console.log("[ERROR] => " + err);
+        context.commit('hideLoadingFeedback');
         //context.commit('treatErrorForActions', err);
       });
 

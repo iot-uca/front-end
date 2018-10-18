@@ -12,9 +12,10 @@
   </p>
 </p>
 
-[![GitHub release](https://img.shields.io/github/release/ba-st/Cannon.svg)](https://github.com/iot-uca/front-end/releases/latest)
-[![Build Status](https://travis-ci.org/iot-uca/front-end.svg?branch=master)](https://travis-ci.org/iot-uca/front-end)
 
+[![Build Status](https://travis-ci.org/iot-uca/front-end.svg?branch=master)](https://travis-ci.org/iot-uca/front-end)
+[![Coverage Status](https://coveralls.io/repos/github/iot-uca/front-end/badge.svg?branch=master)](https://coveralls.io/github/iot-uca/front-end?branch=master)
+[![GitHub release](https://img.shields.io/github/release/ba-st/Cannon.svg)](https://github.com/iot-uca/front-end/releases/latest)
 
 
 > *Name origin*: TBD

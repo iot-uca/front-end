@@ -8,7 +8,7 @@
           Cosmos is a Internet of Things (IoT) platform.
         </p>
 
-        <p>
+        <p style="color: #4AFF82">
           With Cosmos, we aim to provide a platform to collect data from connected devices and act on them defining a set of rules.
         </p>
 

@@ -39,12 +39,12 @@
             </div>
           </div>
           <div class="col-md-2">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addTriggerModal" style="width: 100%;"><strong>Add trigger</strong></button>
+            <button type="button" class="btn button-main button-primary" data-toggle="modal" data-target="#addTriggerModal" style="width: 100%;">Add trigger</button>
           </div>
 
           <div class="col-md-2">
-            <button v-if="getElementsToDelete().length<1" type="button" disabled class="btn btn-danger" data-toggle="modal" data-target="#removeElements" style="width: 100%;"><strong>Delete</strong></button>
-            <button v-else type="button" class="btn btn-danger" data-toggle="modal" data-target="#removeElements" style="width: 100%;"><strong>Delete</strong></button>
+            <button v-if="getElementsToDelete().length<1" type="button" disabled class="btn button-main button-secondary" data-toggle="modal" data-target="#removeElements" style="width: 100%;">Delete</button>
+            <button v-else type="button" class="btn button-main button-secondary" data-toggle="modal" data-target="#removeElements" style="width: 100%;">Delete</button>
           </div>
         </div>
 
@@ -77,12 +77,12 @@
             <td>{{trigger.policy.elem}}</td>
 
             <td>
-              <button type="button" class="btn btn-success btn-sm" @click="editTrigger(trigger)" data-toggle="modal" data-target="#showTriggerModal" style="height: 75%;">
+              <button type="button" class="btn button-main button-view btn-sm" @click="editTrigger(trigger)" data-toggle="modal" data-target="#showTriggerModal" style="height: 75%;">
                 <i class="fa fa-eye"></i>
               </button>
             </td>
             <td>
-              <button type="button" class="btn btn-info btn-sm" @click="editTrigger(trigger)" data-toggle="modal" data-target="#editTriggerModal" style="height: 75%;">
+              <button type="button" class="btn button-main button-edit btn-sm" @click="editTrigger(trigger)" data-toggle="modal" data-target="#editTriggerModal" style="height: 75%;">
                 <i class="fa fa-pencil-square-o"></i>
               </button>
             </td>
@@ -211,5 +211,32 @@
 
 <style scoped>
 
+.button-main{
+  color: white;
+  font-family: Source Sans Pro, sans-serif;
+}
 
+.button-primary{
+  background-color: #2b2c37;
+}
+
+.button-secondary{
+  background-color: #55576b;
+}
+
+.button-edit{
+  background-color: #323440;
+}
+
+.button-view{
+  background-color: #323440;
+}
+
+.button-primary:hover{
+  background-color: #4b4c5e;
+}
+
+.button-secondary:hover{
+  background-color: #6e708a;
+}
 </style>

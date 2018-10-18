@@ -44,15 +44,15 @@
           </div>
 
           <div class="col-md-2">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addActionModal" @click="cleanActiveAction()" style="width: 100%;"><strong>Add action</strong></button>
+            <button type="button" class="btn button-green button-green-action" data-toggle="modal" data-target="#addActionModal" @click="cleanActiveAction()" style="width: 100%;">Add action</button>
           </div>
 
           <div class="col-md-2">
-            <button v-if="getElementsToDelete().length<1" type="button" disabled class="btn btn-danger" data-toggle="modal" data-target="#removeElements" style="width: 100%;"><strong>Delete</strong></button>
-            <button v-else type="button" class="btn btn-danger" data-toggle="modal" data-target="#removeElements" style="width: 100%;"><strong>Delete</strong></button>
+            <button v-if="getElementsToDelete().length<1" type="button" disabled class="btn button-green button-green-danger" data-toggle="modal" data-target="#removeElements" style="width: 100%;">Delete</button>
+            <button v-else type="button" class="btn button-green button-green-danger" data-toggle="modal" data-target="#removeElements" style="width: 100%;">Delete</button>
           </div>
         </div>
-        
+
         <div v-if="getActionsForPage().length==0">
         <br>
         <br>
@@ -60,7 +60,7 @@
         <br>
         <br>
         </div>
-        
+
         <table v-if="getActionsForPage().length>0" class="table table-striped table-responsive table-sm" style="width: 100%;">
           <thead class="thead-dark">
           <tr>
@@ -102,12 +102,12 @@
             <td v-else class="text-center">-</td>
 
             <td>
-              <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#showActionDetailModal" style="height: 75%;" @click="assignBodyAndHeader(action)">
+              <button type="button" class="btn button-green button-green-view btn-sm" data-toggle="modal" data-target="#showActionDetailModal" style="height: 75%;" @click="assignBodyAndHeader(action)">
                 <i class="fa fa-eye"></i>
               </button>
             </td>
             <td>
-              <button type="button" class="btn btn-info btn-sm" data-toggle="modal" @click="assignBodyAndHeader(action)"  data-target="#editActionModal">
+              <button type="button" class="btn button-green button-green-edit btn-sm" data-toggle="modal" @click="assignBodyAndHeader(action)"  data-target="#editActionModal">
                 <i class="fa fa-pencil-square-o"></i>
               </button>
             </td>
@@ -257,5 +257,40 @@
     transform: translateX(-50%) translateY(-50%);
   }
 
+  .button-green{
+    color: white;
+    font-family: Source Sans Pro, sans-serif;
+  }
 
+  .button-green-action{
+    background-color: #4AE387;
+  }
+
+  .button-green-action:hover{
+     background-color: #4AFF96;
+  }
+
+  .button-green-danger{
+    background-color: #87d37c;
+  }
+
+  .button-green-danger:hover{
+     background-color: #4AE387;
+  }
+
+  .button-edit{
+    background-color: #1e7e34;
+  }
+
+  .button-edit:hover{
+    background-color: #1e8838;
+  }
+
+  .button-view{
+    background-color: #1e8838;
+  }
+
+  .button-view:hover{
+    background-color: #1e7e34;
+  }
 </style>

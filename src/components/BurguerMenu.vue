@@ -17,7 +17,7 @@
 
   <div class="bg-dark">
     <div class="text-center" style="color: white;">
-      <h1><strong>Cosmos</strong></h1>
+      <h1 Style="color:#4AFF82; font-family:Source Sans Pro, sans-serif;"><strong>C O S M O S</strong></h1>
     </div>
 
     <div class="justify-content-md-center">
@@ -49,6 +49,13 @@
               <a class="nav-link">
                 <router-link to="/actions" exact>
                   Actions
+                </router-link>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link">
+                <router-link to="/commands" exact>
+                  Commands
                 </router-link>
               </a>
             </li>
@@ -180,7 +187,8 @@
 <style scoped>
 
   a{
-    color: #fff;
+    //color: #fff;
+    color: #4AFF82;
     text-decoration: none;
     padding: 6px 8px;
     border-radius: 10px;
@@ -196,4 +204,3 @@
   }
 
 </style>
-

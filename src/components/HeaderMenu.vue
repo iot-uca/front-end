@@ -11,14 +11,14 @@
         <a class="navbar-brand" href="#">WebSiteName</a>
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
-        <ul class="nav navbar-nav">
-          <li class="active"><a href="#">Home</a></li>
-          <li><a href="#">Dashboard</a></li>
-          <li><a href="#">Data Streams</a></li>
-          <li><a href="#">Actions</a></li>
-          <li><a href="#">Triggers</a></li>
-          <li><a href="#">Security</a></li>
-          <li><a href="#">About</a></li>
+        <ul class="nav navbar-nav green-title">
+          <li class="active green-title"><a href="#">Home</a></li>
+          <li class="green-title"><a href="#">Dashboard</a></li>
+          <li class="green-title"><a href="#">Data Streams</a></li>
+          <liclass="green-title"class="green-title"><a href="#">Actions</a></li>
+          <li class="green-title"><a href="#">Triggers</a></li>
+          <li class="green-title"><a href="#">Security</a></li>
+          <li class="green-title"><a href="#">About</a></li>
         </ul>
 
       </div>
@@ -34,5 +34,8 @@
 
 <style scoped>
 
+.green-title{
+  background-color: #4AE387;
+}
 
 </style>

@@ -1,0 +1,89 @@
+<template>
+
+  <!-- Modal for addding data streams-->
+  <div class="modal fade" id="addCommandModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="exampleModalLabel"><strong>Add Command</strong></h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+
+        </div>
+        <div class="modal-body">
+
+          <form class="needs-validation" novalidate="" onsubmit="return false;">
+
+            <div class="mb-3">
+              <label for="commandName">Name</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fa fa-font"></i></span>
+                </div>
+                <input type="text" class="form-control" id="commandName" v-model="commandToAdd.command" required="true">
+                <div class="invalid-feedback" style="width: 100%;">
+                  <em>The Command name cannot be empty</em>
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="commandPriority">Priority</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fa fa-font"></i></span>
+                </div>
+                <input type="number" class="form-control" id="commandPriority" v-model="commandToAdd.priority" required="true" min="0" max="100">
+                <div class="invalid-feedback" style="width: 100%;">
+                  <em>The Command priority cannot be empty</em>
+                </div>
+              </div>
+            </div>
+
+
+            <hr>
+            <button class="btn button-green btn-sm" type="submit" @click="addCommand()" style="float: right; font-size: 1.1rem;">Add command</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</template>
+
+<script>
+
+  export default {
+    computed:{
+
+    commandToAdd(){
+      return this.$store.state.commandToAdd;
+    },
+
+    },
+    methods:{
+      addCommand: function () {
+        this.$store.dispatch('addCommand', this.$store.state.backendEndPoint);
+      },
+
+    }
+
+  }
+
+
+</script>
+
+<style scoped>
+
+  .button-green{
+    background-color: #4AE387;
+    color: white;
+    font-family: Source Sans Pro, sans-serif;
+  }
+
+  .button-green:hover{
+     background-color: #4AFF96;
+  }
+
+</style>

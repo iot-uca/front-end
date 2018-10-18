@@ -28,7 +28,7 @@
               </div>
             </div>
             <hr>
-            <button class="btn btn-primary btn-sm" type="submit" @click="addDataStream()" style="float: right; font-size: 1.1rem;"><strong>Add stream</strong></button>
+            <button class="btn button-green btn-sm" type="submit" @click="addDataStream()" style="float: right; font-size: 1.1rem;">Add stream</button>
           </form>
         </div>
 
@@ -71,5 +71,14 @@
 
 <style scoped>
 
+  .button-green{
+    background-color: #4AE387;
+    color: white;
+    font-family: Source Sans Pro, sans-serif;
+  }
+
+  .button-green:hover{
+     background-color: #4AFF96;
+  }
 
 </style>

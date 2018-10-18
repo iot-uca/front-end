@@ -5,6 +5,9 @@
     <burguer-menu></burguer-menu>
     <add-stream-modal></add-stream-modal>
     <edit-stream-modal></edit-stream-modal>
+
+    <add-command-modal></add-command-modal>
+
     <remove-elements-modal></remove-elements-modal>
     <add-action-modal></add-action-modal>
     <show-action-modal></show-action-modal>
@@ -14,11 +17,8 @@
     <data-points-modal></data-points-modal>
     <status-modal></status-modal>
 
-
     <router-view></router-view>
-
-
-
+    
     <!--spinner></spinner-->
 
     <!--dashboard></dashboard>
@@ -56,6 +56,7 @@
   import ShowActionModal from './components/ShowActionModal.vue'
   import EditActionModal from './components/EditActionModal.vue'
   import AddTriggerModal from './components/AddTriggerModal.vue'
+  import AddCommandModal from './components/AddCommandModal.vue'
   import SuccessFailureModal from './components/SuccessFailureModal.vue'
   //import AboutView from './components/AboutView.vue'
 
@@ -87,6 +88,7 @@
       'security-view': SecurityView,
       'cosmos-header': Header,
       'burguer-menu': BurguerMenu,
+      'add-command-modal' : AddCommandModal,
       HelloWorld,
       PrimerComponente,
       'sara-sa': Sarasa

@@ -16,16 +16,16 @@
 
           <ul class="nav nav-tabs" id="addActionTab" role="tablist">
             <li class="nav-item">
-              <a class="nav-link active" id="actionNameAdd-tab" data-toggle="tab" href="#actionNameAddTab" role="tab" aria-controls="actionNameAddTab" aria-selected="true">Action name</a>
+              <a class="nav-link active a-green" id="actionNameAdd-tab" data-toggle="tab" href="#actionNameAddTab" role="tab" aria-controls="actionNameAddTab" aria-selected="true">Action name</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" id="httpRequestAdd-tab" data-toggle="tab" href="#httpRequestAdd" role="tab" aria-controls="httpRequestAdd" aria-selected="false">HTTP request</a>
+              <a class="nav-link a-green" id="httpRequestAdd-tab" data-toggle="tab" href="#httpRequestAdd" role="tab" aria-controls="httpRequestAdd" aria-selected="false">HTTP request</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" id="actionBodyAdd-tab" data-toggle="tab" href="#actionBodyAdd" role="tab" aria-controls="actionBodyAdd" aria-selected="false">Body</a>
+              <a class="nav-link a-green" id="actionBodyAdd-tab" data-toggle="tab" href="#actionBodyAdd" role="tab" aria-controls="actionBodyAdd" aria-selected="false">Body</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" id="actionHeadersAdd-tab" data-toggle="tab" href="#actionHeadersAdd" role="tab" aria-controls="actionHeadersAdd" aria-selected="false">Headers</a>
+              <a class="nav-link a-green" id="actionHeadersAdd-tab" data-toggle="tab" href="#actionHeadersAdd" role="tab" aria-controls="actionHeadersAdd" aria-selected="false">Headers</a>
             </li>
           </ul>
 
@@ -127,7 +127,7 @@
             <div class="tab-pane fade" id="actionHeadersAdd" role="tabpanel" aria-labelledby="actionHeadersAdd-tab">
               <div class="row">
                 <div class="col-md-3">
-                  <button type="button" class="btn btn-info btn-sm" @click="addOneMoreElemForActionRequestHeader()"><strong>Add parameter</strong></button>
+                  <button type="button" class="btn button-green btn-sm" @click="addOneMoreElemForActionRequestHeader()">Add parameter</button>
                   <!--  https://stackoverflow.com/questions/7803814/prevent-refresh-of-page-when-button-inside-form-clicked  -->
                 </div>
               </div>
@@ -166,7 +166,7 @@
                 <div class="col-md-1">
                   <div class="mb-3">
                     <label></label>
-                    <button type="button" class="btn btn-danger btn-sm" @click="oneLessElemForActionRequestHeader(index)"><strong><i class="fa fa-remove"></i></strong></button>
+                    <button type="button" class="btn button-green btn-sm" @click="oneLessElemForActionRequestHeader(index)"><strong><i class="fa fa-remove"></i></strong></button>
                   </div>
                 </div>
 
@@ -177,7 +177,7 @@
         </div>
 
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal"  @click="addAction()"><strong>Add action</strong></button>
+          <button type="button" class="btn button-green btn-sm" data-dismiss="modal"  @click="addAction()"><strong>Add action</strong></button>
         </div>
 
       </div>
@@ -248,6 +248,28 @@
 
 <style scoped>
 
+.a-green{
+  color:#4AE387;
+}
 
+.button-green{
+  background-color: #4AE387;
+  color: white;
+  font-family: Source Sans Pro, sans-serif;
+}
+
+.button-green-danger{
+  background-color: #87d37c;
+  color: white;
+  font-family: Source Sans Pro, sans-serif;
+}
+
+.button-green:hover{
+   background-color: #4AFF96;
+}
+
+.button-green-danger:hover{
+   background-color: #4AE387;
+}
 
 </style>

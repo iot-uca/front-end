@@ -2,12 +2,12 @@
 
   <!-- GUI Header -->
   <div id="ui-header">
-    <div class="text-center">
+    <div class="text-center green-title">
       <!--div class="col-md-1 py-2">
         <span style="font-size:30px;cursor:pointer; padding:2% " @click="openNav()"><i class="fa fa-bars" style="color:white;"></i></span>
       </div-->
       <div>
-        <h1 id="cosmosTitle"><strong>Cosmos</strong></h1>
+        <h1 id="cosmosTitle"><strong>COSMOS</strong></h1>
       </div>
     </div>
   </div>
@@ -55,7 +55,7 @@
     color: white;
     size: 40 px;
     text-align: center;
-    font-family: "Helvetica", sans-serif;
+    font-family: Source Sans Pro, sans-serif;
   }
 
 </style>

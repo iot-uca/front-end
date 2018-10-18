@@ -43,16 +43,16 @@
           </div>
 
           <div class="col-md-2">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addDataStreamModal" style="width: 100%;"><strong>Add stream</strong></button>
+            <button type="button" class="btn button-green" data-toggle="modal" data-target="#addDataStreamModal" style="width: 100%;">Add stream</button>
           </div>
 
           <div class="col-md-2">
-            <button v-if="getElementsToDelete().length<1" type="button" disabled class="btn btn-danger" data-toggle="modal" data-target="#removeElements" style="width: 100%;"><strong>Delete</strong></button>
-            <button v-else type="button" class="btn btn-danger" data-toggle="modal" data-target="#removeElements" style="width: 100%;"><strong>Delete</strong></button>
+            <button v-if="getElementsToDelete().length<1" type="button" disabled class="btn button-green" data-toggle="modal" data-target="#removeElements" style="width: 100%;">Delete</button>
+            <button v-else type="button" class="btn button-green" data-toggle="modal" data-target="#removeElements" style="width: 100%;">Delete</button>
 
           </div>
         </div>
-        
+
         <div v-if="dataStreamsForPage.length==0">
         <br>
         <br>
@@ -269,6 +269,16 @@
       top: 50%;
       left: 50%;
       transform: translateX(-50%) translateY(-50%);
+  }
+
+  .button-green{
+    background-color: #4AFF82;
+    color: white;
+    font-family: Source Sans Pro, sans-serif;
+  }
+
+  .button-green:hover{
+     background-color: #4AFF96;
   }
 
 </style>

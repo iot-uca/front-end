@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex'
 
-import { addElementToFilteredOnes, getPagesNeeded, getElementsToShowInTable} from './store-helpers'
+import { addElementToFilteredOnes, getPagesNeeded, getElementsToShowInTable, addCommandToFilteredOnes} from './store-helpers'
 
 
 Vue.use(Vuex); // tell Vue you want to use Vuex plugin
@@ -700,7 +700,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       console.log("Entering filterCommandsToDisplay ");
 
       state.commandFilter = filterValue;
-      console.log("dataStreamFilter: " + state.commandFilter);
+      console.log("commandFilter: " + state.commandFilter);
 
       let intermmediateCommands = []; // siempre vacío el intermedio
 
@@ -714,11 +714,11 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
           //check command name
           let filteredField = state.existingCommands[i].command;
-          intermmediateCommands = addElementToFilteredOnes(filteredField, state.commandFilter, intermmediateCommands, state.existingCommands[i]);
+          intermmediateCommands = addCommandToFilteredOnes(filteredField, state.commandFilter, intermmediateCommands, state.existingCommands[i]);
 
           //check command priority
           filteredField = state.existingCommands[i].priority;
-          intermmediateCommands = addElementToFilteredOnes(filteredField, state.commandFilter, intermmediateCommands, state.existingCommands[i]);
+          intermmediateCommands = addCommandToFilteredOnes(filteredField, state.commandFilter, intermmediateCommands, state.existingCommands[i]);
         }
 
         if(intermmediateCommands.length>0){ // si tiene triggers para mostrar
@@ -1883,6 +1883,16 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       context.commit('getPagesNeededForCommands');
       context.commit('getCommandsToShowInTable');
     },
+
+    /*
+    filterTriggersToDisplay: (context, value) => {
+      console.log("Entering filterTriggersToDisplay");
+      context.commit('filterTriggersToDisplay', value);
+      context.commit('getPagesNeededForTriggers');
+      context.commit('getTriggersToShowInTable');
+    },
+
+    */
 
     addDataStream: (context, url) => {
         console.log(' Entering addDataStream!');

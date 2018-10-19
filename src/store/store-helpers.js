@@ -26,6 +26,32 @@ export function addElementToFilteredOnes(param, filter, existingElems, elem) {
   return existingElems;
 }
 
+export function addCommandToFilteredOnes(param, filter, existingElems, elem) {
+  console.log("### Entering addCommandToFilteredOnes");
+  console.log("param: " + param);
+  console.log("filter: " + filter);
+  console.log("existingElems: " + existingElems);
+  console.log("elem: " + elem);
+
+  let alreadyAdded = false;
+  if (param.indexOf(filter) >= 0 ){
+
+    for(let a=0; a<existingElems.length; a++){
+      if(existingElems[a].command === elem.command){
+        alreadyAdded = true;
+        break;
+      }
+    }
+    console.log("alreadyAdded: "  +alreadyAdded);
+    if(!alreadyAdded){
+      existingElems.push(elem);
+    }
+    console.log("existingElems: " + existingElems);
+  }
+  console.log("##After filtering the existingElems: " + existingElems);
+  return existingElems;
+}
+
 export function getPagesNeeded(allExistingElements, maxPerPage) {
 
   console.log(" Existing elements length: " + allExistingElements.length);

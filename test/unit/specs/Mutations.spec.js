@@ -574,7 +574,7 @@ it('setMaxDataStreamsPerPageTest', () => {
         expect(store.state.renderDashboardView).to.equal(false)
         expect(store.state.renderDataStreamView).to.equal(false)
         expect(store.state.renderActionAddView).to.equal(false)
-        expect(store.state.renderTriggerAddView).to.equal(true)
+        expect(store.state.renderTriggerAddView).to.equal(false)
         expect(store.state.renderSecurityView).to.equal(false)
         expect(store.state.renderAboutView).to.equal(false)
         expect(store.state.renderCommandsView).to.equal(true)
@@ -668,9 +668,9 @@ it('setMaxDataStreamsPerPageTest', () => {
     store.commit('getCommandsToShowInTable');
     expect(store.state.commandsForPage.length).to.equal(2);
     expect(store.state.commandsForPage[0].command).to.equal('Turn On LED 1');
-    expect(store.state.commandsForPage[0].priority).to.equal(100);
+    expect(store.state.commandsForPage[0].priority).to.equal('100');
     expect(store.state.commandsForPage[1].command).to.equal('Turn Off LED 1');
-    expect(store.state.commandsForPage[1].priority).to.equal(23);
+    expect(store.state.commandsForPage[1].priority).to.equal('23');
   });
 
   /* TENGO QUE

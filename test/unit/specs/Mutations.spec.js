@@ -4,6 +4,7 @@ import {store} from '../../../src/store/store.js';
 
 
 describe('Mutations', () => {
+
   it('increase options should increase options in 1', () => {
 
     store.state.options = [ {name: 'uno', value: 2}, {name: 'uno', value: 3} ]
@@ -13,6 +14,7 @@ describe('Mutations', () => {
     expect(store.state.options[0].value).to.equal(3)
       expect(store.state.options[1].value).to.equal(4)
   });
+
 
   it('showDashboardView should only show dashboard view', () => {
 
@@ -26,6 +28,7 @@ describe('Mutations', () => {
     expect(store.state.renderAboutView).to.equal(false)
   });
 
+
   it('showDashboardView should only show data streams view', () => {
 
     store.commit('showDataStreamView')
@@ -38,6 +41,7 @@ describe('Mutations', () => {
     expect(store.state.renderAboutView).to.equal(false)
   });
 
+
   it('showActionView should only show actions view', () => {
 
     store.commit('showActionView')
@@ -49,6 +53,7 @@ describe('Mutations', () => {
     expect(store.state.renderSecurityView).to.equal(false)
     expect(store.state.renderAboutView).to.equal(false)
   });
+
 
   it('showTriggerView should only show triggers view', () => {
 
@@ -75,6 +80,7 @@ describe('Mutations', () => {
     expect(store.state.renderAboutView).to.equal(false)
   });
 
+
   it('showAboutView should only show about view', () => {
 
     store.commit('showAboutView')
@@ -86,6 +92,7 @@ describe('Mutations', () => {
     expect(store.state.renderSecurityView).to.equal(false)
     expect(store.state.renderAboutView).to.equal(true)
   });
+
 
   it('setFilteredDataStreamsToAllConfiguredTest', () => {
     expect(store.state.filteredDataStreams.length).to.equal(0)
@@ -103,8 +110,8 @@ describe('Mutations', () => {
     expect(store.state.filteredDataStreams[1].name).to.equal('Temperature inside the house')
     expect(store.state.filteredDataStreams[2].id).to.equal(2)
     expect(store.state.filteredDataStreams[2].name).to.equal('Temperature outside the house')
-
   });
+
 
   it('setFilteredActionsToAllConfiguredTest', () => {
     expect(store.state.filteredActions.length).to.equal(0)
@@ -121,6 +128,7 @@ describe('Mutations', () => {
     expect(store.state.filteredActions[1].name).to.equal('Make Facebook Post')
 
   });
+
 
   it('setFilteredTriggersToAllConfiguredTest', () => {
     expect(store.state.filteredTriggers.length).to.equal(0)
@@ -143,6 +151,7 @@ describe('Mutations', () => {
     expect(store.state.currentPage).to.equal(2)
   });
 
+
   it('setCurrentPageNextPageTest', () => {
     store.state.currentPage = 1
     store.commit('setCurrentPageNextPage')
@@ -162,6 +171,7 @@ describe('Mutations', () => {
     store.commit('cleanElementsToDelete')
     expect(store.state.elementsToDelete.length).to.equal(0)
   });
+
 
   it('addElementToDeleteListTest', () => {
     store.state.elementsToDelete = [1,2,3]
@@ -194,6 +204,7 @@ describe('Mutations', () => {
 
     });
 
+
   it('editDataStreamsTest', () => {
     let dataStream = {id: 0, name: 'Solar light in garden'}
 
@@ -205,6 +216,7 @@ describe('Mutations', () => {
 
   });
 
+
   it('updateDataStreamsForPageTest', () => {
     let dataStream = {id: 0, name: 'Solar light in garden'}
 
@@ -214,23 +226,24 @@ describe('Mutations', () => {
 
   });
 
-// PENDING!!!
-// filterActionsToDisplay  |  filterTriggersToDisplay  |  filterDataStreamToDisplay | errorTreatmentForDataStreamAdding | displayErrorDetailsForAddingAction |
 
 it('setMaxDataStreamsPerPageTest', () => {
     store.commit('setMaxDataStreamsPerPage', 5)
     expect(store.state.maxDataStreamsPerPage).to.equal(5)
   });
 
+
     it('setMaxTriggersPerPageTest', () => {
     store.commit('setMaxTriggersPerPage', 5)
     expect(store.state.maxTriggersPerPage).to.equal(5)
   });
 
+
     it('setMaxActionsPerPageTest', () => {
     store.commit('setMaxActionsPerPage', 5)
     expect(store.state.maxActionsPerPage).to.equal(5)
   });
+
 
     it('showAddDataStreamModalTest', () => {
     store.commit('showAddDataStreamModal')
@@ -243,7 +256,9 @@ it('setMaxDataStreamsPerPageTest', () => {
     expect(store.state.showAddDataStreamModal).to.equal(false)
   });
 
-    /*it('prepareDataStreamAddingTest', () => {
+/*          CUANDO SEPA COMO TESTEAR LOS MODIFIERS DE JQUERY
+
+  it('prepareDataStreamAddingTest', () => {
     store.commit('prepareDataStreamAdding')
     expect(store.state.displayLoadingFeedback).to.equal(true)
   });
@@ -258,7 +273,9 @@ it('setMaxDataStreamsPerPageTest', () => {
      expect(store.state.successMessage).to.equal('Backyard door sensor added successfully.')
      expect(store.state.dataStreamToAdd).to.equal('')
   });
-    */
+
+*/
+
 
     it('setDataStreamToAddTest', () => {
     store.state.dataStreamToAdd='Temperature sensor'
@@ -267,12 +284,14 @@ it('setMaxDataStreamsPerPageTest', () => {
      expect(store.state.dataStreamToAdd).to.equal('Backyard door sensor')
   });
 
+
     it('setActiveDataStreamTest', () => {
     store.state.activeDataStream='Temperature sensor'
 
     store.commit('setActiveDataStream', 'Backyard door sensor')
      expect(store.state.activeDataStream).to.equal('Backyard door sensor')
   });
+
 
     it('addOneMoreElemForActionRequestHeaderTest', () => {
     store.state.activeIdsForHttpRequestHeader=[]
@@ -298,6 +317,7 @@ it('setMaxDataStreamsPerPageTest', () => {
 
   });
 
+
     it('prepareActionRequestTest', () => {
         store.state.activeIdsForHttpRequestHeader=[]
         store.state.activeAction.url = 'http://someUrl.com'
@@ -322,7 +342,10 @@ it('setMaxDataStreamsPerPageTest', () => {
 
   });
 
-    /*it('setActionAddSuccessDetailsTest', () => {
+  /*
+        CUANDO SEPA COMO TRABAJAR CON EL $ DE JQUERY
+
+  it('setActionAddSuccessDetailsTest', () => {
         store.state.activeAction.name='Post on Facebook'
 
         store.commit('setActionAddSuccessDetails')
@@ -330,7 +353,10 @@ it('setMaxDataStreamsPerPageTest', () => {
          expect(store.state.errorInInteraction).to.equal(false)
 
          expect(store.state.successMessage).to.equal('Post on Facebook added successfully.')
-  });*/
+  });
+
+*/
+
 
     it('setActionBodyTest', () => {
 
@@ -370,10 +396,12 @@ it('setMaxDataStreamsPerPageTest', () => {
         expect(store.state.isTimePeriodPolicy).to.equals(false)
     });
 
+
    it('timePeriodPolicyTest', () => {
        store.commit('timePeriodPolicy')
        expect(store.state.isTimePeriodPolicy).to.equals(true)
     });
+
 
    it('setConditionSelectedTest', () => {
        store.state.conditionSelected = undefined
@@ -382,6 +410,7 @@ it('setMaxDataStreamsPerPageTest', () => {
        store.commit('setConditionSelected', 2)
        expect(store.state.conditionSelected).to.equals(2)
     });
+
 
 
   it('editTriggerTest', () => {
@@ -397,6 +426,7 @@ it('setMaxDataStreamsPerPageTest', () => {
        expect(store.state.isTimePeriodPolicy).to.equals(false)
 
     });
+
 
   it('cleanActiveActionTest', () => {
         let action={}
@@ -417,6 +447,7 @@ it('setMaxDataStreamsPerPageTest', () => {
         expect(store.state.actionBody).to.equals('{"foo":"bar", "jane":"doe"}')
 
     });
+
 
       it('processActionsConfiguredTest', () => {
         let action={}
@@ -440,17 +471,20 @@ it('setMaxDataStreamsPerPageTest', () => {
 
     });
 
+
     it('displayLoadingFeedbackTest', () => {
         store.state.displayLoadingFeedback = false
         store.commit('displayLoadingFeedback')
         expect(store.state.displayLoadingFeedback).to.equals(true)
     });
 
+
     it('hideLoadingFeedbackTest', () => {
         store.state.displayLoadingFeedback = true
         store.commit('hideLoadingFeedback')
         expect(store.state.displayLoadingFeedback).to.equals(false)
     });
+
 
     it('processDataStreamsConfiguredTest', () => {
         let dataStream={}
@@ -581,6 +615,7 @@ it('setMaxDataStreamsPerPageTest', () => {
         expect(store.state.renderCommandsView).to.equal(true)
     });
 
+
     it('filterActionsToDisplay', () => {
 
         let existingActions = [
@@ -635,10 +670,12 @@ it('setMaxDataStreamsPerPageTest', () => {
         expect(store.state.filteredCommands[0].priority).to.equal('23');
     });
 
+
   it('setMaxCommandsPerPageTest', () => {
     store.commit('setMaxCommandsPerPage', 5);
     expect(store.state.maxCommandsPerPage).to.equal(5);
   });
+
 
   it('testGetPagesNeededForCommands', () => {
     store.state.filteredCommands = [
@@ -656,6 +693,7 @@ it('setMaxDataStreamsPerPageTest', () => {
     expect(store.state.pagesNeededForCommands).to.equal(2);
 
   });
+
 
   it('testGetCommandsToShowInTable', () => {
     store.state.currentPage = 1;
@@ -679,6 +717,8 @@ it('setMaxDataStreamsPerPageTest', () => {
               * ver como mockear requests de axios
               * ver como testear los metodos que dibujan graficos
               * ver como testear interacción con modales
+
+              filterActionsToDisplay  |  filterTriggersToDisplay  |  filterDataStreamToDisplay | errorTreatmentForDataStreamAdding | displayErrorDetailsForAddingAction |
 
   */
 

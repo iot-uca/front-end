@@ -1231,6 +1231,22 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
     },
 
+    processTriggersConfigured: (state, response)  => {
+      console.log(" Entering processTriggersConfigured!!");
+
+      console.log(" RESPONSE: " + response);
+      state.displayLoadingFeedback = false;
+      let triggers = response.data;
+      console.log("[SUCCESS] triggers =>>>> " + triggers);
+
+      state.existingTriggers = [];
+
+      for(let i=0; i<triggers.length; i++){
+        state.existingTriggers.push(triggers[i]);
+        console.log("existingTriggers =>" + state.existingTriggers);
+      }
+
+    },
 
     getDataPointForDataStream: state => {
 
@@ -1689,14 +1705,14 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       context.commit('cleanElementsToDelete');
     },*/
 
-    showActionView: (context, url) =>{
+    showActionView: (context, url) => {
       console.log("Entering showActionView ");
 
       context.commit('showActionView');
       context.commit('cleanElementsToDelete');
       context.commit('displayLoadingFeedback');
       /*axios.get(url + '/actions',{ headers: { "Accept": "application/vnd.cosmos.action+json; version=1.0.0" } }).then(response => {*/
-      axios.get(url + '/actions', {headers: {"Accept" : "application/json"} } ).then(response => {
+      axios.get(url + '/actions', {headers:{"Accept" : "application/json"}} ).then(response => {
         context.commit('processActionsConfigured', response);
         context.commit('setFilteredActionsToAllConfigured');
         context.commit('setCurrentPage', 1);
@@ -1711,14 +1727,27 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
     },
 
-    showTriggerView: context =>{
+    showTriggerView: (context, url) => {
       console.log("Entering showTriggerView ");
+
       context.commit('showTriggerView');
-      context.commit('setFilteredTriggersToAllConfigured');
-      context.commit('setCurrentPage', 1);
-      context.commit('getTriggersToShowInTable');
-      context.commit('getPagesNeededForTriggers');
       context.commit('cleanElementsToDelete');
+      context.commit('displayLoadingFeedback');
+      console.log("SARASAAA : " + url + "/triggers");
+      axios.get(url + '/triggers', {headers:{"Accept" : "application/json"}} ).then(response => {
+        context.commit('processTriggersConfigured', response);
+        context.commit('setFilteredTriggersToAllConfigured');
+        context.commit('setCurrentPage', 1);
+        context.commit('getTriggersToShowInTable');
+        context.commit('getPagesNeededForTriggers');
+        context.commit('hideLoadingFeedback');
+
+      }, (err) => {
+        console.log("[ERROR] => " + err);
+        context.commit('hideLoadingFeedback');
+        //context.commit('treatErrorForActions', err);
+      });
+
 
     },
 
@@ -1728,7 +1757,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       context.commit('cleanElementsToDelete');
       context.commit('displayLoadingFeedback');
 
-      /*axios.get(url + '/commands').then(response => {        ===> COMMENTED FOR TESTING PURPOSES
+      axios.get(url + '/commands', {headers:{"Accept" : "application/json"}} ).then(response => {
         context.commit('processCommandsConfigured', response);
         context.commit('setFilteredCommandsToAllConfigured');
         context.commit('setCurrentPage', 1);
@@ -1739,13 +1768,13 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
         console.log("[ERROR] => " + err);
         context.commit('hideLoadingFeedback');
 
-      });*/
+      });
 
-      context.commit('setFilteredCommandsToAllConfigured');
+      /*context.commit('setFilteredCommandsToAllConfigured');
       context.commit('setCurrentPage', 1);
       context.commit('getCommandsToShowInTable');
       context.commit('getPagesNeededForCommands');
-      context.commit('hideLoadingFeedback');
+      context.commit('hideLoadingFeedback');*/
 
     },
 

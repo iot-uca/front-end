@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import {store} from '../../../src/store/store.js';
+//import mockAxios from './axios.js'
 
 
 describe('Mutations', () => {

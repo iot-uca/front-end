@@ -131,7 +131,7 @@
   export default {
 
     mounted(){
-      this.$store.dispatch('showTriggerView');
+      this.$store.dispatch('showTriggerView', this.$store.state.backendEndPoint);
     },
 
     computed: {

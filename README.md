@@ -30,6 +30,8 @@ With X, we aim to provide a simple, light-weight, powerfull platform to interact
 - [Vue X](https://github.com/vuejs/vuex)
 - [Bootstrap 4.1](https://getbootstrap.com/docs/4.1/getting-started/introduction/)
 - [Chart Js](https://github.com/chartjs/Chart.js)
+- [Axios](https://github.com/axios/axios)
+- [Moxios](https://github.com/axios/moxios)
 
 > Production Components
 

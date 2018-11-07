@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex'
+import axios from 'axios'
 
 import { addElementToFilteredOnes, getPagesNeeded, getElementsToShowInTable, addCommandToFilteredOnes} from './store-helpers'
 
@@ -1313,13 +1314,19 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       state.displayLoadingFeedback = false;
     },
 
-    processDataStreamsConfigured: (state, response) => {
-      console.log(" RESPONSE: " + response);
-      //state.displayLoadingFeedback = false;
-      state.dataStreamsResponseFromBackend = response.data;
-      console.log("[SUCCESS] DataStreams =>>>> " + state.dataStreamsResponseFromBackend);
+    logResponseAttributes:(state, response) => {
+      console.log("########################");
+      console.log("[DATA]: " + response.data);
+      console.log("[STATUS]: " + response.status);
+      console.log("[STATUSTEXT]: " + response.statusText);
+      console.log("########################");
+    },
 
+    processDataStreamsConfigured: (state, response) => {
+      state.dataStreamsResponseFromBackend = response.data;
       state.dataStreamsConfigured = [];
+
+      console.log("Amount of Streams in Response: " + state.dataStreamsResponseFromBackend.length);
 
       for(let i=0; i<state.dataStreamsResponseFromBackend.length; i++){
         state.dataStreamsConfigured.push(state.dataStreamsResponseFromBackend[i]);
@@ -1571,6 +1578,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       /*axios.get(url + '/data-streams',{ headers: { "Accept": "application/vnd.cosmos.data-stream-snapshot+json; version=1.0.0" } }).then(response => {*/
       /*axios.get(url + '/data-streams').then(response => {*/
       axios.get(url + '/data-streams',{ headers: { "Accept": "application/json" } }).then(response => {
+        context.commit('logResponseAttributes', response);
         context.commit('processDataStreamsConfigured', response);
         context.commit('setFilteredDataStreamsToAllConfigured');
         context.commit('setCurrentPage', 1);

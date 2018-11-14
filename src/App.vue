@@ -18,7 +18,7 @@
     <status-modal></status-modal>
 
     <router-view></router-view>
-    
+
     <!--spinner></spinner-->
 
     <!--dashboard></dashboard>
@@ -41,8 +41,6 @@
 
 
 <script>
-  import HelloWorld from './components/HelloWorld.vue'
-  import PrimerComponente from './components/PrimerComponente.vue'
   import BurguerMenu from './components/BurguerMenu.vue'
   import Sarasa from './components/Sarasa.vue'
   import Header from './components/Header.vue'
@@ -89,8 +87,6 @@
       'cosmos-header': Header,
       'burguer-menu': BurguerMenu,
       'add-command-modal' : AddCommandModal,
-      HelloWorld,
-      PrimerComponente,
       'sara-sa': Sarasa
   },
   mounted () {

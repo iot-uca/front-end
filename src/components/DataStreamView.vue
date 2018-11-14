@@ -43,7 +43,9 @@
           </div>
 
           <div class="col-md-2">
-            <button type="button" class="btn button-green" data-toggle="modal" data-target="#addDataStreamModal" style="width: 100%;">Add stream</button>
+            <button type="button" class="btn button-green" @click="displayModalForStreamAdding()" style="width: 100%;">Add stream</button>
+            <!--button type="button" class="btn button-green" data-toggle="modal" data-target="#addDataStreamModal" style="width: 100%;">Add stream</button-->
+
           </div>
 
           <div class="col-md-2">
@@ -193,6 +195,10 @@
     },
 
     methods: {
+
+      displayModalForStreamAdding: function () {
+        this.$store.dispatch('displayModalForStreamAdding');
+      },
 
       getMaxDataStreamsPerPage: function () {
         return this.$store.state.maxDataStreamsPerPage;

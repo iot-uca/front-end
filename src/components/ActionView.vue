@@ -44,7 +44,8 @@
           </div>
 
           <div class="col-md-2">
-            <button type="button" class="btn button-green button-green-action" data-toggle="modal" data-target="#addActionModal" @click="cleanActiveAction()" style="width: 100%;">Add action</button>
+            <!--button type="button" class="btn button-green button-green-action" data-toggle="modal" data-target="#addActionModal" @click="cleanActiveAction()" style="width: 100%;">Add action</button-->
+            <button type="button" class="btn button-green button-green-action" @click="cleanActiveAction(); displayModalForActionAdding();" style="width: 100%;">Add action</button>
           </div>
 
           <div class="col-md-2">
@@ -196,6 +197,9 @@
 
     },
     methods:{
+      displayModalForActionAdding: function (){
+        this.$store.dispatch('displayModalForActionAdding');
+      },
       getOptionsOfEntriesPerPage: function () {
         return this.$store.state.optionsOfEntriesPerPage;
       },

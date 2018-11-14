@@ -41,7 +41,8 @@
         </div>
 
         <div class="col-md-2">
-          <button type="button" class="btn button-green button-green-action" data-toggle="modal" data-target="#addCommandModal" style="width: 100%;">Add command</button>
+          <!--button type="button" class="btn button-green button-green-action" data-toggle="modal" data-target="#addCommandModal" style="width: 100%;">Add command</button-->
+          <button type="button" class="btn button-green button-green-action" @click="displayModalForCommandAdding();" style="width: 100%;">Add command</button>
         </div>
 
         <div class="col-md-2">
@@ -175,6 +176,10 @@ export default {
 
   },
   methods:{
+
+    displayModalForCommandAdding: function (){
+      this.$store.dispatch('displayModalForCommandAdding');
+    },
     getOptionsOfEntriesPerPage: function () {
       return this.$store.state.optionsOfEntriesPerPage;
     },

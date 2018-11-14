@@ -74,6 +74,26 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
 //##########################################################################################
+// Variable for managing the modals behavior
+
+    showModalForStreamAdding: false,
+    showModalForStreamEditing: false,
+
+    showModalForCommandAdding: false,
+
+    showModalForActionAdding: false,
+    showModalForActionDetails: false,
+    showModalForActionEditing: false,
+
+    showModalForTriggerAdding: false,
+    showModalForTriggerDetails: false,
+    showModalForTriggerEditing: false,
+
+    showModalForRequestResult: false,
+
+//##########################################################################################
+
+//##########################################################################################
 // Data Stream model
 //##########################################################################################
 
@@ -760,12 +780,12 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     prepareDataStreamAdding: state => {
-        $("#addDataStreamModal").modal("hide");  			// close the modal
+        //$("#addDataStreamModal").modal("hide");  			// close the modal
         state.displayLoadingFeedback = true; // user starts seeing the loading spinner
     },
 
     prepareCommandAdding: state => {
-        $("#addCommandModal").modal("hide");  			// close the modal
+        //$("#addCommandModal").modal("hide");  			// close the modal
         state.displayLoadingFeedback = true; // user starts seeing the loading spinner
     },
 
@@ -773,7 +793,13 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
         state.displayLoadingFeedback = false;
         state.errorInInteraction = false;
         state.successMessage = state.dataStreamToAdd + " added successfully.";
-        $("#successModal").modal();
+        //$("#successModal").modal();
+
+        state.showModalForRequestResult = true;
+        setTimeout(function(){
+          state.showModalForRequestResult = false;
+        }, 2000);
+
         state.dataStreamToAdd = "";
     },
 
@@ -781,7 +807,13 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
         state.displayLoadingFeedback = false;
         state.errorInInteraction = false;
         state.successMessage = state.commandToAdd.command + " added successfully with priority " + state.commandToAdd.priority;
-        $("#successModal").modal();
+        //$("#successModal").modal();
+
+        state.showModalForRequestResult = true;
+        setTimeout(function(){
+          state.showModalForRequestResult = false;
+        }, 2000);
+
         state.commandToAdd = {};
     },
 
@@ -814,7 +846,13 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
           state.errorMessage = "There was a problem adding " + state.dataStreamToAdd + ". Please try again!";
         }
 
-        $("#successModal").modal();
+        //$("#successModal").modal();
+
+        state.showModalForRequestResult = true;
+        setTimeout(function(){
+          state.showModalForRequestResult = false;
+        }, 2000);
+
         state.dataStreamToAdd = "";
 
     },
@@ -848,7 +886,13 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
           state.errorMessage = "There was a problem adding " + state.commandToAdd.command + ". Please try again!";
         }
 
-        $("#successModal").modal();
+        //$("#successModal").modal();
+
+        state.showModalForRequestResult = true;
+        setTimeout(function(){
+          state.showModalForRequestResult = false;
+        }, 2000);
+
         state.commandToAdd = {};
 
     },
@@ -925,7 +969,12 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
         state.errorMessage = "There was a problem adding " + state.activeAction.name + ". Please try again!";
       }
 
-      $("#successModal").modal();
+      //$("#successModal").modal();
+
+      state.showModalForRequestResult = true;
+      setTimeout(function(){
+        state.showModalForRequestResult = false;
+      }, 2000);
 
     },
 
@@ -935,7 +984,12 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
         state.displayLoadingFeedback = false;
         state.errorInInteraction = false;
         state.successMessage = state.activeAction.name + " added successfully.";
-        $("#successModal").modal();
+        //$("#successModal").modal();
+
+        state.showModalForRequestResult = true;
+        setTimeout(function(){
+          state.showModalForRequestResult = false;
+        }, 2000);
     },
 
     addAction: state => {
@@ -977,7 +1031,12 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
           state.displayLoadingFeedback = false;
           state.errorInInteraction = false;
           state.successMessage = state.activeAction.name + " added successfully.";
-          $("#successModal").modal();
+          //$("#successModal").modal();
+
+          state.showModalForRequestResult = true;
+          setTimeout(function(){
+            state.showModalForRequestResult = false;
+          }, 2000);
 
 
         })
@@ -1012,7 +1071,12 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
             state.errorMessage = "There was a problem adding " + state.activeAction.name + ". Please try again!";
           }
 
-          $("#successModal").modal();
+          //$("#successModal").modal();
+
+          state.showModalForRequestResult = true;
+          setTimeout(function(){
+            state.showModalForRequestResult = false;
+          }, 2000);
 
         });
 
@@ -1481,7 +1545,12 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
           state.displayLoadingFeedback = false;
           state.errorInInteraction = false;
           state.successMessage = state.activeTrigger.name + " added successfully.";
-          $("#successModal").modal();
+          //$("#successModal").modal();
+
+          state.showModalForRequestResult = true;
+          setTimeout(function(){
+            state.showModalForRequestResult = false;
+          }, 2000);
 
         })
         .catch(function (error) {
@@ -1515,7 +1584,12 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
             state.errorMessage = "There was a problem adding " + state.activeTrigger.name + ". Please try again!";
           }
 
-          $("#successModal").modal();
+          //$("#successModal").modal();
+
+          state.showModalForRequestResult = true;
+          setTimeout(function(){
+            state.showModalForRequestResult = false;
+          }, 2000);
 
         });
 
@@ -1555,10 +1629,61 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       state.filteredCommands = state.existingCommands;
     },
 
+    //####################################################################
+    //  Stream  Adding  Modal
+    //####################################################################
 
+    displayModalForStreamAdding: state => {
+      console.log("### Entering  displayModalForStreamAdding");
+      state.showModalForStreamAdding = true;
+    },
 
+    hideModalForStreamAdding: state => {
+      console.log("### Entering  hideModalForStreamAdding");
+      state.showModalForStreamAdding = false;
+    },
 
+    //####################################################################
+    //  Command  Adding  Modal
+    //####################################################################
 
+    displayModalForCommandAdding: state => {
+      console.log("### Entering  displayModalForCommandAdding");
+      state.showModalForCommandAdding = true;
+    },
+
+    hideModalForCommandAdding: state => {
+      console.log("### Entering  hideModalForCommandAdding");
+      state.showModalForCommandAdding = false;
+    },
+
+    //####################################################################
+    //  Action  Adding  Modal
+    //####################################################################
+
+    displayModalForActionAdding: state => {
+      console.log("### Entering  displayModalForActionAdding");
+      state.showModalForActionAdding = true;
+    },
+
+    hideModalForActionAdding: state => {
+      console.log("### Entering  hideModalForActionAdding");
+      state.showModalForActionAdding = false;
+    },
+
+    //####################################################################
+    //  Trigger  Adding  Modal
+    //####################################################################
+
+    displayModalForTriggerAdding: state => {
+      console.log("### Entering  displayModalForTriggerAdding");
+      state.showModalForTriggerAdding = true;
+    },
+
+    hideModalForTriggerAdding: state => {
+      console.log("### Entering  hideModalForTriggerAdding");
+      state.showModalForTriggerAdding = false;
+    },
 
 
 
@@ -2122,6 +2247,38 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
     addTrigger: context => {
       context.commit('addTrigger');
+    },
+
+
+    displayModalForStreamAdding: context => {
+      context.commit('displayModalForStreamAdding');
+    },
+    hideModalForStreamAdding: context => {
+      context.commit('hideModalForStreamAdding');
+    },
+
+
+    displayModalForCommandAdding: context => {
+      context.commit('displayModalForCommandAdding');
+    },
+    hideModalForCommandAdding: context => {
+      context.commit('hideModalForCommandAdding');
+    },
+
+
+    displayModalForActionAdding: context => {
+      context.commit('displayModalForActionAdding');
+    },
+    hideModalForActionAdding: context => {
+      context.commit('hideModalForActionAdding');
+    },
+
+
+    displayModalForTriggerAdding: context => {
+      context.commit('displayModalForTriggerAdding');
+    },
+    hideModalForTriggerAdding: context => {
+      context.commit('hideModalForTriggerAdding');
     },
 
   }

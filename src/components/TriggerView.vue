@@ -39,7 +39,9 @@
             </div>
           </div>
           <div class="col-md-2">
-            <button type="button" class="btn button-main button-primary" data-toggle="modal" data-target="#addTriggerModal" style="width: 100%;">Add trigger</button>
+            <!--button type="button" class="btn button-main button-primary" data-toggle="modal" data-target="#addTriggerModal" style="width: 100%;">Add trigger</button-->
+            <button type="button" class="btn button-main button-primary" style="width: 100%;" @click="displayModalForTriggerAdding()">Add trigger</button>
+
           </div>
 
           <div class="col-md-2">
@@ -166,6 +168,9 @@
 
     },
     methods: {
+      displayModalForTriggerAdding: function (){
+        this.$store.dispatch('displayModalForTriggerAdding');
+      },
       getOptionsOfEntriesPerPage: function () {
         return this.$store.state.optionsOfEntriesPerPage;
       },

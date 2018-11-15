@@ -761,6 +761,76 @@ it('setMaxDataStreamsPerPageTest', () => {
   });
 
 
+  it('testTreatErrorForAddingDataStream', () => {
+      let error = {
+        response: {
+          data: {
+            message: 'Internal Server Error'
+          },
+          status:'500',
+          headers:[]
+        },
+      };
+      store.commit('treatErrorForAddingDataStream', error);
+      expect(store.state.errorMessage).to.equal('Internal Server Error');
+
+      store.state.dataStreamToAdd = "Data Stream 1";
+      error = {
+        request: { },
+        message: 'Not Found'
+      };
+
+      store.commit('treatErrorForAddingDataStream', error);
+      expect(store.state.errorMessage).to.equal("There was a problem adding Data Stream 1. Please try again!");
+  });
+
+
+  it('testErrorTreatmentForCommandAdding', () => {
+    let error = {
+      response: {
+        data: {
+          message: 'Internal Server Error'
+        },
+        status:'500',
+        headers:[]
+      },
+    };
+    store.commit('errorTreatmentForCommandAdding', error);
+    expect(store.state.errorMessage).to.equal('Internal Server Error');
+    store.state.commandToAdd.command = "Command 1";
+    error = {
+      request: { },
+      message: 'Not Found'
+    };
+
+    store.commit('errorTreatmentForCommandAdding', error);
+    expect(store.state.errorMessage).to.equal("There was a problem adding Command 1. Please try again!");
+  });
+
+
+  it('testDisplayErrorDetailsForAddingAction', () => {
+      let error = {
+        response: {
+          data: {
+            message: 'Internal Server Error'
+          },
+          status:'500',
+          headers:[]
+        },
+      };
+      store.commit('displayErrorDetailsForAddingAction', error);
+      expect(store.state.errorMessage).to.equal('Internal Server Error');
+      store.state.activeAction.name = "Action 1";
+      error = {
+        request: { },
+        message: 'Not Found'
+      };
+
+      store.commit('displayErrorDetailsForAddingAction', error);
+      expect(store.state.errorMessage).to.equal("There was a problem adding Action 1. Please try again!");
+  });
+
+
 
   /* TENGO QUE
               * seguir con processCommandsConfigured

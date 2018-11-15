@@ -135,37 +135,52 @@ describe('Actions', () => {
         expect(store.state.sideNavStyle.width).to.equals("0")
     });
 
-/*
-    it('showTriggerViewTest', () => {
-        store.state.maxTriggersPerPage = 1
-        store.state.filteredTriggers = []
-
-        expect(store.state.filteredTriggers.length).to.equal(0)
-
-        store.state.existingTriggers = [
-          { name: 'Trigger1', action : 'Tweet', policy: {type: 'data_point_registration', elem: 'Temperature'}, conditions: ['Temperature current value > 24 Celsius', 'Temperature current value > 24 Celsius', 'Time interval' ]},
-          {name: 'Trigger2', action: 'Make Facebook Post', policy: {type: 'data_point_registration',	elem: 'Temperature' }, conditions: ['Always']}
-        ]
-
-        store.dispatch('showTriggerView')
-
-        expect(store.state.renderDashboardView).to.equal(false)
-        expect(store.state.renderDataStreamView).to.equal(false)
-        expect(store.state.renderActionAddView).to.equal(false)
-        expect(store.state.renderTriggerAddView).to.equal(true)
-        expect(store.state.renderSecurityView).to.equal(false)
-        expect(store.state.renderAboutView).to.equal(false)
-
-        expect(store.state.triggersForPage.length).to.equal(1)
-        expect(store.state.triggersForPage[0].name).to.equal('Trigger1')
-        expect(store.state.currentPage).to.equal(1)
-        expect(store.state.pagesNeededForTriggers).to.equal(2)
-        expect(store.state.elementsToDelete.length).to.equal(0)
-
+    it('testDisplayModalForStreamAdding', () => {
+        store.dispatch('displayModalForStreamAdding');
+        expect(store.state.showModalForStreamAdding).to.equal(true);
     });
 
-*/
 
+    it('testHideModalForStreamAdding', () => {
+        store.dispatch('hideModalForStreamAdding');
+        expect(store.state.showModalForStreamAdding).to.equal(false);
+    });
+
+
+    it('testDisplayModalForCommandAdding', () => {
+        store.dispatch('displayModalForCommandAdding');
+        expect(store.state.showModalForCommandAdding).to.equal(true);
+    });
+
+
+    it('testHideModalForCommandAdding', () => {
+        store.dispatch('hideModalForCommandAdding');
+        expect(store.state.showModalForCommandAdding).to.equal(false);
+    });
+
+
+    it('testDisplayModalForActionAdding', () => {
+        store.dispatch('displayModalForActionAdding');
+        expect(store.state.showModalForActionAdding).to.equal(true);
+    });
+
+
+    it('testHideModalForActionAdding', () => {
+        store.dispatch('hideModalForActionAdding');
+        expect(store.state.showModalForActionAdding).to.equal(false);
+    });
+
+
+    it('testDisplayModalForTriggerAdding', () => {
+        store.dispatch('displayModalForTriggerAdding');
+        expect(store.state.showModalForTriggerAdding).to.equal(true);
+    });
+
+
+    it('testHideModalForTriggerAdding', () => {
+        store.dispatch('hideModalForTriggerAdding');
+        expect(store.state.showModalForTriggerAdding).to.equal(false);
+    });
 
 
 

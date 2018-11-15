@@ -464,7 +464,7 @@
       },
 
       addTrigger: function () {
-        this.$store.dispatch('addTrigger');
+        this.$store.dispatch('addTrigger', this.$store.state.backendEndPoint);
       },
     }
 

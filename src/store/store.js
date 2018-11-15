@@ -932,7 +932,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       console.log("request_line: " + request_line);
       console.log("request: " + request);
 
-        state.request = request;
+      state.request = request;
 
       state.displayLoadingFeedback = true; // user starts seeing the loading spinner
 
@@ -1516,7 +1516,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
 
-    addTrigger: state => {
+    addTrigger: (state, url) => {
       console.log("##### ABOUT TO ADD A TRIGGER!! ");
 
       let policy = {};
@@ -1529,7 +1529,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
       state.displayLoadingFeedback = true; // user starts seeing the loading spinner
 
-      axios.post(state.backendEndPoint + '/triggers', {
+      axios.post(url + '/triggers', {
         name: state.activeTrigger.name,
         action: state.activeTrigger.action,
         policy: policy,
@@ -1715,14 +1715,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
         //context.commit('treatErrorForDataStream', err);
         context.commit('hideLoadingFeedback');
 
-      })
-    },
-
-    LOAD_PROJECT_LIST: function ({ commit }) {
-      axios.get('/secured/projects').then((response) => {
-        commit('SET_PROJECT_LIST', { list: response.data })
-      }, (err) => {
-        console.log(err)
       })
     },
 
@@ -2245,8 +2237,8 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       context.commit('setDataStreamNotUpdated', newValue);
     },
 
-    addTrigger: context => {
-      context.commit('addTrigger');
+    addTrigger: (context, url) => {
+      context.commit('addTrigger', url);
     },
 
 

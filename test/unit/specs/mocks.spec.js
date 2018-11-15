@@ -107,4 +107,155 @@ describe('mocking axios requests', function () {
 
   });
 
+  it('GET /triggers', function (done) {
+
+    store.state.maxTriggersPerPage = 5;
+
+    moxios.withMock(function () {
+      let onFulfilled = sinon.spy()
+
+      store.dispatch('showTriggerView', 'http://localhost:1111').then(onFulfilled)
+
+      moxios.wait(function () {
+        let request = moxios.requests.mostRecent()
+        request.respondWith({
+          status: 200,
+          statusText: 'OK',
+          response: [
+            { name: 'Trigger1', action : 'Tweet', policy: {type: 'data_point_registration', elem: 'Temperature'}, conditions: ['Temperature current value > 24 Celsius', 'Temperature current value > 24 Celsius', 'Time interval' ]},
+            {name: 'Trigger2', action: 'Make Facebook Post', policy: {type: 'data_point_registration',	elem: 'Temperature' }, conditions: ['Always']	}
+          ]
+        }).then(function () {
+          equal(onFulfilled.called, true)
+          expect(store.state.triggersForPage.length).to.equal(2)
+          expect(store.state.triggersForPage[0].name).to.equal('Trigger1')
+          expect(store.state.triggersForPage[0].action).to.equal('Tweet')
+          expect(store.state.triggersForPage[1].name).to.equal('Trigger2')
+          expect(store.state.triggersForPage[1].action).to.equal('Make Facebook Post')
+          done()
+        })
+      })
+    })
+
+  });
+
+  it('POST /data-streams', function (done) {
+
+    store.state.dataStreamToAdd = 'Data Stream 1';
+
+    moxios.withMock(function () {
+      let onFulfilled = sinon.spy()
+
+      store.dispatch('addDataStream', 'http://localhost:1111').then(onFulfilled)
+
+      moxios.wait(function () {
+        let request = moxios.requests.mostRecent()
+        request.respondWith({
+          status: 200,
+          statusText: 'OK',
+          response: [ ]
+        }).then(function () {
+          equal(onFulfilled.called, true)
+          expect(store.state.displayLoadingFeedback).to.equal(false)
+          expect(store.state.errorInInteraction).to.equal(false)
+          expect(store.state.dataStreamToAdd).to.equal('')
+          done()
+        })
+      })
+    })
+
+  });
+
+  it('POST /commands', function (done) {
+
+    store.state.commandToAdd.command = "Command 1";
+    store.state.commandToAdd.priority = "12";
+
+    moxios.withMock(function () {
+      let onFulfilled = sinon.spy()
+
+      store.dispatch('addCommand', 'http://localhost:1111').then(onFulfilled)
+
+      moxios.wait(function () {
+        let request = moxios.requests.mostRecent()
+        request.respondWith({
+          status: 200,
+          statusText: 'OK',
+          response: [ ]
+        }).then(function () {
+          equal(onFulfilled.called, true)
+          expect(store.state.displayLoadingFeedback).to.equal(false)
+          expect(store.state.errorInInteraction).to.equal(false)
+          done()
+        })
+      })
+    })
+
+  });
+
+  it('POST /actions', function (done) {
+
+    store.state.activeAction.name = "Action to Add";
+    store.state.activeAction.url = "myUrl";
+    store.state.activeAction.method = "POST";
+    store.state.activeAction.version = "HTTP 1.1";
+    store.state.activeIdsForHttpRequestHeader = "";
+    store.state.actionBody = "";
+
+    moxios.withMock(function () {
+      let onFulfilled = sinon.spy()
+
+      store.dispatch('addAction', 'http://localhost:1111', '', '').then(onFulfilled)
+
+      moxios.wait(function () {
+        let request = moxios.requests.mostRecent()
+        request.respondWith({
+          status: 200,
+          statusText: 'OK',
+          response: [ ]
+        }).then(function () {
+          equal(onFulfilled.called, true)
+          expect(store.state.displayLoadingFeedback).to.equal(false)
+          expect(store.state.errorInInteraction).to.equal(false)
+          expect(store.state.successMessage).to.equal("Action to Add added successfully.")
+          done()
+        })
+      })
+    })
+    console.log("EEEEEEEEEEEE");
+
+  });
+
+  it('POST /triggers', function (done) {
+
+    store.state.isTimePeriodPolicy = true;
+    store.state.activeTrigger.timePeriod= {granularity: "10 seg"};
+    store.state.activeTrigger.name = "Trigger1";
+    store.state.activeTrigger.action = "Action1";
+    store.state.conditionsForTrigger = "Always";
+
+    moxios.withMock(function () {
+      let onFulfilled = sinon.spy()
+
+      store.dispatch('addTrigger', 'http://localhost:1111').then(onFulfilled)
+
+      moxios.wait(function () {
+        let request = moxios.requests.mostRecent()
+        request.respondWith({
+          status: 200,
+          statusText: 'OK',
+          response: [ ]
+        }).then(function () {
+          equal(onFulfilled.called, true)
+          expect(store.state.displayLoadingFeedback).to.equal(false)
+          expect(store.state.errorInInteraction).to.equal(false)
+          expect(store.state.successMessage).to.equal("Trigger1 added successfully.")
+          done()
+        })
+      })
+    })
+
+  });
+
+
 })

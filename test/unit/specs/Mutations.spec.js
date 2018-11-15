@@ -712,11 +712,59 @@ it('setMaxDataStreamsPerPageTest', () => {
     expect(store.state.commandsForPage[1].priority).to.equal('23');
   });
 
+
+  it('testDisplayModalForStreamAdding', () => {
+      store.commit('displayModalForStreamAdding');
+      expect(store.state.showModalForStreamAdding).to.equal(true);
+  });
+
+
+  it('testHideModalForStreamAdding', () => {
+      store.commit('hideModalForStreamAdding');
+      expect(store.state.showModalForStreamAdding).to.equal(false);
+  });
+
+
+  it('testDisplayModalForCommandAdding', () => {
+      store.commit('displayModalForCommandAdding');
+      expect(store.state.showModalForCommandAdding).to.equal(true);
+  });
+
+
+  it('testHideModalForCommandAdding', () => {
+      store.commit('hideModalForCommandAdding');
+      expect(store.state.showModalForCommandAdding).to.equal(false);
+  });
+
+
+  it('testDisplayModalForActionAdding', () => {
+      store.commit('displayModalForActionAdding');
+      expect(store.state.showModalForActionAdding).to.equal(true);
+  });
+
+
+  it('testHideModalForActionAdding', () => {
+      store.commit('hideModalForActionAdding');
+      expect(store.state.showModalForActionAdding).to.equal(false);
+  });
+
+
+  it('testDisplayModalForTriggerAdding', () => {
+      store.commit('displayModalForTriggerAdding');
+      expect(store.state.showModalForTriggerAdding).to.equal(true);
+  });
+
+
+  it('testHideModalForTriggerAdding', () => {
+      store.commit('hideModalForTriggerAdding');
+      expect(store.state.showModalForTriggerAdding).to.equal(false);
+  });
+
+
+
   /* TENGO QUE
               * seguir con processCommandsConfigured
-              * ver como mockear requests de axios
               * ver como testear los metodos que dibujan graficos
-              * ver como testear interacción con modales
 
               filterActionsToDisplay  |  filterTriggersToDisplay  |  filterDataStreamToDisplay | errorTreatmentForDataStreamAdding | displayErrorDetailsForAddingAction |
 

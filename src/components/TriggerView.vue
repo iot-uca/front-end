@@ -45,8 +45,10 @@
           </div>
 
           <div class="col-md-2">
-            <button v-if="getElementsToDelete().length<1" type="button" disabled class="btn button-main button-secondary" data-toggle="modal" data-target="#removeElements" style="width: 100%;">Delete</button>
-            <button v-else type="button" class="btn button-main button-secondary" data-toggle="modal" data-target="#removeElements" style="width: 100%;">Delete</button>
+            <button v-if="getElementsToDelete().length<1" type="button" disabled class="btn button-main button-secondary" style="width: 100%;">Delete</button>
+            <!--button v-else type="button" class="btn button-main button-secondary" data-toggle="modal" data-target="#removeElements" style="width: 100%;">Delete</button-->
+            <button v-else type="button" class="btn button-main button-secondary" style="width: 100%;" @click="displayModalForRemovingElements()">Delete</button>
+
           </div>
         </div>
 
@@ -168,6 +170,9 @@
 
     },
     methods: {
+      displayModalForRemovingElements: function () {
+        this.$store.dispatch('displayModalForRemovingElements');
+      },
       displayModalForTriggerAdding: function (){
         this.$store.dispatch('displayModalForTriggerAdding');
       },

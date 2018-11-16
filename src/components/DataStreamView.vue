@@ -49,8 +49,9 @@
           </div>
 
           <div class="col-md-2">
-            <button v-if="getElementsToDelete().length<1" type="button" disabled class="btn button-green" data-toggle="modal" data-target="#removeElements" style="width: 100%;">Delete</button>
-            <button v-else type="button" class="btn button-green" data-toggle="modal" data-target="#removeElements" style="width: 100%;">Delete</button>
+            <button v-if="getElementsToDelete().length<1" type="button" disabled class="btn button-green" style="width: 100%;">Delete</button>
+            <!--button v-else type="button" class="btn button-green" data-toggle="modal" data-target="#removeElements" style="width: 100%;">Delete</button-->
+            <button v-else type="button" class="btn button-green" style="width: 100%;" @click="displayModalForRemovingElements();">Delete</button>
 
           </div>
         </div>
@@ -195,9 +196,16 @@
     },
 
     methods: {
+      displayModalForRemovingElements: function () {
+        this.$store.dispatch('displayModalForRemovingElements');
+      },
 
       displayModalForStreamAdding: function () {
         this.$store.dispatch('displayModalForStreamAdding');
+      },
+
+      displayModalForStreamEditing: function () {
+        this.$store.dispatch('displayModalForStreamEditing');
       },
 
       getMaxDataStreamsPerPage: function () {

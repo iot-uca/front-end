@@ -49,8 +49,11 @@
           </div>
 
           <div class="col-md-2">
-            <button v-if="getElementsToDelete().length<1" type="button" disabled class="btn button-green button-green-danger" data-toggle="modal" data-target="#removeElements" style="width: 100%;">Delete</button>
-            <button v-else type="button" class="btn button-green button-green-danger" data-toggle="modal" data-target="#removeElements" style="width: 100%;">Delete</button>
+            <button v-if="getElementsToDelete().length<1" type="button" disabled class="btn button-green button-green-danger" style="width: 100%;">Delete</button>
+            <!--button v-else type="button" class="btn button-green button-green-danger" data-toggle="modal" data-target="#removeElements" style="width: 100%;">Delete</button-->
+
+            <button v-else type="button" class="btn button-green button-green-danger" @click="displayModalForRemovingElements()" style="width: 100%;">Delete</button>
+
           </div>
         </div>
 
@@ -103,12 +106,14 @@
             <td v-else class="text-center">-</td>
 
             <td>
-              <button type="button" class="btn button-green button-green-view btn-sm" data-toggle="modal" data-target="#showActionDetailModal" style="height: 75%;" @click="assignBodyAndHeader(action)">
+              <!--button type="button" class="btn button-green button-green-view btn-sm" data-toggle="modal" data-target="#showActionDetailModal" style="height: 75%;" @click="assignBodyAndHeader(action)"-->
+              <button type="button" class="btn button-green button-green-view btn-sm" style="height: 75%;" @click="assignBodyAndHeader(action); displayModalForActionDetails();">
                 <i class="fa fa-eye"></i>
               </button>
             </td>
             <td>
-              <button type="button" class="btn button-green button-green-edit btn-sm" data-toggle="modal" @click="assignBodyAndHeader(action)"  data-target="#editActionModal">
+              <!--button type="button" class="btn button-green button-green-edit btn-sm" data-toggle="modal" @click="assignBodyAndHeader(action)"  data-target="#editActionModal"-->
+              <button type="button" class="btn button-green button-green-edit btn-sm" @click="assignBodyAndHeader(action); displayModalForActionEditing();">
                 <i class="fa fa-pencil-square-o"></i>
               </button>
             </td>
@@ -197,6 +202,19 @@
 
     },
     methods:{
+
+    displayModalForActionDetails: function (){
+      this.$store.dispatch('displayModalForActionDetails');
+    },
+
+      displayModalForRemovingElements: function (){
+        this.$store.dispatch('displayModalForRemovingElements');
+      },
+
+      displayModalForActionEditing: function (){
+        this.$store.dispatch('displayModalForActionEditing');
+      },
+
       displayModalForActionAdding: function (){
         this.$store.dispatch('displayModalForActionAdding');
       },

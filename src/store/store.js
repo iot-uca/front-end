@@ -74,7 +74,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
 //##########################################################################################
-// Variable for managing the modals behavior
+// Variables for managing the modals behavior
 
     showModalForStreamAdding: false,
     showModalForStreamEditing: false,
@@ -90,6 +90,8 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     showModalForTriggerEditing: false,
 
     showModalForRequestResult: false,
+
+    showModalForRemovingElements: false,
 
 //##########################################################################################
 
@@ -1630,7 +1632,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     //####################################################################
-    //  Stream  Adding  Modal
+    //  Stream  Modals
     //####################################################################
 
     displayModalForStreamAdding: state => {
@@ -1641,6 +1643,14 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     hideModalForStreamAdding: state => {
       console.log("### Entering  hideModalForStreamAdding");
       state.showModalForStreamAdding = false;
+    },
+
+    displayModalForStreamEditing: state => {
+      state.showModalForStreamEditing = true;
+    },
+
+    hideModalForStreamEditing: state => {
+      state.showModalForStreamEditing = false;
     },
 
     //####################################################################
@@ -1658,7 +1668,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     //####################################################################
-    //  Action  Adding  Modal
+    //  Action  Modals
     //####################################################################
 
     displayModalForActionAdding: state => {
@@ -1671,8 +1681,24 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       state.showModalForActionAdding = false;
     },
 
+    displayModalForActionEditing: state => {
+      state.showModalForActionEditing = true;
+    },
+
+    hideModalForActionEditing: state => {
+      state.showModalForActionEditing = false;
+    },
+
+    displayModalForActionDetails: state => {
+      state.showModalForActionDetails = true;
+    },
+
+    hideModalForActionDetails: state => {
+      state.showModalForActionDetails = false;
+    },
+
     //####################################################################
-    //  Trigger  Adding  Modal
+    //  Trigger  Modals
     //####################################################################
 
     displayModalForTriggerAdding: state => {
@@ -1685,7 +1711,29 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       state.showModalForTriggerAdding = false;
     },
 
+    displayModalForTriggerDetails: state => {
+      console.log("### Entering  displayModalForTriggerDetails");
+      state.showModalForTriggerDetails = true;
+    },
 
+    hideModalForTriggerDetails: state => {
+      console.log("### Entering  hideModalForTriggerDetails");
+      state.showModalForTriggerDetails = true;
+    },
+
+    //####################################################################
+    //  Remove Elements  Modal
+    //####################################################################
+
+    displayModalForRemovingElements: state => {
+      console.log("### Entering  displayModalForRemovingElements");
+      state.showModalForRemovingElements = true;
+    },
+
+    hideModalForRemovingElements: state => {
+      console.log("### Entering  hideModalForRemovingElements");
+      state.showModalForRemovingElements = false;
+    },
 
 
   },
@@ -2249,6 +2297,13 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       context.commit('hideModalForStreamAdding');
     },
 
+    displayModalForStreamEditing: context => {
+      context.commit('displayModalForStreamEditing');
+    },
+
+    hideModalForStreamEditing: context => {
+      context.commit('hideModalForStreamEditing');
+    },
 
     displayModalForCommandAdding: context => {
       context.commit('displayModalForCommandAdding');
@@ -2272,6 +2327,38 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     hideModalForTriggerAdding: context => {
       context.commit('hideModalForTriggerAdding');
     },
+
+
+    displayModalForTriggerDetails: context => {
+      context.commit('displayModalForTriggerDetails');
+    },
+
+    hideModalForTriggerDetails: context => {
+      context.commit('hideModalForTriggerDetails');
+    },
+
+
+    displayModalForActionEditing: context => {
+      context.commit('displayModalForActionEditing');
+    },
+    hideModalForActionEditing: context => {
+      context.commit('hideModalForActionEditing');
+    },
+
+    displayModalForRemovingElements: context => {
+      context.commit('displayModalForRemovingElements');
+    },
+    hideModalForRemovingElements: context => {
+      context.commit('hideModalForRemovingElements');
+    },
+
+    displayModalForActionDetails: context => {
+      context.commit('displayModalForActionDetails');
+    },
+    hideModalForActionDetails: context => {
+      context.commit('hideModalForActionDetails');
+    },
+
 
   }
 })

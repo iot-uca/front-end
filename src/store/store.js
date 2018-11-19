@@ -1020,7 +1020,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
       axios.post(state.backendEndPoint + '/actions', {
         name: state.activeAction.name,
-        request: request
+        http_request: request
       })
         .then(function (response) {
           console.log("(1)");

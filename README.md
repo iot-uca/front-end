@@ -1,7 +1,7 @@
 <p align="center"><img src="src/assets/cosmos-gui.jpg">
- <h1 align="center">Cosmos</h1>
+ <h1 align="center">Apollo</h1>
   <p align="center">
-      X is particular Cosmos graphical user interface written in Vue.js.
+      Apollo is a particular Cosmos graphical user interface written in Vue.js.
     <br>
     <a href="docs/"><strong>Explore the docs »</strong></a>
     <br>
@@ -20,7 +20,7 @@
 
 > *Name origin*: TBD
 
-With X, we aim to provide a simple, light-weight, powerfull platform to interact with Cosmos.
+With Apollo, we aim to provide a simple, light-weight, powerfull platform to explote and interact with Cosmos.
 
 
 > Structural Projects
@@ -47,13 +47,13 @@ With X, we aim to provide a simple, light-weight, powerfull platform to interact
 
 A Docker image is pushed to Docker Hub every time CI runs successfully. 
 
-> *First download the latest docker image*:
+> *Download the latest docker image*:
 
   docker pull jnahas/cosmos-ui
 
-> *Second, open CLI and run*:
+> *Open CLI and run*:
 
-  docker run -it -p 8080:80 --rm --name cosmos-gui jnahas/cosmos-ui
+  docker run -it -p 7080:80 --rm --name cosmos-gui jnahas/cosmos-ui
 
 
 ## Contibute

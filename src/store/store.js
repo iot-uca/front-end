@@ -2179,7 +2179,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
     axios.post(url + '/actions', {
         name: context.state.activeAction.name,
-        request: context.state.request
+        http_request: context.state.request
       }).then(function (response) {
           console.log("(1)");
           console.log("data: " + response.data);

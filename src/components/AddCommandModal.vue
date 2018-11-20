@@ -43,7 +43,7 @@
                         <div class="input-group-prepend">
                           <span class="input-group-text"><i class="fa fa-font"></i></span>
                         </div>
-                        <input type="number" class="form-control" id="commandPriority" v-model="commandToAdd.priority" required="true" min="0" max="100">
+                        <input type="tel" class="form-control" id="commandPriority" v-model="commandToAdd.priority" required="true" min="1" max="100" maxlength="3">
                         <div class="invalid-feedback" style="width: 100%;">
                           <em>The Command priority cannot be empty</em>
                         </div>

@@ -76,6 +76,8 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 //##########################################################################################
 // Variables for managing the modals behavior
 
+    showModalForDataPointsAdding: false,
+
     showModalForStreamAdding: false,
     showModalForStreamEditing: false,
 
@@ -111,6 +113,9 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       {id: 8, name: 'Pressure outside the house'},
       {id: 9, name: 'Movement sensor in atic'}
     ],*/
+
+    dataPointToAdd: undefined,
+    dataStreamToRegisterDataPointOn: undefined,
 
     dataStreamsResponseFromBackend:[],
 
@@ -1334,39 +1339,53 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
     },
 
-    deleteElements: state => {
+    deleteElements: (state, view) => {
+      console.log("### Entering deleteElements");
 
+      /*let url;
       if(state.renderDataStreamView){
-
-        for(let i=0; i<state.elementsToDelete.length; i++){
-
-          axios.delete(state.backendEndPoint + '/data-streams/' + state.elementsToDelete[i].metadata[0].identifier,{ headers: { "Accept": "application/vnd.cosmos.data-stream+json; version=1.0.0" } }).then(response => {
-
-            console.log(" RESPONSE: " + response);
-            state.displayLoadingFeedback = false;
-            let dataStreams = response.data;
-            console.log("[SUCCESS] DataPoints =>>>> " + dataStreams);
-
-
-          }, (error) => {
-
-            state.displayLoadingFeedback = false; // we stop showing the loading spinner
-            console.log(error);
-
-          })
-        }
-
+        url = state.backendEndPoint + '/data-streams/';
       }else{
         if(state.renderActionAddView){
-
+          url = state.backendEndPoint + '/actions/';
         }else{
           if(state.renderTriggerAddView){
-
+            url = state.backendEndPoint + '/triggers/';
           }else{
-
+            url = state.backendEndPoint +  '/commands/';
           }
         }
+      }*/
+
+      // assume everything succeded
+      state.successMessage = "Elements deleted successfully!";
+      state.errorMessage = "";
+
+      for(let i=0; i<state.elementsToDelete.length; i++){
+        state.displayLoadingFeedback = true; // user starts seeing the loading spinner
+
+        //axios.delete( url + state.elementsToDelete[i].metadata[0].identifier).then(response => {
+
+        console.log(">> URL : " + state.elementsToDelete[i].links.self);
+        axios.delete(state.elementsToDelete[i].links.self).then(response => {
+
+          state.displayLoadingFeedback = false;
+
+        }, (error) => {
+
+          state.displayLoadingFeedback = false; // we stop showing the loading spinner
+          state.errorInInteraction = true;
+          state.errorMessage += "There was a problem deleting " ;//+ state.elementsToDelete[i].metadata[0].identifier;
+          console.log(error);
+
+        })
       }
+
+
+      state.showModalForRequestResult = true;
+      setTimeout(function(){
+        state.showModalForRequestResult = false;
+      }, 1500);
 
     },
 
@@ -1520,7 +1539,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
     addTrigger: (state, url) => {
       console.log("##### ABOUT TO ADD A TRIGGER!! ");
-
       let policy = {};
 
       if(state.isTimePeriodPolicy){
@@ -1697,6 +1715,14 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       state.showModalForActionDetails = false;
     },
 
+    displayModalForDataPointsAdding: state => {
+      console.log(" Entering displayModalForDataPointsAdding mutation");
+      state.showModalForDataPointsAdding = true;
+    },
+    hideModalForDataPointsAdding: state => {
+      state.showModalForDataPointsAdding = false;
+    },
+
     //####################################################################
     //  Trigger  Modals
     //####################################################################
@@ -1734,6 +1760,13 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       console.log("### Entering  hideModalForRemovingElements");
       state.showModalForRemovingElements = false;
     },
+
+    setdataPointToAdd: (state,value) => {
+      console.log("### Entering  setdataPointToAdd");
+      state.dataPointToAdd = value;
+      console.log(" dataPointToAdd: " + state.dataPointToAdd);
+    },
+
 
 
   },
@@ -2255,6 +2288,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
     deleteElements: context =>{
       context.commit('deleteElements');
+      //context.commit('refreshView', );
     },
 
     displayLoadingFeedback: context => {
@@ -2286,7 +2320,45 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     addTrigger: (context, url) => {
-      context.commit('addTrigger', url);
+      console.log("### [addTrigger] ");
+
+      //context.commit('addTrigger', url);
+
+      let policy = {};
+
+      if(context.state.isTimePeriodPolicy){
+        policy = {type: "time_interval", granularity: context.state.activeTrigger.timePeriod.granularity};
+      }else{
+        policy= {type: "data_point_registration", data_stream: context.state.activeTrigger.dataPointRegistration.dataStream};
+      }
+
+      context.state.displayLoadingFeedback = true; // user starts seeing the loading spinner
+
+      axios.post(url + '/triggers', {
+        name: context.state.activeTrigger.name,
+        action: context.state.activeTrigger.action,
+        policy: policy,
+        conditions: context.state.conditionsForTrigger,
+      }).then(function (response) {
+
+          context.state.displayLoadingFeedback = false;
+          context.state.errorInInteraction = false;
+          context.state.successMessage = context.state.activeTrigger.name + " added successfully.";
+
+          axios.get(url + '/triggers').then(response => {
+            context.commit('processTriggersConfigured', response);
+            context.commit('setFilteredTriggersToAllConfigured');
+            context.commit('setCurrentPage', 1);
+            context.commit('getTriggersToShowInTable');
+            context.commit('getPagesNeededForTriggers');
+          }, (err) => {
+            console.log("[ERROR] => " + err);
+          });
+
+        }).catch(function (error) {
+
+      });
+
     },
 
 
@@ -2359,6 +2431,41 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       context.commit('hideModalForActionDetails');
     },
 
+    displayModalForDataPointsAdding: context => {
+      console.log("Entering displayModalForDataPointsAdding");
+      context.commit('displayModalForDataPointsAdding');
+    },
+    hideModalForDataPointsAdding: context => {
+      context.commit('hideModalForDataPointsAdding');
+    },
+
+    addDataPoint: (context, url) => {
+      context.state.displayLoadingFeedback = true;
+
+      axios.post( url + '/data-points', {
+              name: context.state.activeDataStream.name,
+              value: context.state.dataPointToAdd
+          }).then(function (response) {
+            context.state.displayLoadingFeedback = false;
+            context.state.errorInInteraction = false;
+            context.state.successMessage = context.state.dataPointToAdd + " registered successfully on " + context.state.activeDataStream.name;
+
+
+        }).catch(function (error) {
+            context.state.displayLoadingFeedback = false;
+            context.state.errorInInteraction = true;
+
+        });
+
+        context.state.showModalForRequestResult = true;
+        setTimeout(function(){
+          context.state.showModalForRequestResult = false;
+        }, 1500);
+    },
+
+    setdataPointToAdd: (context, value) => {
+      context.commit('setdataPointToAdd', value);
+    }
 
   }
 })

@@ -3,7 +3,13 @@
   <!-- div for showing the Triggers add view -->
   <div id="triggers" v-if="renderTriggerAddView" style="margin: 1.5%;">
 
-    <div class="row">
+  <div v-if="hasToDisplayLoadingFeedback">
+
+    <spinner id="spinner"></spinner>
+
+  </div>
+
+    <div v-else class="row">
       <br>
 
       <!--div class="col-md-1">
@@ -53,13 +59,13 @@
         </div>
 
         <table class="table table-striped table-responsive table-sm" style="width: 100%;">
-          <thead class="thead-dark">
+          <thead style="background-color: #2b2c37;">
           <tr>
             <th scope="col" style="width: 2%;"></th>
-            <th scope="col" style="width: 25%;">Name</th>
-            <th scope="col" style="width: 30%;">Action</th>
-            <th scope="col" style="width: 26%;">Policy Type</th>
-            <th scope="col" style="width: 15%;">Policy Elem</th>
+            <th scope="col" style="width: 25%; color: white;">Name</th>
+            <th scope="col" style="width: 30%; color: white;">Action</th>
+            <th scope="col" style="width: 26%; color: white;">Policy Type</th>
+            <th scope="col" style="width: 15%; color: white;">Policy Elem</th>
             <th scope="col"></th>
             <th scope="col"></th>
           </tr>
@@ -139,6 +145,11 @@
     },
 
     computed: {
+
+      hasToDisplayLoadingFeedback() {
+        return this.$store.state.displayLoadingFeedback;
+      },
+
       renderTriggerAddView() {
         return this.$store.state.renderTriggerAddView;
       },
@@ -221,32 +232,20 @@
 
 <style scoped>
 
-.button-main{
+#spinner{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+.button-green{
+  background-color: #4AFF82;
   color: white;
   font-family: Source Sans Pro, sans-serif;
 }
 
-.button-primary{
-  background-color: #2b2c37;
-}
-
-.button-secondary{
-  background-color: #55576b;
-}
-
-.button-edit{
-  background-color: #323440;
-}
-
-.button-view{
-  background-color: #323440;
-}
-
-.button-primary:hover{
-  background-color: #4b4c5e;
-}
-
-.button-secondary:hover{
-  background-color: #6e708a;
+.button-green:hover{
+   background-color: #4AFF96;
 }
 </style>

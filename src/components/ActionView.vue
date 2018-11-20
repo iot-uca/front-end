@@ -66,15 +66,13 @@
         </div>
 
         <table v-if="getActionsForPage().length>0" class="table table-striped table-responsive table-sm" style="width: 100%;">
-          <thead class="thead-dark">
+          <thead style="background-color: #2b2c37;">
           <tr>
             <th scope="col" style="width: 1%"></th>
-            <th scope="col" style="width: 30%;">Name</th>
-            <th scope="col" style="width: 11%;">Type</th>
-            <th scope="col" style="width: 11%;">Priority</th>
-            <th scope="col" style="width: 10%">Method</th>
-            <th scope="col" style="width: 28%;">URL</th>
-            <th scope="col" style="width: 7%;">Version</th>
+            <th scope="col" style="width: 40%; color: white;">Name</th>
+            <th scope="col" style="width: 10%; color: white;">Method</th>
+            <th scope="col" style="width: 40%; color: white;">URL</th>
+            <th scope="col" style="width: 7%; color: white;">Version</th>
             <th scope="col" style="width: 1%"></th>
             <th scope="col" style="width: 1%"></th>
           </tr>
@@ -90,12 +88,6 @@
 
             <td>{{action.name}}</td>
 
-            <td v-if="action.http_request!==undefined">HTTP Request</td>
-            <td v-else>Command</td>
-
-            <td v-if="action.http_request.priority!==undefined">{{action.http_request.priority}}</td>
-            <td v-else >-</td>
-
             <td v-if="action.http_request.request_line.method!==undefined">{{action.http_request.request_line.method}}</td>
             <td v-else class="text-center">-</td>
 
@@ -106,13 +98,11 @@
             <td v-else class="text-center">-</td>
 
             <td>
-              <!--button type="button" class="btn button-green button-green-view btn-sm" data-toggle="modal" data-target="#showActionDetailModal" style="height: 75%;" @click="assignBodyAndHeader(action)"-->
               <button type="button" class="btn button-green button-green-view btn-sm" style="height: 75%;" @click="assignBodyAndHeader(action); displayModalForActionDetails();">
                 <i class="fa fa-eye"></i>
               </button>
             </td>
             <td>
-              <!--button type="button" class="btn button-green button-green-edit btn-sm" data-toggle="modal" @click="assignBodyAndHeader(action)"  data-target="#editActionModal"-->
               <button type="button" class="btn button-green button-green-edit btn-sm" @click="assignBodyAndHeader(action); displayModalForActionEditing();">
                 <i class="fa fa-pencil-square-o"></i>
               </button>
@@ -280,39 +270,12 @@
   }
 
   .button-green{
+    background-color: #4AFF82;
     color: white;
     font-family: Source Sans Pro, sans-serif;
   }
 
-  .button-green-action{
-    background-color: #4AE387;
-  }
-
-  .button-green-action:hover{
+  .button-green:hover{
      background-color: #4AFF96;
-  }
-
-  .button-green-danger{
-    background-color: #87d37c;
-  }
-
-  .button-green-danger:hover{
-     background-color: #4AE387;
-  }
-
-  .button-edit{
-    background-color: #1e7e34;
-  }
-
-  .button-edit:hover{
-    background-color: #1e8838;
-  }
-
-  .button-view{
-    background-color: #1e8838;
-  }
-
-  .button-view:hover{
-    background-color: #1e7e34;
   }
 </style>

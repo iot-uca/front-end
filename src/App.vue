@@ -27,6 +27,7 @@
     <trigger-view></trigger-view>
     <security-view></security-view-->
 
+    <add-data-point-modal></add-data-point-modal>
 
 
     <!-- FORM VALIDATIONS IN VUE JS => https://vuejs.org/v2/cookbook/form-validation.html -->
@@ -56,6 +57,7 @@
   import AddTriggerModal from './components/AddTriggerModal.vue'
   import AddCommandModal from './components/AddCommandModal.vue'
   import SuccessFailureModal from './components/SuccessFailureModal.vue'
+  import AddDataPointModal from './components/AddDataPointModal.vue'
   //import AboutView from './components/AboutView.vue'
 
 
@@ -87,6 +89,7 @@
       'cosmos-header': Header,
       'burguer-menu': BurguerMenu,
       'add-command-modal' : AddCommandModal,
+      'add-data-point-modal': AddDataPointModal,
       'sara-sa': Sarasa
   },
   mounted () {

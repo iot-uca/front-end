@@ -65,11 +65,12 @@
         </div>
 
         <table v-if="dataStreamsForPage.length>0"  class="table table-striped table-responsive table-sm w-100">
-          <thead class="thead-dark">
+          <thead style="background-color: #2b2c37;">
             <tr>
               <th scope="col" style="width: 2%"></th>
-              <th scope="col" style="width: 79%">Name</th>
-              <th scope="col" style="width: 15%">Current Value</th>
+              <th scope="col" style="width: 77%; color: white;">Name</th>
+              <th scope="col" style="width: 15%; color: white;">Current Value</th>
+              <th scope="col" style="width: 2%"></th>
               <th scope="col" style="width: 2%"></th>
               <th scope="col" style="width: 2%"></th>
             </tr>
@@ -90,15 +91,20 @@
               <!--button type="button" class="btn btn-success btn-sm" @click="showDataStream(dataStream)" data-toggle="modal" data-target="#dataPointsForStreamModal" style="height: 75%;">
                 <i class="fa fa-bar-chart"></i>
               </button-->
-              <a @click="showDataStream(dataStream)" data-toggle="modal" data-target="#dataPointsForStreamModal"><i class="fa fa-bar-chart"></i></a>
+              <a @click="showDataStream(dataStream)" data-toggle="modal" data-target="#dataPointsForStreamModal" style="color:#4AFF82"><i class="fa fa-bar-chart"></i></a>
             </td>
             <td>
-              <!--button type="button" class="btn btn-info btn-sm" @click="editDataStreams(dataStream)" data-toggle="modal" data-target="#editDataStreamModal" style="height: 75%;">
+              <!--button type="button" class="btn btn-info btn-sm" @click="editDataStreams(dataStream)" data-toggle="modal" data-target="#editDataStreamModal" style="height: 75%; color:#4AFF82">
                 <i class="fa fa-pencil-square-o"></i>
               </button-->
-              <a @click="editDataStreams(dataStream)" data-toggle="modal" data-target="#editDataStreamModal" style="color:darkcyan"><i class="fa fa-pencil-square-o"></i></a>
+              <a @click="editDataStreams(dataStream); displayModalForStreamEditing()" style="color:#4AFF82"><i class="fa fa-pencil-square-o"></i></a>
 
             </td>
+
+            <td>
+              <a @click="editDataStreams(dataStream); displayModalForDataPointsAdding();" style="color:#4AFF82"><i class="fa fa-plus"></i></a>
+            </td>
+
           </tr>
           </tbody>
         </table>
@@ -196,6 +202,11 @@
     },
 
     methods: {
+
+      displayModalForDataPointsAdding: function () {
+        this.$store.dispatch('displayModalForDataPointsAdding');
+      },
+
       displayModalForRemovingElements: function () {
         this.$store.dispatch('displayModalForRemovingElements');
       },

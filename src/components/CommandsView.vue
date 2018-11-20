@@ -62,11 +62,11 @@
       </div>
 
       <table v-if="getCommandsForPage().length>0" class="table table-striped table-responsive table-sm" style="width: 100%;">
-        <thead class="thead-dark">
+        <thead style="background-color: #2b2c37;">
         <tr>
           <th scope="col" style="width: 2%"></th>
-          <th scope="col" style="width: 50%;">Name</th>
-          <th scope="col" style="width: 46%;">Priority</th>
+          <th scope="col" style="width: 50%; color: white;">Name</th>
+          <th scope="col" style="width: 46%; color: white;">Priority</th>
           <th scope="col" style="width: 2%"></th>
         </tr>
         </thead>

@@ -106,7 +106,7 @@
                             <span class="input-group-text"><i class="fa fa-diamond"></i></span>
                           </div>
                           <select class="form-control custom-select" id="dsName" placeholder="" required="true" v-model="activeTrigger.dataPointRegistration.dataStream">
-                            <option v-for="dS in dataStreamsConfigured" value="dS.name">{{dS.name}}</option>
+                            <option v-for="dS in dataStreamsConfigured" :value="dS.name">{{dS.name}}</option>
                           </select>
                           <div class="invalid-feedback" style="width: 100%;">
                             The Trigger name is required.
@@ -312,7 +312,7 @@
               </div>
 
               <div class="modal-footer">
-                <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal"  @click="addTrigger()"><strong>Add trigger</strong></button>
+                <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal"  @click="addTrigger(); hideModalForTriggerAdding();"><strong>Add trigger</strong></button>
               </div>
 
             </div>

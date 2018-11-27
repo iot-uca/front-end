@@ -46,14 +46,14 @@
           </div>
           <div class="col-md-2">
             <!--button type="button" class="btn button-main button-primary" data-toggle="modal" data-target="#addTriggerModal" style="width: 100%;">Add trigger</button-->
-            <button type="button" class="btn button-main button-primary" style="width: 100%;" @click="displayModalForTriggerAdding()">Add trigger</button>
+            <button type="button" class="btn button-green" style="width: 100%;" @click="displayModalForTriggerAdding()">Add trigger</button>
 
           </div>
 
           <div class="col-md-2">
             <button v-if="getElementsToDelete().length<1" type="button" disabled class="btn button-main button-secondary" style="width: 100%;">Delete</button>
             <!--button v-else type="button" class="btn button-main button-secondary" data-toggle="modal" data-target="#removeElements" style="width: 100%;">Delete</button-->
-            <button v-else type="button" class="btn button-main button-secondary" style="width: 100%;" @click="displayModalForRemovingElements()">Delete</button>
+            <button v-else type="button" class="btn button-green" style="width: 100%;" @click="displayModalForRemovingElements()">Delete</button>
 
           </div>
         </div>
@@ -87,12 +87,12 @@
             <td>{{trigger.policy.elem}}</td>
 
             <td>
-              <button type="button" class="btn button-main button-view btn-sm" @click="editTrigger(trigger)" data-toggle="modal" data-target="#showTriggerModal" style="height: 75%;">
+              <button type="button" class="btn button-green btn-sm" @click="editTrigger(trigger)" data-toggle="modal" data-target="#showTriggerModal" style="height: 75%;">
                 <i class="fa fa-eye"></i>
               </button>
             </td>
             <td>
-              <button type="button" class="btn button-main button-edit btn-sm" @click="editTrigger(trigger)" data-toggle="modal" data-target="#editTriggerModal" style="height: 75%;">
+              <button type="button" class="btn button-green btn-sm" @click="editTrigger(trigger)" data-toggle="modal" data-target="#editTriggerModal" style="height: 75%;">
                 <i class="fa fa-pencil-square-o"></i>
               </button>
             </td>

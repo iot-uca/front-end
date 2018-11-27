@@ -77,6 +77,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 // Variables for managing the modals behavior
 
     showModalForDataPointsAdding: false,
+    showModalForDataPointsChart: false,
 
     showModalForStreamAdding: false,
     showModalForStreamEditing: false,
@@ -116,6 +117,11 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
     dataPointToAdd: undefined,
     dataStreamToRegisterDataPointOn: undefined,
+
+    dataPointsAvailables: [],
+    dataPointsMinValue: 0,
+    dataPointsMaxValue: 0,
+    dataPointsAverageValue: 0,
 
     dataStreamsResponseFromBackend:[],
 
@@ -1217,6 +1223,56 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       });
     },
 
+
+    drawDataPointsChart: state => {
+      console.log("==> ENTERING drawDataPointsChart");
+      let ctx = document.getElementById("line-chart").getContext('2d');
+
+      console.log("aaaaa: " + state.labelsForDataPoints);
+      console.log("bbbbb: " + state.dataPointsAvailables);
+      console.log("ccccc: " + state.activeDataStream.name);
+      console.log("ddddd: " + state.dataPointsMinValue);
+      console.log("eeeee: " + state.dataPointsMaxValue);
+      console.log("fffff: " + state.dataPointsAverageValue);
+
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          //labels: [1,2,3,4,5,6,7,8,9,10],
+          labels: state.labelsForDataPoints,
+          datasets: [{
+            //data: [86,114,106,106,107,111,114,90,99,107],
+            data: state.dataPointsAvailables,
+            //label: "Temperature",
+            label: state.activeDataStream.name,
+            borderColor: "#3e95cd",
+            fill: false
+          }]
+        },
+        options: {
+          title:false,
+          title: {
+            display: false,
+            text: 'Data Points registered in ' + state.activeDataStream.name
+          },
+          scales: {
+            xAxes: [{
+              gridLines: {
+                display:false
+              }
+            }],
+            yAxes: [{
+              gridLines: {
+                display:false
+              }
+            }]
+          }
+        }
+      });
+    },
+
+
+
     drawMostExecutedTriggersChart: state => {
       let ctx = document.getElementById("barChart").getContext('2d');
       new Chart(ctx, {
@@ -1723,6 +1779,14 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       state.showModalForDataPointsAdding = false;
     },
 
+    displayModalForDataPointsChart: state => {
+      console.log(" Entering displayModalForDataPointsChart mutation");
+      state.showModalForDataPointsChart = true;
+    },
+    hideModalForDataPointsChart: state => {
+      state.showModalForDataPointsChart = false;
+    },
+
     //####################################################################
     //  Trigger  Modals
     //####################################################################
@@ -1765,6 +1829,26 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       console.log("### Entering  setdataPointToAdd");
       state.dataPointToAdd = value;
       console.log(" dataPointToAdd: " + state.dataPointToAdd);
+    },
+
+    processDataPointsConfigured: (state, response) => {
+      console.log("### Entering  processDataPointsConfigured");
+      state.labelsForDataPoints = [];
+      state.dataPointsAvailables = [];
+      state.dataPointsMinValue = 0;
+      state.dataPointsMaxValue = 0;
+      state.dataPointsAverageValue = 0;
+      let sum=0;
+      let amountOfPoints = response.length;
+
+      for(let i=0; i<amountOfPoints; i++){
+        state.dataPointsAvailables.push(response[i].value);
+        state.labelsForDataPoints.push(i+1);
+        sum = sum + +response[i].value; //convert the string number to number
+      }
+      state.dataPointsMaxValue = Math.max(...state.dataPointsAvailables);
+      state.dataPointsMinValue = Math.min(...state.dataPointsAvailables);
+      state.dataPointsAverageValue = sum/amountOfPoints;
     },
 
 
@@ -2442,14 +2526,13 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     addDataPoint: (context, url) => {
       context.state.displayLoadingFeedback = true;
 
-      axios.post( url + '/data-points', {
-              name: context.state.activeDataStream.name,
-              value: context.state.dataPointToAdd
-          }).then(function (response) {
+      axios.post( url + '/data-points',
+              [{data_stream: context.state.activeDataStream.name,
+                value: context.state.dataPointToAdd}]
+          ).then(function (response) {
             context.state.displayLoadingFeedback = false;
             context.state.errorInInteraction = false;
             context.state.successMessage = context.state.dataPointToAdd + " registered successfully on " + context.state.activeDataStream.name;
-
 
         }).catch(function (error) {
             context.state.displayLoadingFeedback = false;
@@ -2461,11 +2544,44 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
         setTimeout(function(){
           context.state.showModalForRequestResult = false;
         }, 1500);
+
+        console.log("#$$$$$$$: " + context.state.activeDataStream.links.data_points);
     },
 
     setdataPointToAdd: (context, value) => {
       context.commit('setdataPointToAdd', value);
-    }
+    },
+
+    displayModalForDataPointsChart: context => {
+      context.commit('displayModalForDataPointsChart');
+    },
+    hideModalForDataPointsChart: context => {
+      context.commit('hideModalForDataPointsChart');
+    },
+
+    getDataPoints: context => {
+      context.commit('displayLoadingFeedback');
+
+      axios.get(context.state.activeDataStream.links.data_points, { headers: { "Accept": "application/json" } }).then(response => {
+        context.commit('logResponseAttributes', response);
+        context.commit('processDataPointsConfigured', response.data);
+        context.commit('hideLoadingFeedback');
+        context.commit('drawDataPointsChart');
+      }, (err) => {
+        console.log("[ERROR] => " + err);
+        //context.commit('treatErrorForDataStream', err);
+        context.commit('hideLoadingFeedback');
+
+      });
+
+    },
+
+    getLabelsForDataPointsChart: context => {
+      context.commit('getLabelsForDataPointsChart');
+    },
+
+
+
 
   }
 })

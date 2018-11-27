@@ -1,6 +1,6 @@
 <template>
-  <!-- Modal for showing success or failure interactions-->
 
+  <!-- Modal for showing success or failure interactions-->
     <div v-if="showModalForRequestResult">
         <div class="modal-mask">
           <div class="modal-wrapper">
@@ -21,23 +21,6 @@
         </div>
       </div>
     </div>
-
-
-
-
-
-  <!--div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModal" aria-hidden="true" style="margin: 15%;">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div v-if="errorInInteraction" class="modal-body alert alert-danger text-center" role="alert">
-          <strong>{{errorMessage}}</strong>
-        </div>
-        <div v-else class="modal-body alert alert-success text-center" role="alert">
-          <strong>{{successMessage}} </strong>
-        </div>
-      </div>
-    </div>
-  </div-->
 
 </template>
 

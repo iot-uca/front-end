@@ -65,9 +65,9 @@
         <thead style="background-color: #2b2c37;">
         <tr>
           <th scope="col" style="width: 2%"></th>
-          <th scope="col" style="width: 50%; color: white;">Name</th>
-          <th scope="col" style="width: 46%; color: white;">Priority</th>
-          <th scope="col" style="width: 2%"></th>
+          <th scope="col" style="width: 62%; color: white;">Name</th>
+          <th scope="col" style="width: 36%; color: white;">Priority</th>
+          <!--th scope="col" style="width: 2%"></th-->
         </tr>
         </thead>
         <tbody class="table-hover">
@@ -83,11 +83,11 @@
 
           <td>{{command.priority}}</td>
 
-          <td>
+          <!--td>
             <button type="button" class="btn button-green button-green-edit btn-sm" data-toggle="modal" data-target="#editCommandModal">
               <i class="fa fa-pencil-square-o"></i>
             </button>
-          </td>
+          </td-->
         </tr>
         </tbody>
       </table>

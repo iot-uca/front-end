@@ -91,7 +91,8 @@
               <!--button type="button" class="btn btn-success btn-sm" @click="showDataStream(dataStream)" data-toggle="modal" data-target="#dataPointsForStreamModal" style="height: 75%;">
                 <i class="fa fa-bar-chart"></i>
               </button-->
-              <a @click="showDataStream(dataStream)" data-toggle="modal" data-target="#dataPointsForStreamModal" style="color:#4AFF82"><i class="fa fa-bar-chart"></i></a>
+              <a @click="showDataStream(dataStream); getDataPoints();" data-toggle="modal" data-target="#dataPointsForStreamModal" style="color:#4AFF82"><i class="fa fa-bar-chart"></i></a>
+              <!-- displayModalForDataPointsChart(); getDataPoints(); -->
             </td>
             <td>
               <!--button type="button" class="btn btn-info btn-sm" @click="editDataStreams(dataStream)" data-toggle="modal" data-target="#editDataStreamModal" style="height: 75%; color:#4AFF82">
@@ -202,6 +203,10 @@
     },
 
     methods: {
+    
+      getDataPoints: function () {
+        this.$store.dispatch('getDataPoints');
+      },
 
       displayModalForDataPointsAdding: function () {
         this.$store.dispatch('displayModalForDataPointsAdding');

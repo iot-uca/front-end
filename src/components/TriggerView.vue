@@ -138,7 +138,13 @@
 
 <script>
 
+  import Spinner from './Spinner.vue'
+
   export default {
+
+    components:{
+      'spinner' : Spinner,
+    },
 
     mounted(){
       this.$store.dispatch('showTriggerView', this.$store.state.backendEndPoint);

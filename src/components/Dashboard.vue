@@ -12,7 +12,7 @@
           <div class="card-body text-center">
             <div class="row">
               <div class="col-sm-12">
-                <h4 class="card-title text-primary">12</h4>
+                <h4 class="card-title text-primary">{{this.$store.state.dataStreamsConfigured.length}}</h4>
                 <div class="text-muted">Data Streams</div>
               </div>
               <!--div class="col-sm-6 text-center">
@@ -27,11 +27,11 @@
           <div class="card-body text-center">
             <div class="row">
               <div class="col-sm-4">
-                <h4 class="card-title text-primary">23</h4>
+                <h4 class="card-title text-primary">{{this.$store.state.existingActions.length}}</h4>
                 <div class="small text-muted">Actions</div>
               </div>
               <div class="col-sm-4 text-center">
-                <div class="h5 mb-0 text-info">17</div>
+                <div class="h5 mb-0 text-info">{{this.$store.state.existingCommands.length}}</div>
                 <div class="small text-muted">Commands</div>
               </div>
               <div class="col-sm-4 text-center">
@@ -46,7 +46,7 @@
           <div class="card-body text-center">
             <div class="row">
               <div class="col-sm-4">
-                <h4 class="card-title text-primary">7</h4>
+                <h4 class="card-title text-primary">{{this.$store.state.existingTriggers.length}}</h4>
                 <div class="small text-muted">Triggers</div>
               </div>
               <div class="col-sm-8 text-center">
@@ -59,13 +59,13 @@
 
                 <div class="small text-muted">Time Interval</div>
                 <div class="progress">
-                  <div class="progress-bar bg-info" role="progressbar" style="width: 58%;" aria-valuenow="58" aria-valuemin="0" aria-valuemax="100">4</div>
+                  <div class="progress-bar bg-info" role="progressbar" style="width: 58%;" aria-valuenow="58" aria-valuemin="0" aria-valuemax="100">{{this.$store.state.amountOfPeriodicalTriggers}}</div>
                 </div>
 
 
                 <div class="small text-muted">Data Point Registration</div>
                 <div class="progress">
-                  <div class="progress-bar bg-info" role="progressbar" style="width: 42%;" aria-valuenow="42" aria-valuemin="0" aria-valuemax="100">3</div>
+                  <div class="progress-bar bg-info" role="progressbar" style="width: 42%;" aria-valuenow="42" aria-valuemin="0" aria-valuemax="100">{{this.$store.state.amountOfDataPointTriggers}}</div>
                 </div>
 
               </div>

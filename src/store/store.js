@@ -49,18 +49,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 //##########################################################################################
 // Commands model
 //##########################################################################################
-    existingCommands: [
-      {command: 'Start Engine Alfa', priority: '28'},
-      {command: 'Turn On LED 1', priority: '100'},
-      {command: 'Turn Off LED 1', priority: '23'},
-      {command: 'Stop Engine Alfa', priority: '46'},
-      {command: 'Turn On PIN 5',priority: '56'},
-      {command: 'Turn On PIN 6', priority: '33'},
-      {command: 'Turn On PIN 7', priority: '66'},
-      {command: 'Turn On PIN 8', priority: '73'},
-      {command: 'Stop Engine Beta', priority: '92'},
-      {command: 'Stop Engine Delta', priority: '35'},
-    ],
+    existingCommands: [],
 
     commandsForPage: [],
     maxCommandsPerPage: 10,
@@ -171,16 +160,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 //##########################################################################################
 
     // actions variables
-    existingActions:[
-      {id: 1, name: 'Tweet', type:'http_request', method:'POST', url:'https://twitter.com', version:'1.1', body:"{\"foo\":\"bar\", \"jane\":\"doe\"}", headers:[{key:'security-key', value:'f78r3d'}, {key:'email', value:'jnahas@foor.bar'}]},
-      {id: 2, name: 'Make Facebook Post', type:'http_request', method:'POST', url:'https://facebook.com', version:'1.1', body:"{\"foo\":\"bar\", \"jane\":\"doe\"}", headers:[{key:'security-key', value:'f78r3d'}, {key:'email', value:'jnahas@foor.bar'}]},
-      {id: 3, name: 'Send Email', type:'http_request', method:'POST', url:'https://gmail.com', version:'1.1', body:"{\"foo\":\"bar\", \"jane\":\"doe\"}", headers:[{key:'security-key', value:'f78r3d'}, {key:'email', value:'jnahas@foor.bar'}]},
-      {id: 4, name: 'Start Engine Alfa', type:'http_request', method:'POST', url:'http://device1.com', version:'1.1', body:"{\"foo\":\"bar\", \"jane\":\"doe\"}", headers:[{key:'security-key', value:'f78r3d'}, {key:'email', value:'jnahas@foor.bar'}]},
-      {id: 5, name: 'Sense Temperature', type:'http_request', method:'GET', url:'http://device2.com', version:'1.1', body:"{\"foo\":\"bar\", \"jane\":\"doe\"}", headers:[{key:'security-key', value:'f78r3d'}, {key:'email', value:'jnahas@foor.bar'}]},
-      {id: 6, name: 'Command A', type:'command', priority:'High'},
-      {id: 7, name: 'Command B', type:'command', priority:'Medium'},
-      {id: 8, name: 'Command C', type:'command', priority:'Low'},
-    ],
+    existingActions:[],
 
 
     trueActions: [
@@ -239,37 +219,10 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     showTriggersOptions : false,
     isTimePeriodPolicy : false,
 
-    existingTriggers: [
-      { name: 'Trigger1', action : 'Tweet', policy: {type: 'data_point_registration', elem: 'Temperature'}, conditions: ['Temperature current value > 24 Celsius', 'Temperature current value > 24 Celsius', 'Time interval' ]},
+    existingTriggers: [],
 
-      {name: 'Trigger2', action: 'Make Facebook Post', policy: {type: 'data_point_registration',	elem: 'Temperature' }, conditions: ['Always']	},
-
-      {name: 'Trigger3', action: 'Send Email', policy: {type: 'data_point_registration', elem: 'Temperature'}, conditions: ['Temperature current value > 24 Celsius']},
-
-      {name: 'Trigger4', action: 'Start Engine Alfa', policy: {type:'data_point_registration', elem: 'Temperature'}, conditions: ['Always']},
-
-      {name: 'Trigger5', action: 'Sense Temperature', policy: {type: 'time_interval', elem: 'Fridays' }, conditions: ['Always']},
-
-      { name: 'Trigger6', action : 'Start Engine Alfa', policy: {type: 'data_point_registration', elem: 'Temperature'}, conditions: ['Temperature current value > 24 Celsius', 'Temperature current value > 24 Celsius', 'Time interval' ]},
-
-      {name: 'Trigger7', action: 'Start Engine Alfa', policy: {type: 'data_point_registration',	elem: 'Temperature' }, conditions: ['Always']	},
-
-      {name: 'Trigger8', action: 'Start Engine Alfa', policy: {type: 'data_point_registration', elem: 'Temperature'}, conditions: ['Temperature current value > 24 Celsius']},
-
-      {name: 'Trigger9', action: 'Make Facebook Post', policy: {type:'data_point_registration', elem: 'Temperature'}, conditions: ['Always']},
-
-      {name: 'Trigger10', action: 'Make Facebook Post', policy: {type: 'time_interval', elem: 'Fridays' }, conditions: ['Always']},
-
-      { name: 'Trigger11', action : 'Make Facebook Post', policy: {type: 'data_point_registration', elem: 'Temperature'}, conditions: ['Temperature current value > 24 Celsius', 'Temperature current value > 24 Celsius', 'Time interval' ]},
-
-      {name: 'Trigger12', action: 'Send Email', policy: {type: 'data_point_registration',	elem: 'Temperature' }, conditions: ['Always']	},
-
-      {name: 'Trigger13', action: 'Send Email', policy: {type: 'data_point_registration', elem: 'Temperature'}, conditions: ['Temperature current value > 24 Celsius']},
-
-      {name: 'Trigger14', action: 'Send Email', policy: {type:'data_point_registration', elem: 'Temperature'}, conditions: ['Always']},
-
-      {name: 'Trigger15', action: 'Send Email', policy: {type: 'time_interval', elem: 'Fridays' }, conditions: ['Always']},
-    ],
+    amountOfPeriodicalTriggers: 0,
+    amountOfDataPointTriggers: 0,
 
     triggersForPage: [],
     maxTriggersPerPage: 10,
@@ -1852,6 +1805,23 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
 
+    getAmountOfTriggerTypes: state => {
+      console.log("### Entering  getAmountOfTriggerTypes");
+      state.amountOfPeriodicalTriggers=0;
+      state.amountOfDataPointTriggers=0;
+
+      for(let i=0; i<state.existingTriggers.length; i++){
+          if(state.existingTriggers[i].policy.type==='periodical'){
+            state.amountOfPeriodicalTriggers+=1;
+            console.log("!!!!!!!!!!!state.amountOfPeriodicalTriggers: " + state.amountOfPeriodicalTriggers);
+          }else{
+            state.amountOfDataPointTriggers+=1;
+            console.log("!!!!!!!!!!!state.amountOfDataPointTriggers: " + state.amountOfDataPointTriggers);
+          }
+      }
+
+    },
+
 
   },
 
@@ -2023,7 +1993,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       context.commit('showTriggerView');
       context.commit('cleanElementsToDelete');
       context.commit('displayLoadingFeedback');
-      console.log("SARASAAA : " + url + "/triggers");
+
       axios.get(url + '/triggers', {headers:{"Accept" : "application/json"}} ).then(response => {
         context.commit('processTriggersConfigured', response);
         context.commit('setFilteredTriggersToAllConfigured');
@@ -2031,6 +2001,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
         context.commit('getTriggersToShowInTable');
         context.commit('getPagesNeededForTriggers');
         context.commit('hideLoadingFeedback');
+        context.commit('getAmountOfTriggerTypes');
 
       }, (err) => {
         console.log("[ERROR] => " + err);
@@ -2411,7 +2382,8 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       let policy = {};
 
       if(context.state.isTimePeriodPolicy){
-        policy = {type: "time_interval", granularity: context.state.activeTrigger.timePeriod.granularity};
+        //policy = {type: "time_interval", granularity: context.state.activeTrigger.timePeriod.granularity};
+        policy = {type: "periodical", time_interval: context.state.activeTrigger.timePeriod.granularity};
       }else{
         policy= {type: "data_point_registration", data_stream: context.state.activeTrigger.dataPointRegistration.dataStream};
       }
@@ -2435,6 +2407,8 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
             context.commit('setCurrentPage', 1);
             context.commit('getTriggersToShowInTable');
             context.commit('getPagesNeededForTriggers');
+            context.commit('getAmountOfTriggerTypes');
+
           }, (err) => {
             console.log("[ERROR] => " + err);
           });

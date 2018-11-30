@@ -784,22 +784,28 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     errorTreatmentForDataStreamAdding: (state,error) => {
+        console.log("### Entering errorTreatmentForDataStreamAdding ");
         console.log("[ERROR] " + error);
 
         state.displayLoadingFeedback = false;
         state.errorInInteraction = true;
 
+        console.log("error.response: " + error.response);
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+
         // Error
         if (error.response) {
           // The request was made and the server responded with a status code
           // that falls out of the range of 2xx
-          console.log(error.response.data);
-          console.log(error.response.data.message);
+          console.log("error.response.data: " + error.response.data);
+          console.log("error.response.data.message: " + error.response.data.message);
 
           state.errorMessage = error.response.data.message;
 
-          console.log(error.response.status);
-          console.log(error.response.headers);
+          console.log("error.response.status: " + error.response.status);
+          console.log("error.response.headers: " + error.response.headers);
         } else if (error.request) {
           // The request was made but no response was received
           // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
@@ -1268,33 +1274,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       });
     },
 
-    /*getDataStreamsConfigured: state => {
-      console.log("##### Entering getDataStreamsConfigured!! ");
-
-      //state.displayLoadingFeedback = true;
-
-      axios.get(state.backendEndPoint + '/data-streams',{ headers: { "Accept": "application/vnd.cosmos.data-stream-snapshot+json; version=1.0.0" } }).then(response => {
-
-        console.log(" RESPONSE: " + response);
-        //state.displayLoadingFeedback = false;
-        state.dataStreamsResponseFromBackend = response.data;
-        console.log("[SUCCESS] DataStreams =>>>> " + state.dataStreamsResponseFromBackend);
-
-        state.dataStreamsConfigured = [];
-
-        for(let i=0; i<state.dataStreamsResponseFromBackend.length; i++){
-          state.dataStreamsConfigured.push(state.dataStreamsResponseFromBackend[i]);
-          console.log("DataStreams =>" + state.dataStreamsConfigured);
-        }
-        console.log(" Finishing getDataStreamsConfigured ######");
-
-      }, (error) => {
-        // state.displayLoadingFeedback = false; // we stop showing the loading spinner
-        console.log(error);
-      });
-
-    },*/
-
     processActionsConfigured: (state, response)  => {
       console.log(" Entering processActionsConfigured!!");
 
@@ -1331,20 +1310,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
     getDataPointForDataStream: state => {
 
-      /*axios.get(state.backendEndPoint + '/data-streams/4cuvu7vjro0tbqz7arztpt657/data-points',{ headers: { "Accept": "application/vnd.cosmos.data-points+json; version=1.0.0" } }).then(response => {
-
-        console.log(" RESPONSE: " + response);
-        state.displayLoadingFeedback = false;
-        let dataStreams = response.data;
-        console.log("[SUCCESS] DataPoints =>>>> " + dataStreams);
-
-
-      }, (error) => {
-
-        state.displayLoadingFeedback = false; // we stop showing the loading spinner
-        console.log(error);
-
-      })*/
 
     },
 
@@ -1545,84 +1510,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
     },
 
-
-    addTrigger: (state, url) => {
-      console.log("##### ABOUT TO ADD A TRIGGER!! ");
-      let policy = {};
-
-      if(state.isTimePeriodPolicy){
-        policy = {type: "time_interval", granularity: state.activeTrigger.timePeriod.granularity};
-      }else{
-        policy= {type: "data_point_registration", data_stream: state.activeTrigger.dataPointRegistration.dataStream};
-      }
-
-      state.displayLoadingFeedback = true; // user starts seeing the loading spinner
-
-      axios.post(url + '/triggers', {
-        name: state.activeTrigger.name,
-        action: state.activeTrigger.action,
-        policy: policy,
-        conditions: state.conditionsForTrigger,
-      })
-        .then(function (response) {
-          console.log("data: " + response.data);
-          console.log("status: " + response.status);
-          console.log("statusText: " + response.statusText);
-          console.log("headers: " + response.headers);
-          console.log("config: " + response.config);
-
-          state.displayLoadingFeedback = false;
-          state.errorInInteraction = false;
-          state.successMessage = state.activeTrigger.name + " added successfully.";
-          //$("#successModal").modal();
-
-          state.showModalForRequestResult = true;
-          setTimeout(function(){
-            state.showModalForRequestResult = false;
-          }, 2000);
-
-        })
-        .catch(function (error) {
-          console.log("[ERROR] " + error);
-
-          state.displayLoadingFeedback = false;
-          state.errorInInteraction = true;
-
-          // Error
-          if (error.response) {
-            // The request was made and the server responded with a status code
-            // that falls out of the range of 2xx
-            console.log(error.response.data);
-            console.log(error.response.data.message);
-
-            state.errorMessage = error.response.data.message;
-
-            console.log(error.response.status);
-            console.log(error.response.headers);
-
-          } else if (error.request) {
-            // The request was made but no response was received
-            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-            // http.ClientRequest in node.js
-            console.log(error.request);
-            state.errorMessage = "There was a problem adding " + state.activeTrigger.name + ". Please try again!";
-
-          } else {
-            // Something happened in setting up the request that triggered an Error
-            console.log('Error', error.message);
-            state.errorMessage = "There was a problem adding " + state.activeTrigger.name + ". Please try again!";
-          }
-
-          //$("#successModal").modal();
-
-          state.showModalForRequestResult = true;
-          setTimeout(function(){
-            state.showModalForRequestResult = false;
-          }, 2000);
-
-        });
-
-    },
 
     getPagesNeededForCommands: state => {
       console.log("### Entering  getPagesNeededForCommands");
@@ -1835,8 +1722,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       context.commit('showDataStreamView');
       context.commit('cleanElementsToDelete');
       context.commit('displayLoadingFeedback');
-      /*axios.get(url + '/data-streams',{ headers: { "Accept": "application/vnd.cosmos.data-stream-snapshot+json; version=1.0.0" } }).then(response => {*/
-      /*axios.get(url + '/data-streams').then(response => {*/
+
       axios.get(url + '/data-streams',{ headers: { "Accept": "application/json" } }).then(response => {
         context.commit('logResponseAttributes', response);
         context.commit('processDataStreamsConfigured', response);
@@ -2209,6 +2095,10 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
               });
 
           }).catch(function (error) {
+                console.log("LA UUUUTA : " + JSON.stringify(error));
+                console.log("LA UUUUTA : " + error.message);
+                console.log("LA UUUUTA : " + JSON.stringify(error.config));
+                console.log("LA UUUUTA : " + JSON.stringify(error.request));
                 context.commit('errorTreatmentForDataStreamAdding', error);
           });
 

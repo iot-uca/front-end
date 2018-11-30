@@ -17,9 +17,9 @@
 
   <div class="bg-dark">
     <div class="text-center" style="color: white;">
-      <!--h1 Style="color:#4AFF82; font-family:Source Sans Pro, sans-serif;"><strong>C O S M O S</strong></h1-->
       <!--h1 style="color:#4AFF82; font-family:Source Sans Pro, sans-serif;"><strong>A P O L L O</strong></h1-->
-      <h1 style="color:#4AFF82; font-family:Source Sans Pro, sans-serif;"><strong>H U B B L E</strong></h1>
+      <!--h1 style="color:#4AFF82; font-family:Source Sans Pro, sans-serif;"><strong>H U B B L E</strong></h1-->
+      <h1 style="color:#4AFF82; font-family:Source Sans Pro, sans-serif;"><strong>T E L E S C O P E</strong></h1>
     </div>
 
     <div class="justify-content-md-center">

@@ -59,13 +59,13 @@
 
                 <div class="small text-muted">Time Interval</div>
                 <div class="progress">
-                  <div class="progress-bar bg-info" role="progressbar" style="width: 58%;" aria-valuenow="58" aria-valuemin="0" aria-valuemax="100">{{this.$store.state.amountOfPeriodicalTriggers}}</div>
+                  <div class="progress-bar bg-info" role="progressbar" style="width: 58%;" aria-valuenow="56" aria-valuemin="0" aria-valuemax="100">{{this.$store.state.amountOfPeriodicalTriggers}}</div>
                 </div>
 
 
                 <div class="small text-muted">Data Point Registration</div>
                 <div class="progress">
-                  <div class="progress-bar bg-info" role="progressbar" style="width: 42%;" aria-valuenow="42" aria-valuemin="0" aria-valuemax="100">{{this.$store.state.amountOfDataPointTriggers}}</div>
+                  <div class="progress-bar bg-info" role="progressbar" style="width: 42%;" aria-valuenow="44" aria-valuemin="0" aria-valuemax="100">{{this.$store.state.amountOfDataPointTriggers}}</div>
                 </div>
 
               </div>

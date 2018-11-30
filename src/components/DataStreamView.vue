@@ -3,7 +3,6 @@
   <!-- div for showing the Data Stream add view -->
   <div v-if="renderDataStreamView" style="margin: 1.5%;">
 
-    <!--i v-if="hasToDisplayLoadingFeedback()" class="fa fa-spinner fa-spin" style="font-size: 5rem; padding-left: 50%; padding-right: 50%;"></i-->
     <div v-if="hasToDisplayLoadingFeedback">
 
       <spinner id="spinner"></spinner>
@@ -110,7 +109,7 @@
           </tbody>
         </table>
 
-        <div class="row">
+        <div v-if="dataStreamsForPage.length>0" class="row">
           <br>
           <p></p>
           <br>
@@ -203,7 +202,7 @@
     },
 
     methods: {
-    
+
       getDataPoints: function () {
         this.$store.dispatch('getDataPoints');
       },

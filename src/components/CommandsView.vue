@@ -92,7 +92,7 @@
         </tbody>
       </table>
 
-      <div class="row">
+      <div v-if="getCommandsForPage().length>0" class="row">
         <br>
         <p></p>
         <br>

@@ -111,7 +111,7 @@
           </tbody>
         </table>
 
-        <div class="row">
+        <div v-if="getActionsForPage().length>0" class="row">
           <br>
           <p></p>
           <br>

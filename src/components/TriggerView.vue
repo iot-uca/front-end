@@ -39,7 +39,8 @@
                   <span class="input-group-text"><i class="fa fa-search"></i></span>
                 </div>
 
-                <input type="text" class="form-control" v-model="triggerFilter" placeholder="Start typing to filter triggers..." required="true">
+                <input v-if="getExistingTriggers().length>0" type="text" class="form-control" v-model="triggerFilter" placeholder="Start typing to filter triggers..." required="true">
+                <input v-else type="text" class="form-control" v-model="actionFilter" placeholder="Start typing to filter triggers..." readonly>
 
               </div>
             </div>
@@ -58,7 +59,15 @@
           </div>
         </div>
 
-        <table class="table table-striped table-responsive table-sm" style="width: 100%;">
+        <div v-if="getTriggersForPage().length==0">
+        <br>
+        <br>
+        <p class="text-center"><strong><em>There are currently no triggers configured in the system</em></strong></p>
+        <br>
+        <br>
+        </div>
+
+        <table v-if="getTriggersForPage().length>0" class="table table-striped table-responsive table-sm" style="width: 100%;">
           <thead style="background-color: #2b2c37;">
           <tr>
             <th scope="col" style="width: 2%;"></th>
@@ -101,7 +110,7 @@
         </table>
 
 
-        <div class="row">
+        <div v-if="getTriggersForPage().length>0" class="row">
           <br>
           <p></p>
           <br>

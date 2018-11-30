@@ -1,7 +1,7 @@
-<p align="center"><img src="src/assets/cosmos-gui.jpg">
- <h1 align="center">Apollo</h1>
+<p align="center"><img src="src/assets/telescope.jpg">
+ <h1 align="center">Telescope</h1>
   <p align="center">
-      Apollo is a particular Cosmos graphical user interface written in Vue.js.
+      Telescope is a particular Cosmos graphical user interface written in Vue.js.
     <br>
     <a href="docs/"><strong>Explore the docs »</strong></a>
     <br>
@@ -20,7 +20,7 @@
 
 > *Name origin*: TBD
 
-With Apollo, we aim to provide a simple, light-weight, powerfull platform to explote and interact with Cosmos.
+With Telescope, we aim to provide a simple, light-weight, powerfull platform to explore and interact with Cosmos.
 
 
 > Structural Projects
@@ -45,7 +45,7 @@ With Apollo, we aim to provide a simple, light-weight, powerfull platform to exp
 
 ## How to run
 
-A Docker image is pushed to Docker Hub every time CI runs successfully. 
+A Docker image is pushed to Docker Hub every time CI runs successfully.
 
 > *Download the latest docker image*:
 

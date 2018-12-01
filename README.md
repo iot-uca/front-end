@@ -1,4 +1,4 @@
-<p align="center"><img src="src/assets/telescope.jpg">
+<p align="center"><img src="src/assets/telescope.jpg" style="width:200px; height: 200px">
  <h1 align="center">Telescope</h1>
   <p align="center">
       Telescope is a particular Cosmos graphical user interface written in Vue.js.

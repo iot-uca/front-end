@@ -104,6 +104,8 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       {id: 9, name: 'Movement sensor in atic'}
     ],*/
 
+    mostRecentlyUpdatedStreams: [],
+
     dataPointToAdd: undefined,
     dataStreamToRegisterDataPointOn: undefined,
 
@@ -1316,21 +1318,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     deleteElements: (state, view) => {
       console.log("### Entering deleteElements");
 
-      /*let url;
-      if(state.renderDataStreamView){
-        url = state.backendEndPoint + '/data-streams/';
-      }else{
-        if(state.renderActionAddView){
-          url = state.backendEndPoint + '/actions/';
-        }else{
-          if(state.renderTriggerAddView){
-            url = state.backendEndPoint + '/triggers/';
-          }else{
-            url = state.backendEndPoint +  '/commands/';
-          }
-        }
-      }*/
-
       // assume everything succeded
       state.successMessage = "Elements deleted successfully!";
       state.errorMessage = "";
@@ -1709,6 +1696,70 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
     },
 
+    determineUpdateTimeForStreams: state => {
+      console.log("### Entering determineUpdateTimeForStreams!!");
+      state.mostRecentlyUpdatedStreams=[];
+
+      let amountOfStreams = state.dataStreamsConfigured.length;
+
+      let instant = new Date();
+      console.log("instant: " + instant);
+
+      let thisMoment = moment(instant);
+      console.log("thisMoment: " + thisMoment);
+
+      //let timezoneOffset = instant.getTimezoneOffset();
+      //console.log("Timezone Offset: " + timezoneOffset);
+
+      //let milisFromTimezone = (timezoneOffset*60000);
+      //console.log("milisFromTimezone: " + milisFromTimezone);
+
+      //thisMoment = thisMoment + milisFromTimezone;
+      //console.log("milis adapted: " + thisMoment);
+
+      console.log("===>" + thisMoment.day());
+      console.log("===>" + thisMoment.month());
+      console.log("===>" + thisMoment.year());
+      console.log("===>" + thisMoment.hour());
+      console.log("===>" + thisMoment.minutes());
+      console.log("===>" + thisMoment.seconds());
+
+
+      for(let i=0; i<amountOfStreams; i++){
+
+        if(state.dataStreamsConfigured[i].last_update !== 'N/A'){
+          console.log("last_update: " + state.dataStreamsConfigured[i].last_update);
+          let iso8610 = state.dataStreamsConfigured[i].last_update.slice(0,19) + '-' + state.dataStreamsConfigured[i].last_update.slice(19,24);
+          console.log("iso8610: " + iso8610);
+
+          let registrationMoment = moment(iso8610, moment.ISO_8601);
+
+          console.log("===>" + registrationMoment.day());
+          console.log("===>" + registrationMoment.month());
+          console.log("===>" + registrationMoment.year());
+          console.log("===>" + registrationMoment.hour());
+          console.log("===>" + registrationMoment.minutes());
+          console.log("===>" + registrationMoment.seconds());
+
+          console.log("registrationMoment: " + registrationMoment);
+          state.dataStreamsConfigured[i].last_update = Math.floor((thisMoment - registrationMoment)/60000);
+          console.log("state.dataStreamsConfigured[i].last_update: " + state.dataStreamsConfigured[i].last_update);
+          state.mostRecentlyUpdatedStreams.push(state.dataStreamsConfigured[i]);
+        }
+
+      }
+    },
+
+    determineMostRecentlyUpdatedStreams: state => {
+      console.log("### Entering determineMostRecentlyUpdatedStreams!!");
+      state.mostRecentlyUpdatedStreams = state.mostRecentlyUpdatedStreams.sort(function(a, b){return a.last_update-b.last_update});
+
+      if(state.mostRecentlyUpdatedStreams.length>5){
+        state.mostRecentlyUpdatedStreams = state.mostRecentlyUpdatedStreams.slice(0,5);
+      }
+      console.log(JSON.stringify(state.mostRecentlyUpdatedStreams));
+    },
+
 
   },
 
@@ -1731,6 +1782,8 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
         context.commit('getDataStreamsToShowInTable');
         context.commit('getPagesNeededForDataStreams');
         context.commit('hideLoadingFeedback');
+        context.commit('determineUpdateTimeForStreams');
+        context.commit('determineMostRecentlyUpdatedStreams');
       }, (err) => {
         console.log("[ERROR] => " + err);
         //context.commit('treatErrorForDataStream', err);
@@ -2081,15 +2134,18 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
             context.commit('displaySuccessDataStreamAdding');
 
-              /*axios.get(url + '/data-streams',{ headers: { "Accept": "application/vnd.cosmos.data-stream-snapshot+json; version=1.0.0" } }).then(response => {*/
               axios.get(url + '/data-streams',{ headers: { "Accept": "application/json" } }).then(response => {
                 context.commit('processDataStreamsConfigured', response);
                 context.commit('setFilteredDataStreamsToAllConfigured');
                 context.commit('setCurrentPage', 1);
                 context.commit('getDataStreamsToShowInTable');
                 context.commit('getPagesNeededForDataStreams');
+                context.commit('cleanElementsToDelete');
+                context.commit('determineUpdateTimeForStreams');
+                context.commit('determineMostRecentlyUpdatedStreams');
                 //context.commit('hideLoadingFeedback');
               }, (err) => {
+                context.commit('cleanElementsToDelete');
                 console.log("[ERROR] => " + err);
                 //context.commit('treatErrorForDataStream', err);
               });
@@ -2099,6 +2155,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
                 console.log("LA UUUUTA : " + error.message);
                 console.log("LA UUUUTA : " + JSON.stringify(error.config));
                 console.log("LA UUUUTA : " + JSON.stringify(error.request));
+                context.commit('cleanElementsToDelete');
                 context.commit('errorTreatmentForDataStreamAdding', error);
           });
 
@@ -2116,16 +2173,17 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
             context.commit('displaySuccessCommandAdding');
 
-              /*axios.get(url + '/data-streams',{ headers: { "Accept": "application/vnd.cosmos.data-stream-snapshot+json; version=1.0.0" } }).then(response => {*/
               axios.get(url + '/commands').then(response => {
                 context.commit('processCommandsConfigured', response);
                 context.commit('setFilteredCommandsToAllConfigured');
                 context.commit('setCurrentPage', 1);
                 context.commit('getCommandsToShowInTable');
                 context.commit('getPagesNeededForCommands');
+                context.commit('cleanElementsToDelete');
                 //context.commit('hideLoadingFeedback');
               }, (err) => {
                 console.log("[ERROR] => " + err);
+                context.commit('cleanElementsToDelete');
                 //context.commit('treatErrorForDataStream', err);
               });
 
@@ -2231,9 +2289,28 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       context.commit('drawMostExecutedTriggersChart');
     },
 
-    deleteElements: context =>{
+    deleteElements: context => {
+      console.log('### ENTERING deleteElements!!');
       context.commit('deleteElements');
-      //context.commit('refreshView', );
+
+      setTimeout(function(){
+
+      if(context.state.renderDataStreamView){
+        context.dispatch('showDataStreamView', context.state.backendEndPoint);
+      }else{
+        if(context.state.renderActionAddView){
+          context.dispatch('showActionView', context.state.backendEndPoint);
+        }else{
+          if(context.state.renderTriggerAddView){
+            context.dispatch('showTriggerView', context.state.backendEndPoint);
+          }else{
+            context.dispatch('showCommandView', context.state.backendEndPoint);
+          }
+        }
+      }
+
+    }, 500);
+
     },
 
     displayLoadingFeedback: context => {
@@ -2444,8 +2521,10 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       context.commit('getLabelsForDataPointsChart');
     },
 
-
-
+    determineMostRecentlyUpdatedStreams: context => {
+      context.commit('determineUpdateTimeForStreams');
+      context.commit('determineMostRecentlyUpdatedStreams');
+    },
 
   }
 })

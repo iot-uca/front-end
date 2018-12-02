@@ -164,11 +164,11 @@
               </tr>
               </thead>
               <tbody>
-              <tr v-for="dS in dataStreams" style="font-size: 0.8rem;">
-                <td>{{dS.name}}</td>
-                <td>{{dS.current_value}}</td>
-                <td>{{dS.last_updated}}</td>
-                <td><button class="btn btn-sm" data-toggle="modal" data-target="#dataPointsForStreamModal"><i class="fa fa-bar-chart text-center"></i></button></td>
+              <tr v-for="dataStream in dataStreams" style="font-size: 0.8rem;">
+                <td>{{dataStream.name}}</td>
+                <td>{{dataStream.current_value}}</td>
+                <td>{{dataStream.last_update}} minutes</td>
+                <td><button class="btn btn-sm" data-toggle="modal" @click="showDataStream(dataStream); getDataPoints();" data-target="#dataPointsForStreamModal"><i class="fa fa-bar-chart text-center"></i></button></td>
               </tr>
               </tbody>
             </table>
@@ -188,9 +188,9 @@
 export default {
 
   mounted(){
-
     this.$store.dispatch('showDashboardView');
     this.drawCharts();
+    this.determineMostRecentlyUpdatedStreams();
 
   },
 
@@ -205,7 +205,7 @@ export default {
       return this.$store.state.showAddDataStream;
     },
     dataStreams(){
-      return this.$store.state.dataStreams;
+      return this.$store.state.mostRecentlyUpdatedStreams;
     },
 
   },
@@ -213,6 +213,15 @@ export default {
   methods: {
     drawCharts: function () {
       this.$store.dispatch('drawCharts');
+    },
+    showDataStream: function (dataStream) {
+      this.$store.dispatch('showDataStream', dataStream);
+    },
+    getDataPoints: function () {
+      this.$store.dispatch('getDataPoints');
+    },
+    determineMostRecentlyUpdatedStreams: function () {
+      this.$store.dispatch('determineMostRecentlyUpdatedStreams');
     },
   }
 }

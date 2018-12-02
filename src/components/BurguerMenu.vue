@@ -16,10 +16,15 @@
   </div-->
 
   <div class="bg-dark">
-    <div class="text-center" style="color: white;">
-      <!--h1 style="color:#4AFF82; font-family:Source Sans Pro, sans-serif;"><strong>A P O L L O</strong></h1-->
-      <!--h1 style="color:#4AFF82; font-family:Source Sans Pro, sans-serif;"><strong>H U B B L E</strong></h1-->
-      <h1 style="color:#4AFF82; font-family:Source Sans Pro, sans-serif;"><strong>T E L E S C O P E</strong></h1>
+
+    <div class="text-center">
+        <div style="display: inline-block; vertical-align:top;">
+          <img style="height:80px;width:80px; float:left;" src="../../src/assets/telescopio.gif">
+        </div>
+        <div style="display: inline-block">
+          <br>
+          <h3 style="color:#4AFF82; font-family:Source Sans Pro, sans-serif; float:right;"><strong>T E L E S C O P E</strong></h3>
+        </div>
     </div>
 
     <div class="justify-content-md-center">
@@ -28,7 +33,7 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-          <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+          <ul class="navbar-nav mr-auto mt-2 mt-lg-0" style="margin: auto;">
 
             <!--li class="nav-item active" @click="showDashboardView()"-->
             <li class="nav-item active">

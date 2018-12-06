@@ -153,7 +153,15 @@
           <div class="card-header">
             <i class="fa fa-pie-chart"></i> Most Recently Updated Streams
           </div>
-          <div class="card-body">
+
+
+          <div v-if="dataStreams.length==0" class="card-body">
+            <br>
+            <br>
+            <p class="text-center">No updated Streams for the moment</p>
+          </div>
+
+          <div v-else class="card-body">
             <table class="table table-striped table-responsive table-sm" style="width:100%;">
               <thead>
               <tr>
@@ -173,6 +181,8 @@
               </tbody>
             </table>
           </div>
+
+
         </div>
       </div>
 

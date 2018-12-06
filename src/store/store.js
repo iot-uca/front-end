@@ -1886,31 +1886,12 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       context.commit('closeNav');
     },
 
-/*    showDataStreamView: context => {
-      console.log("Entering showDataStreamView ");
-
-      context.commit('showDataStreamView');
-      context.commit('displayLoadingFeedback');
-      context.commit('getDataStreamsConfigured');
-
-      setTimeout(function () {
-        context.commit('setFilteredDataStreamsToAllConfigured');
-        context.commit('setCurrentPage', 1);
-        context.commit('getDataStreamsToShowInTable');
-        context.commit('getPagesNeededForDataStreams');
-        context.commit('hideLoadingFeedback');
-      }, 1000);
-
-      context.commit('cleanElementsToDelete');
-    },*/
-
     showActionView: (context, url) => {
       console.log("Entering showActionView ");
 
       context.commit('showActionView');
       context.commit('cleanElementsToDelete');
       context.commit('displayLoadingFeedback');
-      /*axios.get(url + '/actions',{ headers: { "Accept": "application/vnd.cosmos.action+json; version=1.0.0" } }).then(response => {*/
       axios.get(url + '/actions', {headers:{"Accept" : "application/json"}} ).then(response => {
         context.commit('processActionsConfigured', response);
         context.commit('setFilteredActionsToAllConfigured');
@@ -2226,9 +2207,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
           context.commit('setActionAddSuccessDetails');
 
-          //context.commit('addAction');
-
-          /*axios.get(url + '/actions',{ headers: { "Accept": "application/vnd.cosmos.action+json; version=1.0.0" } }).then(response => {*/
           axios.get(url + '/actions', {headers: {"Accept" : "application/json"} }).then(response => {
                   console.log("(2)");
                 context.commit('processActionsConfigured', response);
@@ -2478,7 +2456,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
         }).catch(function (error) {
             context.state.displayLoadingFeedback = false;
             context.state.errorInInteraction = true;
-
         });
 
         context.state.showModalForRequestResult = true;
@@ -2487,6 +2464,22 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
         }, 1500);
 
         console.log("#$$$$$$$: " + context.state.activeDataStream.links.data_points);
+
+        axios.get(url + '/data-streams',{ headers: { "Accept": "application/json" } }).then(response => {
+        context.commit('processDataStreamsConfigured', response);
+        context.commit('setFilteredDataStreamsToAllConfigured');
+        context.commit('setCurrentPage', 1);
+        context.commit('getDataStreamsToShowInTable');
+        context.commit('getPagesNeededForDataStreams');
+        context.commit('cleanElementsToDelete');
+        context.commit('determineUpdateTimeForStreams');
+        context.commit('determineMostRecentlyUpdatedStreams');
+        //context.commit('hideLoadingFeedback');
+      }, (err) => {
+        context.commit('cleanElementsToDelete');
+        console.log("[ERROR] => " + err);
+        //context.commit('treatErrorForDataStream', err);
+      });
     },
 
     setdataPointToAdd: (context, value) => {
@@ -2511,6 +2504,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       }, (err) => {
         console.log("[ERROR] => " + err);
         //context.commit('treatErrorForDataStream', err);
+        context.commit('cleanElementsToDelete');
         context.commit('hideLoadingFeedback');
 
       });

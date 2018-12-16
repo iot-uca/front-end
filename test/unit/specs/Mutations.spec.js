@@ -5,6 +5,43 @@ import {store} from '../../../src/store/store.js';
 
 describe('Mutations', () => {
 
+    before(function () {
+      // runs before all tests in this block
+      console.log("#### BEFORE ALL #####");
+      var body = document.getElementsByTagName("body")[0];
+      var canvasForFirstChart = document.createElement("canvas");
+      canvasForFirstChart.id = 'line-chart';
+      canvasForFirstChart.classList.add('chartjs-render-monitor');
+      canvasForFirstChart.height ='20';
+      canvasForFirstChart.width ='20';
+
+      var canvasForSecondChart = document.createElement("canvas");
+      canvasForSecondChart.id = 'barChart';
+      canvasForSecondChart.classList.add('chartjs-render-monitor');
+      canvasForSecondChart.height ='20';
+      canvasForSecondChart.width ='20';
+
+      var canvasForThirdChart = document.createElement("canvas");
+      canvasForThirdChart.id = 'myPieChart2';
+      canvasForThirdChart.classList.add('chartjs-render-monitor');
+      canvasForThirdChart.height ='20';
+      canvasForThirdChart.width ='20';
+
+      var canvasForFourthChart = document.createElement("canvas");
+      canvasForFourthChart.id = 'percentageBar';
+      canvasForFourthChart.classList.add('chartjs-render-monitor');
+      canvasForFourthChart.height ='20';
+      canvasForFourthChart.width ='20';
+
+      body.appendChild(canvasForFirstChart);
+      body.appendChild(canvasForSecondChart);
+      body.appendChild(canvasForThirdChart);
+      body.appendChild(canvasForFourthChart);
+
+      console.log("#### BEFORE ALL #####");
+    });
+
+
   it('increase options should increase options in 1', () => {
 
     store.state.options = [ {name: 'uno', value: 2}, {name: 'uno', value: 3} ]
@@ -16,7 +53,7 @@ describe('Mutations', () => {
   });
 
 
-  it('showDashboardView should only show dashboard view', () => {
+/*  it('showDashboardView should only show dashboard view', () => {
 
     store.commit('showDashboardView')
 
@@ -26,10 +63,10 @@ describe('Mutations', () => {
     expect(store.state.renderTriggerAddView).to.equal(false)
     expect(store.state.renderSecurityView).to.equal(false)
     expect(store.state.renderAboutView).to.equal(false)
-  });
+  });*/
 
 
-  it('showDashboardView should only show data streams view', () => {
+  it('showDataStreamView should only show data streams view', () => {
 
     store.commit('showDataStreamView')
 
@@ -256,26 +293,6 @@ it('setMaxDataStreamsPerPageTest', () => {
     expect(store.state.showAddDataStreamModal).to.equal(false)
   });
 
-/*          CUANDO SEPA COMO TESTEAR LOS MODIFIERS DE JQUERY
-
-  it('prepareDataStreamAddingTest', () => {
-    store.commit('prepareDataStreamAdding')
-    expect(store.state.displayLoadingFeedback).to.equal(true)
-  });
-
-
-    it('displaySuccessDataStreamAddingTest', () => {
-
-    store.state.dataStreamToAdd='Backyard door sensor'
-    store.commit('displaySuccessDataStreamAdding')
-    expect(store.state.displayLoadingFeedback).to.equal(false)
-     expect(store.state.errorInInteraction).to.equal(false)
-     expect(store.state.successMessage).to.equal('Backyard door sensor added successfully.')
-     expect(store.state.dataStreamToAdd).to.equal('')
-  });
-
-*/
-
 
     it('setDataStreamToAddTest', () => {
     store.state.dataStreamToAdd='Temperature sensor'
@@ -341,22 +358,6 @@ it('setMaxDataStreamsPerPageTest', () => {
         expect(store.state.displayLoadingFeedback).to.equal(true)
 
   });
-
-  /*
-        CUANDO SEPA COMO TRABAJAR CON EL $ DE JQUERY
-
-  it('setActionAddSuccessDetailsTest', () => {
-        store.state.activeAction.name='Post on Facebook'
-
-        store.commit('setActionAddSuccessDetails')
-        expect(store.state.displayLoadingFeedback).to.equal(false)
-         expect(store.state.errorInInteraction).to.equal(false)
-
-         expect(store.state.successMessage).to.equal('Post on Facebook added successfully.')
-  });
-
-*/
-
 
     it('setActionBodyTest', () => {
 
@@ -615,25 +616,39 @@ it('setMaxDataStreamsPerPageTest', () => {
         expect(store.state.renderCommandsView).to.equal(true)
     });
 
-
     it('filterActionsToDisplay', () => {
 
         let existingActions = [
-          {id: 1, name: 'Tweet', type:'http_request', method:'POST', url:'https://twitter.com', version:'1.1', body:"{\"foo\":\"bar\", \"jane\":\"doe\"}", headers:[{key:'security-key', value:'f78r3d'}, {key:'email', value:'jnahas@foor.bar'}]},
-          {id: 2, name: 'Make Facebook Post', type:'http_request', method:'POST', url:'https://facebook.com', version:'1.1', body:"{\"foo\":\"bar\", \"jane\":\"doe\"}", headers:[{key:'security-key', value:'f78r3d'}, {key:'email', value:'jnahas@foor.bar'}]},
-          {id: 3, name: 'Send Email', type:'http_request', method:'POST', url:'https://gmail.com', version:'1.1', body:"{\"foo\":\"bar\", \"jane\":\"doe\"}", headers:[{key:'security-key', value:'f78r3d'}, {key:'email', value:'jnahas@foor.bar'}]},
-          {id: 4, name: 'Start Engine Alfa', type:'http_request', method:'POST', url:'http://device1.com', version:'1.1', body:"{\"foo\":\"bar\", \"jane\":\"doe\"}", headers:[{key:'security-key', value:'f78r3d'}, {key:'email', value:'jnahas@foor.bar'}]},
-          {id: 5, name: 'Sense Temperature', type:'http_request', method:'GET', url:'http://device2.com', version:'1.1', body:"{\"foo\":\"bar\", \"jane\":\"doe\"}", headers:[{key:'security-key', value:'f78r3d'}, {key:'email', value:'jnahas@foor.bar'}]}
+          {id: 1, name: 'Tweet', http_request:{ request_line: { method:'POST', url:'https://twitter.com', version:'1.1'}, body:"{\"foo\":\"bar\", \"jane\":\"doe\"}", headers:[{key:'security-key', value:'f78r3d'}, {key:'email', value:'jnahas@foor.bar'}]}},
+          {id: 2, name: 'Make Facebook Post', http_request:{ request_line: { method:'POST', url:'https://facebook.com', version:'1.1'}, body:"{\"foo\":\"bar\", \"jane\":\"doe\"}", headers:[{key:'security-key', value:'f78r3d'}, {key:'email', value:'jnahas@foor.bar'}]}},
+          {id: 3, name: 'Send Email',  http_request:{ request_line: { method:'POST', url:'https://gmail.com', version:'1.1'}, body:"{\"foo\":\"bar\", \"jane\":\"doe\"}", headers:[{key:'security-key', value:'f78r3d'}, {key:'email', value:'jnahas@foor.bar'}]}},
+          {id: 4, name: 'Start Engine Alfa',  http_request:{ request_line: { method:'POST', url:'http://device1.com', version:'1.1'}, body:"{\"foo\":\"bar\", \"jane\":\"doe\"}", headers:[{key:'security-key', value:'f78r3d'}, {key:'email', value:'jnahas@foor.bar'}]}},
+          {id: 5, name: 'Sense Temperature',  http_request:{ request_line: { method:'GET', url:'http://device2.com', version:'1.1'}, body:"{\"foo\":\"bar\", \"jane\":\"doe\"}", headers:[{key:'security-key', value:'f78r3d'}, {key:'email', value:'jnahas@foor.bar'}]}}
         ];
 
         store.state.existingActions = existingActions;
         store.commit('filterActionsToDisplay','Tw');
-
         expect(store.state.filteredActions.length).to.equal(1);
         expect(store.state.filteredActions[0].id).to.equal(1);
         expect(store.state.filteredActions[0].name).to.equal('Tweet');
-        expect(store.state.filteredActions[0].type).to.equal('http_request');
+        expect(store.state.filteredActions[0].http_request.request_line.method).to.equal('POST');
     });
+
+    it('filterActionsToDisplayWithNoneMatching', () => {
+
+        let existingActions = [
+          {id: 1, name: 'Tweet', http_request:{ request_line: { method:'POST', url:'https://twitter.com', version:'1.1'}, body:"{\"foo\":\"bar\", \"jane\":\"doe\"}", headers:[{key:'security-key', value:'f78r3d'}, {key:'email', value:'jnahas@foor.bar'}]}},
+          {id: 2, name: 'Make Facebook Post', http_request:{ request_line: { method:'POST', url:'https://facebook.com', version:'1.1'}, body:"{\"foo\":\"bar\", \"jane\":\"doe\"}", headers:[{key:'security-key', value:'f78r3d'}, {key:'email', value:'jnahas@foor.bar'}]}},
+          {id: 3, name: 'Send Email',  http_request:{ request_line: { method:'POST', url:'https://gmail.com', version:'1.1'}, body:"{\"foo\":\"bar\", \"jane\":\"doe\"}", headers:[{key:'security-key', value:'f78r3d'}, {key:'email', value:'jnahas@foor.bar'}]}},
+          {id: 4, name: 'Start Engine Alfa',  http_request:{ request_line: { method:'POST', url:'http://device1.com', version:'1.1'}, body:"{\"foo\":\"bar\", \"jane\":\"doe\"}", headers:[{key:'security-key', value:'f78r3d'}, {key:'email', value:'jnahas@foor.bar'}]}},
+          {id: 5, name: 'Sense Temperature',  http_request:{ request_line: { method:'GET', url:'http://device2.com', version:'1.1'}, body:"{\"foo\":\"bar\", \"jane\":\"doe\"}", headers:[{key:'security-key', value:'f78r3d'}, {key:'email', value:'jnahas@foor.bar'}]}}
+        ];
+
+        store.state.existingActions = existingActions;
+        store.commit('filterActionsToDisplay','ABC');
+        expect(store.state.filteredActions.length).to.equal(0);
+    });
+
 
     it('testFilterTriggersToDisplayWhenHavingTriggers', () => {
 
@@ -830,16 +845,157 @@ it('setMaxDataStreamsPerPageTest', () => {
       expect(store.state.errorMessage).to.equal("There was a problem adding Action 1. Please try again!");
   });
 
+  it('testErrorTreatmentForDataStreamAdding', () => {
+      let error = {
+        response: {
+          data: {
+            message: 'Internal Server Error'
+          },
+          status:'500',
+          headers:[]
+        },
+      };
+      store.commit('errorTreatmentForDataStreamAdding', error);
+      store.state.dataStreamToAdd = "Data Stream 1";
+      expect(store.state.errorMessage).to.equal('Internal Server Error');
+  });
 
 
-  /* TENGO QUE
-              * seguir con processCommandsConfigured
-              * ver como testear los metodos que dibujan graficos
+  it('testUpdateAction', () => {
+    store.commit('updateAction');
+  });
 
-              filterActionsToDisplay  |  filterTriggersToDisplay  |  filterDataStreamToDisplay | errorTreatmentForDataStreamAdding | displayErrorDetailsForAddingAction |
+  it('testDrawMosTriggeredActionsChart', () => {
+    console.log("AAA : " + JSON.stringify(document.getElementById('myPieChart2').outerHTML));
+    store.commit('drawMosTriggeredActionsChart');
+  });
 
-  */
+  it('testDrawTriggerTypesPercentagesChart', () => {
+    console.log("BBB : " + JSON.stringify(document.getElementById('percentageBar').outerHTML));
+    store.commit('drawTriggerTypesPercentagesChart');
+  });
+
+  it('testDrawMostExecutedTriggersChart', () => {
+    console.log("CCC : " + JSON.stringify(document.getElementById('barChart').outerHTML));
+    store.commit('drawMostExecutedTriggersChart');
+  });
 
 
+  it('testDrawDataPointsChart', () => {
+    console.log("DDD : " + JSON.stringify(document.getElementById('line-chart').outerHTML));
+
+    store.state.labelsForDataPoints = [1,2,3];
+    store.state.dataPointsAvailables = ['23','24','25'];
+    store.state.activeDataStream = {name:'DataStream1'};
+
+    store.commit('drawDataPointsChart');
+  });
+
+
+  it('testDisplayModalForStreamEditing', () => {
+    store.state.showModalForStreamEditing = false;
+    store.commit('displayModalForStreamEditing');
+    expect(store.state.showModalForStreamEditing).to.equal(true);
+  });
+
+  it('testHideModalForStreamEditing', () => {
+    store.state.showModalForStreamEditing = true;
+    store.commit('hideModalForStreamEditing');
+    expect(store.state.showModalForStreamEditing).to.equal(false);
+  });
+
+  it('testDisplayModalForActionEditing', () => {
+    store.state.showModalForActionEditing = false;
+    store.commit('displayModalForActionEditing');
+    expect(store.state.showModalForActionEditing).to.equal(true);
+  });
+
+  it('testHideModalForActionEditing', () => {
+    store.state.showModalForActionEditing = true;
+    store.commit('hideModalForActionEditing');
+    expect(store.state.showModalForActionEditing).to.equal(false);
+  });
+
+  it('testDisplayModalForActionDetails', () => {
+    store.state.showModalForActionDetails = false;
+    store.commit('displayModalForActionDetails');
+    expect(store.state.showModalForActionDetails).to.equal(true);
+  });
+
+  it('testHideModalForActionDetails', () => {
+    store.state.showModalForActionDetails = true;
+    store.commit('hideModalForActionDetails');
+    expect(store.state.showModalForActionDetails).to.equal(false);
+  });
+
+  it('testDisplayModalForDataPointsAdding', () => {
+    store.state.showModalForDataPointsAdding = false;
+    store.commit('displayModalForDataPointsAdding');
+    expect(store.state.showModalForDataPointsAdding).to.equal(true);
+  });
+
+  it('testHideModalForDataPointsAdding', () => {
+    store.state.showModalForDataPointsAdding = true;
+    store.commit('hideModalForDataPointsAdding');
+    expect(store.state.showModalForDataPointsAdding).to.equal(false);
+  });
+
+  it('testDisplayModalForDataPointsChart', () => {
+    store.state.showModalForDataPointsChart = false;
+    store.commit('displayModalForDataPointsChart');
+    expect(store.state.showModalForDataPointsChart).to.equal(true);
+  });
+
+  it('testHideModalForDataPointsChart', () => {
+    store.state.showModalForDataPointsChart = true;
+    store.commit('hideModalForDataPointsChart');
+    expect(store.state.showModalForDataPointsChart).to.equal(false);
+  });
+
+  it('testDisplayModalForTriggerDetails', () => {
+    store.state.showModalForTriggerDetails = false;
+    store.commit('displayModalForTriggerDetails');
+    expect(store.state.showModalForTriggerDetails).to.equal(true);
+  });
+
+  it('testHideModalForTriggerDetails', () => {
+    store.state.showModalForTriggerDetails = true;
+    store.commit('hideModalForTriggerDetails');
+    expect(store.state.showModalForTriggerDetails).to.equal(false);
+  });
+
+  it('testDisplayModalForRemovingElements', () => {
+    store.state.showModalForRemovingElements = false;
+    store.commit('displayModalForRemovingElements');
+    expect(store.state.showModalForRemovingElements).to.equal(true);
+  });
+
+  it('testHideModalForRemovingElements', () => {
+    store.state.showModalForRemovingElements = true;
+    store.commit('hideModalForRemovingElements');
+    expect(store.state.showModalForRemovingElements).to.equal(false);
+  });
+
+  it('testSetDataPointToAdd', () => {
+    store.state.showModalForRemovingElements = true;
+    store.state.dataPointToAdd = 0;
+    store.commit('setdataPointToAdd', 5);
+    expect(store.state.dataPointToAdd).to.equal(5);
+  });
+
+  it('testProcessDataPointsConfigured', () => {
+    let response = [{value:1},{value:2},{value:3},{value:4},{value:5}];
+    store.commit('processDataPointsConfigured',response);
+
+    expect(store.state.dataPointsAvailables.length).to.equal(5);
+    expect(store.state.dataPointsAvailables[0]).to.equal(1);
+    expect(store.state.dataPointsAvailables[4]).to.equal(5);
+    expect(store.state.labelsForDataPoints.length).to.equal(5);
+    expect(store.state.labelsForDataPoints[0]).to.equal(1);
+    expect(store.state.labelsForDataPoints[4]).to.equal(5);
+    expect(store.state.dataPointsMaxValue).to.equal(5);
+    expect(store.state.dataPointsMinValue).to.equal(1);
+    expect(store.state.dataPointsAverageValue).to.equal(3);
+  });
 
 })

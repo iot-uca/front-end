@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex'
 import axios from 'axios'
+import Chart from 'chart.js';
 
 import { addElementToFilteredOnes, getPagesNeeded, getElementsToShowInTable, addCommandToFilteredOnes} from './store-helpers'
 
@@ -566,39 +567,28 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
           let filteredField = state.existingActions[i].name;
           intermmediateActions = addElementToFilteredOnes(filteredField, state.actionFilter, intermmediateActions, state.existingActions[i]);
 
-          //check Action type
-          /*filteredField = state.existingActions[i].type;
-          intermmediateActions = addElementToFilteredOnes(filteredField, state.actionFilter, intermmediateActions, state.existingActions[i]);*/
+          //check Action http request method
+          filteredField = state.existingActions[i].http_request.request_line.method;
+          intermmediateActions = addElementToFilteredOnes(filteredField, state.actionFilter, intermmediateActions, state.existingActions[i]);
 
-          // FIXME: Need to check COMMANDS structure!!
+          //check Action http request url
+          filteredField = state.existingActions[i].http_request.request_line.url;
+          intermmediateActions = addElementToFilteredOnes(filteredField, state.actionFilter, intermmediateActions, state.existingActions[i]);
 
-          if(state.existingActions[i].http_request!== undefined){
-            filteredField = "HTTP Request";
-            intermmediateActions = addElementToFilteredOnes(filteredField, state.actionFilter, intermmediateActions, state.existingActions[i]);
-
-            //check Action http request method
-            filteredField = state.existingActions[i].http_request.request_line.method;
-            intermmediateActions = addElementToFilteredOnes(filteredField, state.actionFilter, intermmediateActions, state.existingActions[i]);
-
-            //check Action http request url
-            filteredField = state.existingActions[i].http_request.request_line.url;
-            intermmediateActions = addElementToFilteredOnes(filteredField, state.actionFilter, intermmediateActions, state.existingActions[i]);
-
-            //check Action http request version
-            filteredField = state.existingActions[i].http_request.request_line.version;
-            intermmediateActions = addElementToFilteredOnes(filteredField, state.actionFilter, intermmediateActions, state.existingActions[i]);
-          }
+          //check Action http request version
+          filteredField = state.existingActions[i].http_request.request_line.version;
+          intermmediateActions = addElementToFilteredOnes(filteredField, state.actionFilter, intermmediateActions, state.existingActions[i]);
 
         }
 
-        if(intermmediateActions.length>0){ // si tiene triggers para mostrar
-          state.filteredActions = intermmediateActions; // ahora ya podría mostrar todos los filtrados
+        if(intermmediateActions.length>0){ // check if there are actions to show
+          state.filteredActions = intermmediateActions; // start showing fitered ones
         }else{
           state.filteredActions = [];
         }
 
       }else {
-        // copy all the existing triggers, no filtering
+        // copy all the existing actions, no filtering
         state.filteredActions = state.existingActions;
       }
     },
@@ -913,6 +903,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     displayErrorDetailsForAddingAction: (state, error) => {
+        console.log(" Entering displayErrorDetailsForAddingAction!!!");
         console.log("[ERROR] " + error);
 
         state.displayLoadingFeedback = false;
@@ -964,96 +955,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
         setTimeout(function(){
           state.showModalForRequestResult = false;
         }, 2000);
-    },
-
-    addAction: state => {
-      console.log("##### ABOUT TO ADD AN ACTION!! ");
-      console.log("activeIdsForHttpRequestHeader: " + state.activeIdsForHttpRequestHeader);
-      console.log("activeIdsForHttpRequestBody: " + state.actionBody);
-      console.log("activeAction - Name: " + state.activeAction.name);
-      console.log("activeAction - Method: " + state.activeAction.method);
-      console.log("activeAction - URL: " + state.activeAction.url);
-      console.log("activeAction - Version: " + state.activeAction.version);
-
-      let request={};
-      let request_line={};
-
-      request_line['url'] = state.activeAction.url;
-      request_line['method'] = state.activeAction.method;
-      request_line['version'] = state.activeAction.version;
-      request['request_line'] = request_line;
-      request['headers'] = state.activeIdsForHttpRequestHeader;
-      request['body'] = state.actionBody;
-
-      console.log("request_line: " + request_line);
-      console.log("request: " + request);
-
-      state.displayLoadingFeedback = true; // user starts seeing the loading spinner
-
-      axios.post(state.backendEndPoint + '/actions', {
-        name: state.activeAction.name,
-        http_request: request
-      })
-        .then(function (response) {
-          console.log("(1)");
-          console.log("data: " + response.data);
-          console.log("status: " + response.status);
-          console.log("statusText: " + response.statusText);
-          console.log("headers: " + response.headers);
-          console.log("config: " + response.config);
-
-          state.displayLoadingFeedback = false;
-          state.errorInInteraction = false;
-          state.successMessage = state.activeAction.name + " added successfully.";
-          //$("#successModal").modal();
-
-          state.showModalForRequestResult = true;
-          setTimeout(function(){
-            state.showModalForRequestResult = false;
-          }, 2000);
-
-
-        })
-        .catch(function (error) {
-          console.log("[ERROR] " + error);
-
-          state.displayLoadingFeedback = false;
-          state.errorInInteraction = true;
-
-          // Error
-          if (error.response) {
-            // The request was made and the server responded with a status code
-            // that falls out of the range of 2xx
-            console.log(error.response.data);
-            console.log(error.response.data.message);
-
-            state.errorMessage = error.response.data.message;
-
-            console.log(error.response.status);
-            console.log(error.response.headers);
-
-          } else if (error.request) {
-            // The request was made but no response was received
-            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-            // http.ClientRequest in node.js
-            console.log(error.request);
-            state.errorMessage = "There was a problem adding " + state.activeAction.name + ". Please try again!";
-
-          } else {
-            // Something happened in setting up the request that triggered an Error
-            console.log('Error', error.message);
-            state.errorMessage = "There was a problem adding " + state.activeAction.name + ". Please try again!";
-          }
-
-          //$("#successModal").modal();
-
-          state.showModalForRequestResult = true;
-          setTimeout(function(){
-            state.showModalForRequestResult = false;
-          }, 2000);
-
-        });
-
     },
 
 
@@ -1137,7 +1038,12 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     drawMosTriggeredActionsChart: state => {
       console.log("Entering drawMosTriggeredActionsChart!!");
 
+      console.log("######################################################");
+      console.log("FFF : " + JSON.stringify(document.getElementById('myPieChart2').outerHTML));
+      console.log("######################################################");
+
       let ctx = document.getElementById("myPieChart2").getContext('2d');
+
       new Chart(ctx, {
         type: 'doughnut',
         data: {
@@ -1162,6 +1068,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     drawTriggerTypesPercentagesChart: state => {
+      console.log("Entering drawTriggerTypesPercentagesChart!!");
       let ctx = document.getElementById("percentageBar").getContext('2d');
       new Chart(ctx, {
         type: 'doughnut',
@@ -1187,14 +1094,12 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
     drawDataPointsChart: state => {
       console.log("==> ENTERING drawDataPointsChart");
-      let ctx = document.getElementById("line-chart").getContext('2d');
 
-      console.log("aaaaa: " + state.labelsForDataPoints);
-      console.log("bbbbb: " + state.dataPointsAvailables);
-      console.log("ccccc: " + state.activeDataStream.name);
-      console.log("ddddd: " + state.dataPointsMinValue);
-      console.log("eeeee: " + state.dataPointsMaxValue);
-      console.log("fffff: " + state.dataPointsAverageValue);
+      console.log("######################################################");
+      console.log("LALA : " + JSON.stringify(document.getElementById('line-chart').outerHTML));
+      console.log("######################################################");
+
+      let ctx = document.getElementById("line-chart").getContext('2d');
 
       new Chart(ctx, {
         type: 'line',
@@ -1235,6 +1140,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
 
     drawMostExecutedTriggersChart: state => {
+      console.log("Etenring drawMostExecutedTriggersChart!!");
       let ctx = document.getElementById("barChart").getContext('2d');
       new Chart(ctx, {
         type: 'horizontalBar',
@@ -1382,31 +1288,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     treatErrorForAddingDataStream: (state, error) => {
-
-      if (error.response) {
-        // The request was made and the server responded with a status code
-        // that falls out of the range of 2xx
-        console.log(error.response.data);
-        console.log(error.response.data.message);
-
-        state.errorMessage = error.response.data.message;
-
-        console.log(error.response.status);
-        console.log(error.response.headers);
-      } else if (error.request) {
-        // The request was made but no response was received
-        // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-        // http.ClientRequest in node.js
-        console.log(error.request);
-        state.errorMessage = "There was a problem adding " + state.dataStreamToAdd + ". Please try again!";
-      } else {
-        // Something happened in setting up the request that triggered an Error
-        console.log('Error', error.message);
-        state.errorMessage = "There was a problem adding " + state.dataStreamToAdd + ". Please try again!";
-      }
-    },
-
-    treatErrorForAddingAction: (state, error) => {
 
       if (error.response) {
         // The request was made and the server responded with a status code
@@ -1635,7 +1516,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
     hideModalForTriggerDetails: state => {
       console.log("### Entering  hideModalForTriggerDetails");
-      state.showModalForTriggerDetails = true;
+      state.showModalForTriggerDetails = false;
     },
 
     //####################################################################
@@ -1854,12 +1735,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       context.commit('filterDataStreamToDisplay', filterValue);
       context.commit('getPagesNeededForDataStreams');
       context.commit('getDataStreamsToShowInTable');
-    },
-
-    reduceOptions: context => { //el contexto actua "como" la store
-      setTimeout(function () {
-        context.commit('reduceOptions');
-      }, 3000)
     },
 
     openNav: context =>{
@@ -2191,7 +2066,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     addAction: (context, url, request, name) => {
-
+    console.log("######## TU VIEJAAAAA ########");
     context.commit('prepareActionRequest');
 
     axios.post(url + '/actions', {
@@ -2208,16 +2083,14 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
           context.commit('setActionAddSuccessDetails');
 
           axios.get(url + '/actions', {headers: {"Accept" : "application/json"} }).then(response => {
-                  console.log("(2)");
+                console.log("(2)");
                 context.commit('processActionsConfigured', response);
                 context.commit('setFilteredActionsToAllConfigured');
                 context.commit('setCurrentPage', 1);
                 context.commit('getActionsToShowInTable');
                 context.commit('getPagesNeededForActions');
-                //context.commit('hideLoadingFeedback');
            }, (err) => {
                 console.log("[ERROR] => " + err);
-                //context.commit('treatErrorForActions', err);
            });
 
         }).catch(function (error) {
@@ -2321,8 +2194,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
     addTrigger: (context, url) => {
       console.log("### [addTrigger] ");
-
-      //context.commit('addTrigger', url);
 
       let policy = {};
 

@@ -7,14 +7,12 @@ import {store} from '../../../src/store/store.js';
 
 describe('Actions', () => {
 
-
   it('showAddDataStreamModalTest', () => {
     store.state.showAddDataStreamModal=false;
     store.dispatch('showAddDataStreamModal')
     expect(store.state.showAddDataStreamModal).to.equal(true)
 
   });
-
 
 
   it('hideAddDataStreamModalTest', () => {
@@ -95,18 +93,15 @@ describe('Actions', () => {
         expect(store.state.currentPage).to.equal(1)
   });
 
-
     it('filterDataStreamToDisplayTest', () => {
 
         store.state.maxDataStreamsPerPage = 2;
         store.state.currentPage = 1
         store.state.dataStreamsForPage = []
 
+        store.state.dataStreamsConfigured = [ {id: 0, name: 'Solar light in garden'}, {id: 1, name: 'Temperature inside the house'}, {id: 2, name: 'Temperature outside the house'}, {id: 3, name: 'Solar light in terrace'}, {id: 4, name: 'Rain Sensor'} ]
 
-        store.state.filteredDataStreams = [ {id: 0, name: 'Solar light in garden'}, {id: 1, name: 'Temperature inside the house'}, {id: 2, name: 'Temperature outside the house'}, {id: 3, name: 'Solar light in terrace'}, {id: 4, name: 'Rain Sensor'} ]
-
-        store.dispatch('filterDataStreamToDisplay', "Temperature")
-
+        store.dispatch('filterDataStreamToDisplay', 'Temperature')
 
         expect(store.state.filteredDataStreams.length).to.equals(2)
         expect(store.state.filteredDataStreams[0].name).to.equals('Temperature inside the house')
@@ -117,6 +112,8 @@ describe('Actions', () => {
         expect(store.state.currentPage).to.equal(1)
 
     });
+
+
 
     it('openNavTest', () => {
         store.state.sideNavStyle.backgroundColor = "white";
@@ -181,7 +178,6 @@ describe('Actions', () => {
         store.dispatch('hideModalForTriggerAdding');
         expect(store.state.showModalForTriggerAdding).to.equal(false);
     });
-
 
 
 });

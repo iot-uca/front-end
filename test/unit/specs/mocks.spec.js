@@ -139,8 +139,10 @@ describe('mocking axios requests', function () {
 
   });
 
-  it('POST /data-streams', function (done) {
 
+
+
+  it('POST /data-streams', function (done) {
     store.state.dataStreamToAdd = 'Data Stream 1';
 
     moxios.withMock(function () {
@@ -222,7 +224,6 @@ describe('mocking axios requests', function () {
         })
       })
     })
-    console.log("EEEEEEEEEEEE");
 
   });
 
@@ -250,6 +251,37 @@ describe('mocking axios requests', function () {
           expect(store.state.displayLoadingFeedback).to.equal(false)
           expect(store.state.errorInInteraction).to.equal(false)
           expect(store.state.successMessage).to.equal("Trigger1 added successfully.")
+          done()
+        })
+      })
+    })
+
+  });
+
+
+
+
+  it('DELETE /something', function (done) {
+    console.log('DELETE /something');
+    store.state.elementsToDelete = [{links:{self:"http://localhost:1111/triggers/i-den-ti-fi-er"}}];
+    console.log('store.state.elementsToDelete: ' + store.state.elementsToDelete);
+
+    moxios.withMock(function () {
+      let onFulfilled = sinon.spy()
+
+      store.dispatch('deleteElements','').then(onFulfilled)
+
+      moxios.wait(function () {
+        let request = moxios.requests.mostRecent()
+        request.respondWith({
+          status: 200,
+          statusText: 'OK',
+          response: [ ]
+        }).then(function () {
+          equal(onFulfilled.called, true)
+          expect(store.state.displayLoadingFeedback).to.equal(false)
+          expect(store.state.errorInInteraction).to.equal(false)
+          expect(store.state.successMessage).to.equal("Elements deleted successfully!")
           done()
         })
       })

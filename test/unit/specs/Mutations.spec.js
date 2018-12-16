@@ -998,4 +998,47 @@ it('setMaxDataStreamsPerPageTest', () => {
     expect(store.state.dataPointsAverageValue).to.equal(3);
   });
 
+
+  it('testProcessDataPointsConfigured', () => {
+      store.state.mostRecentlyUpdatedStreams = [{last_update:7},{last_update:9},{last_update:13},{last_update:3},{last_update:2},{last_update:1},{last_update:5},{last_update:4}];
+
+      store.commit('determineMostRecentlyUpdatedStreams');
+
+      expect(store.state.mostRecentlyUpdatedStreams.length).to.equal(5);
+      expect(store.state.mostRecentlyUpdatedStreams[0].last_update).to.equal(1);
+      expect(store.state.mostRecentlyUpdatedStreams[1].last_update).to.equal(2);
+      expect(store.state.mostRecentlyUpdatedStreams[2].last_update).to.equal(3);
+      expect(store.state.mostRecentlyUpdatedStreams[3].last_update).to.equal(4);
+      expect(store.state.mostRecentlyUpdatedStreams[4].last_update).to.equal(5);
+
+      store.state.mostRecentlyUpdatedStreams = [{last_update:1},{last_update:5},{last_update:4}];
+
+      store.commit('determineMostRecentlyUpdatedStreams');
+
+      expect(store.state.mostRecentlyUpdatedStreams.length).to.equal(3);
+      expect(store.state.mostRecentlyUpdatedStreams[0].last_update).to.equal(1);
+      expect(store.state.mostRecentlyUpdatedStreams[1].last_update).to.equal(4);
+      expect(store.state.mostRecentlyUpdatedStreams[2].last_update).to.equal(5);
+  });
+
+
+  it('testGetAmountOfTriggerTypes', () => {
+    let existingTriggers = [
+          {name: 'Trigger1', action: 'Tweet', policy: {type: 'data_point_registration', elem: 'Temperature'}, conditions: ['Temperature current value > 24 Celsius', 'Temperature current value > 24 Celsius', 'Time interval' ]},
+          {name: 'Trigger2', action: 'Make Facebook Post', policy: {type: 'data_point_registration',	elem: 'Temperature' }, conditions: ['Always']	},
+          {name: 'Trigger3', action: 'Send Email', policy: {type: 'data_point_registration', elem: 'Temperature'}, conditions: ['Temperature current value > 24 Celsius']},
+          {name: 'Trigger4', action: 'Start Engine Alfa', policy: {type:'data_point_registration', elem: 'Temperature'}, conditions: ['Always']},
+          {name: 'Trigger5', action: 'Sense Temperature', policy: {type: 'periodical', elem: 'Fridays' }, conditions: ['Always']},
+          {name: 'Trigger6', action: 'Start Engine Alfa', policy: {type: 'data_point_registration', elem: 'Temperature'}, conditions: ['Temperature current value > 24 Celsius', 'Temperature current value > 24 Celsius', 'Time interval' ]},
+        ];
+
+    store.state.existingTriggers = existingTriggers;
+
+    store.commit('getAmountOfTriggerTypes');
+
+    expect(store.state.amountOfDataPointTriggers).to.equal(5);
+    expect(store.state.amountOfPeriodicalTriggers).to.equal(1);
+  });
+
+
 })

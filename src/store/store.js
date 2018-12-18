@@ -538,7 +538,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       console.log(" activeDataStream: " + state.activeDataStream);
       state.activeDataStream = dataStream;
       console.log(" activeDataStream: " + state.activeDataStream);
-
     },
 
     updateDataStreamsForPage: (state, value) => {
@@ -1838,14 +1837,12 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       console.log("Entering showSecurityView ");
       context.commit('showSecurityView');
       context.commit('cleanElementsToDelete');
-
     },
 
     showAboutView: context => {
       console.log("Entering showAboutView ");
       context.commit('showAboutView');
       context.commit('cleanElementsToDelete');
-
     },
 
     displayPrevPageCommands: context => {

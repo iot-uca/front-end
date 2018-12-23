@@ -808,6 +808,16 @@ describe('Actions', () => {
       store.dispatch('getLabelsForDataPointsChart');
     });
 
+    it('testDisplayModalForStreamEditing', () => {
+      store.dispatch('displayModalForStreamEditing');
+      expect(store.state.showModalForStreamEditing).to.equal(true);
+    });
+
+    it('testHideModalForStreamEditing', () => {
+      store.dispatch('hideModalForStreamEditing');
+      expect(store.state.showModalForStreamEditing).to.equal(false);
+    });
+
     /*it('testDetermineMostRecentlyUpdatedStreams', () => {
       store.dispatch('determineMostRecentlyUpdatedStreams');
     });*/

@@ -139,6 +139,37 @@ describe('mocking axios requests', function () {
 
   });
 
+  it('GET /data-points', function (done) {
+
+    moxios.withMock(function () {
+      let onFulfilled = sinon.spy()
+
+      store.state.activeDataStream = {links:{data_points: 'http://localhost:1111'}};
+
+      store.dispatch('getDataPoints').then(onFulfilled)
+
+      moxios.wait(function () {
+        let request = moxios.requests.mostRecent()
+        request.respondWith({
+          status: 200,
+          statusText: 'OK',
+          response: [
+            {value: '1'},{value: '4'}, {value: '11'}
+          ]
+        }).then(function () {
+          equal(onFulfilled.called, true)
+          expect(store.state.dataPointsAvailables.length).to.equal(3)
+          console.log("TU_VIEEEEEEEEEEEJA");
+          console.log(JSON.stringify(store.state.dataPointsAvailables))
+          expect(store.state.dataPointsAvailables[0]).to.equal("1")
+          expect(store.state.dataPointsAvailables[1]).to.equal("4")
+          expect(store.state.dataPointsAvailables[2]).to.equal("11")
+          done()
+        })
+      })
+    })
+
+  });
 
 
 

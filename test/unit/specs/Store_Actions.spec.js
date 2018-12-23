@@ -600,5 +600,217 @@ describe('Actions', () => {
       expect(store.state.activeDataStream.name).to.equal('Solar light in garden');
     });
 
+    it('testAddOneMoreElemForActionRequestHeader', () => {
+      store.state.activeIdsForHttpRequestHeader=[];
+      store.dispatch('addOneMoreElemForActionRequestHeader');
+      expect(store.state.activeIdsForHttpRequestHeader.length).to.equal(1);
+      store.dispatch('addOneMoreElemForActionRequestHeader');
+      expect(store.state.activeIdsForHttpRequestHeader.length).to.equal(2);
+
+    });
+
+    it('testOneLessElementForActionRequestHeader', () => {
+      store.state.activeIdsForHttpRequestHeader=[];
+      store.dispatch('addOneMoreElemForActionRequestHeader');
+      expect(store.state.activeIdsForHttpRequestHeader.length).to.equal(1);
+      store.dispatch('addOneMoreElemForActionRequestHeader');
+      expect(store.state.activeIdsForHttpRequestHeader.length).to.equal(2);
+      store.dispatch('oneLessElemForActionRequestHeader', 1);
+      expect(store.state.activeIdsForHttpRequestHeader.length).to.equal(1);
+    });
+
+    it('testSetActionBody', () => {
+      store.state.actionBody=[];
+      store.dispatch('setActionBody', {"key":"value"});
+      expect(store.state.validJson).to.equal(false);
+
+      store.dispatch('setActionBody', '{"key":"value"}');
+      expect(store.state.validJson).to.equal(true);
+    });
+
+/*    it('testAssignBodyAndHeader', () => {
+      let action = {id: 1, name: 'Tweet', http_request:{ request_line: { method:'POST', url:'https://twitter.com', version:'1.1'}, body:"{\"foo\":\"bar\", \"jane\":\"doe\"}", headers:[{key:'security-key', value:'f78r3d'}, {key:'email', value:'jnahas@foor.bar'}]}};
+      store.dispatch('assignBodyAndHeader', action);
+
+      expect(store.state.activeAction.name).to.equal('Tweet');
+      expect(store.state.activeIdsForHttpRequestHeader.length).to.equal(2);
+      expect(store.state.activeIdsForHttpRequestBody).to.equal("{\"foo\":\"bar\", \"jane\":\"doe\"}");
+    });
+
+    it('testUpdateAction', () => {
+      store.dispatch('updateAction');
+    });
+*/
+
+    it('testDataPointPolicy', () => {
+      store.dispatch('dataPointPolicy');
+      expect(store.state.isTimePeriodPolicy).to.equal(false);
+    });
+
+
+    it('testTimePeriodPolicy', () => {
+      store.dispatch('timePeriodPolicy');
+      expect(store.state.isTimePeriodPolicy).to.equal(true);
+    });
+
+    it('testSetConditionSelected', () => {
+      store.dispatch('setConditionSelected', {condition: "selected"});
+      expect(store.state.conditionSelected.condition).to.equal("selected");
+    });
+
+
+    it('testSetConditionSelected', () => {
+      let existingTriggers = [
+        { name: 'Trigger1', action : 'Tweet', policy: {type: 'data_point_registration', elem: 'Temperature'}, conditions: ['Temperature current value > 24 Celsius', 'Temperature current value > 24 Celsius', 'Time interval' ]},
+        {name: 'Trigger2', action: 'Make Facebook Post', policy: {type: 'time_period',	elem: '5 mins' }, conditions: ['Always']	}
+      ];
+
+      store.dispatch('editTrigger', existingTriggers[0]);
+      expect(store.state.activeTrigger.name).to.equal('Trigger1');
+      expect(store.state.isTimePeriodPolicy).to.equal(true);
+
+      store.dispatch('editTrigger', existingTriggers[1]);
+      expect(store.state.activeTrigger.name).to.equal('Trigger2');
+      expect(store.state.isTimePeriodPolicy).to.equal(false);
+    });
+
+    it('testCleanActiveAction', () => {
+      store.dispatch('cleanActiveAction');
+      expect(store.state.activeAction.length).to.equal(0);
+      expect(store.state.activeIdsForHttpRequestHeader.length).to.equal(0);
+      expect(store.state.actionBody).to.equal('{"foo":"bar", "jane":"doe"}');
+    });
+
+    it('testDrawCharts', () => {
+      store.dispatch('drawCharts');
+    });
+
+/*
+    it('testDeleteElements', () => {
+      store.dispatch('deleteElements');
+    });*/
+
+    it('testDisplayLoadingFeedback', () => {
+      store.dispatch('displayLoadingFeedback');
+      expect(store.state.displayLoadingFeedback).to.equal(true);
+    });
+
+    it('testHideLoadingFeedback', () => {
+      store.dispatch('hideLoadingFeedback');
+      expect(store.state.displayLoadingFeedback).to.equal(false);
+    });
+
+    it('testSetOnDataStreamValue', () => {
+      store.state.onDataStreamValueCondition = {dataStream:""};
+      store.dispatch('setOnDataStreamValue', "DataStream1");
+      expect(store.state.onDataStreamValueCondition.dataStream).to.equal("DataStream1");
+    });
+
+    it('testSetOnDataStreamCondition', () => {
+      store.state.onDataStreamValueCondition = {condition:""};
+      store.dispatch('setOnDataStreamCondition', "Condition1");
+      expect(store.state.onDataStreamValueCondition.condition).to.equal("Condition1");
+    });
+
+    it('testSetOnDataStreamReferenceValue', () => {
+      store.state.onDataStreamValueCondition = {value:""};
+      store.dispatch('setOnDataStreamReferenceValue', "Value1");
+      expect(store.state.onDataStreamValueCondition.value).to.equal("Value1");
+    });
+
+    /*it('testAddNewCondition', () => {
+      store.dispatch('addNewCondition');
+    });*/
+
+    it('testSetDataStreamNotUpdated', () => {
+      store.state.dataStreamNotUpdatedCondition = {dataStream:""};
+      store.dispatch('setDataStreamNotUpdated', "dataStream1");
+      expect(store.state.dataStreamNotUpdatedCondition.dataStream).to.equal("dataStream1");
+    });
+
+    it('testDisplayModalForStreamAdding', () => {
+      store.dispatch('displayModalForStreamAdding');
+      expect(store.state.showModalForStreamAdding).to.equal(true);
+    });
+
+    it('testHideModalForStreamAdding', () => {
+      store.dispatch('hideModalForStreamAdding');
+      expect(store.state.showModalForStreamAdding).to.equal(false);
+    });
+
+    it('testDisplayModalForTriggerDetails', () => {
+      store.dispatch('displayModalForTriggerDetails');
+      expect(store.state.showModalForTriggerDetails).to.equal(true);
+    });
+
+    it('testHideModalForTriggerDetails', () => {
+      store.dispatch('hideModalForTriggerDetails');
+      expect(store.state.showModalForTriggerDetails).to.equal(false);
+    });
+
+
+    it('testDisplayModalForActionEditing', () => {
+      store.dispatch('displayModalForActionEditing');
+      expect(store.state.showModalForActionEditing).to.equal(true);
+    });
+
+    it('testHideModalForActionEditing', () => {
+      store.dispatch('hideModalForActionEditing');
+      expect(store.state.showModalForActionEditing).to.equal(false);
+    });
+
+    it('testDisplayModalForRemovingElements', () => {
+      store.dispatch('displayModalForRemovingElements');
+      expect(store.state.showModalForRemovingElements).to.equal(true);
+    });
+
+    it('testHideModalForRemovingElements', () => {
+      store.dispatch('hideModalForRemovingElements');
+      expect(store.state.showModalForRemovingElements).to.equal(false);
+    });
+
+    it('testDisplayModalForActionDetails', () => {
+      store.dispatch('displayModalForActionDetails');
+      expect(store.state.showModalForActionDetails).to.equal(true);
+    });
+
+    it('testHideModalForActionDetails', () => {
+      store.dispatch('hideModalForActionDetails');
+      expect(store.state.showModalForActionDetails).to.equal(false);
+    });
+
+    it('testDisplayModalForDataPointsAdding', () => {
+      store.dispatch('displayModalForDataPointsAdding');
+      expect(store.state.showModalForDataPointsAdding).to.equal(true);
+    });
+
+    it('testHideModalForDataPointsAdding', () => {
+      store.dispatch('hideModalForDataPointsAdding');
+      expect(store.state.showModalForDataPointsAdding).to.equal(false);
+    });
+
+    it('testSetdataPointToAdd', () => {
+      store.dispatch('setdataPointToAdd', "DataPoint1");
+      expect(store.state.dataPointToAdd).to.equal("DataPoint1");
+    });
+
+    it('testDisplayModalForDataPointsChart', () => {
+      store.dispatch('displayModalForDataPointsChart');
+      expect(store.state.showModalForDataPointsChart).to.equal(true);
+    });
+
+    it('testHideModalForDataPointsChart', () => {
+      store.dispatch('hideModalForDataPointsChart');
+      expect(store.state.showModalForDataPointsChart).to.equal(false);
+    });
+
+    it('testGetLabelsForDataPointsChart', () => {
+      store.dispatch('getLabelsForDataPointsChart');
+    });
+
+    /*it('testDetermineMostRecentlyUpdatedStreams', () => {
+      store.dispatch('determineMostRecentlyUpdatedStreams');
+    });*/
+
 
 });

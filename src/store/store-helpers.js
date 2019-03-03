@@ -2,10 +2,10 @@
 
 export function addElementToFilteredOnes(param, filter, existingElems, elem) {
   console.log("### Entering addElementToFilteredOnes");
-  console.log("param: " + param);
-  console.log("filter: " + filter);
-  console.log("existingElems: " + existingElems);
-  console.log("elem: " + elem);
+  console.log("param: " + JSON.stringify(param));
+  console.log("filter: " + JSON.stringify(filter));
+  console.log("existingElems: " + JSON.stringify(existingElems));
+  console.log("elem: " + JSON.stringify(elem));
 
   let alreadyAdded = false;
   if (param.indexOf(filter) >= 0 ){

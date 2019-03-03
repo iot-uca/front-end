@@ -624,10 +624,16 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
           filteredField = state.existingTriggers[i].policy.type;
           intermediateTriggers = addElementToFilteredOnes(filteredField, state.triggerFilter, intermediateTriggers, state.existingTriggers[i]);
 
+          console.log("state.existingTriggers[i]: " + JSON.stringify(state.existingTriggers[i]));
 
-          //check Trigger policy
-          filteredField = state.existingTriggers[i].policy.elem;
-          intermediateTriggers = addElementToFilteredOnes(filteredField, state.triggerFilter, intermediateTriggers, state.existingTriggers[i]);
+          if(state.existingTriggers[i].policy.type=='on_data_point_registration'){
+            filteredField = state.existingTriggers[i].policy.data_stream;
+            intermediateTriggers = addElementToFilteredOnes(filteredField, state.triggerFilter, intermediateTriggers, state.existingTriggers[i]);
+          }else{
+            filteredField = state.existingTriggers[i].policy.time_interval;
+            intermediateTriggers = addElementToFilteredOnes(filteredField, state.triggerFilter, intermediateTriggers, state.existingTriggers[i]);
+          }
+
 
         }
 
@@ -1598,32 +1604,29 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
       let instant = new Date();
       console.log("instant: " + instant);
+      console.log("TimezoneOffset: " + instant.getTimezoneOffset()); // negative value means ahead, positive behind UTC
+
+      let milisFromTimezone = instant.getTimezoneOffset()*60000;
+      console.log("milisFromTimezone: " + milisFromTimezone);
 
       let thisMoment = moment(instant);
       console.log("thisMoment: " + thisMoment);
 
-      //let timezoneOffset = instant.getTimezoneOffset();
-      //console.log("Timezone Offset: " + timezoneOffset);
-
-      //let milisFromTimezone = (timezoneOffset*60000);
-      //console.log("milisFromTimezone: " + milisFromTimezone);
-
-      //thisMoment = thisMoment + milisFromTimezone;
-      //console.log("milis adapted: " + thisMoment);
-
-      console.log("===>" + thisMoment.day());
+      console.log("moment Adapted: " + (milisFromTimezone + thisMoment));
+      /*console.log("===>" + thisMoment.day());
       console.log("===>" + thisMoment.month());
       console.log("===>" + thisMoment.year());
       console.log("===>" + thisMoment.hour());
       console.log("===>" + thisMoment.minutes());
-      console.log("===>" + thisMoment.seconds());
+      console.log("===>" + thisMoment.seconds());*/
 
 
       for(let i=0; i<amountOfStreams; i++){
 
         if(state.dataStreamsConfigured[i].last_update !== 'N/A'){
           console.log("last_update: " + state.dataStreamsConfigured[i].last_update);
-          let iso8610 = state.dataStreamsConfigured[i].last_update.slice(0,19) + '-' + state.dataStreamsConfigured[i].last_update.slice(19,24);
+          //let iso8610 = state.dataStreamsConfigured[i].last_update.slice(0,19) + '-' + state.dataStreamsConfigured[i].last_update.slice(19,24);
+          let iso8610 = state.dataStreamsConfigured[i].last_update.slice(0,19);
           console.log("iso8610: " + iso8610);
 
           let registrationMoment = moment(iso8610, moment.ISO_8601);
@@ -1636,7 +1639,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
           console.log("===>" + registrationMoment.seconds());
 
           console.log("registrationMoment: " + registrationMoment);
-          state.dataStreamsConfigured[i].last_update = Math.floor((thisMoment - registrationMoment)/60000);
+          state.dataStreamsConfigured[i].last_update = Math.floor(( (thisMoment + milisFromTimezone ) - registrationMoment)/60000);
           console.log("state.dataStreamsConfigured[i].last_update: " + state.dataStreamsConfigured[i].last_update);
           state.mostRecentlyUpdatedStreams.push(state.dataStreamsConfigured[i]);
         }

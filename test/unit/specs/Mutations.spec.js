@@ -634,16 +634,15 @@ it('setMaxDataStreamsPerPageTest', () => {
         expect(store.state.filteredActions.length).to.equal(0);
     });
 
-
     it('testFilterTriggersToDisplayWhenHavingTriggers', () => {
 
         let existingTriggers = [
-              {name: 'Trigger1', action: 'Tweet', policy: {type: 'data_point_registration', elem: 'Temperature'}, conditions: ['Temperature current value > 24 Celsius', 'Temperature current value > 24 Celsius', 'Time interval' ]},
-              {name: 'Trigger2', action: 'Make Facebook Post', policy: {type: 'data_point_registration',	elem: 'Temperature' }, conditions: ['Always']	},
-              {name: 'Trigger3', action: 'Send Email', policy: {type: 'data_point_registration', elem: 'Temperature'}, conditions: ['Temperature current value > 24 Celsius']},
-              {name: 'Trigger4', action: 'Start Engine Alfa', policy: {type:'data_point_registration', elem: 'Temperature'}, conditions: ['Always']},
-              {name: 'Trigger5', action: 'Sense Temperature', policy: {type: 'time_interval', elem: 'Fridays' }, conditions: ['Always']},
-              {name: 'Trigger6', action: 'Start Engine Alfa', policy: {type: 'data_point_registration', elem: 'Temperature'}, conditions: ['Temperature current value > 24 Celsius', 'Temperature current value > 24 Celsius', 'Time interval' ]},
+              {name: 'Trigger1', action: 'Tweet', policy: {type: 'on_data_point_registration', data_stream: 'Temperature'}, conditions: [{type:"data_stream_current_value",data_stream:"DataStream2", condition:{"operator":"<","value":55}}]},
+              {name: 'Trigger2', action: 'Make Facebook Post', policy: {type: 'on_data_point_registration',	data_stream: 'Temperature' }, condition: []},
+              {name: 'Trigger3', action: 'Send Email', policy: {type: 'on_data_point_registration', data_stream: 'Temperature'}, condition: [{"type":"data_stream_current_value","data_stream":"DataStream2","condition":{"operator":"<","value":55}}]},
+              {name: 'Trigger4', action: 'Start Engine Alfa', policy: {type:'on_data_point_registration', data_stream: 'Temperature'}, condition: []},
+              {name: 'Trigger5', action: 'Sense Temperature', policy: {type: 'periodical', time_interval: '10 minutes' }, condition: []},
+              {name: 'Trigger6', action: 'Start Engine Alfa', policy: {type: 'on_data_point_registration', data_stream: 'Temperature'}, condition: [{"type":"data_stream_current_value","data_stream":"DataStream2","condition":{"operator":"<","value":55}}]},
             ];
 
         store.state.existingTriggers = existingTriggers;
@@ -653,6 +652,7 @@ it('setMaxDataStreamsPerPageTest', () => {
         expect(store.state.filteredTriggers[0].name).to.equal('Trigger3');
         expect(store.state.filteredTriggers[0].action).to.equal('Send Email');
     });
+
 
     it('testFilterCommandsToDisplayWhenHavingCommands', () => {
 

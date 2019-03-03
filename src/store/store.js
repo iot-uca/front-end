@@ -255,10 +255,10 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
 
     triggerConditions:[
-      {id: 1, name: 'Always'},
-      {id: 2, name: 'On Data-Stream value'},
-      {id: 3, name: 'When Data-Stream has not been updated'},
-      {id: 4, name: 'Time interval'},
+      {id: 1, name: 'Always', label:'Always'},
+      {id: 2, name: 'data_stream_current_value', label:'Data-Stream current value'},
+      {id: 3, name: 'data_stream_not_updated', label:'Data-Stream not updated'},
+      {id: 4, name: 'time_interval', label:'Time interval'},
     ],
 
     conditionSelected:{
@@ -269,7 +269,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     conditionsForTrigger:[], // it will contain an array of 'condition's selected for a trigger
 
     condition:{               // it will contain each condition selected for a trigger
-      condition: undefined,   // it will contain the conditionSelected
+      type: undefined,        // it will contain the conditionSelected
       details: undefined,     // it will contain either dataStreamNotUpdatedCondition, onDataStreamValueCondition or timeIntervalCondition
     },
 
@@ -307,6 +307,10 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     conditionsCounter:1 ,
+
+    timeIntervalConditions:[],
+    dataStreamNotUpdatedConditions:[],
+    dataStreamCurrentValueConditions:[],
 
 //##########################################################################################
 // Pagination model
@@ -781,6 +785,8 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
         state.displayLoadingFeedback = false;
         state.errorInInteraction = true;
 
+        console.log("error " + JSON.stringify(error));
+
         console.log("error.response: " + error.response);
         console.log(error.response.data);
         console.log(error.response.status);
@@ -1021,8 +1027,8 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       console.log("activeTrigger: " + state.activeTrigger);
       console.log("trigger: " + trigger.name);
       state.activeTrigger = trigger;
-      state.isTimePeriodPolicy = trigger.policy.type === "data_point_registration";
-      console.log("activeTrigger: " + state.activeTrigger);
+      state.isTimePeriodPolicy = trigger.policy.type === "time_interval";
+      console.log("activeTrigger: " + JSON.stringify(state.activeTrigger));
     },
 
     cleanActiveAction: state => {
@@ -1342,39 +1348,47 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       let condition = {};
       let elemId = state.conditionsCounter;
 
-      condition.condition =  state.conditionSelected.text;
-      condition.id = state.conditionSelected.id;
-      condition.elemId = elemId;
+      condition.type =  state.conditionSelected.text;
 
-      console.log("condition.id: " + condition.id);
-      console.log("condition.elemId: " + condition.elemId);
+      if (state.conditionSelected.id === 2) {
+        //condition.details = Object.assign({}, state.onDataStreamValueCondition);   // This prevents binding the variables, since you are copying the initial object
+        condition.data_stream = state.onDataStreamValueCondition.dataStream;
+        condition.condition = {operator:state.onDataStreamValueCondition.condition, value: parseInt(state.onDataStreamValueCondition.value)};
+        state.dataStreamCurrentValueConditions.push(condition);
 
-      if(state.conditionSelected.id === 1){
-          // DO NOTHING
-      }else {
-        if (state.conditionSelected.id === 2) {
-          condition.details = Object.assign({}, state.onDataStreamValueCondition);   // This prevents binding the variables, since you are copying the initial object
-
+      } else {
+        if (state.conditionSelected.id === 3) {
+          state.dataStreamNotUpdatedCondition.dataStreamNotUpdatedFrom = Object.assign({}, state.dataStreamNotUpdatedFrom);
+          condition.details = Object.assign({}, state.dataStreamNotUpdatedCondition);
+          state.dataStreamNotUpdatedConditions.push(condition);
         } else {
-          if (state.conditionSelected.id === 3) {
-            state.dataStreamNotUpdatedCondition.dataStreamNotUpdatedFrom = Object.assign({}, state.dataStreamNotUpdatedFrom);
-            condition.details = Object.assign({}, state.dataStreamNotUpdatedCondition);
-
-          } else {
-            console.log("state.timeIntervalCondition: " +state.timeIntervalCondition);
-            console.log("state.timeIntervalCondition.from: " + state.timeIntervalCondition.from);
-            console.log("state.timeIntervalCondition.to: " + state.timeIntervalCondition.to);
-            condition.details = Object.assign({}, state.timeIntervalCondition);
-          }
+          console.log("state.timeIntervalCondition: " + state.timeIntervalCondition);
+          console.log("state.timeIntervalCondition.from: " + state.timeIntervalCondition.from);
+          console.log("state.timeIntervalCondition.to: " + state.timeIntervalCondition.to);
+          condition.from = state.timeIntervalCondition.from.hours + ":" + state.timeIntervalCondition.from.minutes + ":00";
+          condition.to = state.timeIntervalCondition.to.hours + ":" + state.timeIntervalCondition.to.minutes + ":00";
+          state.timeIntervalConditions.push(condition);
         }
       }
 
       state.conditionsForTrigger.push(Object.assign({}, condition));
       state.conditionsCounter+=1;
 
+      if(state.conditionSelected.id === 1){
+        state.conditionsForTrigger=[]; // no conditions means "execute always"
+        // all the other conditions have to be overwritten
+        state.conditionsCounter=1;
+        state.dataStreamCurrentValueConditions=[];
+        state.timeIntervalConditions=[];
+        state.dataStreamNotUpdatedConditions=[];
+      }
+
       console.log("### state.conditionsForTrigger: " + state.conditionsForTrigger);
       console.log("### conditionsCounter: " + state.conditionsCounter);
-
+      console.log("ABCDE###########################");
+      console.log("condition: " + JSON.stringify(condition));
+      console.log("state.conditionsForTrigger: " + JSON.stringify(state.conditionsForTrigger));
+      console.log("ABCDE###########################");
     },
 
 
@@ -1983,31 +1997,34 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
         axios.post( url + '/data-streams', {
                 name: context.state.dataStreamToAdd
-            }).then(function (response) {
+            }).then( function (response) {
 
-            context.commit('displaySuccessDataStreamAdding');
+	        	context.commit('displaySuccessDataStreamAdding');
 
-              axios.get(url + '/data-streams',{ headers: { "Accept": "application/json" } }).then(response => {
-                context.commit('processDataStreamsConfigured', response);
-                context.commit('setFilteredDataStreamsToAllConfigured');
-                context.commit('setCurrentPage', 1);
-                context.commit('getDataStreamsToShowInTable');
-                context.commit('getPagesNeededForDataStreams');
-                context.commit('cleanElementsToDelete');
-                context.commit('determineUpdateTimeForStreams');
-                context.commit('determineMostRecentlyUpdatedStreams');
-                //context.commit('hideLoadingFeedback');
-              }, (err) => {
-                context.commit('cleanElementsToDelete');
-                console.log("[ERROR] => " + err);
-                //context.commit('treatErrorForDataStream', err);
-              });
+		      axios.get(url + '/data-streams',{ headers: { "Accept": "application/json" } }).then(response => {
+    			context.commit('processDataStreamsConfigured', response);
+    			context.commit('setFilteredDataStreamsToAllConfigured');
+    			context.commit('setCurrentPage', 1);
+    			context.commit('getDataStreamsToShowInTable');
+    			context.commit('getPagesNeededForDataStreams');
+    			context.commit('cleanElementsToDelete');
+    			context.commit('determineUpdateTimeForStreams');
+    			context.commit('determineMostRecentlyUpdatedStreams');
+    			//context.commit('hideLoadingFeedback');
+    		      }, (err) => {
+    			context.commit('cleanElementsToDelete');
+    			console.log("[ERROR] => " + JSON.stringify(err));
+			       //context.commit('treatErrorForDataStream', err);
+		      });
+
 
           }).catch(function (error) {
-                console.log("LA UUUUTA : " + JSON.stringify(error));
-                console.log("LA UUUUTA : " + error.message);
-                console.log("LA UUUUTA : " + JSON.stringify(error.config));
-                console.log("LA UUUUTA : " + JSON.stringify(error.request));
+                console.log("error : " + JSON.stringify(error));
+                console.log("error.message : " + error.message);
+                console.log("error.status : " + error.status);
+                console.log("error.config : " + JSON.stringify(error.config));
+                console.log("error.request : " + JSON.stringify(error.request));
+                console.log("error.response : " + JSON.stringify(error.response));
                 context.commit('cleanElementsToDelete');
                 context.commit('errorTreatmentForDataStreamAdding', error);
           });
@@ -2203,12 +2220,20 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
       context.state.displayLoadingFeedback = true; // user starts seeing the loading spinner
 
+      console.log("conditionsForTrigger: " + JSON.stringify(context.state.conditionsForTrigger));
+
+      console.log("name="+ JSON.stringify(context.state.activeTrigger.name)+", action=" + JSON.stringify(context.state.activeTrigger.action)+", policy="+ JSON.stringify(policy)+", conditions=" + JSON.stringify(context.state.conditionsForTrigger));
+
       axios.post(url + '/triggers', {
         name: context.state.activeTrigger.name,
         action: context.state.activeTrigger.action,
         policy: policy,
         conditions: context.state.conditionsForTrigger,
       }).then(function (response) {
+
+          context.state.dataStreamCurrentValueConditions = [];
+          context.state.dataStreamNotUpdatedConditions = [];
+          context.state.timeIntervalConditions = [];
 
           context.state.displayLoadingFeedback = false;
           context.state.errorInInteraction = false;
@@ -2315,7 +2340,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
       axios.post( url + '/data-points',
               [{data_stream: context.state.activeDataStream.name,
-                value: context.state.dataPointToAdd}]
+                value: parseFloat(context.state.dataPointToAdd)}]
           ).then(function (response) {
             context.state.displayLoadingFeedback = false;
             context.state.errorInInteraction = false;

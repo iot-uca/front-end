@@ -49,44 +49,6 @@
 
 </div>
 
-
-
-
-
-  <!--div class="modal fade" id="addDataStreamModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title" id="exampleModalLabel"><strong>Add Data Stream</strong></h4>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-
-        </div>
-        <div class="modal-body">
-
-          <form class="needs-validation" novalidate="" onsubmit="return false;">
-
-            <div class="mb-3">
-              <label for="streamName">Name</label>
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fa fa-font"></i></span>
-                </div>
-                <input type="text" class="form-control" id="streamName" v-model="dataStreamToAdd" required="true">
-                <div class="invalid-feedback" style="width: 100%;">
-                  <em>The Stream name cannot be empty</em>
-                </div>
-              </div>
-            </div>
-            <hr>
-            <button class="btn button-green btn-sm" type="submit" @click="addDataStream()" style="float: right; font-size: 1.1rem;">Add stream</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div-->
-
 </template>
 
 <script>

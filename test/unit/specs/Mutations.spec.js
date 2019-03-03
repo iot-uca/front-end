@@ -66,6 +66,7 @@ describe('Mutations', () => {
   });*/
 
 
+
   it('showDataStreamView should only show data streams view', () => {
 
     store.commit('showDataStreamView')
@@ -413,18 +414,17 @@ it('setMaxDataStreamsPerPageTest', () => {
     });
 
 
-
   it('editTriggerTest', () => {
        let trigger = { name: 'Trigger1', action : 'Tweet', policy: {type: 'data_point_registration', elem: 'Temperature'}, conditions: ['Temperature current value > 24 Celsius', 'Temperature current value > 24 Celsius', 'Time interval' ]}
 
        store.commit('editTrigger', trigger)
        expect(store.state.activeTrigger).to.equals(trigger)
-       expect(store.state.isTimePeriodPolicy).to.equals(true)
+       expect(store.state.isTimePeriodPolicy).to.equals(false)
 
        trigger.policy.type = 'time_interval'
        store.commit('editTrigger', trigger)
        expect(store.state.activeTrigger).to.equals(trigger)
-       expect(store.state.isTimePeriodPolicy).to.equals(false)
+       expect(store.state.isTimePeriodPolicy).to.equals(true)
 
     });
 
@@ -526,40 +526,29 @@ it('setMaxDataStreamsPerPageTest', () => {
     });
 
     it('addNewConditionTest', () => {
+
         store.state.conditionsCounter = 0
         expect(store.state.conditionsForTrigger.length).to.equals(0)
 
         //1 - always
-
-        store.state.conditionSelected = {
-            id:1,
-            text:'Always'
-        }
-
+        store.state.conditionSelected = { id:1, text:'Always'}
         store.commit('addNewCondition')
-        expect(store.state.conditionsForTrigger.length).to.equals(1)
-        expect(store.state.conditionsForTrigger[0].id).to.equals(1)
-        expect(store.state.conditionsForTrigger[0].condition).to.equals('Always')
-        expect(store.state.conditionsForTrigger[0].elemId).to.equals(0)
+        expect(store.state.conditionsForTrigger.length).to.equals(0)
         expect(store.state.conditionsCounter).to.equals(1)
 
         //2 - on data Stream value
         store.state.onDataStreamValueCondition.dataStream='Temperature sensor'
         store.state.onDataStreamValueCondition.condition='>'
         store.state.onDataStreamValueCondition.value='20'
-
         store.state.conditionSelected.text = 'On Data Stream value'
         store.state.conditionSelected.id = 2
 
         store.commit('addNewCondition')
-        expect(store.state.conditionsForTrigger.length).to.equals(2)
-        expect(store.state.conditionsForTrigger[1].id).to.equals(2)
-        expect(store.state.conditionsForTrigger[1].condition).to.equals('On Data Stream value')
-        expect(store.state.conditionsForTrigger[1].elemId).to.equals(1)
-        //expect(store.state.conditionsForTrigger[1].details.dataStream).to.equals('Temperature sensor')
-        expect(store.state.conditionsForTrigger[1].details.condition).to.equals('>')
-        expect(store.state.conditionsForTrigger[1].details.value).to.equals('20')
-
+        expect(store.state.conditionsForTrigger.length).to.equals(1)
+        expect(store.state.conditionsForTrigger[0].type).to.equals('On Data Stream value')
+        expect(store.state.conditionsForTrigger[0].data_stream).to.equals('Temperature sensor')
+        expect(store.state.conditionsForTrigger[0].condition.operator).to.equals('>')
+        expect(store.state.conditionsForTrigger[0].condition.value).to.equals(20)
         expect(store.state.conditionsCounter).to.equals(2)
 
         //3 - Data Stream not updated for...
@@ -569,41 +558,37 @@ it('setMaxDataStreamsPerPageTest', () => {
         store.state.dataStreamNotUpdatedFrom.hours=1
         store.state.dataStreamNotUpdatedFrom.minutes=0
         store.state.dataStreamNotUpdatedFrom.seconds=0
-
         store.state.conditionSelected.text = 'When Data Stream has not been updated for'
         store.state.conditionSelected.id = 3
 
         store.commit('addNewCondition')
-        expect(store.state.conditionsForTrigger.length).to.equals(3)
-        expect(store.state.conditionsForTrigger[2].id).to.equals(3)
-        expect(store.state.conditionsForTrigger[2].condition).to.equals('When Data Stream has not been updated for')
-        expect(store.state.conditionsForTrigger[2].elemId).to.equals(2)
-        //expect(store.state.conditionsForTrigger[2].details.dataStream).to.equals('Temperature sensor')
-        expect(store.state.conditionsForTrigger[2].details.dataStreamNotUpdatedFrom.months).to.equals(0)
-        expect(store.state.conditionsForTrigger[2].details.dataStreamNotUpdatedFrom.weeks).to.equals(1)
-        expect(store.state.conditionsForTrigger[2].details.dataStreamNotUpdatedFrom.days).to.equals(0)
-        expect(store.state.conditionsForTrigger[2].details.dataStreamNotUpdatedFrom.hours).to.equals(1)
-        expect(store.state.conditionsForTrigger[2].details.dataStreamNotUpdatedFrom.minutes).to.equals(0)
-        expect(store.state.conditionsForTrigger[2].details.dataStreamNotUpdatedFrom.seconds).to.equals(0)
-
+        expect(store.state.conditionsForTrigger.length).to.equals(2)
+        expect(store.state.conditionsForTrigger[1].type).to.equals('When Data Stream has not been updated for')
+        expect(store.state.conditionsForTrigger[1].details.dataStreamNotUpdatedFrom.months).to.equals(0)
+        expect(store.state.conditionsForTrigger[1].details.dataStreamNotUpdatedFrom.weeks).to.equals(1)
+        expect(store.state.conditionsForTrigger[1].details.dataStreamNotUpdatedFrom.days).to.equals(0)
+        expect(store.state.conditionsForTrigger[1].details.dataStreamNotUpdatedFrom.hours).to.equals(1)
+        expect(store.state.conditionsForTrigger[1].details.dataStreamNotUpdatedFrom.minutes).to.equals(0)
+        expect(store.state.conditionsForTrigger[1].details.dataStreamNotUpdatedFrom.seconds).to.equals(0)
         expect(store.state.conditionsCounter).to.equals(3)
 
         //4 - Time interval
-        store.state.timeIntervalCondition.from = '01:23'
-        store.state.timeIntervalCondition.to = '07:10'
-
+        store.state.timeIntervalCondition.from.hours = '01'
+        store.state.timeIntervalCondition.from.minutes = '23'
+        store.state.timeIntervalCondition.to.hours = '07'
+        store.state.timeIntervalCondition.to.minutes = '10'
         store.state.conditionSelected.text = 'Time interval'
         store.state.conditionSelected.id = 4
 
         store.commit('addNewCondition')
-        expect(store.state.conditionsForTrigger.length).to.equals(4)
-        expect(store.state.conditionsForTrigger[3].id).to.equals(4)
-        expect(store.state.conditionsForTrigger[3].condition).to.equals('Time interval')
-        expect(store.state.conditionsForTrigger[3].elemId).to.equals(3)
-        expect(store.state.conditionsForTrigger[3].details.from).to.equals('01:23')
-        expect(store.state.conditionsForTrigger[3].details.to).to.equals('07:10')
+        expect(store.state.conditionsForTrigger.length).to.equals(3)
+        expect(store.state.conditionsForTrigger[2].type).to.equals('Time interval')
+        expect(store.state.conditionsForTrigger[2].from).to.equals('01:23:00')
+        expect(store.state.conditionsForTrigger[2].to).to.equals('07:10:00')
         expect(store.state.conditionsCounter).to.equals(4)
     });
+
+
 
     it('showCommandView should only check commands view', () => {
         store.commit('showCommandView')
@@ -1039,6 +1024,5 @@ it('setMaxDataStreamsPerPageTest', () => {
     expect(store.state.amountOfDataPointTriggers).to.equal(5);
     expect(store.state.amountOfPeriodicalTriggers).to.equal(1);
   });
-
 
 })

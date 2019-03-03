@@ -3,10 +3,10 @@
   <!-- Modal for showing success or failure interactions-->
     <div v-if="showModalForRequestResult">
         <div class="modal-mask">
-          <div class="modal-wrapper">
+          <div class="modal-wrapper modal-dialog modal-lg">
 
             <div class="modal-dialog modal-lg">
-              <div class="modal-content">
+              <div class="modal-dialog modal-lg modal-content">
 
                 <div v-if="errorInInteraction" class="modal-body alert alert-danger text-center" role="alert">
                   <strong>{{errorMessage}}</strong>

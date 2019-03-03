@@ -17,6 +17,9 @@
     <data-points-modal></data-points-modal>
     <status-modal></status-modal>
 
+
+    <show-trigger-modal></show-trigger-modal>
+
     <router-view></router-view>
 
     <!--spinner></spinner-->
@@ -55,6 +58,7 @@
   import ShowActionModal from './components/ShowActionModal.vue'
   import EditActionModal from './components/EditActionModal.vue'
   import AddTriggerModal from './components/AddTriggerModal.vue'
+  import ShowTriggerModal from './components/ShowTriggerModal.vue'
   import AddCommandModal from './components/AddCommandModal.vue'
   import SuccessFailureModal from './components/SuccessFailureModal.vue'
   import AddDataPointModal from './components/AddDataPointModal.vue'
@@ -84,6 +88,7 @@
       //'action-view': ActionView,
       'dashboard': Dashboard,
       'add-stream-modal': AddStreamModal,
+      'show-trigger-modal': ShowTriggerModal,
       //'data-stream-view': DataStreamView,
       'security-view': SecurityView,
       'cosmos-header': Header,

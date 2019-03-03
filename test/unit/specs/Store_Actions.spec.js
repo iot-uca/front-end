@@ -662,16 +662,16 @@ describe('Actions', () => {
     it('testSetConditionSelected', () => {
       let existingTriggers = [
         { name: 'Trigger1', action : 'Tweet', policy: {type: 'data_point_registration', elem: 'Temperature'}, conditions: ['Temperature current value > 24 Celsius', 'Temperature current value > 24 Celsius', 'Time interval' ]},
-        {name: 'Trigger2', action: 'Make Facebook Post', policy: {type: 'time_period',	elem: '5 mins' }, conditions: ['Always']	}
+        {name: 'Trigger2', action: 'Make Facebook Post', policy: {type: 'time_interval',	elem: '5 mins' }, conditions: ['Always']	}
       ];
 
       store.dispatch('editTrigger', existingTriggers[0]);
       expect(store.state.activeTrigger.name).to.equal('Trigger1');
-      expect(store.state.isTimePeriodPolicy).to.equal(true);
+      expect(store.state.isTimePeriodPolicy).to.equal(false);
 
       store.dispatch('editTrigger', existingTriggers[1]);
       expect(store.state.activeTrigger.name).to.equal('Trigger2');
-      expect(store.state.isTimePeriodPolicy).to.equal(false);
+      expect(store.state.isTimePeriodPolicy).to.equal(true);
     });
 
     it('testCleanActiveAction', () => {

@@ -124,7 +124,7 @@
                           <span class="input-group-text"><i class="fa fa-exclamation"></i></span>
                         </div>
                         <select class="form-control custom-select" id="days" placeholder="" required="true" v-model="conditionSelected">
-                          <option v-for="condition in triggerConditions" v-bind:value="{ id: condition.id, text: condition.name }">{{ condition.name }}</option>
+                          <option v-for="condition in triggerConditions" v-bind:value="{ id: condition.id, text: condition.name }">{{ condition.label }}</option>
                         </select>
                         <div class="invalid-feedback" style="width: 100%;">
                           The Trigger name is required.
@@ -177,10 +177,10 @@
                         <div class="col-md-3 mb-3">
                           <label>Condition</label>
                           <select class="form-control custom-select" id="currentValueCond" v-model="dataStreamCondition">
-                            <option value="greater">greater than</option>
-                            <option value="less">less than</option>
-                            <option value="equal">equal to</option>
-                            <option value="different">different to</option>
+                            <option value=">">greater than</option>
+                            <option value="<">less than</option>
+                            <option value="=">equal to</option>
+                            <option value="!=">different to</option>
                           </select>
                           <div class="invalid-feedback">
                             Condition is required

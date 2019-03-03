@@ -40,7 +40,7 @@
                 </div>
 
                 <input v-if="getExistingTriggers().length>0" type="text" class="form-control" v-model="triggerFilter" placeholder="Start typing to filter triggers..." required="true">
-                <input v-else type="text" class="form-control" v-model="actionFilter" placeholder="Start typing to filter triggers..." readonly>
+                <input v-else type="text" class="form-control" v-model="triggerFilter" placeholder="Start typing to filter triggers..." readonly>
 
               </div>
             </div>
@@ -76,8 +76,8 @@
             <th scope="col" style="width: 26%; color: white;">Policy Type</th>
             <th scope="col" style="width: 15%; color: white;">Policy Elem</th>
             <th scope="col"></th>
-            <th scope="col"></th>
           </tr>
+
           </thead>
           <tbody class="table-hover">
           <!--tr v-for="t in triggersForPage" v-bind:trigger="t" is="trigger-table-row"></tr-->
@@ -93,18 +93,20 @@
             <td>{{trigger.name}}</td>
             <td>{{trigger.action}}</td>
             <td>{{trigger.policy.type}}</td>
-            <td>{{trigger.policy.elem}}</td>
+
+            <td v-if="trigger.policy.type=='periodical'">{{trigger.policy.time_interval}}</td>
+            <td v-else>{{trigger.policy.data_stream}}</td>
 
             <td>
-              <button type="button" class="btn button-green btn-sm" @click="editTrigger(trigger)" data-toggle="modal" data-target="#showTriggerModal" style="height: 75%;">
+              <button type="button" class="btn button-green btn-sm" @click="displayModalForTriggerDetails(); editTrigger(trigger)" style="height: 75%;">
                 <i class="fa fa-eye"></i>
               </button>
             </td>
-            <td>
+            <!--td>
               <button type="button" class="btn button-green btn-sm" @click="editTrigger(trigger)" data-toggle="modal" data-target="#editTriggerModal" style="height: 75%;">
                 <i class="fa fa-pencil-square-o"></i>
               </button>
-            </td>
+            </td-->
           </tr>
           </tbody>
         </table>
@@ -196,6 +198,11 @@
 
     },
     methods: {
+
+      displayModalForTriggerDetails: function (){
+        this.$store.dispatch('displayModalForTriggerDetails');
+      },
+
       displayModalForRemovingElements: function () {
         this.$store.dispatch('displayModalForRemovingElements');
       },

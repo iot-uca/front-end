@@ -18,7 +18,7 @@
             <li v-for="condition in onDataStreamConditions" class="list-group-item">
               <!--button type="button" class="btn btn-danger btn-sm" style="float: right;"><strong><i class="fa fa-remove"></i></strong></button-->
 
-              <h6><a href="#" style="float: right; color: red"><strong><i class="fa fa-remove"></i></strong></a>{{condition.dataStream}} <strong>{{condition.condition}}</strong> {{condition.value}} </h6>
+              <h6><a href="#" style="float: right; color: red"><strong><i class="fa fa-remove"></i></strong></a>{{condition.data_stream}} <strong>{{condition.condition.operator}} {{condition.condition.value}}</strong> {{condition.value}} </h6>
             </li>
           </ul>
 
@@ -66,7 +66,7 @@
 
           <ul v-if="timeIntervalConditions.length>0" class="list-group list-group-flush">
             <li v-for="condition in timeIntervalConditions" class="list-group-item">
-              {{condition}}
+              From: {{condition.from}} - To {{condition.to}}
               <a href="#" style="float: right; color: red"><strong><i class="fa fa-remove"></i></strong></a>
             </li>
           </ul>
@@ -88,40 +88,15 @@
 
 
       onDataStreamConditions: function() {
-        let allConditions = this.$store.state.conditionsForTrigger;
-        let onDataStreamConditions=[];
-
-        allConditions.forEach(function(element) {
-          if(element.id===2){
-            onDataStreamConditions.push(element.details);
-          }
-        });
-
-        return onDataStreamConditions;
+        return this.$store.state.dataStreamCurrentValueConditions;
       },
 
       dataStreamNotUpdatedConditions: function() {
-        let allConditions = this.$store.state.conditionsForTrigger;
-        let dataStreamNotUpdatedConditions=[];
-
-        allConditions.forEach(function(element) {
-          if(element.id===3){
-            dataStreamNotUpdatedConditions.push(element.details);
-          }
-        });
-        return dataStreamNotUpdatedConditions;
+        return this.$store.state.dataStreamNotUpdatedConditions;
       },
 
       timeIntervalConditions: function() {
-        let allConditions = this.$store.state.conditionsForTrigger;
-        let timeIntervalConditions=[];
-
-        allConditions.forEach(function(element) {
-          if(element.id===4){
-            timeIntervalConditions.push(element.details);
-          }
-        });
-        return timeIntervalConditions;
+        return this.$store.state.timeIntervalConditions;
       },
 
     },

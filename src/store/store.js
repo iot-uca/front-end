@@ -1092,10 +1092,10 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       new Chart(ctx, {
         type: 'doughnut',
         data: {
-          labels: ['Data Point Reg', 'Time Interval'],
+          labels: ['Action1', 'Action2', 'Action3', 'Action4', 'Action5'],
           datasets: [{
-            data: [11, 22,],
-            backgroundColor: ['#0000FF', '#32D75E']
+            data: [11, 22, 7, 17, 9],
+            backgroundColor: ['#0000FF', '#ff4d4d', '#ffff33', ' #32D75E', ' #c61aff']
           }]
         },
         options: {
@@ -1104,7 +1104,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
           },
           title: false,
           responsive:true,
-          cutoutPercentage:70,
+          cutoutPercentage:75,
           maintainAspectRatio: false,
         }
       });

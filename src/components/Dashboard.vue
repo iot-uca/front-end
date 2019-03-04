@@ -13,7 +13,11 @@
             <div class="row">
               <div class="col-sm-12">
                 <h4 class="card-title text-primary">{{this.$store.state.dataStreamsConfigured.length}}</h4>
-                <div class="text-muted">Data Streams</div>
+
+                <router-link to="/dataStreams" exact>
+                  <div class="text-muted">Data Streams</div>
+                </router-link>
+
               </div>
               <!--div class="col-sm-6 text-center">
 
@@ -26,17 +30,22 @@
         <div class="card shadow my-4 clickable-card"><!-- my-5 da margen en el eje Y : 1.5 rem -->
           <div class="card-body text-center">
             <div class="row">
-              <div class="col-sm-4">
+              <div class="col-sm-6">
                 <h4 class="card-title text-primary">{{this.$store.state.existingActions.length}}</h4>
-                <div class="small text-muted">Actions</div>
+
+                <router-link to="/actions" exact>
+                  <div class="small text-muted">Actions</div>
+                </router-link>
+
+
               </div>
-              <div class="col-sm-4 text-center">
-                <div class="h5 mb-0 text-info">{{this.$store.state.existingCommands.length}}</div>
-                <div class="small text-muted">Commands</div>
-              </div>
-              <div class="col-sm-4 text-center">
-                <div class="h5 mb-0 text-info">5</div>
-                <div class="small text-muted">HTTP Requests</div>
+              <div class="col-sm-6">
+                <h4 class="card-title text-primary">{{this.$store.state.existingCommands.length}}</h4>
+
+                <router-link to="/commands" exact>
+                  <div class="small text-muted">Commands</div>
+                </router-link>
+
               </div>
             </div>
           </div>
@@ -47,7 +56,11 @@
             <div class="row">
               <div class="col-sm-4">
                 <h4 class="card-title text-primary">{{this.$store.state.existingTriggers.length}}</h4>
-                <div class="small text-muted">Triggers</div>
+
+                <router-link to="/triggers" exact>
+                  <div class="small text-muted">Triggers</div>
+                </router-link>
+
               </div>
               <div class="col-sm-8 text-center">
                 <!--div class="h5 mb-0 text-info">4</div>
@@ -82,7 +95,12 @@
 
         <div class="card mb-3 shadow h-100">
           <div class="card-header">
-            <i class="fa fa-pie-chart"></i> Most Executed Triggers
+            <i class="fa fa-pie-chart"></i> Most Executed Actions
+
+            <router-link to="/actions" exact>
+              <i class="fa fa-ellipsis-h" style="float:right; color:black"></i>
+            </router-link>
+
           </div>
           <div class="card-body">
             <div class="row">
@@ -96,13 +114,15 @@
                     <canvas id="percentageBar" class="chartjs-render-monitor"></canvas>
                     <!--h3 class="card-title text-primary">7</h3-->
                   </div>
+
                   <div class="col-md-6 text-center my-auto">
                     <div class="h5 mb-0 text-primary">33.33%</div>
                     <div class="small text-muted">Data Point Registration</div>
                     <hr>
                     <div class="h5 mb-0 text-success">66.66%</div>
                     <div class="small text-muted">Time Interval</div>
-                  </div>
+                  </div >
+
                 </div>
 
               </div>

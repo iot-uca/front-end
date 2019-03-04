@@ -122,6 +122,11 @@
         <div class="card shadow h-100" style="font-family: sans-serif;">
           <div class="card-header">
             <i class="fa fa-pie-chart"></i> Next Commands in Queue
+
+            <router-link to="/commands" exact>
+              <i class="fa fa-ellipsis-h" style="float:right; color:black"></i>
+            </router-link>
+
           </div>
 
 
@@ -160,6 +165,11 @@
         <div v-if="showAddDataStream" class="card shadow h-100" style="font-family: sans-serif;">
           <div class="card-header">
             <i class="fa fa-pie-chart"></i> Most Recently Updated Streams
+
+              <router-link to="/dataStreams" exact>
+                <i class="fa fa-ellipsis-h" style="float:right; color:black"></i>
+              </router-link>
+
           </div>
 
 

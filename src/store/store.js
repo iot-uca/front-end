@@ -192,6 +192,12 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     activeIdsForHttpRequestHeader: [],
 
 
+    streamTypes: [
+      {id:0, name:'Boolean'},
+      {id:1, name:'Numeric'},
+      {id:2, name:'String'}
+    ],
+
     existingHttpMethods:[
       {id:0, name:'DELETE'},
       {id:1, name:'GET'},

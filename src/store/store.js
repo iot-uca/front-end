@@ -52,6 +52,8 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 //##########################################################################################
     existingCommands: [],
 
+    existingCommandsPrioritized:[],
+
     commandsForPage: [],
     maxCommandsPerPage: 10,
     pagesNeededForCommands: 0,
@@ -1663,6 +1665,21 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       console.log(JSON.stringify(state.mostRecentlyUpdatedStreams));
     },
 
+    getNextCommandsInQueue: (state, response) =>{
+      console.log(" Entering getNextCommandsInQueue");
+      console.log(" RESPONSE: " + JSON.stringify(response));
+
+      let commands = response.data;
+      console.log("[SUCCESS] commands =>>>> " + commands);
+
+      state.existingCommandsPrioritized = [];
+
+      for(let i=0; i<commands.length; i++){
+        state.existingCommandsPrioritized.push(commands[i]);
+      }
+      console.log(" Commands =>" + JSON.stringify(state.existingCommandsPrioritized));
+    }
+
 
   },
 
@@ -2420,6 +2437,17 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     determineMostRecentlyUpdatedStreams: context => {
       context.commit('determineUpdateTimeForStreams');
       context.commit('determineMostRecentlyUpdatedStreams');
+    },
+
+    getNextCommandsInQueue: (context, url) => {
+        console.log("Entering getNextCommandsInQueue ");
+
+        axios.get(url + '/commands?order=priority', {headers:{"Accept" : "application/json"}} ).then(response => {
+          context.commit('getNextCommandsInQueue', response);
+        }, (err) => {
+          console.log("[ERROR] => " + err);
+        });
+
     },
 
   }

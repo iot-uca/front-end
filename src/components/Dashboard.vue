@@ -115,36 +115,44 @@
 
     <div class="row" style="font-family: sans-serif; margin-top: 2%;">
 
-      <!--data-stream-card v-for="dS in dataStreams" v-bind:name="dS.name" v-bind:value="dS.current_value" v-bind:timestamp="dS.last_updated" @click.native="assignDataStream(dS)"></data-stream-card>
-      <div v-if="showAddDataStream" class="col-md-2">
-          <button @click="showDataStreamView(); displayDataStreamModal()"><i class="fa fa-plus text-center" style="font-size: 3rem; color: lightblue;"></i></button>
-      </div-->
 
       <div class="col-md-4">
-        <!-- Example Pie Chart Card-->
-        <div class="card mb-3 shadow h-100">
+
+
+        <div class="card shadow h-100" style="font-family: sans-serif;">
           <div class="card-header">
-            <i class="fa fa-pie-chart"></i> Most Triggered Actions
+            <i class="fa fa-pie-chart"></i> Next Commands in Queue
           </div>
-          <div class="card-body">
-            <div class="row">
-              <div class="col-md-6">
-                <canvas id="myPieChart2" class="chartjs-render-monitor"></canvas>
-                <!--h3 class="card-title text-primary">7</h3-->
-              </div>
-              <div class="col-md-6 text-center my-auto">
-                <div class="h5 mb-0 text-primary">9</div>
-                <div class="small text-muted">Action 1</div>
-                <hr>
-                <div class="h5 mb-0 text-warning">7</div>
-                <div class="small text-muted">Action 2</div>
-                <hr>
-                <div class="h5 mb-0 text-success">5</div>
-                <div class="small text-muted">Action 3</div>
-              </div>
-            </div>
+
+
+          <div v-if="existingCommandsPrioritized.length==0" class="card-body">
+            <br>
+            <br>
+            <p class="text-center">No pending commands for now</p>
+          </div>
+
+          <div v-else class="card-body">
+            <table class="table table-striped table-responsive table-sm" style="width:100%;">
+              <thead>
+              <tr>
+                <th scope="col" style="width:55%;">Name</th>
+                <th scope="col" style="width:15%;">Priority</th>
+                <th scope="col" class="text-center" style="width:30%;">Last Upd.</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr v-for="command in existingCommandsPrioritized" style="font-size: 0.8rem;">
+                <td>{{command.command}}</td>
+                <td class="text-center">{{command.priority}}</td>
+                <td class="text-center"> - mins</td>
+                <!--td><button class="btn btn-sm" data-toggle="modal" @click="showDataStream(dataStream); getDataPoints();" data-target="#dataPointsForStreamModal"><i class="fa fa-bar-chart text-center"></i></button></td-->
+              </tr>
+              </tbody>
+            </table>
           </div>
         </div>
+
+
       </div>
 
       <div class="col-md-8" style="font-family: sans-serif; width:100%;" >
@@ -166,16 +174,17 @@
               <thead>
               <tr>
                 <th scope="col" style="width:58%;">Name</th>
-                <th scope="col" style="width:20%;">Value</th>
-                <th scope="col" style="width:20%;">Last Updated</th>
+                <th scope="col" class="text-center" style="width:10%;">Type</th>
+                <th scope="col" class="text-center" style="width:10%;">Value</th>
+                <th scope="col" class="text-center" style="width:20%;">Last Updated</th>
                 <th scope="col"style="width:2%;"/>
               </tr>
               </thead>
               <tbody>
               <tr v-for="dataStream in dataStreams" style="font-size: 0.8rem;">
                 <td>{{dataStream.name}}</td>
-                <td>{{dataStream.current_value}}</td>
-                <td>{{dataStream.last_update}} minutes</td>
+                <td class="text-center" >{{dataStream.current_value}}</td>
+                <td class="text-center">{{dataStream.last_update}} minutes</td>
                 <td><button class="btn btn-sm" data-toggle="modal" @click="showDataStream(dataStream); getDataPoints();" data-target="#dataPointsForStreamModal"><i class="fa fa-bar-chart text-center"></i></button></td>
               </tr>
               </tbody>
@@ -199,8 +208,9 @@ export default {
 
   mounted(){
     this.$store.dispatch('showDashboardView');
-    this.drawCharts();
+    this.$store.dispatch('getNextCommandsInQueue', this.$store.state.backendEndPoint);
     this.determineMostRecentlyUpdatedStreams();
+    this.drawCharts();
 
   },
 
@@ -216,6 +226,9 @@ export default {
     },
     dataStreams(){
       return this.$store.state.mostRecentlyUpdatedStreams;
+    },
+    existingCommandsPrioritized(){
+      return this.$store.state.existingCommandsPrioritized;
     },
 
   },

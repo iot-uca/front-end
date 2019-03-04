@@ -18,7 +18,7 @@
 [![GitHub release](https://img.shields.io/github/release/ba-st/Cannon.svg)](https://github.com/iot-uca/front-end/releases/latest)
 
 
-> *Name origin*: TBD
+> *Name origin*: The Telescope was one the first human-invented tools for exploring the Cosmos 
 
 With Telescope, we aim to provide a simple, light-weight, powerfull platform to explore and interact with Cosmos.
 
@@ -53,11 +53,11 @@ A Docker image is pushed to Docker Hub every time CI runs successfully.
 
 > *Open CLI and run*:
 
-  docker run -it -p 7080:80 --rm --name cosmos-gui jnahas/cosmos-ui
+  docker run -it -p 7080:80 --rm --name telescope jnahas/cosmos-ui
 
 
 ## Contibute
 
 * Clone repository
-* Open project on your favorite IDE/Text-Editor
+* Open Telescope project in your favorite IDE/Text-Editor
 * Enjoy!

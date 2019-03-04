@@ -6,16 +6,14 @@
           <div class="modal-wrapper modal-dialog modal-lg">
 
             <div class="modal-dialog modal-lg">
-              <div class="modal-dialog modal-lg modal-content">
 
-                <div v-if="errorInInteraction" class="modal-body alert alert-danger text-center" role="alert">
+                <div v-if="errorInInteraction" class="modal-dialog modal-lg alert alert-danger text-center" role="alert">
                   <strong>{{errorMessage}}</strong>
                 </div>
-                <div v-else class="modal-body alert alert-success text-center" role="alert">
+                <div v-else class="modal-dialog modal-lg alert alert-success text-center" role="alert">
                   <strong>{{successMessage}} </strong>
                 </div>
 
-              </div>
             </div>
 
         </div>

@@ -1642,7 +1642,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
           console.log("registrationMoment: " + registrationMoment);
           // storing the time in another field, need the original to do every calculation
-          state.dataStreamsConfigured[i].not_updated_since = Math.floor(( (thisMoment + milisFromTimezone ) - registrationMoment)/60000);
+          state.dataStreamsConfigured[i].not_updated_since = ( (thisMoment + milisFromTimezone ) - registrationMoment)/60000;
           console.log("state.dataStreamsConfigured[i].not_updated_since: " + state.dataStreamsConfigured[i].not_updated_since);
           state.mostRecentlyUpdatedStreams.push(state.dataStreamsConfigured[i]);
         }
@@ -2379,21 +2379,23 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
         console.log("#$$$$$$$: " + context.state.activeDataStream.links.data_points);
 
-        axios.get(url + '/data-streams',{ headers: { "Accept": "application/json" } }).then(response => {
-        context.commit('processDataStreamsConfigured', response);
-        context.commit('setFilteredDataStreamsToAllConfigured');
-        context.commit('setCurrentPage', 1);
-        context.commit('getDataStreamsToShowInTable');
-        context.commit('getPagesNeededForDataStreams');
-        context.commit('cleanElementsToDelete');
-        //context.commit('determineUpdateTimeForStreams');
-        //context.commit('determineMostRecentlyUpdatedStreams');
-        //context.commit('hideLoadingFeedback');
-      }, (err) => {
-        context.commit('cleanElementsToDelete');
-        console.log("[ERROR] => " + err);
-        //context.commit('treatErrorForDataStream', err);
-      });
+        setTimeout(function(){
+            axios.get(url + '/data-streams',{ headers: { "Accept": "application/json" } }).then(response => {
+              context.commit('processDataStreamsConfigured', response);
+              context.commit('setFilteredDataStreamsToAllConfigured');
+              context.commit('setCurrentPage', 1);
+              context.commit('getDataStreamsToShowInTable');
+              context.commit('getPagesNeededForDataStreams');
+              context.commit('cleanElementsToDelete');
+              //context.commit('determineUpdateTimeForStreams');
+              //context.commit('determineMostRecentlyUpdatedStreams');
+              //context.commit('hideLoadingFeedback');
+          }, (err) => {
+            context.commit('cleanElementsToDelete');
+            console.log("[ERROR] => " + err);
+            //context.commit('treatErrorForDataStream', err);
+          });
+      }, 100);
     },
 
     setdataPointToAdd: (context, value) => {

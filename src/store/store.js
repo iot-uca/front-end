@@ -1609,6 +1609,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       state.mostRecentlyUpdatedStreams=[];
 
       let amountOfStreams = state.dataStreamsConfigured.length;
+      console.log("dataStreamsConfigured: " + JSON.stringify(state.dataStreamsConfigured));
 
       let instant = new Date();
       console.log("instant: " + instant);
@@ -1621,13 +1622,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       console.log("thisMoment: " + thisMoment);
 
       console.log("moment Adapted: " + (milisFromTimezone + thisMoment));
-      /*console.log("===>" + thisMoment.day());
-      console.log("===>" + thisMoment.month());
-      console.log("===>" + thisMoment.year());
-      console.log("===>" + thisMoment.hour());
-      console.log("===>" + thisMoment.minutes());
-      console.log("===>" + thisMoment.seconds());*/
-
 
       for(let i=0; i<amountOfStreams; i++){
 
@@ -1647,8 +1641,9 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
           console.log("===>" + registrationMoment.seconds());
 
           console.log("registrationMoment: " + registrationMoment);
-          state.dataStreamsConfigured[i].last_update = Math.floor(( (thisMoment + milisFromTimezone ) - registrationMoment)/60000);
-          console.log("state.dataStreamsConfigured[i].last_update: " + state.dataStreamsConfigured[i].last_update);
+          // storing the time in another field, need the original to do every calculation
+          state.dataStreamsConfigured[i].not_updated_since = Math.floor(( (thisMoment + milisFromTimezone ) - registrationMoment)/60000);
+          console.log("state.dataStreamsConfigured[i].not_updated_since: " + state.dataStreamsConfigured[i].not_updated_since);
           state.mostRecentlyUpdatedStreams.push(state.dataStreamsConfigured[i]);
         }
 
@@ -1657,7 +1652,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
     determineMostRecentlyUpdatedStreams: state => {
       console.log("### Entering determineMostRecentlyUpdatedStreams!!");
-      state.mostRecentlyUpdatedStreams = state.mostRecentlyUpdatedStreams.sort(function(a, b){return a.last_update-b.last_update});
+      state.mostRecentlyUpdatedStreams = state.mostRecentlyUpdatedStreams.sort(function(a, b){return a.not_updated_since-b.not_updated_since});
 
       if(state.mostRecentlyUpdatedStreams.length>5){
         state.mostRecentlyUpdatedStreams = state.mostRecentlyUpdatedStreams.slice(0,5);
@@ -1702,8 +1697,8 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
         context.commit('getDataStreamsToShowInTable');
         context.commit('getPagesNeededForDataStreams');
         context.commit('hideLoadingFeedback');
-        context.commit('determineUpdateTimeForStreams');
-        context.commit('determineMostRecentlyUpdatedStreams');
+        //context.commit('determineUpdateTimeForStreams');
+        //context.commit('determineMostRecentlyUpdatedStreams');
       }, (err) => {
         console.log("[ERROR] => " + err);
         //context.commit('treatErrorForDataStream', err);
@@ -2034,8 +2029,8 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     			context.commit('getDataStreamsToShowInTable');
     			context.commit('getPagesNeededForDataStreams');
     			context.commit('cleanElementsToDelete');
-    			context.commit('determineUpdateTimeForStreams');
-    			context.commit('determineMostRecentlyUpdatedStreams');
+    			//context.commit('determineUpdateTimeForStreams');
+    			//context.commit('determineMostRecentlyUpdatedStreams');
     			//context.commit('hideLoadingFeedback');
     		      }, (err) => {
     			context.commit('cleanElementsToDelete');
@@ -2391,8 +2386,8 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
         context.commit('getDataStreamsToShowInTable');
         context.commit('getPagesNeededForDataStreams');
         context.commit('cleanElementsToDelete');
-        context.commit('determineUpdateTimeForStreams');
-        context.commit('determineMostRecentlyUpdatedStreams');
+        //context.commit('determineUpdateTimeForStreams');
+        //context.commit('determineMostRecentlyUpdatedStreams');
         //context.commit('hideLoadingFeedback');
       }, (err) => {
         context.commit('cleanElementsToDelete');

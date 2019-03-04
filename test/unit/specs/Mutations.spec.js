@@ -985,25 +985,25 @@ it('setMaxDataStreamsPerPageTest', () => {
 
 
   it('testProcessDataPointsConfigured', () => {
-      store.state.mostRecentlyUpdatedStreams = [{last_update:7},{last_update:9},{last_update:13},{last_update:3},{last_update:2},{last_update:1},{last_update:5},{last_update:4}];
+      store.state.mostRecentlyUpdatedStreams = [{not_updated_since:7},{not_updated_since:9},{not_updated_since:13},{not_updated_since:3},{not_updated_since:2},{not_updated_since:1},{not_updated_since:5},{not_updated_since:4}];
 
       store.commit('determineMostRecentlyUpdatedStreams');
 
       expect(store.state.mostRecentlyUpdatedStreams.length).to.equal(5);
-      expect(store.state.mostRecentlyUpdatedStreams[0].last_update).to.equal(1);
-      expect(store.state.mostRecentlyUpdatedStreams[1].last_update).to.equal(2);
-      expect(store.state.mostRecentlyUpdatedStreams[2].last_update).to.equal(3);
-      expect(store.state.mostRecentlyUpdatedStreams[3].last_update).to.equal(4);
-      expect(store.state.mostRecentlyUpdatedStreams[4].last_update).to.equal(5);
+      expect(store.state.mostRecentlyUpdatedStreams[0].not_updated_since).to.equal(1);
+      expect(store.state.mostRecentlyUpdatedStreams[1].not_updated_since).to.equal(2);
+      expect(store.state.mostRecentlyUpdatedStreams[2].not_updated_since).to.equal(3);
+      expect(store.state.mostRecentlyUpdatedStreams[3].not_updated_since).to.equal(4);
+      expect(store.state.mostRecentlyUpdatedStreams[4].not_updated_since).to.equal(5);
 
-      store.state.mostRecentlyUpdatedStreams = [{last_update:1},{last_update:5},{last_update:4}];
+      store.state.mostRecentlyUpdatedStreams = [{not_updated_since:1},{not_updated_since:5},{not_updated_since:4}];
 
       store.commit('determineMostRecentlyUpdatedStreams');
 
       expect(store.state.mostRecentlyUpdatedStreams.length).to.equal(3);
-      expect(store.state.mostRecentlyUpdatedStreams[0].last_update).to.equal(1);
-      expect(store.state.mostRecentlyUpdatedStreams[1].last_update).to.equal(4);
-      expect(store.state.mostRecentlyUpdatedStreams[2].last_update).to.equal(5);
+      expect(store.state.mostRecentlyUpdatedStreams[0].not_updated_since).to.equal(1);
+      expect(store.state.mostRecentlyUpdatedStreams[1].not_updated_since).to.equal(4);
+      expect(store.state.mostRecentlyUpdatedStreams[2].not_updated_since).to.equal(5);
   });
 
 

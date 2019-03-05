@@ -670,6 +670,39 @@ it('setMaxDataStreamsPerPageTest', () => {
         expect(store.state.filteredCommands[0].priority).to.equal('23');
     });
 
+    it('testFilteringAnAlreadyFilteredElementDoesNotAddItAgain', () => {
+
+      console.log("testFilteringAnAlreadyFilteredElementDoesNotAddItAgain");
+
+      let existingCommands = [
+            {command: 'Turn On LED 1', priority: '100'},
+            {command: 'Turn Off LED 1', priority: '23'},
+            {command: 'Turn On PIN 5',priority: '56'},
+          ];
+
+      store.state.existingCommands = existingCommands;
+      store.commit('filterCommandsToDisplay','O');
+
+      console.log("AJJJJJJJJJJJAAAAAAA: " + JSON.stringify(store.state.filteredCommands));
+
+      expect(store.state.filteredCommands.length).to.equal(3);
+      expect(store.state.filteredCommands[0].command).to.equal('Turn On LED 1');
+      expect(store.state.filteredCommands[1].command).to.equal('Turn Off LED 1');
+      expect(store.state.filteredCommands[2].command).to.equal('Turn On PIN 5');
+
+
+      store.commit('filterCommandsToDisplay','On');
+      console.log("BBBBBBBBBBBBBBBBBBBB: " + JSON.stringify(store.state.filteredCommands));
+      expect(store.state.filteredCommands.length).to.equal(2);
+      console.log("----1");
+      expect(store.state.filteredCommands[0].command).to.equal('Turn On LED 1');
+      console.log("----1");
+      expect(store.state.filteredCommands[1].command).to.equal('Turn On PIN 5');
+      console.log("----1");
+
+      store.state.filteredCommands = [];
+
+    });
 
   it('setMaxCommandsPerPageTest', () => {
     store.commit('setMaxCommandsPerPage', 5);
@@ -1024,5 +1057,6 @@ it('setMaxDataStreamsPerPageTest', () => {
     expect(store.state.amountOfDataPointTriggers).to.equal(5);
     expect(store.state.amountOfPeriodicalTriggers).to.equal(1);
   });
+
 
 })

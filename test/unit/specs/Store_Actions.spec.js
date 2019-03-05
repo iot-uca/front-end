@@ -130,6 +130,7 @@ describe('Actions', () => {
 
         store.state.dataStreamsConfigured = [ {id: 0, name: 'Solar light in garden'}, {id: 1, name: 'Temperature inside the house'}, {id: 2, name: 'Temperature outside the house'}, {id: 3, name: 'Solar light in terrace'}, {id: 4, name: 'Rain Sensor'} ]
 
+
         store.dispatch('filterDataStreamToDisplay', 'Temperature')
 
         expect(store.state.filteredDataStreams.length).to.equals(2)

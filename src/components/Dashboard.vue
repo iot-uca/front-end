@@ -213,7 +213,7 @@
               <tbody>
               <tr v-for="dataStream in dataStreams" style="font-size: 0.8rem;">
                 <td>{{dataStream.name}}</td>
-                <td>type</td>
+                <td class="text-center">type</td>
                 <td class="text-center" >{{dataStream.current_value}}</td>
                 <td class="text-center">{{Math.floor(dataStream.not_updated_since)}} minutes</td>
                 <td><button class="btn btn-sm" data-toggle="modal" @click="showDataStream(dataStream); getDataPoints();" data-target="#dataPointsForStreamModal"><i class="fa fa-bar-chart text-center"></i></button></td>

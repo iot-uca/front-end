@@ -21,13 +21,13 @@
 
                 <ul class="nav nav-tabs" id="addTriggersTab" role="tablist">
                   <li class="nav-item">
-                    <a class="nav-link active" id="triggerActionConfig-tab" data-toggle="tab" href="#triggerActionConfig" role="tab" aria-controls="triggerActionConfig" aria-selected="true">Action config</a>
+                    <a class="nav-link active a-green" id="triggerActionConfig-tab" data-toggle="tab" href="#triggerActionConfig" role="tab" aria-controls="triggerActionConfig" aria-selected="true">Action config</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" id="triggerPolicy-tab" data-toggle="tab" href="#triggerPolicy" role="tab" aria-controls="triggerPolicy" aria-selected="false">Policy</a>
+                    <a class="nav-link a-green" id="triggerPolicy-tab" data-toggle="tab" href="#triggerPolicy" role="tab" aria-controls="triggerPolicy" aria-selected="false">Policy</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" id="triggerCondition-tab" data-toggle="tab" href="#triggerCondition" role="tab" aria-controls="triggerCondition" aria-selected="false">Condition</a>
+                    <a class="nav-link a-green" id="triggerCondition-tab" data-toggle="tab" href="#triggerCondition" role="tab" aria-controls="triggerCondition" aria-selected="false">Condition</a>
                   </li>
                 </ul>
 
@@ -75,7 +75,7 @@
                       </div>
                       <div class="col-md-6 mb-3">
                         <div class="custom-control custom-radio">
-                          <input id="timePer" name="timePer" type="radio" class="custom-control-input" :checked="isTimePeriodPolicy" @click="timePeriodPolicy()">
+                          <input id="timePer" name="timePer" type="radio" class="custom-control-input" :checked="isTimePeriodPolicy" @click="timePeriodPolicy()" style="background-color:#4AE387;">
                           <label class="custom-control-label" for="timePer">Time Period</label>
                         </div>
                       </div>
@@ -295,9 +295,10 @@
                     </div>
 
                     <div class="row" style="margin: inherit;">
-                      <button type="button" class="btn btn-primary btn-sm" @click="addNewCondition()" style="float: right;">Add condition</button>
+                      <button type="button" class="btn button-green btn-sm" @click="addNewCondition()" style="float: right;">Add condition</button>
                     </div>
 
+                    <br>
 
                     <!--ul class="list-group list-group-flush">
                       <li v-for="condition in conditionsForTrigger" class="list-group-item">{{condition}}</li>
@@ -312,7 +313,7 @@
               </div>
 
               <div class="modal-footer">
-                <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal"  @click="addTrigger(); hideModalForTriggerAdding();"><strong>Add trigger</strong></button>
+                <button type="button" class="btn button-green btn-sm" data-dismiss="modal"  @click="addTrigger(); hideModalForTriggerAdding();"><strong>Add trigger</strong></button>
               </div>
 
             </div>
@@ -475,6 +476,30 @@
 
 
 <style scoped>
+
+.a-green{
+  color:#4AE387;
+}
+
+.button-green{
+  background-color: #4AE387;
+  color: white;
+  font-family: Source Sans Pro, sans-serif;
+}
+
+.button-green-danger{
+  background-color: #87d37c;
+  color: white;
+  font-family: Source Sans Pro, sans-serif;
+}
+
+.button-green:hover{
+   background-color: #4AFF96;
+}
+
+.button-green-danger:hover{
+   background-color: #4AE387;
+}
 
 .modal-mask {
 position: fixed;

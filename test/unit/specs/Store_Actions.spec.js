@@ -143,6 +143,24 @@ describe('Actions', () => {
 
     });
 
+    it('filterDataStreamToDisplayFilterUndefinedTest', () => {
+
+        store.state.maxDataStreamsPerPage = 2;
+        store.state.currentPage = 1
+        store.state.dataStreamsForPage = []
+
+        store.state.dataStreamsConfigured = [ {id: 0, name: 'Solar light in garden'}, {id: 1, name: 'Temperature inside the house'}, {id: 2, name: 'Temperature outside the house'}, {id: 3, name: 'Solar light in terrace'}, {id: 4, name: 'Rain Sensor'} ]
+
+
+        store.dispatch('filterDataStreamToDisplay', undefined);
+
+        expect(store.state.filteredDataStreams.length).to.equals(5)
+        expect(store.state.pagesNeededForDataStreams).to.equals(3)
+        expect(store.state.maxDataStreamsPerPage).to.equal(2)
+        expect(store.state.currentPage).to.equal(1)
+
+    });
+
     it('openNavTest', () => {
         store.state.sideNavStyle.backgroundColor = "white";
         store.state.sideNavStyle.width = "0";

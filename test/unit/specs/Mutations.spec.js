@@ -634,6 +634,21 @@ it('setMaxDataStreamsPerPageTest', () => {
         expect(store.state.filteredActions.length).to.equal(0);
     });
 
+    it('filterActionsToDisplayWithFilterUndefined', () => {
+
+        let existingActions = [
+          {id: 1, name: 'Tweet', http_request:{ request_line: { method:'POST', url:'https://twitter.com', version:'1.1'}, body:"{\"foo\":\"bar\", \"jane\":\"doe\"}", headers:[{key:'security-key', value:'f78r3d'}, {key:'email', value:'jnahas@foor.bar'}]}},
+          {id: 2, name: 'Make Facebook Post', http_request:{ request_line: { method:'POST', url:'https://facebook.com', version:'1.1'}, body:"{\"foo\":\"bar\", \"jane\":\"doe\"}", headers:[{key:'security-key', value:'f78r3d'}, {key:'email', value:'jnahas@foor.bar'}]}},
+          {id: 3, name: 'Send Email',  http_request:{ request_line: { method:'POST', url:'https://gmail.com', version:'1.1'}, body:"{\"foo\":\"bar\", \"jane\":\"doe\"}", headers:[{key:'security-key', value:'f78r3d'}, {key:'email', value:'jnahas@foor.bar'}]}},
+          {id: 4, name: 'Start Engine Alfa',  http_request:{ request_line: { method:'POST', url:'http://device1.com', version:'1.1'}, body:"{\"foo\":\"bar\", \"jane\":\"doe\"}", headers:[{key:'security-key', value:'f78r3d'}, {key:'email', value:'jnahas@foor.bar'}]}},
+          {id: 5, name: 'Sense Temperature',  http_request:{ request_line: { method:'GET', url:'http://device2.com', version:'1.1'}, body:"{\"foo\":\"bar\", \"jane\":\"doe\"}", headers:[{key:'security-key', value:'f78r3d'}, {key:'email', value:'jnahas@foor.bar'}]}}
+        ];
+
+        store.state.existingActions = existingActions;
+        store.commit('filterActionsToDisplay', undefined);
+        expect(store.state.filteredActions.length).to.equal(5);
+    });
+
     it('testFilterTriggersToDisplayWhenHavingTriggers', () => {
 
         let existingTriggers = [
@@ -653,6 +668,23 @@ it('setMaxDataStreamsPerPageTest', () => {
         expect(store.state.filteredTriggers[0].action).to.equal('Send Email');
     });
 
+    it('testFilterTriggersToDisplayWhenFilterUndefined', () => {
+
+        let existingTriggers = [
+              {name: 'Trigger1', action: 'Tweet', policy: {type: 'on_data_point_registration', data_stream: 'Temperature'}, conditions: [{type:"data_stream_current_value",data_stream:"DataStream2", condition:{"operator":"<","value":55}}]},
+              {name: 'Trigger2', action: 'Make Facebook Post', policy: {type: 'on_data_point_registration',	data_stream: 'Temperature' }, condition: []},
+              {name: 'Trigger3', action: 'Send Email', policy: {type: 'on_data_point_registration', data_stream: 'Temperature'}, condition: [{"type":"data_stream_current_value","data_stream":"DataStream2","condition":{"operator":"<","value":55}}]},
+              {name: 'Trigger4', action: 'Start Engine Alfa', policy: {type:'on_data_point_registration', data_stream: 'Temperature'}, condition: []},
+              {name: 'Trigger5', action: 'Sense Temperature', policy: {type: 'periodical', time_interval: '10 minutes' }, condition: []},
+              {name: 'Trigger6', action: 'Start Engine Alfa', policy: {type: 'on_data_point_registration', data_stream: 'Temperature'}, condition: [{"type":"data_stream_current_value","data_stream":"DataStream2","condition":{"operator":"<","value":55}}]},
+            ];
+
+        store.state.existingTriggers = existingTriggers;
+        store.commit('filterTriggersToDisplay', undefined);
+
+        expect(store.state.filteredTriggers.length).to.equal(6);
+    });
+
 
     it('testFilterCommandsToDisplayWhenHavingCommands', () => {
 
@@ -668,6 +700,21 @@ it('setMaxDataStreamsPerPageTest', () => {
         expect(store.state.filteredCommands.length).to.equal(1);
         expect(store.state.filteredCommands[0].command).to.equal('Turn Off LED 1');
         expect(store.state.filteredCommands[0].priority).to.equal('23');
+    });
+
+
+    it('testFilterCommandsToDisplayWhenFilterIsUndefined', () => {
+
+            let existingCommands = [
+                  {command: 'Turn On LED 1', priority: '100'},
+                  {command: 'Turn Off LED 1', priority: '23'},
+                  {command: 'Turn On PIN 5',priority: '56'},
+                ];
+
+            store.state.existingCommands = existingCommands;
+            store.commit('filterCommandsToDisplay', undefined);
+
+            expect(store.state.filteredCommands.length).to.equal(3);
     });
 
     it('testFilteringAnAlreadyFilteredElementDoesNotAddItAgain', () => {
@@ -1058,5 +1105,37 @@ it('setMaxDataStreamsPerPageTest', () => {
     expect(store.state.amountOfPeriodicalTriggers).to.equal(1);
   });
 
+
+  it('testGetNextCommandsInQueue', () => {
+
+    let existingCommands = [
+          {command: 'Turn On LED 1', priority: '100'},
+          {command: 'Turn On PIN 5',priority: '56'},
+          {command: 'Turn Off LED 1', priority: '23'},
+        ];
+    let response = {data: existingCommands};
+    store.commit('getNextCommandsInQueue', response);
+    expect(store.state.existingCommandsPrioritized.length).to.equal(3);
+  });
+
+
+  it('testGetNextCommandsInQueue', () => {
+    let customDate = new Date(999999999999);
+    //Sat Sep 08 2001 22:46:39 GMT-0300 (-03)
+    //Sun Sep 09 2001 01:46:39 UTC
+
+    store.state.dataStreamsConfigured = [
+      {name:'DataStream1',current_value:'N/A',last_update:'N/A',links:{data_points:'http://localhost:8090/data-streams/39fef8d1-2a41-0d00-bcf5-f2750dff89b3/data-points', self:'http://localhost:8090/data-streams/39fef8d1-2a41-0d00-bcf5-f2750dff89b3'}},
+      {name:'DataStream2',current_value:65, last_update:'2001-09-08T21:00:41Z', links:{ data_points:'http://localhost:8090/data-streams/9eb98dd3-2a41-0d00-bcf6-f0660dff89b3/data-points', self :'http://localhost:8090/data-streams/9eb98dd3-2a41-0d00-bcf6-f0660dff89b3'}},
+      {name:'DataStream3',current_value:77, last_update :'2001-09-08T21:00:35Z', links :{ data_points :'http://localhost:8090/data-streams/265ee7d3-2a41-0d00-bcf7-d9150dff89b3/data-points',self:'http://localhost:8090/data-streams/265ee7d3-2a41-0d00-bcf7-d9150dff89b3'}}
+    ]
+
+    store.commit('determineUpdateTimeForStreams', customDate);
+
+    expect(store.state.dataStreamsConfigured[1].not_updated_since).to.equals(285.98331666666667);
+    expect(store.state.dataStreamsConfigured[2].not_updated_since).to.equals(286.0833166666667);
+    expect(store.state.mostRecentlyUpdatedStreams.length).to.equals(2);
+
+  });
 
 })

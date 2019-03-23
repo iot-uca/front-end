@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex'
 import axios from 'axios'
+import moment from 'moment'
 import Chart from 'chart.js';
 
 import { addElementToFilteredOnes, getPagesNeeded, getElementsToShowInTable, addCommandToFilteredOnes} from './store-helpers'
@@ -1604,15 +1605,14 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
     },
 
-    determineUpdateTimeForStreams: state => {
+    determineUpdateTimeForStreams: (state, instant) => {
       console.log("### Entering determineUpdateTimeForStreams!!");
+      console.log("instant: " + instant);
       state.mostRecentlyUpdatedStreams=[];
 
       let amountOfStreams = state.dataStreamsConfigured.length;
       console.log("dataStreamsConfigured: " + JSON.stringify(state.dataStreamsConfigured));
 
-      let instant = new Date();
-      console.log("instant: " + instant);
       console.log("TimezoneOffset: " + instant.getTimezoneOffset()); // negative value means ahead, positive behind UTC
 
       let milisFromTimezone = instant.getTimezoneOffset()*60000;
@@ -2432,7 +2432,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     determineMostRecentlyUpdatedStreams: context => {
-      context.commit('determineUpdateTimeForStreams');
+      context.commit('determineUpdateTimeForStreams', new Date());
       context.commit('determineMostRecentlyUpdatedStreams');
     },
 

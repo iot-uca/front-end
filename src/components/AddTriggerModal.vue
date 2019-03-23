@@ -38,9 +38,6 @@
                     <div class="mb-3">
                       <label for="triggerName">Name</label>
                       <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text"><i class="fa fa-font"></i></span>
-                        </div>
                         <input type="text" class="form-control" id="triggerName" placeholder="Trigger Name" required="true" v-model="activeTrigger.name">
                         <div class="invalid-feedback" style="width: 100%;">
                           The Trigger name is required.
@@ -51,9 +48,6 @@
                     <div class="mb-3">
                       <label for="triggerAction">Action associated</label>
                       <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text"><i class="fa fa-star-o"></i></span>
-                        </div>
                         <select class="form-control custom-select" id="triggerAction" placeholder="" required="true" v-model="activeTrigger.action">
                           <option v-for="(action, index) in existingActions" :value="action.name">{{action.name}}</option>
                         </select>
@@ -86,9 +80,6 @@
                       <div class="mb-3">
                         <label for="triggerName">Granularity</label>
                         <div class="input-group">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fa fa-calendar-plus-o"></i></span>
-                          </div>
                           <select class="form-control custom-select" id="timeGranularity" required="true" v-model="activeTrigger.timePeriod.granularity">
                             <option v-for="opt in timeGranularityOptions" :value="opt.name">{{opt.name}}</option>
                           </select>
@@ -102,9 +93,6 @@
                       <div class="mb-3">
                         <label for="dsName">From Data Stream</label>
                         <div class="input-group">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fa fa-diamond"></i></span>
-                          </div>
                           <select class="form-control custom-select" id="dsName" placeholder="" required="true" v-model="activeTrigger.dataPointRegistration.dataStream">
                             <option v-for="dS in dataStreamsConfigured" :value="dS.name">{{dS.name}}</option>
                           </select>
@@ -120,9 +108,6 @@
                     <br>
                     <div class="mb-3">
                       <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text"><i class="fa fa-exclamation"></i></span>
-                        </div>
                         <select class="form-control custom-select" id="days" placeholder="" required="true" v-model="conditionSelected">
                           <option v-for="condition in triggerConditions" v-bind:value="{ id: condition.id, text: condition.name }">{{ condition.label }}</option>
                         </select>
@@ -135,9 +120,6 @@
                     <!--div class="mb-3" v-if="conditionSelected.id==2">
                       <label for="dataStreamName">From Data Stream</label>
                       <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text"><i class="fa fa-diamond"></i></span>
-                        </div>
                         <select class="form-control custom-select" id="dataStreamName" placeholder="" required="true">
                           <option v-for="dS in dataStreamsConfigured" value="dS.name" v-model="onDataStreamValueCondition.dataStream">{{dS.name}}</option>
                         </select>
@@ -154,9 +136,6 @@
                         <div class="col-md-7 mb-3">
                           <label for="dataStreamName">From Data Stream</label>
                           <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-diamond"></i></span>
-                            </div>
                             <select class="form-control custom-select" id="dataStreamName" v-model="dataStreamValue">
                               <option v-for="dS in dataStreamsConfigured" :id="dS.name" :value="dS.name">{{dS.name}}</option>
                               <!--option v-for="dS in dataStreamsConfigured" value="dS.name">{{dS.name}}</option-->
@@ -199,9 +178,6 @@
                     <div class="mb-3" v-if="conditionSelected.id==3">
                       <label for="dataStreamName">From Data Stream</label>
                       <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text"><i class="fa fa-diamond"></i></span>
-                        </div>
                         <select class="form-control custom-select" id="dataStreamNameNotUpdated" v-model="dataStreamNotUpdated">
                           <option v-for="dS in dataStreamsConfigured" :value="dS.name">{{dS.name}}</option>
                         </select>

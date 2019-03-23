@@ -40,9 +40,6 @@
                   <div class="mb-3">
                     <label for="actionName">Name</label>
                     <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fa fa-font"></i></span>
-                      </div>
                       <input type="text" class="form-control" id="actionName" placeholder="Action Name" v-model="activeAction.name" required="true">
                       <div class="invalid-feedback" style="width: 100%;">
                         The Action name is required.
@@ -57,9 +54,6 @@
                   <div class="mb-3">
                     <label for="httpMethod">Method</label>
                     <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fa fa-star-o"></i></span>
-                      </div>
                       <select class="form-control custom-select" id="httpMethod" v-model="activeAction.method" required="true">
                         <option v-for="(method, index) in existingHttpMethods" v-bind:value="method.name">
                           {{method.name}}
@@ -74,22 +68,13 @@
                   <div class="mb-3">
                     <label for="actionUrl">URL</label>
                     <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fa fa-external-link"></i></span>
-                      </div>
-                      <input type="url" class="form-control" id="actionUrl" placeholder="http://foo" v-model="activeAction.url" required="true">
-                      <div class="invalid-feedback" style="width: 100%;">
-                        The Action name is required.
-                      </div>
+                      <input type="url" class="form-control" id="actionUrl" placeholder="http://foo" v-model="activeAction.url">
                     </div>
                   </div>
 
                   <div class="mb-3">
                     <label for="actionVersion">Version</label>
                     <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fa fa-code"></i></span>
-                      </div>
 
                       <select class="form-control custom-select" id="actionVersion" v-model="activeAction.version" required="true">
                         <option v-for="(version, index) in existingHttpVersions" v-bind:value="version.name">
@@ -109,9 +94,6 @@
                   <div class="mb-3">
                     <label for="actionBodyAdd">Body</label>
                     <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fa fa-code"></i></span>
-                      </div>
                       <textarea class="form-control" aria-label="Request body" v-model="actionBody"></textarea>
                     </div>
                   </div>
@@ -142,9 +124,6 @@
                     <div class="col-md-5">
                       <div class="mb-3">
                         <div class="input-group">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fa fa-key"></i></span>
-                          </div>
                           <input type="text" class="form-control" v-model="elem.key" placeholder="Parameter key" required="true">
                           <div class="invalid-feedback" style="width: 100%;">
                             The Action name is required.
@@ -156,9 +135,6 @@
                     <div class="col-md-6">
                       <div class="mb-3">
                         <div class="input-group">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fa fa-pencil-square-o"></i></span>
-                          </div>
                           <input type="text" class="form-control" v-model="elem.value" placeholder="Parameter value" required="true">
                           <div class="invalid-feedback" style="width: 100%;">
                             The Action name is required.
@@ -233,9 +209,6 @@
               <div class="mb-3">
                 <label for="actionName">Name</label>
                 <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fa fa-font"></i></span>
-                  </div>
                   <input type="text" class="form-control" id="actionName" placeholder="Action Name" v-model="activeAction.name" required="true">
                   <div class="invalid-feedback" style="width: 100%;">
                     The Action name is required.
@@ -250,9 +223,6 @@
               <div class="mb-3">
                 <label for="httpMethod">Method</label>
                 <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fa fa-star-o"></i></span>
-                  </div>
                   <select class="form-control custom-select" id="httpMethod" v-model="activeAction.method" required="true">
                     <option v-for="(method, index) in existingHttpMethods" v-bind:value="method.name">
                       {{method.name}}
@@ -267,22 +237,13 @@
               <div class="mb-3">
                 <label for="actionUrl">URL</label>
                 <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fa fa-external-link"></i></span>
-                  </div>
-                  <input type="url" class="form-control" id="actionUrl" placeholder="http://foo" v-model="activeAction.url" required="true">
-                  <div class="invalid-feedback" style="width: 100%;">
-                    The Action name is required.
-                  </div>
+                  <input type="url" class="form-control" id="actionUrl" placeholder="http://foo" v-model="activeAction.url">
                 </div>
               </div>
 
               <div class="mb-3">
                 <label for="actionVersion">Version</label>
                 <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fa fa-code"></i></span>
-                  </div>
 
                   <select class="form-control custom-select" id="actionVersion" v-model="activeAction.version" required="true">
                     <option v-for="(version, index) in existingHttpVersions" v-bind:value="version.name">
@@ -302,9 +263,7 @@
               <div class="mb-3">
                 <label for="actionBodyAdd">Body</label>
                 <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fa fa-code"></i></span>
-                  </div>
+
                   <textarea class="form-control" aria-label="Request body" v-model="actionBody"></textarea>
                 </div>
               </div>
@@ -335,9 +294,7 @@
                 <div class="col-md-5">
                   <div class="mb-3">
                     <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fa fa-key"></i></span>
-                      </div>
+
                       <input type="text" class="form-control" v-model="elem.key" placeholder="Parameter key" required="true">
                       <div class="invalid-feedback" style="width: 100%;">
                         The Action name is required.
@@ -349,9 +306,6 @@
                 <div class="col-md-6">
                   <div class="mb-3">
                     <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fa fa-pencil-square-o"></i></span>
-                      </div>
                       <input type="text" class="form-control" v-model="elem.value" placeholder="Parameter value" required="true">
                       <div class="invalid-feedback" style="width: 100%;">
                         The Action name is required.

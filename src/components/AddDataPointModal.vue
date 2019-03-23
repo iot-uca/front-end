@@ -27,9 +27,6 @@
                   <div class="mb-3">
                     <label for="dataPointValue">Value</label>
                     <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fa fa-font"></i></span>
-                      </div>
                       <input type="number" class="form-control" id="dataPointValue" v-model="dataPointToAdd" required="true">
                       <div class="invalid-feedback" style="width: 100%;">
                         <em>The data point cannot be empty</em>

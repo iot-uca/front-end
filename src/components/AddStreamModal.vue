@@ -24,9 +24,6 @@
                   <div class="mb-3">
                     <label for="streamName">Name</label>
                     <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fa fa-font"></i></span>
-                      </div>
                       <input type="text" class="form-control" id="streamName" v-model="dataStreamToAdd" required="true">
                       <div class="invalid-feedback" style="width: 100%;">
                         <em>The Stream name cannot be empty</em>

@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex'
 import axios from 'axios'
-import moment from 'moment'
+import moment from 'moment';
 import Chart from 'chart.js';
 
 import { addElementToFilteredOnes, getPagesNeeded, getElementsToShowInTable, addCommandToFilteredOnes} from './store-helpers'

@@ -666,6 +666,11 @@ it('setMaxDataStreamsPerPageTest', () => {
         expect(store.state.filteredTriggers.length).to.equal(1);
         expect(store.state.filteredTriggers[0].name).to.equal('Trigger3');
         expect(store.state.filteredTriggers[0].action).to.equal('Send Email');
+
+        store.state.existingTriggers = existingTriggers;
+        store.commit('filterTriggersToDisplay','BLABLA');
+        expect(store.state.filteredTriggers.length).to.equal(0);
+
     });
 
     it('testFilterTriggersToDisplayWhenFilterUndefined', () => {

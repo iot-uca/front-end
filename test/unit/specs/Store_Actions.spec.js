@@ -131,16 +131,27 @@ describe('Actions', () => {
         store.state.dataStreamsConfigured = [ {id: 0, name: 'Solar light in garden'}, {id: 1, name: 'Temperature inside the house'}, {id: 2, name: 'Temperature outside the house'}, {id: 3, name: 'Solar light in terrace'}, {id: 4, name: 'Rain Sensor'} ]
 
 
-        store.dispatch('filterDataStreamToDisplay', 'Temperature')
+        store.dispatch('filterDataStreamToDisplay', 'Temperat')
 
         expect(store.state.filteredDataStreams.length).to.equals(2)
         expect(store.state.filteredDataStreams[0].name).to.equals('Temperature inside the house')
         expect(store.state.filteredDataStreams[1].name).to.equals('Temperature outside the house')
-
         expect(store.state.pagesNeededForDataStreams).to.equals(1)
         expect(store.state.maxDataStreamsPerPage).to.equal(2)
         expect(store.state.currentPage).to.equal(1)
 
+        store.dispatch('filterDataStreamToDisplay', 'Temperatu')
+
+        expect(store.state.filteredDataStreams.length).to.equals(2)
+        expect(store.state.filteredDataStreams[0].name).to.equals('Temperature inside the house')
+        expect(store.state.filteredDataStreams[1].name).to.equals('Temperature outside the house')
+        expect(store.state.pagesNeededForDataStreams).to.equals(1)
+        expect(store.state.maxDataStreamsPerPage).to.equal(2)
+        expect(store.state.currentPage).to.equal(1)
+
+        store.dispatch('filterDataStreamToDisplay', 'BLABLABLA')
+
+        expect(store.state.filteredDataStreams.length).to.equals(0)
     });
 
     it('filterDataStreamToDisplayFilterUndefinedTest', () => {
@@ -602,11 +613,17 @@ describe('Actions', () => {
       store.state.currentPage = 1;
       store.state.maxCommandsPerPage = 1;
       store.state.existingCommands = existingCommands;
-      store.state.existingCommands = existingCommands;
+
+      store.dispatch('filterCommandsToDisplay', 'PI');
+      expect(store.state.commandsForPage.length).to.equal(1);
+      expect(store.state.commandsForPage[0].command).to.equal('Turn On PIN 5');
 
       store.dispatch('filterCommandsToDisplay', 'PIN');
       expect(store.state.commandsForPage.length).to.equal(1);
       expect(store.state.commandsForPage[0].command).to.equal('Turn On PIN 5');
+
+      store.dispatch('filterCommandsToDisplay', 'BLABLA');
+      expect(store.state.commandsForPage.length).to.equal(0);
 
     });
 

@@ -289,6 +289,43 @@ describe('mocking axios requests', function () {
 
   });
 
+/*
+  it('POST /data-points', function (done) {
+    store.state.activeDataStream = {name: 'Data Stream 1'};
+    store.state.dataPointToAdd = '77';
+
+    moxios.withMock(function () {
+      let onFulfilled = sinon.spy()
+
+      store.dispatch('addDataPoint', 'http://localhost:2232').then(onFulfilled)
+
+      moxios.wait(function () {
+        let request = moxios.requests.mostRecent()
+        request.respondWith({
+          status: 200,
+          statusText: 'OK',
+          response: [ ]
+        }).then(function () {
+          equal(onFulfilled.called, true)
+          console.log("LALALALALALALALALAA 1 ");
+          expect(store.state.displayLoadingFeedback).to.equal(false)
+          console.log("LALALALALALALALALAA 1 ");
+          expect(store.state.errorInInteraction).to.equal(false)
+          console.log("LALALALALALALALALAA 1 ");
+          expect(store.state.showModalForRequestResult).to.equal(true)
+          console.log("LALALALALALALALALAA 1 ");
+          expect(store.state.dataStreamToAdd).to.equal('')
+          console.log("LALALALALALALALALAA : " + JSON.stringify(store.state.successMessage));
+          expect(store.state.successMessage).to.equal(77 +'registered successfully on Data Stream 1')
+          done()
+        })
+      })
+    })
+
+  });*/
+
+
+
 
 
 

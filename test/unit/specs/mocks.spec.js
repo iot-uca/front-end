@@ -171,6 +171,39 @@ describe('mocking axios requests', function () {
 
   });
 
+  it('GET /commands?order=priority', function (done) {
+
+    moxios.withMock(function () {
+      let onFulfilled = sinon.spy()
+
+      store.dispatch('getNextCommandsInQueue', 'http://localhost:1111').then(onFulfilled)
+
+      moxios.wait(function () {
+        let request = moxios.requests.mostRecent()
+        request.respondWith({
+          status: 200,
+          statusText: 'OK',
+          response: [
+            {command: 'Turn On LED 1', priority: '100'},
+            {command: 'Turn Off LED 1', priority: '56'},
+            {command: 'Turn On PIN 5',priority: '23'}
+          ]
+        }).then(function () {
+          equal(onFulfilled.called, true)
+          expect(store.state.existingCommandsPrioritized.length).to.equal(3)
+          expect(store.state.existingCommandsPrioritized[0].command).to.equal('Turn On LED 1')
+          expect(store.state.existingCommandsPrioritized[0].priority).to.equal('100')
+          expect(store.state.existingCommandsPrioritized[1].command).to.equal('Turn Off LED 1')
+          expect(store.state.existingCommandsPrioritized[1].priority).to.equal('56')
+          expect(store.state.existingCommandsPrioritized[2].command).to.equal('Turn On PIN 5')
+          expect(store.state.existingCommandsPrioritized[2].priority).to.equal('23')
+          done()
+        })
+      })
+    })
+
+  });
+
 
 
   it('POST /data-streams', function (done) {
@@ -288,46 +321,36 @@ describe('mocking axios requests', function () {
     })
 
   });
-
 /*
   it('POST /data-points', function (done) {
+    console.log("CARAAJO!############");
     store.state.activeDataStream = {name: 'Data Stream 1'};
     store.state.dataPointToAdd = '77';
 
     moxios.withMock(function () {
       let onFulfilled = sinon.spy()
 
-      store.dispatch('addDataPoint', 'http://localhost:2232').then(onFulfilled)
+      store.dispatch('addDataPoint', 'http://localhost:1111').then(onFulfilled)
 
       moxios.wait(function () {
         let request = moxios.requests.mostRecent()
         request.respondWith({
           status: 200,
           statusText: 'OK',
-          response: [ ]
+          response: []
         }).then(function () {
           equal(onFulfilled.called, true)
-          console.log("LALALALALALALALALAA 1 ");
           expect(store.state.displayLoadingFeedback).to.equal(false)
-          console.log("LALALALALALALALALAA 1 ");
           expect(store.state.errorInInteraction).to.equal(false)
-          console.log("LALALALALALALALALAA 1 ");
           expect(store.state.showModalForRequestResult).to.equal(true)
-          console.log("LALALALALALALALALAA 1 ");
           expect(store.state.dataStreamToAdd).to.equal('')
-          console.log("LALALALALALALALALAA : " + JSON.stringify(store.state.successMessage));
           expect(store.state.successMessage).to.equal(77 +'registered successfully on Data Stream 1')
           done()
         })
       })
     })
-
-  });*/
-
-
-
-
-
+  });
+*/
 
   it('DELETE /something', function (done) {
     console.log('DELETE /something');

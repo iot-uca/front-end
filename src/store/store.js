@@ -2431,8 +2431,8 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       context.commit('getLabelsForDataPointsChart');
     },
 
-    determineMostRecentlyUpdatedStreams: context => {
-      context.commit('determineUpdateTimeForStreams', new Date());
+    determineMostRecentlyUpdatedStreams: (context, now) => {
+      context.commit('determineUpdateTimeForStreams', now);
       context.commit('determineMostRecentlyUpdatedStreams');
     },
 

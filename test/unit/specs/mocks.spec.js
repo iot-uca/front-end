@@ -159,8 +159,6 @@ describe('mocking axios requests', function () {
         }).then(function () {
           equal(onFulfilled.called, true)
           expect(store.state.dataPointsAvailables.length).to.equal(3)
-          console.log("TU_VIEEEEEEEEEEEJA");
-          console.log(JSON.stringify(store.state.dataPointsAvailables))
           expect(store.state.dataPointsAvailables[0]).to.equal("1")
           expect(store.state.dataPointsAvailables[1]).to.equal("4")
           expect(store.state.dataPointsAvailables[2]).to.equal("11")
@@ -170,6 +168,36 @@ describe('mocking axios requests', function () {
     })
 
   });
+
+
+  it('GET /data-points with error', function (done) {
+    console.log("GET /data-points with error");
+
+    moxios.withMock(function () {
+      let onFulfilled = sinon.spy()
+
+      store.state.activeDataStream = {links:{data_points: 'http://localhost:1111'}};
+
+      store.dispatch('getDataPoints').then(onFulfilled)
+
+      moxios.wait(function () {
+        let request = moxios.requests.mostRecent()
+        request.respondWith({
+          status: 500,
+          statusText: 'Internal Server Error',
+          response: []
+        }).then(function () {
+          equal(onFulfilled.called, true)
+          expect(store.state.displayLoadingFeedback).to.equal(false)
+          expect(store.state.elementsToDelete.length).to.equal(0)
+          done()
+        })
+      })
+    })
+
+  });
+
+  
 
   it('GET /commands?order=priority', function (done) {
 

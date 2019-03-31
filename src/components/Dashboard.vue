@@ -240,7 +240,7 @@ export default {
   mounted(){
     this.$store.dispatch('showDashboardView');
     this.$store.dispatch('getNextCommandsInQueue', this.$store.state.backendEndPoint);
-    this.determineMostRecentlyUpdatedStreams();
+    this.determineMostRecentlyUpdatedStreams(new Date());
     this.drawCharts();
 
   },
@@ -275,7 +275,7 @@ export default {
       this.$store.dispatch('getDataPoints');
     },
     determineMostRecentlyUpdatedStreams: function () {
-      this.$store.dispatch('determineMostRecentlyUpdatedStreams');
+      this.$store.dispatch('determineMostRecentlyUpdatedStreams', new Date());
     },
   }
 }

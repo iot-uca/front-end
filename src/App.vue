@@ -1,7 +1,6 @@
 <template>
   <div id="app" class="bg-light" v-cloak>
 
-    <!--cosmos-header></cosmos-header-->
     <burguer-menu></burguer-menu>
     <add-stream-modal></add-stream-modal>
     <edit-stream-modal></edit-stream-modal>
@@ -22,14 +21,6 @@
 
     <router-view></router-view>
 
-    <!--spinner></spinner-->
-
-    <!--dashboard></dashboard>
-    <data-stream-view></data-stream-view>
-    <action-view></action-view>
-    <trigger-view></trigger-view>
-    <security-view></security-view-->
-
     <add-data-point-modal></add-data-point-modal>
 
 
@@ -46,7 +37,6 @@
 
 <script>
   import BurguerMenu from './components/BurguerMenu.vue'
-  import Header from './components/Header.vue'
   import SecurityView from './components/SecurityView.vue'
   import AddStreamModal from './components/AddStreamModal.vue'
   import Dashboard from './components/Dashboard.vue'
@@ -72,9 +62,6 @@
 
   name: 'App',
     components: {
-
-      //'spinner' : Spinner,
-      //'about-view':AboutView,
       'status-modal' : SuccessFailureModal,
       'add-trigger-modal': AddTriggerModal,
       'edit-action-modal': EditActionModal,
@@ -83,14 +70,10 @@
       'data-points-modal': DataPointsModal,
       'remove-elements-modal': RemoveElementsModal,
       'edit-stream-modal' : EditStreamModal,
-      //'trigger-view': TriggerView,
-      //'action-view': ActionView,
       'dashboard': Dashboard,
       'add-stream-modal': AddStreamModal,
       'show-trigger-modal': ShowTriggerModal,
-      //'data-stream-view': DataStreamView,
       'security-view': SecurityView,
-      'cosmos-header': Header,
       'burguer-menu': BurguerMenu,
       'add-command-modal' : AddCommandModal,
       'add-data-point-modal': AddDataPointModal,

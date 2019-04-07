@@ -46,7 +46,6 @@
 
 <script>
   import BurguerMenu from './components/BurguerMenu.vue'
-  import Sarasa from './components/Sarasa.vue'
   import Header from './components/Header.vue'
   import SecurityView from './components/SecurityView.vue'
   import AddStreamModal from './components/AddStreamModal.vue'
@@ -95,7 +94,6 @@
       'burguer-menu': BurguerMenu,
       'add-command-modal' : AddCommandModal,
       'add-data-point-modal': AddDataPointModal,
-      'sara-sa': Sarasa
   },
   mounted () {
 
@@ -135,4 +133,5 @@
   #app {
     font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
   }
+
 </style>

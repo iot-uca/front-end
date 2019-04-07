@@ -249,4 +249,9 @@ export default {
    background-color: #4AFF96;
 }
 
+.pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover {
+    background-color: #4AFF82;
+    border-color: #4AFF82;
+  }
+
 </style>

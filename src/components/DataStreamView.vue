@@ -120,7 +120,7 @@
             <!--     Table pagination     -->
             <nav aria-label="Page navigation data streams">
               <ul class="pagination justify-content-end">
-                <li v-bind:class="[getCurrentPage() > 1 ? 'page-item': 'page-item disabled']">
+                <li v-bind:class="[getCurrentPage() > 1 ? 'page-item': 'page-item disabled']" >
                   <a @click="displayPrevPage()" class="page-link" href="#" tabindex="-1">Previous</a>
                 </li>
                 <li v-for="number in getPagesNeededForDataStreams()" v-bind:class="[getCurrentPage() === number ? 'page-item active': 'page-item']" @click="getElementsToShowInTable(number)"><a class="page-link" href="#">{{number}}</a></li>
@@ -309,5 +309,10 @@
   .button-green:hover{
      background-color: #4AFF96;
   }
+
+  .pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover {
+      background-color: #4AFF82;
+      border-color: #4AFF82;
+    }
 
 </style>

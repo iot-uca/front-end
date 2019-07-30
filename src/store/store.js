@@ -22,7 +22,8 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 //##########################################################################################
 
     //backendEndPoint: "http://192.168.99.100:8090",
-    backendEndPoint: "http://localhost:8090",
+    //backendEndPoint: "http://localhost:8090",
+    backendEndPoint: process.env.COSMOS_LOCATION,
 
 //##########################################################################################
 // Error Handling

@@ -109,7 +109,7 @@
           </tbody>
         </table>
 
-        <div v-if="dataStreamsForPage.length>0" class="row">
+        <div v-if="dataStreamsForPage.length>0" class="row" id="footer">
           <br>
           <p></p>
           <br>

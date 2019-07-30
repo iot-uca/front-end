@@ -7,7 +7,6 @@ describe('Mutations', () => {
 
     before(function () {
       // runs before all tests in this block
-      console.log("#### BEFORE ALL #####");
       var body = document.getElementsByTagName("body")[0];
       var canvasForFirstChart = document.createElement("canvas");
       canvasForFirstChart.id = 'line-chart';
@@ -38,33 +37,15 @@ describe('Mutations', () => {
       body.appendChild(canvasForThirdChart);
       body.appendChild(canvasForFourthChart);
 
-      console.log("#### BEFORE ALL #####");
     });
-
 
   it('increase options should increase options in 1', () => {
 
     store.state.options = [ {name: 'uno', value: 2}, {name: 'uno', value: 3} ]
-    console.log("dddd: " + store.state.options[0].name)
-    console.log("dddd: " + store.state.options[0].value)
     store.commit('increaseOptions')
     expect(store.state.options[0].value).to.equal(3)
       expect(store.state.options[1].value).to.equal(4)
   });
-
-
-/*  it('showDashboardView should only show dashboard view', () => {
-
-    store.commit('showDashboardView')
-
-    expect(store.state.renderDashboardView).to.equal(true)
-    expect(store.state.renderDataStreamView).to.equal(false)
-    expect(store.state.renderActionAddView).to.equal(false)
-    expect(store.state.renderTriggerAddView).to.equal(false)
-    expect(store.state.renderSecurityView).to.equal(false)
-    expect(store.state.renderAboutView).to.equal(false)
-  });*/
-
 
 
   it('showDataStreamView should only show data streams view', () => {
@@ -387,7 +368,7 @@ it('setMaxDataStreamsPerPageTest', () => {
 
         expect(store.state.activeIdsForHttpRequestHeader.length).to.equals(1)
         expect(store.state.activeIdsForHttpRequestHeader[0].key).to.equals('name')
-         expect(store.state.activeIdsForHttpRequestHeader[0].value).to.equals('john')
+        expect(store.state.activeIdsForHttpRequestHeader[0].value).to.equals('john')
         expect(store.state.activeIdsForHttpRequestBody).to.equals('{"foo":"bar", "jane":"doe"}')
 
     });
@@ -415,7 +396,7 @@ it('setMaxDataStreamsPerPageTest', () => {
 
 
   it('editTriggerTest', () => {
-       let trigger = { name: 'Trigger1', action : 'Tweet', policy: {type: 'data_point_registration', elem: 'Temperature'}, conditions: ['Temperature current value > 24 Celsius', 'Temperature current value > 24 Celsius', 'Time interval' ]}
+      let trigger = { name: 'Trigger1', action : 'Tweet', policy: {type: 'data_point_registration', elem: 'Temperature'}, conditions: ['Temperature current value > 24 Celsius', 'Temperature current value > 24 Celsius', 'Time interval' ]}
 
        store.commit('editTrigger', trigger)
        expect(store.state.activeTrigger).to.equals(trigger)
@@ -583,11 +564,10 @@ it('setMaxDataStreamsPerPageTest', () => {
         store.commit('addNewCondition')
         expect(store.state.conditionsForTrigger.length).to.equals(3)
         expect(store.state.conditionsForTrigger[2].type).to.equals('Time interval')
-        expect(store.state.conditionsForTrigger[2].from).to.equals('01:23:00')
-        expect(store.state.conditionsForTrigger[2].to).to.equals('07:10:00')
+        expect(store.state.conditionsForTrigger[2].time_interval.start).to.equals('01:23')
+        expect(store.state.conditionsForTrigger[2].time_interval.stop).to.equals('07:10')
         expect(store.state.conditionsCounter).to.equals(4)
     });
-
 
 
     it('showCommandView should only check commands view', () => {
@@ -724,8 +704,6 @@ it('setMaxDataStreamsPerPageTest', () => {
 
     it('testFilteringAnAlreadyFilteredElementDoesNotAddItAgain', () => {
 
-      console.log("testFilteringAnAlreadyFilteredElementDoesNotAddItAgain");
-
       let existingCommands = [
             {command: 'Turn On LED 1', priority: '100'},
             {command: 'Turn Off LED 1', priority: '23'},
@@ -735,8 +713,6 @@ it('setMaxDataStreamsPerPageTest', () => {
       store.state.existingCommands = existingCommands;
       store.commit('filterCommandsToDisplay','O');
 
-      console.log("AJJJJJJJJJJJAAAAAAA: " + JSON.stringify(store.state.filteredCommands));
-
       expect(store.state.filteredCommands.length).to.equal(3);
       expect(store.state.filteredCommands[0].command).to.equal('Turn On LED 1');
       expect(store.state.filteredCommands[1].command).to.equal('Turn Off LED 1');
@@ -744,14 +720,9 @@ it('setMaxDataStreamsPerPageTest', () => {
 
 
       store.commit('filterCommandsToDisplay','On');
-      console.log("BBBBBBBBBBBBBBBBBBBB: " + JSON.stringify(store.state.filteredCommands));
       expect(store.state.filteredCommands.length).to.equal(2);
-      console.log("----1");
       expect(store.state.filteredCommands[0].command).to.equal('Turn On LED 1');
-      console.log("----1");
       expect(store.state.filteredCommands[1].command).to.equal('Turn On PIN 5');
-      console.log("----1");
-
       store.state.filteredCommands = [];
 
     });
@@ -936,24 +907,19 @@ it('setMaxDataStreamsPerPageTest', () => {
   });
 
   it('testDrawMosTriggeredActionsChart', () => {
-    console.log("AAA : " + JSON.stringify(document.getElementById('myPieChart2').outerHTML));
     store.commit('drawMosTriggeredActionsChart');
   });
 
   it('testDrawTriggerTypesPercentagesChart', () => {
-    console.log("BBB : " + JSON.stringify(document.getElementById('percentageBar').outerHTML));
     store.commit('drawTriggerTypesPercentagesChart');
   });
 
   it('testDrawMostExecutedTriggersChart', () => {
-    console.log("CCC : " + JSON.stringify(document.getElementById('barChart').outerHTML));
     store.commit('drawMostExecutedTriggersChart');
   });
 
 
   it('testDrawDataPointsChart', () => {
-    console.log("DDD : " + JSON.stringify(document.getElementById('line-chart').outerHTML));
-
     store.state.labelsForDataPoints = [1,2,3];
     store.state.dataPointsAvailables = ['23','24','25'];
     store.state.activeDataStream = {name:'DataStream1'};
@@ -1065,11 +1031,10 @@ it('setMaxDataStreamsPerPageTest', () => {
     expect(store.state.labelsForDataPoints[4]).to.equal(5);
     expect(store.state.dataPointsMaxValue).to.equal(5);
     expect(store.state.dataPointsMinValue).to.equal(1);
-    expect(store.state.dataPointsAverageValue).to.equal(3);
+    expect(store.state.dataPointsAverageValue).to.equal( (15/5).toFixed(2) );
   });
 
-
-  it('testProcessDataPointsConfigured', () => {
+  it('testDetermineMostRecentlyUpdatedStreams', () => {
       store.state.mostRecentlyUpdatedStreams = [{not_updated_since:7},{not_updated_since:9},{not_updated_since:13},{not_updated_since:3},{not_updated_since:2},{not_updated_since:1},{not_updated_since:5},{not_updated_since:4}];
 
       store.commit('determineMostRecentlyUpdatedStreams');
@@ -1090,7 +1055,6 @@ it('setMaxDataStreamsPerPageTest', () => {
       expect(store.state.mostRecentlyUpdatedStreams[1].not_updated_since).to.equal(4);
       expect(store.state.mostRecentlyUpdatedStreams[2].not_updated_since).to.equal(5);
   });
-
 
   it('testGetAmountOfTriggerTypes', () => {
     let existingTriggers = [
@@ -1142,5 +1106,6 @@ it('setMaxDataStreamsPerPageTest', () => {
     expect(store.state.mostRecentlyUpdatedStreams.length).to.equals(2);
 
   });
+
 
 })

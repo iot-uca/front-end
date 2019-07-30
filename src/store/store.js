@@ -1380,8 +1380,9 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
           console.log("state.timeIntervalCondition: " + state.timeIntervalCondition);
           console.log("state.timeIntervalCondition.from: " + state.timeIntervalCondition.from);
           console.log("state.timeIntervalCondition.to: " + state.timeIntervalCondition.to);
-          condition.from = state.timeIntervalCondition.from.hours + ":" + state.timeIntervalCondition.from.minutes + ":00";
-          condition.to = state.timeIntervalCondition.to.hours + ":" + state.timeIntervalCondition.to.minutes + ":00";
+
+	  condition.time_interval = {start: state.timeIntervalCondition.from.hours + ":" + state.timeIntervalCondition.from.minutes, stop: state.timeIntervalCondition.to.hours + ":" + state.timeIntervalCondition.to.minutes};
+
           state.timeIntervalConditions.push(condition);
         }
       }
@@ -1582,9 +1583,11 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
         state.labelsForDataPoints.push(i+1);
         sum = sum + +response[i].value; //convert the string number to number
       }
-      state.dataPointsMaxValue = Math.max(...state.dataPointsAvailables);
-      state.dataPointsMinValue = Math.min(...state.dataPointsAvailables);
-      state.dataPointsAverageValue = sum/amountOfPoints;
+
+      state.dataPointsMaxValue = ((state.dataPointsAvailables.length < 1) ? 0 : Math.max(...state.dataPointsAvailables));
+      state.dataPointsMinValue = ((state.dataPointsAvailables.length < 1) ? 0 : Math.min(...state.dataPointsAvailables));
+      state.dataPointsAverageValue = ((amountOfPoints < 1) ? 0 : (sum/amountOfPoints).toFixed(2));
+
     },
 
 
@@ -2059,7 +2062,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
         axios.post( url + '/commands', {
           command: context.state.commandToAdd.command,
-          priority: context.state.commandToAdd.priority
+          priority: parseInt(context.state.commandToAdd.priority)
             }).then(function (response) {
 
             context.commit('displaySuccessCommandAdding');

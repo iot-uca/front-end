@@ -40,6 +40,8 @@ describe('mocking axios requests', function () {
 
   });
 
+
+
   it('GET /commands', function (done) {
 
     store.state.maxCommandsPerPage = 5;
@@ -171,8 +173,6 @@ describe('mocking axios requests', function () {
 
 
   it('GET /data-points with error', function (done) {
-    console.log("GET /data-points with error");
-
     moxios.withMock(function () {
       let onFulfilled = sinon.spy()
 
@@ -197,7 +197,7 @@ describe('mocking axios requests', function () {
 
   });
 
-  
+
 
   it('GET /commands?order=priority', function (done) {
 
@@ -263,7 +263,7 @@ describe('mocking axios requests', function () {
   it('POST /commands', function (done) {
 
     store.state.commandToAdd.command = "Command 1";
-    store.state.commandToAdd.priority = "12";
+    store.state.commandToAdd.priority = 12;
 
     moxios.withMock(function () {
       let onFulfilled = sinon.spy()
@@ -349,9 +349,9 @@ describe('mocking axios requests', function () {
     })
 
   });
+
 /*
   it('POST /data-points', function (done) {
-    console.log("CARAAJO!############");
     store.state.activeDataStream = {name: 'Data Stream 1'};
     store.state.dataPointToAdd = '77';
 
@@ -379,11 +379,8 @@ describe('mocking axios requests', function () {
     })
   });
 */
-
   it('DELETE /something', function (done) {
-    console.log('DELETE /something');
     store.state.elementsToDelete = [{links:{self:"http://localhost:1111/triggers/i-den-ti-fi-er"}}];
-    console.log('store.state.elementsToDelete: ' + store.state.elementsToDelete);
 
     moxios.withMock(function () {
       let onFulfilled = sinon.spy()
@@ -407,7 +404,6 @@ describe('mocking axios requests', function () {
     })
 
   });
-
 
 // Need to validate behavior when status code != 200
 

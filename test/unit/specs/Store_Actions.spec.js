@@ -281,7 +281,7 @@ describe('Actions', () => {
       expect(store.state.elementsToDelete.length).to.equal(0);
 
     });
-
+// 1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
     it('testDisplayPrevPageCommands', () => {
       let existingCommands = [
           {command: 'Turn On LED 1', priority: '100'},
@@ -523,7 +523,7 @@ describe('Actions', () => {
       expect(store.state.dataStreamsForPage[0].name).to.equal('Solar light in garden');
 
     });
-
+//2222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222
     it('testDisplayNextPageDataStream', () => {
       let existingStreams = [
           {id: 0, name: 'Solar light in garden'},
@@ -668,20 +668,7 @@ describe('Actions', () => {
       store.dispatch('setActionBody', '{"key":"value"}');
       expect(store.state.validJson).to.equal(true);
     });
-
-/*    it('testAssignBodyAndHeader', () => {
-      let action = {id: 1, name: 'Tweet', http_request:{ request_line: { method:'POST', url:'https://twitter.com', version:'1.1'}, body:"{\"foo\":\"bar\", \"jane\":\"doe\"}", headers:[{key:'security-key', value:'f78r3d'}, {key:'email', value:'jnahas@foor.bar'}]}};
-      store.dispatch('assignBodyAndHeader', action);
-
-      expect(store.state.activeAction.name).to.equal('Tweet');
-      expect(store.state.activeIdsForHttpRequestHeader.length).to.equal(2);
-      expect(store.state.activeIdsForHttpRequestBody).to.equal("{\"foo\":\"bar\", \"jane\":\"doe\"}");
-    });
-
-    it('testUpdateAction', () => {
-      store.dispatch('updateAction');
-    });
-*/
+//33333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333
 
     it('testDataPointPolicy', () => {
       store.dispatch('dataPointPolicy');
@@ -726,11 +713,6 @@ describe('Actions', () => {
       store.dispatch('drawCharts');
     });
 
-/*
-    it('testDeleteElements', () => {
-      store.dispatch('deleteElements');
-    });*/
-
     it('testDisplayLoadingFeedback', () => {
       store.dispatch('displayLoadingFeedback');
       expect(store.state.displayLoadingFeedback).to.equal(true);
@@ -759,9 +741,6 @@ describe('Actions', () => {
       expect(store.state.onDataStreamValueCondition.value).to.equal("Value1");
     });
 
-    /*it('testAddNewCondition', () => {
-      store.dispatch('addNewCondition');
-    });*/
 
     it('testSetDataStreamNotUpdated', () => {
       store.state.dataStreamNotUpdatedCondition = {dataStream:""};
@@ -778,6 +757,8 @@ describe('Actions', () => {
       store.dispatch('hideModalForStreamAdding');
       expect(store.state.showModalForStreamAdding).to.equal(false);
     });
+
+//4444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444
 
     it('testDisplayModalForTriggerDetails', () => {
       store.dispatch('displayModalForTriggerDetails');
@@ -829,6 +810,8 @@ describe('Actions', () => {
       store.dispatch('hideModalForDataPointsAdding');
       expect(store.state.showModalForDataPointsAdding).to.equal(false);
     });
+
+//55555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555
 
     it('testSetdataPointToAdd', () => {
       store.dispatch('setdataPointToAdd', "DataPoint1");

@@ -12,16 +12,13 @@
           <div class="card-body text-center">
             <div class="row">
               <div class="col-sm-12">
-                <h4 class="card-title text-primary">{{this.$store.state.dataStreamsConfigured.length}}</h4>
+                <h4 class="card-title" style="color:rgb(74, 255, 130) !important;">{{this.$store.state.dataStreamsConfigured.length}}</h4>
 
                 <router-link to="/dataStreams" exact>
                   <div class="text-muted">Data Streams</div>
                 </router-link>
 
               </div>
-              <!--div class="col-sm-6 text-center">
-
-              </div-->
             </div>
           </div>
         </div>
@@ -31,7 +28,7 @@
           <div class="card-body text-center">
             <div class="row">
               <div class="col-sm-6">
-                <h4 class="card-title text-primary">{{this.$store.state.existingActions.length}}</h4>
+                <h4 class="card-title" style="color:rgb(74, 255, 130) !important;">{{this.$store.state.existingActions.length}}</h4>
 
                 <router-link to="/actions" exact>
                   <div class="small text-muted">Actions</div>
@@ -40,7 +37,7 @@
 
               </div>
               <div class="col-sm-6">
-                <h4 class="card-title text-primary">{{this.$store.state.existingCommands.length}}</h4>
+                <h4 class="card-title" style="color:rgb(74, 255, 130) !important;">{{this.$store.state.existingCommands.length}}</h4>
 
                 <router-link to="/commands" exact>
                   <div class="small text-muted">Commands</div>
@@ -55,7 +52,7 @@
           <div class="card-body text-center">
             <div class="row">
               <div class="col-sm-4">
-                <h4 class="card-title text-primary">{{this.$store.state.existingTriggers.length}}</h4>
+                <h4 class="card-title" style="color:rgb(74, 255, 130) !important;">{{this.$store.state.existingTriggers.length}}</h4>
 
                 <router-link to="/triggers" exact>
                   <div class="small text-muted">Triggers</div>
@@ -72,13 +69,13 @@
 
                 <div class="small text-muted">Time Interval</div>
                 <div class="progress">
-                  <div class="progress-bar bg-info" role="progressbar" style="width: 58%;" aria-valuenow="56" aria-valuemin="0" aria-valuemax="100">{{this.$store.state.amountOfPeriodicalTriggers}}</div>
+                  <div class="progress-bar" role="progressbar" style="width: 58%; background-color:rgb(74, 255, 130) !important;" aria-valuenow="56" aria-valuemin="0" aria-valuemax="100">{{this.$store.state.amountOfPeriodicalTriggers}}</div>
                 </div>
 
 
                 <div class="small text-muted">Data Point Registration</div>
                 <div class="progress">
-                  <div class="progress-bar bg-info" role="progressbar" style="width: 42%;" aria-valuenow="44" aria-valuemin="0" aria-valuemax="100">{{this.$store.state.amountOfDataPointTriggers}}</div>
+                  <div class="progress-bar" role="progressbar" style="width: 42%; background-color:rgb(74, 255, 130) !important;" aria-valuenow="44" aria-valuemin="0" aria-valuemax="100">{{this.$store.state.amountOfDataPointTriggers}}</div>
                 </div>
 
               </div>
@@ -98,38 +95,47 @@
             <i class="fa fa-pie-chart"></i> Most Executed Actions
 
             <router-link to="/actions" exact>
-              <i class="fa fa-ellipsis-h" style="float:right; color:black"></i>
+        	<!--i class="fa fa-ellipsis-h" style="float:right; color:black"></i-->
+		<span class="badge" style="color: rgb(74, 255, 130); float:right;">View</span>
             </router-link>
 
           </div>
-          <div class="card-body">
+
+	<div v-if="mostExecutedActions.labels.length<1" class="card-body">
+            <br>
+	    <br>
+            <br>
+            <p class="text-center">No executed Actions at this time</p>
+	</div>
+
+          <div v-else class="card-body">
             <div class="row">
-              <div class="col-md-6">
+              <div class="col-md-8">
                 <canvas id="barChart" class="chartjs-render-monitor"></canvas>
               </div>
-              <div class="col-md-6">
-                <div class="row">
-                  <div class="col-md-6">
-                    <!--canvas id="myPieChart2" class="chartjs-render-monitor"></canvas-->
-                    <canvas id="percentageBar" class="chartjs-render-monitor"></canvas>
-                    <!--h3 class="card-title text-primary">7</h3-->
-                  </div>
+              <div class="col-md-4">
 
-                  <div class="col-md-6 text-center my-auto">
-                    <div class="h5 mb-0 text-primary">33.33%</div>
-                    <div class="small text-muted">Data Point Registration</div>
-                    <hr>
-                    <div class="h5 mb-0 text-success">66.66%</div>
-                    <div class="small text-muted">Time Interval</div>
-                  </div >
-
-                </div>
+		    <table class="table table-striped table-responsive table-md">
+		      <thead>
+		      <tr>
+		        <th scope="col" style="width:30%;">Name</th>
+		        <th scope="col" class="text-center" style="width:70%;">Last Updated</th>
+		      </tr>
+		      </thead>
+		      <tbody>
+		      <tr v-for="action in mostRecentlyUpdatedActions" style="font-size: 0.8rem;">
+		        <td>{{action.action.name}}</td>
+			<td>{{Math.floor(action.not_updated_since)}} minutes</td>
+		      </tr>
+		      </tbody>
+		    </table>
 
               </div>
             </div>
           </div>
         </div>
       </div>
+
 
     </div>
 
@@ -144,7 +150,8 @@
             <i class="fa fa-pie-chart"></i> Next Commands in Queue
 
             <router-link to="/commands" exact>
-              <i class="fa fa-ellipsis-h" style="float:right; color:black"></i>
+              <!--i class="fa fa-ellipsis-h" style="float:right; color:black"></i-->
+	      <span class="badge" style="color: rgb(74, 255, 130); float:right;">View</span>
             </router-link>
 
           </div>
@@ -153,7 +160,7 @@
           <div v-if="existingCommandsPrioritized.length==0" class="card-body">
             <br>
             <br>
-            <p class="text-center">No pending commands for now</p>
+            <p class="text-center">No pending commands at this time</p>
           </div>
 
           <div v-else class="card-body">
@@ -187,7 +194,8 @@
             <i class="fa fa-pie-chart"></i> Most Recently Updated Streams
 
               <router-link to="/dataStreams" exact>
-                <i class="fa fa-ellipsis-h" style="float:right; color:black"></i>
+                <!--i class="fa fa-ellipsis-h" style="float:right; color:black"></i-->
+		<span class="badge" style="color: rgb(74, 255, 130); float:right;">View</span>
               </router-link>
 
           </div>
@@ -196,7 +204,7 @@
           <div v-if="dataStreams.length==0" class="card-body">
             <br>
             <br>
-            <p class="text-center">No updated Streams for the moment</p>
+            <p class="text-center">No updated Streams at this time</p>
           </div>
 
           <div v-else class="card-body">
@@ -239,9 +247,19 @@ export default {
 
   mounted(){
     this.$store.dispatch('showDashboardView');
+    console.log("###### 111 #####");
     this.$store.dispatch('getNextCommandsInQueue', this.$store.state.backendEndPoint);
+    console.log("###### 222 #####");
     this.determineMostRecentlyUpdatedStreams(new Date());
+    console.log("###### 333 #####");
+    this.$store.dispatch('getMostExecutedActions', this.$store.state.backendEndPoint);
+    console.log("###### 444 #####");
+    this.$store.dispatch('getLastExecutedActions', this.$store.state.backendEndPoint);
+    console.log("###### 555 #####");
     this.drawCharts();
+    console.log("###### 666 #####");
+    //this.determineMostRecentlyUpdatedActions(new Date());
+    console.log("###### 777 #####");
 
   },
 
@@ -261,6 +279,15 @@ export default {
     existingCommandsPrioritized(){
       return this.$store.state.existingCommandsPrioritized;
     },
+    mostExecutedActions(){
+      return this.$store.state.mostExecutedActions;
+    },
+    lastExecutedActions(){
+      return this.$store.state.lastExecutedActions;
+    },
+    mostRecentlyUpdatedActions(){
+      return this.$store.state.mostRecentlyUpdatedActions;
+    },
 
   },
 
@@ -276,6 +303,9 @@ export default {
     },
     determineMostRecentlyUpdatedStreams: function () {
       this.$store.dispatch('determineMostRecentlyUpdatedStreams', new Date());
+    },
+    determineMostRecentlyUpdatedActions: function () {
+      this.$store.dispatch('determineMostRecentlyUpdatedActions', new Date());
     },
   }
 }

@@ -169,6 +169,12 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     // actions variables
     existingActions:[],
 
+    mostExecutedActions: {labels:[], points:[]},
+
+    lastExecutedActions: [],
+
+    mostRecentlyUpdatedActions: [],
+
 
     trueActions: [
       {name:'Action1', created_on:'2018-08-19T19:33:3400:00', http_request:{
@@ -842,6 +848,51 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
     },
 
+    errorTreatmentForTriggersAdding: (state,error) => {
+        console.log("### Entering errorTreatmentForTriggersAdding ");
+        console.log("[ERROR] " + error);
+
+        state.displayLoadingFeedback = false;
+        state.errorInInteraction = true;
+
+        console.log("error " + JSON.stringify(error));
+
+        console.log("error.response: " + error.response);
+        console.log(error.response.data);
+        console.log(error.response.status);
+        console.log(error.response.headers);
+
+        // Error
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          console.log("error.response.data: " + error.response.data);
+          console.log("error.response.data.message: " + error.response.data.message);
+
+          state.errorMessage = error.response.data.message;
+
+          console.log("error.response.status: " + error.response.status);
+          console.log("error.response.headers: " + error.response.headers);
+        } else if (error.request) {
+          // The request was made but no response was received
+          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+          // http.ClientRequest in node.js
+          console.log(error.request);
+          state.errorMessage = "There was a problem adding " + state.activeTrigger.name + ". Please try again!";
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log('Error', error.message);
+          state.errorMessage = "There was a problem adding " + state.activeTrigger.name + ". Please try again!";
+        }
+
+        state.showModalForRequestResult = true;
+        setTimeout(function(){
+          state.showModalForRequestResult = false;
+        }, 2000);
+
+    },
+
+
     errorTreatmentForCommandAdding: (state,error) => {
         console.log("[ERROR] " + error);
 
@@ -1166,9 +1217,11 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       new Chart(ctx, {
         type: 'horizontalBar',
         data: {
-          labels: ['Trigger 1', 'Trigger 2', 'Trigger 3', 'Trigger 4', 'Trigger 5'],
+          //labels: ['Trigger 1', 'Trigger 2', 'Trigger 3', 'Trigger 4', 'Trigger 5'],
+	  labels: state.mostExecutedActions.labels,
           datasets: [{
-            data: [22, 17, 15, 11, 9],
+            //data: [22, 17, 15, 11, 9],
+            data: state.mostExecutedActions.points,
             backgroundColor: ['#FABB3C', '#32D75E','#D02FC0','#EB0524','#3e95cd']
             /*backgroundColor: ['#3e95cd', '#8e5ea2','#3cba9f','#e8c3b9','#c45850']*/
           }]
@@ -1664,7 +1717,59 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       console.log(JSON.stringify(state.mostRecentlyUpdatedStreams));
     },
 
-    getNextCommandsInQueue: (state, response) =>{
+    determineMostRecentlyUpdatedActions: (state, instant) => {
+
+      console.log("### Entering determineMostRecentlyUpdatedActions!!");
+      console.log("instant: " + instant);
+      state.mostRecentlyUpdatedActions=[];
+
+      let amountOfActions = state.lastExecutedActions.length;
+      console.log("lastExecutedActions: " + JSON.stringify(state.lastExecutedActions));
+
+      console.log("TimezoneOffset: " + instant.getTimezoneOffset()); // negative value means ahead, positive behind UTC
+
+      let milisFromTimezone = instant.getTimezoneOffset()*60000;
+      console.log("milisFromTimezone: " + milisFromTimezone);
+
+      let thisMoment = moment(instant);
+      console.log("thisMoment: " + thisMoment);
+
+      console.log("moment Adapted: " + (milisFromTimezone + thisMoment));
+
+      for(let i=0; i<amountOfActions; i++){
+
+        if(state.lastExecutedActions[i].evaluationDateTime !== 'N/A'){
+          console.log("last_update: " + state.lastExecutedActions[i].evaluationDateTime);
+          let iso8610 = state.lastExecutedActions[i].evaluationDateTime.slice(0,19);
+          console.log("iso8610: " + iso8610);
+
+          let registrationMoment = moment(iso8610, moment.ISO_8601);
+
+          console.log("===>" + registrationMoment.day());
+          console.log("===>" + registrationMoment.month());
+          console.log("===>" + registrationMoment.year());
+          console.log("===>" + registrationMoment.hour());
+          console.log("===>" + registrationMoment.minutes());
+          console.log("===>" + registrationMoment.seconds());
+
+          console.log("registrationMoment: " + registrationMoment);
+          // storing the time in another field, need the original to do every calculation
+          state.lastExecutedActions[i].not_updated_since = ( (thisMoment + milisFromTimezone ) - registrationMoment)/60000;
+          console.log("state.lastExecutedActions[i].not_updated_since: " + state.lastExecutedActions[i].not_updated_since);
+          state.mostRecentlyUpdatedActions.push(state.lastExecutedActions[i]);
+        }
+
+      }
+
+      state.mostRecentlyUpdatedActions = state.mostRecentlyUpdatedActions.sort(function(a, b){return a.not_updated_since-b.not_updated_since});
+
+      if(state.mostRecentlyUpdatedActions.length>5){
+        state.mostRecentlyUpdatedActions = state.mostRecentlyUpdatedActions.slice(0,5);
+      }
+      console.log(JSON.stringify(state.mostRecentlyUpdatedActions));
+    },
+
+    getNextCommandsInQueue: (state, response) => {
       console.log(" Entering getNextCommandsInQueue");
       console.log(" RESPONSE: " + JSON.stringify(response));
 
@@ -1677,7 +1782,57 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
         state.existingCommandsPrioritized.push(commands[i]);
       }
       console.log(" Commands =>" + JSON.stringify(state.existingCommandsPrioritized));
-    }
+    },
+
+   getMostExecutedActions: (state, response) => {
+      console.log(" Entering getMostExecutedActions");
+      console.log(" RESPONSE: " + JSON.stringify(response));
+      let actionsExecuted = response.data;
+      state.mostExecutedActions.labels = [];
+      state.mostExecutedActions.points = [];
+
+      actionsExecuted = actionsExecuted.sort(function(a, b){return a.evaluationCount-b.evaluationCount});
+
+      if(actionsExecuted.length>5){
+        actionsExecuted = actionsExecuted.slice(0,5);
+      }
+
+      for (let i=0; i<actionsExecuted.length; i++){
+	state.mostExecutedActions.labels.push(actionsExecuted[i].action.name);
+	state.mostExecutedActions.points.push(actionsExecuted[i].evaluationCount);
+      }
+
+      console.log(" RESPONSE: " + JSON.stringify(state.mostExecutedActions));
+   },
+
+   getLastExecutedActions: (state, response) => {
+      console.log(" Entering getLastExecutedActions");
+      console.log(" RESPONSE: " + JSON.stringify(response));
+      let actionsExecuted = response.data;
+      state.lastExecutedActions = [];
+
+      state.lastExecutedActions.push(actionsExecuted[actionsExecuted.length-1]);
+      let alreadyIncluded = false;
+
+
+	for(let i=actionsExecuted.length-1; i>=0; i--){
+		for(let j=0; j<state.lastExecutedActions.length; j++){
+			if(actionsExecuted[i].action.name==state.lastExecutedActions[j].action.name){
+				alreadyIncluded = true;
+			}
+
+		}
+		if(!alreadyIncluded){
+		   state.lastExecutedActions.push(actionsExecuted[i]);
+		}
+		alreadyIncluded = false;
+	}
+      console.log(" Before chopping: " + JSON.stringify(state.lastExecutedActions));
+      if(state.lastExecutedActions.length>5){
+         state.lastExecutedActions = state.lastExecutedActions.slice(0,5);
+      }
+      console.log(" Finally: " + JSON.stringify(state.lastExecutedActions));
+   },
 
 
   },
@@ -2274,10 +2429,14 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
           }, (err) => {
             console.log("[ERROR] => " + err);
+            context.commit('cleanElementsToDelete');
+            context.commit('errorTreatmentForTriggersAdding', error);
           });
 
         }).catch(function (error) {
-
+	  console.log("[ERROR] => " + error);
+          context.commit('cleanElementsToDelete');
+          context.commit('errorTreatmentForTriggersAdding', error);
       });
 
     },
@@ -2451,5 +2610,33 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
     },
 
+    getMostExecutedActions: (context, url) => {
+       console.log("Entering getMostExecutedActions ");
+
+        axios.get(url + '/action-evaluations/summaries', {headers:{"Accept" : "application/json"}} ).then(response => {
+          context.commit('getMostExecutedActions', response);
+        }, (err) => {
+          console.log("[ERROR] => " + err);
+        });
+    },
+
+    getLastExecutedActions: (context, url) => {
+       console.log("Entering getLastExecutedActions");
+
+        axios.get(url + '/action-evaluations/last', {headers:{"Accept" : "application/json"}} ).then(response => {
+          	context.commit('getLastExecutedActions', response);
+	  	context.commit('determineMostRecentlyUpdatedActions', new Date());
+      		context.commit('drawMosTriggeredActionsChart');
+      		context.commit('drawTriggerTypesPercentagesChart');
+      		context.commit('drawMostExecutedTriggersChart');
+        }, (err) => {
+          console.log("[ERROR] => " + err);
+        });
+    },
+
+   determineMostRecentlyUpdatedActions: (context, now) => {
+      console.log("determineMostRecentlyUpdatedActions");
+      context.commit('determineMostRecentlyUpdatedActions', now);
+   },
   }
 })

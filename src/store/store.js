@@ -273,7 +273,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     triggerConditions:[
       {id: 1, name: 'Always', label:'Always'},
       {id: 2, name: 'data_stream_current_value', label:'Data-Stream current value'},
-      {id: 3, name: 'data_stream_not_updated', label:'Data-Stream not updated'},
+      {id: 3, name: 'data_stream_has_not_been_updated', label:'Data-Stream not updated'},
       {id: 4, name: 'time_interval', label:'Time interval'},
     ],
 
@@ -1428,7 +1428,8 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       } else {
         if (state.conditionSelected.id === 3) {
           state.dataStreamNotUpdatedCondition.dataStreamNotUpdatedFrom = Object.assign({}, state.dataStreamNotUpdatedFrom);
-          condition.details = Object.assign({}, state.dataStreamNotUpdatedCondition);
+          condition.data_stream = state.dataStreamNotUpdatedCondition.dataStream;
+	  condition.time_period = state.dataStreamNotUpdatedCondition.dataStreamNotUpdatedFrom.minutes + " minutes";
           state.dataStreamNotUpdatedConditions.push(condition);
         } else {
           console.log("state.timeIntervalCondition: " + state.timeIntervalCondition);
@@ -1453,7 +1454,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
         state.dataStreamNotUpdatedConditions=[];
       }
 
-      console.log("### state.conditionsForTrigger: " + state.conditionsForTrigger);
+      console.log("### state.conditionsForTrigger: " + JSON.stringify(state.conditionsForTrigger));
       console.log("### conditionsCounter: " + state.conditionsCounter);
       console.log("ABCDE###########################");
       console.log("condition: " + JSON.stringify(condition));

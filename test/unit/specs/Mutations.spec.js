@@ -39,6 +39,7 @@ describe('Mutations', () => {
 
     });
 
+
   it('increase options should increase options in 1', () => {
 
     store.state.options = [ {name: 'uno', value: 2}, {name: 'uno', value: 3} ]
@@ -503,7 +504,7 @@ it('setMaxDataStreamsPerPageTest', () => {
 
     it('setDataStreamNotUpdatedTest', () => {
         store.commit('setDataStreamNotUpdated', {id: 0, name: 'Solar light in garden'})
-         expect(store.state.dataStreamNotUpdatedCondition.dataStream.name).to.equals('Solar light in garden')
+        expect(store.state.dataStreamNotUpdatedCondition.dataStream.name).to.equals('Solar light in garden')
     });
 
     it('addNewConditionTest', () => {
@@ -541,16 +542,14 @@ it('setMaxDataStreamsPerPageTest', () => {
         store.state.dataStreamNotUpdatedFrom.seconds=0
         store.state.conditionSelected.text = 'When Data Stream has not been updated for'
         store.state.conditionSelected.id = 3
+        store.state.dataStreamNotUpdatedCondition.dataStream='Temperature sensor'
 
         store.commit('addNewCondition')
+
         expect(store.state.conditionsForTrigger.length).to.equals(2)
         expect(store.state.conditionsForTrigger[1].type).to.equals('When Data Stream has not been updated for')
-        expect(store.state.conditionsForTrigger[1].details.dataStreamNotUpdatedFrom.months).to.equals(0)
-        expect(store.state.conditionsForTrigger[1].details.dataStreamNotUpdatedFrom.weeks).to.equals(1)
-        expect(store.state.conditionsForTrigger[1].details.dataStreamNotUpdatedFrom.days).to.equals(0)
-        expect(store.state.conditionsForTrigger[1].details.dataStreamNotUpdatedFrom.hours).to.equals(1)
-        expect(store.state.conditionsForTrigger[1].details.dataStreamNotUpdatedFrom.minutes).to.equals(0)
-        expect(store.state.conditionsForTrigger[1].details.dataStreamNotUpdatedFrom.seconds).to.equals(0)
+        expect(store.state.conditionsForTrigger[1].data_stream).to.equals('Temperature sensor')
+        expect(store.state.conditionsForTrigger[1].time_period).to.equals("0 minutes")
         expect(store.state.conditionsCounter).to.equals(3)
 
         //4 - Time interval

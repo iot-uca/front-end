@@ -40,12 +40,12 @@
           <ul v-if="dataStreamNotUpdatedConditions.length>0" class="list-group list-group-flush">
             <a href="#" style="float: right; color: red"><strong><i class="fa fa-remove"></i></strong></a>
             <li v-for="condition in dataStreamNotUpdatedConditions" class="list-group-item">{{condition.dataStream}} not updated from
-              <div v-if="condition.dataStreamNotUpdatedFrom.months>0">{{condition.dataStreamNotUpdatedFrom.months}} months,</div>
+              <!--div v-if="condition.dataStreamNotUpdatedFrom.months>0">{{condition.dataStreamNotUpdatedFrom.months}} months,</div>
               <div v-if="condition.dataStreamNotUpdatedFrom.weeks>0">{{condition.dataStreamNotUpdatedFrom.weeks}} weeks,</div>
               <div v-if="condition.dataStreamNotUpdatedFrom.days>0">{{condition.dataStreamNotUpdatedFrom.days}} days,</div>
               <div v-if="condition.dataStreamNotUpdatedFrom.hours>0">{{condition.dataStreamNotUpdatedFrom.hours}} hrs,</div>
-              <div v-if="condition.dataStreamNotUpdatedFrom.minutes>0">{{condition.dataStreamNotUpdatedFrom.minutes}} min,</div>
-              <div v-if="condition.dataStreamNotUpdatedFrom.seconds>0">{{condition.dataStreamNotUpdatedFrom.seconds}} secs.</div>
+              <div v-if="condition.dataStreamNotUpdatedFrom.minutes>0">{{condition.dataStreamNotUpdatedFrom.minutes}} minutes</div-->
+              <!--div v-if="condition.dataStreamNotUpdatedFrom.seconds>0">{{condition.dataStreamNotUpdatedFrom.seconds}} secs.</div-->
             </li>
           </ul>
 

@@ -16,15 +16,46 @@
               </button>
             </div>
             <div class="modal-body text-center">
-              <h4><strong>¿Are you sure you want to delete?</strong></h4>
+              <h5><strong>¿Are you sure you want to delete?</strong></h5>
 
               <ul class="list-group" v-for="(elem, index) in elementsToDelete">
-                <li class="list-group-item"><strong>{{elem}}</strong></li>
+
+		<div v-if="elem.command">  <!-- COMMAND -->
+		     <li class="list-group-item"><strong>Command:</strong> {{elem.command}}  <strong> Priority: </strong> {{elem.priority}}</li>
+		</div>	
+
+		<div v-else>
+
+			<div v-if="elem.http_request">  <!-- ACTION -->
+			     <li class="list-group-item"><strong>Action:</strong> {{elem.name}}  <strong> Method: </strong> {{elem.http_request.request_line.method}}  <strong> URL:</strong> {{elem.http_request.request_line.url}}</li>
+			</div>
+
+			<div v-else>
+
+				<div v-if="elem.action"> <!-- TRIGGER -->
+			     	     <li class="list-group-item"><strong>Trigger:</strong> {{elem.name}}  <strong> Action: </strong> {{elem.action}}  <strong> Policy type:</strong> {{elem.policy.type}}</li>
+				</div>
+
+				<div v-else> <!-- DATA STREAM-->
+					<li class="list-group-item"><strong>Data Stream:</strong> {{elem.name}}  <strong> Value: </strong> {{elem.current_value}}  <strong> Updated:</strong> {{elem.last_update}}</li>
+				</div>
+
+			</div>
+		</div>
+
+
+
+			<div v-if="elem.current_value">
+				<li class="list-group-item"><strong>Data Stream:</strong> {{elem.name}}  <strong> Value: </strong> {{elem.current_value}}  <strong> Updated:</strong> {{elem.last_update}}</li>
+			</div>
+
+
+
               </ul>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-danger" @click="deleteElements(); hideModalForRemovingElements()">Delete</button>
-              <button type="button" class="btn btn-secondary" @click="hideModalForRemovingElements()">Cancel</button>
+              <button type="button" class="btn button-main button-secondary" @click="deleteElements(); hideModalForRemovingElements()">Delete</button>
+              <button type="button" class="btn button-green" @click="hideModalForRemovingElements()">Cancel</button>
             </div>
 
         </div>
@@ -83,6 +114,27 @@ transition: opacity .3s ease;
 display: table-cell;
 vertical-align: middle;
 }
+
+
+.button-green{
+  background-color: #4AFF82;
+  color: white;
+  font-family: Source Sans Pro, sans-serif;
+}
+
+.button-green:hover{
+   background-color: #4AFF96;
+}
+
+.button-secondary{
+  color: white;
+  font-family: Source Sans Pro, sans-serif;
+}
+
+.button-secondary:hover{
+   background-color: #4AFF96;
+}
+
 
 
 </style>

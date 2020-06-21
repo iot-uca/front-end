@@ -75,13 +75,13 @@
               </a>
             </li>
             <!--li class="nav-item" @click="showSecurityView()"-->
-            <li class="nav-item">
+            <!--li class="nav-item">
               <a class="nav-link">
                 <router-link to="/security" exact>
                   Security
                 </router-link>
               </a>
-            </li>
+            </li-->
             <!--li class="nav-item" @click="showAboutView()"-->
             <li class="nav-item">
               <a class="nav-link">

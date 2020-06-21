@@ -46,14 +46,11 @@
             </div>
           </div>
           <div class="col-md-2">
-            <!--button type="button" class="btn button-main button-primary" data-toggle="modal" data-target="#addTriggerModal" style="width: 100%;">Add trigger</button-->
             <button type="button" class="btn button-green" style="width: 100%;" @click="displayModalForTriggerAdding()">Add trigger</button>
-
           </div>
 
           <div class="col-md-2">
             <button v-if="getElementsToDelete().length<1" type="button" disabled class="btn button-main button-secondary" style="width: 100%;">Delete</button>
-            <!--button v-else type="button" class="btn button-main button-secondary" data-toggle="modal" data-target="#removeElements" style="width: 100%;">Delete</button-->
             <button v-else type="button" class="btn button-green" style="width: 100%;" @click="displayModalForRemovingElements()">Delete</button>
 
           </div>

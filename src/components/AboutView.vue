@@ -2,18 +2,20 @@
 
   <div class="my-3" v-if="hasToShowAboutView()">
       <div class="text-center font-italic lead">
-        <img src="../assets/cosmos.jpg" class="img-fluid" alt="Responsive image">
+        <img src="../assets/cosmos.jpg" class="img-fluid" alt="Responsive image" style="max-width:180px; max-height:180px;">
 
         <p>
-          Cosmos is a Internet of Things (IoT) platform.
+          Cosmos is an Internet of Things (IoT) platform.
         </p>
 
         <p style="color: #4AFF82">
           With Cosmos, we aim to provide a platform to collect data from connected devices and act on them defining a set of rules.
         </p>
 
+        <img src="../assets/telescopio.gif" class="img-fluid" alt="Responsive image"style="max-width:180px; max-height:180px;">
+
         <p>
-          You are currently using the first pure-VUE-JS interface to interact with it.
+          Telescope is the first graphical interface to interact and explore Cosmos.
         </p>
 
       </div>

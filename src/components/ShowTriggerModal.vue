@@ -21,13 +21,13 @@
 
                   <ul class="nav nav-tabs" id="showTriggerTab" role="tablist">
                     <li class="nav-item">
-                      <a class="nav-link active" id="triggerActionDetail-tab" data-toggle="tab" href="#triggerActionDetail" role="tab" aria-controls="triggerActionDetail" aria-selected="true">Action config</a>
+                      <a class="nav-link active a-green" id="triggerActionDetail-tab" data-toggle="tab" href="#triggerActionDetail" role="tab" aria-controls="triggerActionDetail" aria-selected="true">Action config</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" id="triggerPolicyDetail-tab" data-toggle="tab" href="#triggerPolicyDetail" role="tab" aria-controls="triggerPolicyDetail" aria-selected="false">Policy</a>
+                      <a class="nav-link a-green" id="triggerPolicyDetail-tab" data-toggle="tab" href="#triggerPolicyDetail" role="tab" aria-controls="triggerPolicyDetail" aria-selected="false">Policy</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" id="triggerConditionDetail-tab" data-toggle="tab" href="#triggerConditionDetail" role="tab" aria-controls="triggerConditionDetail" aria-selected="false">Condition</a>
+                      <a class="nav-link a-green" id="triggerConditionDetail-tab" data-toggle="tab" href="#triggerConditionDetail" role="tab" aria-controls="triggerConditionDetail" aria-selected="false">Condition</a>
                     </li>
                   </ul>
 
@@ -38,9 +38,6 @@
                       <div class="mb-3">
                         <label for="triggerName">Name</label>
                         <div class="input-group">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fa fa-font"></i></span>
-                          </div>
                           <input disabled type="text" class="form-control" id="triggerName" v-bind:placeholder="activeTrigger.name" required="true">
                         </div>
                       </div>
@@ -48,9 +45,6 @@
                       <div class="mb-3">
                         <label for="actionAssociated">Action associated</label>
                         <div class="input-group">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fa fa-star-o"></i></span>
-                          </div>
                           <select disabled class="form-control custom-select" id="actionAssociated" v-model="activeTrigger.action" required="true">
                             <option v-for="(action, index) in existingActions" :value="action.name">
                               {{action.name}}
@@ -83,9 +77,6 @@
                         <div class="mb-3">
                           <label for="triggerName">Granularity</label>
                           <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-calendar-plus-o"></i></span>
-                            </div>
                             <select disabled class="form-control custom-select" id="timeGranularity">
                               <option :value="activeTrigger.policy.time_interval">{{activeTrigger.policy.time_interval}}</option>
                             </select>
@@ -99,9 +90,6 @@
                         <div class="mb-3">
                           <label for="fromDataStream">From Data Stream</label>
                           <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-diamond"></i></span>
-                            </div>
                             <select disabled class="form-control custom-select" id="fromDataStream">
                               <option :value="activeTrigger.policy.data_stream">{{activeTrigger.policy.data_stream}}</option>
                             </select>
@@ -266,6 +254,10 @@
 
 <style scoped>
 
+  .a-green{
+    color:#4AE387;
+  }
+
   .button-green{
     background-color: #4AE387;
     color: white;
@@ -297,5 +289,6 @@
     max-height: calc(100vh - 210px);
     overflow-y: auto;
 }
+
 
 </style>

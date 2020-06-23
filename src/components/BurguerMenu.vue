@@ -20,42 +20,42 @@
         <div class="collapse navbar-collapse" id="telescopeNavbar">
           <ul class="navbar-nav mr-auto mt-2 mt-lg-0" style="margin: auto;">
             <li class="nav-item active">
-              <a class="nav-link" data-toggle="collapse" data-target="#telescopeNavbar" aria-controls="telescopeNavbar">
+              <a class="nav-link">
                 <router-link to="/dashboard" exact>
                   Dashboard
                 </router-link>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" data-toggle="collapse" data-target="#telescopeNavbar" aria-controls="telescopeNavbar">
+              <a class="nav-link">
                 <router-link to="/dataStreams" exact>
                   Data Streams
                 </router-link>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" data-toggle="collapse" data-target="#telescopeNavbar" aria-controls="telescopeNavbar">
+              <a class="nav-link">
                 <router-link to="/actions" exact>
                   Actions
                 </router-link>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" data-toggle="collapse" data-target="#telescopeNavbar" aria-controls="telescopeNavbar">
+              <a class="nav-link">
                 <router-link to="/commands" exact>
                   Commands
                 </router-link>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" data-toggle="collapse" data-target="#telescopeNavbar" aria-controls="telescopeNavbar">
+              <a class="nav-link">
                 <router-link to="/triggers" exact>
                   Triggers
                 </router-link>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" data-toggle="collapse" data-target="#telescopeNavbar" aria-controls="telescopeNavbar">
+              <a class="nav-link">
                 <router-link to="/about" exact>
                   About
                 </router-link>

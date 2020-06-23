@@ -40,9 +40,6 @@
                   <div class="small text-muted">Average</div>
                 </div>
               </div>
-	      <!--div v-else>
-		<p>There are no Data Points registered</p>
-	      </div-->
             </div>
           </div>
         </div>

@@ -44,7 +44,6 @@
           </div>
 
           <div class="col-md-2">
-            <!--button type="button" class="btn button-green button-green-action" data-toggle="modal" data-target="#addActionModal" @click="cleanActiveAction()" style="width: 100%;">Add action</button-->
             <button type="button" class="btn button-green button-green-action" @click="cleanActiveAction(); displayModalForActionAdding();" style="width: 100%;">Add action</button>
           </div>
 
@@ -169,7 +168,6 @@
         },
         // setter
         set: function (newValue) {
-          console.log("#### Entering maxActionsPerPage watcher");
           this.$store.dispatch('setMaxActionsPerPage', newValue);
         }
       },
@@ -181,7 +179,6 @@
         },
         // setter
         set: function (newValue) {
-          console.log("#### Entering actionFilter watcher");
           this.$store.dispatch('filterActionsToDisplay', newValue);
         }
       },

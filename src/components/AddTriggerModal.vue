@@ -117,19 +117,6 @@
                       </div>
                     </div>
 
-                    <!--div class="mb-3" v-if="conditionSelected.id==2">
-                      <label for="dataStreamName">From Data Stream</label>
-                      <div class="input-group">
-                        <select class="form-control custom-select" id="dataStreamName" placeholder="" required="true">
-                          <option v-for="dS in dataStreamsConfigured" value="dS.name" v-model="onDataStreamValueCondition.dataStream">{{dS.name}}</option>
-                        </select>
-                        <div class="invalid-feedback" style="width: 100%;">
-                          The Trigger name is required.
-                        </div>
-                      </div>
-                    </div-->
-
-
                     <div v-if="conditionSelected.id==2">
                       <div class="row">
 
@@ -145,12 +132,6 @@
                             </div>
                           </div>
                         </div>
-
-
-                        <!--div class="col-md-4 mb-3">
-                          <label>Value</label>
-                          <input class="form-control" type="text" placeholder="Data-Stream current value" readonly>
-                        </div-->
 
 
                         <div class="col-md-3 mb-3">
@@ -276,12 +257,8 @@
 
                     <br>
 
-                    <!--ul class="list-group list-group-flush">
-                      <li v-for="condition in conditionsForTrigger" class="list-group-item">{{condition}}</li>
-                    </ul-->
 
                     <conditions-accordion v-if="conditionsForTrigger!==undefined"></conditions-accordion>
-
 
 
                   </div>
@@ -310,16 +287,6 @@
 
     components: {
       'conditions-accordion': TriggerConditionsAccordion
-    },
-
-    mounted(){
-      /*$(function () {
-        $('#datetimepicker1').datetimepicker();
-        $('#datetimepicker2').datetimepicker();
-
-        console.log($("#datetimepicker1").datetimepicker('date'));
-        console.log($('#datetimepicker').datetimepicker('viewDate'));
-      });*/
     },
 
     computed:{

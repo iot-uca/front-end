@@ -16,8 +16,6 @@
 
           <ul v-if="onDataStreamConditions.length>0" class="list-group list-group-flush">
             <li v-for="condition in onDataStreamConditions" class="list-group-item">
-              <!--button type="button" class="btn btn-danger btn-sm" style="float: right;"><strong><i class="fa fa-remove"></i></strong></button-->
-
               <h6><a href="#" style="float: right; color: #4AE387"><strong><i class="fa fa-remove"></i></strong></a>{{condition.data_stream}} <strong>{{condition.condition.operator}} {{condition.condition.value}}</strong> {{condition.value}} </h6>
             </li>
           </ul>
@@ -45,7 +43,6 @@
               <div v-if="condition.dataStreamNotUpdatedFrom.days>0">{{condition.dataStreamNotUpdatedFrom.days}} days,</div>
               <div v-if="condition.dataStreamNotUpdatedFrom.hours>0">{{condition.dataStreamNotUpdatedFrom.hours}} hrs,</div>
               <div v-if="condition.dataStreamNotUpdatedFrom.minutes>0">{{condition.dataStreamNotUpdatedFrom.minutes}} minutes</div-->
-              <!--div v-if="condition.dataStreamNotUpdatedFrom.seconds>0">{{condition.dataStreamNotUpdatedFrom.seconds}} secs.</div-->
             </li>
           </ul>
 

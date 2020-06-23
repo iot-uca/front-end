@@ -43,8 +43,6 @@
 
           <div class="col-md-2">
             <button type="button" class="btn button-green" @click="displayModalForStreamAdding()" style="width: 100%;">Add stream</button>
-            <!--button type="button" class="btn button-green" data-toggle="modal" data-target="#addDataStreamModal" style="width: 100%;">Add stream</button-->
-
           </div>
 
           <div class="col-md-2">
@@ -86,16 +84,9 @@
             <td>{{dataStream.name}}</td>
             <td>{{dataStream.current_value}}</td>
             <td>
-              <!--button type="button" class="btn btn-success btn-sm" @click="showDataStream(dataStream)" data-toggle="modal" data-target="#dataPointsForStreamModal" style="height: 75%;">
-                <i class="fa fa-bar-chart"></i>
-              </button-->
               <a @click="showDataStream(dataStream); getDataPoints();" data-toggle="modal" data-target="#dataPointsForStreamModal" style="color:#4AFF82"><i class="fa fa-bar-chart"></i></a>
-              <!-- displayModalForDataPointsChart(); getDataPoints(); -->
             </td>
             <td>
-              <!--button type="button" class="btn btn-info btn-sm" @click="editDataStreams(dataStream)" data-toggle="modal" data-target="#editDataStreamModal" style="height: 75%; color:#4AFF82">
-                <i class="fa fa-pencil-square-o"></i>
-              </button-->
               <a @click="editDataStreams(dataStream); displayModalForStreamEditing()" style="color:#4AFF82"><i class="fa fa-pencil-square-o"></i></a>
 
             </td>
@@ -152,7 +143,6 @@
     },
 
     mounted(){
-      console.log(" ########### Entering mounted ###########");
       this.$store.dispatch('showDataStreamView', this.$store.state.backendEndPoint);
     },
 
@@ -169,7 +159,6 @@
         },
         // setter
         set: function (newValue) {
-          console.log("#### Entering maxDataStreamsPerPage watcher");
           this.$store.dispatch('setMaxDataStreamsPerPage', newValue);
         }
       },
@@ -192,7 +181,6 @@
         },
         // setter
         set: function (newValue) {
-          console.log("#### Entering dataStreamFilter watcher");
           this.$store.dispatch('filterDataStreamToDisplay', newValue);
         }
       }
@@ -266,18 +254,6 @@
       editDataStreams: function (dataStream) {
         this.$store.dispatch('editDataStreams',dataStream);
       },
-
-/*      addElementToDeleteList: function (dataStream) {
-        this.$store.state.dispatch('updateDataStreamsForPage', currentElems);
-      },
-
-      showDataStream: function (dataStream) {
-        this.$store.state.dispatch('updateDataStreamsForPage', currentElems);
-      },
-
-      editDataStream: function (dataStream) {
-        this.$store.state.dispatch('updateDataStreamsForPage', currentElems);
-      }*/
 
       ...mapActions([
         'addElementToDeleteList', 'showDataStream'//, 'editDataStreams'

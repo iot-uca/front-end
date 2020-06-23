@@ -95,7 +95,6 @@
             <i class="fa fa-pie-chart"></i> Most Executed Actions
 
             <router-link to="/actions" exact>
-        	<!--i class="fa fa-ellipsis-h" style="float:right; color:black"></i-->
 		<span class="badge" style="color: rgb(74, 255, 130); float:right;">View</span>
             </router-link>
 
@@ -177,7 +176,6 @@
                 <td>{{command.command}}</td>
                 <td class="text-center">{{command.priority}}</td>
                 <td class="text-center"> - mins</td>
-                <!--td><button class="btn btn-sm" data-toggle="modal" @click="showDataStream(dataStream); getDataPoints();" data-target="#dataPointsForStreamModal"><i class="fa fa-bar-chart text-center"></i></button></td-->
               </tr>
               </tbody>
             </table>
@@ -194,7 +192,6 @@
             <i class="fa fa-pie-chart"></i> Most Recently Updated Streams
 
               <router-link to="/dataStreams" exact>
-                <!--i class="fa fa-ellipsis-h" style="float:right; color:black"></i-->
 		<span class="badge" style="color: rgb(74, 255, 130); float:right;">View</span>
               </router-link>
 
@@ -247,20 +244,11 @@ export default {
 
   mounted(){
     this.$store.dispatch('showDashboardView');
-    console.log("###### 111 #####");
     this.$store.dispatch('getNextCommandsInQueue', this.$store.state.backendEndPoint);
-    console.log("###### 222 #####");
     this.determineMostRecentlyUpdatedStreams(new Date());
-    console.log("###### 333 #####");
     this.$store.dispatch('getMostExecutedActions', this.$store.state.backendEndPoint);
-    console.log("###### 444 #####");
     this.$store.dispatch('getLastExecutedActions', this.$store.state.backendEndPoint);
-    console.log("###### 555 #####");
     this.drawCharts();
-    console.log("###### 666 #####");
-    //this.determineMostRecentlyUpdatedActions(new Date());
-    console.log("###### 777 #####");
-
   },
 
   computed:{

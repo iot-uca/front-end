@@ -101,8 +101,6 @@
 
                     <div class="tab-pane fade" id="triggerConditionDetail" role="tabpanel" aria-labelledby="triggerConditionDetail-tab">
 
-                    <!--  {{JSON.stringify(activeTrigger)}}   -->
-
                     <br>
 
                     <div v-if="activeTrigger.conditions.length<1" >

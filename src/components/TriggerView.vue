@@ -12,12 +12,7 @@
     <div v-else class="row">
       <br>
 
-      <!--div class="col-md-1">
-      </div-->
-
       <div class="col-md-12">
-        <!--h4 class="mb-3"><small><strong>Existing triggers</strong></small></h4>
-        <hr-->
 
         <div class="row">
 
@@ -78,7 +73,7 @@
           </thead>
           <tbody class="table-hover">
           <!--tr v-for="t in triggersForPage" v-bind:trigger="t" is="trigger-table-row"></tr-->
-          <!--Refenrenced in ..... https://github.com/vuejs/Discussion/issues/204 -->
+          <!--Refenrenced in https://github.com/vuejs/Discussion/issues/204 -->
 
           <tr v-for="(trigger, index) in getTriggersForPage()">
             <td>
@@ -99,11 +94,6 @@
                 <i class="fa fa-eye"></i>
               </button>
             </td>
-            <!--td>
-              <button type="button" class="btn button-green btn-sm" @click="editTrigger(trigger)" data-toggle="modal" data-target="#editTriggerModal" style="height: 75%;">
-                <i class="fa fa-pencil-square-o"></i>
-              </button>
-            </td-->
           </tr>
           </tbody>
         </table>
@@ -134,9 +124,6 @@
         </div>
 
       </div>
-
-      <!--div class="col-md-1">
-      </div-->
     </div>
   </div>
 

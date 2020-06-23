@@ -41,7 +41,6 @@
         </div>
 
         <div class="col-md-2">
-          <!--button type="button" class="btn button-green button-green-action" data-toggle="modal" data-target="#addCommandModal" style="width: 100%;">Add command</button-->
           <button type="button" class="btn button-green button-green-action" @click="displayModalForCommandAdding();" style="width: 100%;">Add command</button>
         </div>
 
@@ -65,7 +64,6 @@
           <th scope="col" style="width: 2%"></th>
           <th scope="col" style="width: 62%; color: white;">Name</th>
           <th scope="col" style="width: 36%; color: white;">Priority</th>
-          <!--th scope="col" style="width: 2%"></th-->
         </tr>
         </thead>
         <tbody class="table-hover">
@@ -81,11 +79,6 @@
 
           <td>{{command.priority}}</td>
 
-          <!--td>
-            <button type="button" class="btn button-green button-green-edit btn-sm" data-toggle="modal" data-target="#editCommandModal">
-              <i class="fa fa-pencil-square-o"></i>
-            </button>
-          </td-->
         </tr>
         </tbody>
       </table>
@@ -134,7 +127,6 @@ export default {
   },
 
   mounted(){
-    console.log("########### ENTERING mounted ###########");
     this.$store.dispatch('showCommandView', this.$store.state.backendEndPoint);
   },
 
@@ -155,7 +147,6 @@ export default {
       },
       // setter
       set: function (newValue) {
-        console.log("#### Entering maxCommandsPerPage watcher");
         this.$store.dispatch('setMaxCommandsPerPage', newValue);
       }
     },
@@ -167,7 +158,6 @@ export default {
       },
       // setter
       set: function (newValue) {
-        console.log("#### Entering commandFilter watcher");
         this.$store.dispatch('filterCommandsToDisplay', newValue);
       }
     },

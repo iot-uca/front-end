@@ -16,4 +16,4 @@ EXPOSE 80
 COPY initialization.sh ./initialization.sh
 RUN chmod +x ./initialization.sh
 
-ENTRYPOINT initialization.sh
+ENTRYPOINT ["./initialization.sh"]

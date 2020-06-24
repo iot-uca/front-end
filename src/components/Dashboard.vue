@@ -249,6 +249,9 @@ export default {
     this.$store.dispatch('getMostExecutedActions', this.$store.state.backendEndPoint);
     this.$store.dispatch('getLastExecutedActions', this.$store.state.backendEndPoint);
     this.drawCharts();
+	console.log("### process.env = " + this.$store.state.backendEndPoint);
+	console.log("### process..env = " + JSON.stringify(process.env));
+	console.log("### process...env = " + JSON.stringify($process.env));
   },
 
   computed:{

@@ -10,7 +10,5 @@ RUN npm run build
 FROM nginx:1.13.12-alpine as production-stage
 COPY --from=build-stage /telescope/dist /usr/share/nginx/html
 EXPOSE 80
-ARG COSMOS
-ENV COSMOS_LOCATION=${COSMOS}
-echo your COSMOS_LOCATION for dev is $COSMOS_LOCATION;
+ENV COSMOS_LOCATION
 CMD ["nginx", "-g", "daemon off;"]

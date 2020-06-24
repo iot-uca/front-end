@@ -245,7 +245,7 @@ export default {
   mounted(){
   	console.log("### process.env = " + this.$store.state.backendEndPoint);
 	console.log("### process..env = " + JSON.stringify(process.env));
-	console.log("### process...env = " + JSON.stringify($process.env));
+	console.log("### process..env = " + JSON.stringify(process.env.COSMOS_LOCATION));
     this.$store.dispatch('showDashboardView');
     this.$store.dispatch('getNextCommandsInQueue', this.$store.state.backendEndPoint);
     this.determineMostRecentlyUpdatedStreams(new Date());

@@ -16,4 +16,6 @@ EXPOSE 80
 COPY initialization.sh ./initialization.sh
 RUN chmod +x ./initialization.sh
 
-ENTRYPOINT ["sh","./initialization.sh"]
+CMD ["nginx", "-g", "daemon off;"]
+
+#ENTRYPOINT ["sh","./initialization.sh"]

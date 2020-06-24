@@ -23,6 +23,7 @@ module.exports = function karmaConfig (config) {
     browsers: ['PhantomJS'],
     frameworks: ['mocha', 'sinon-chai', 'phantomjs-shim'],
     reporters: ['coverage', 'coveralls'],
+   // reporters: ['dots'],
     // due to https://github.com/vuejs-templates/webpack/issues/474, below entry was added
     files: ['../../node_modules/es6-promise/dist/es6-promise.auto.js','./index.js'],
     preprocessors: {

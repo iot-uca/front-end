@@ -22,8 +22,8 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 //##########################################################################################
 
     //backendEndPoint: "http://192.168.99.100:8090",
-    backendEndPoint: "http://localhost:8090",
-    //backendEndPoint: process.env.COSMOS_LOCATION,
+    //backendEndPoint: "http://localhost:8090",
+    backendEndPoint: process.env.COSMOS_LOCATION,
 
 //##########################################################################################
 // Error Handling
@@ -95,19 +95,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 //##########################################################################################
 // Data Stream model
 //##########################################################################################
-
-    /*dataStreamsConfigured:[
-      {id: 0, name: 'Solar light in garden'},
-      {id: 1, name: 'Temperature inside the house'},
-      {id: 2, name: 'Temperature outside the house'},
-      {id: 3, name: 'Car Volumetric Sensor'},
-      {id: 4, name: 'Pressure inside the house'},
-      {id: 5, name: 'UV-Intensity'},
-      {id: 6, name: 'Humidity inside guest-room'},
-      {id: 7, name: 'Humidity outside the house'},
-      {id: 8, name: 'Pressure outside the house'},
-      {id: 9, name: 'Movement sensor in atic'}
-    ],*/
 
     mostRecentlyUpdatedStreams: [],
 
@@ -185,8 +172,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       }
 
     ],
-
-
 
     actionFilter: undefined,
     pagesNeededForActions: 0,
@@ -356,13 +341,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     }
   },
 
-  mutations: { // si uso mutaciones, el developer mediante las vue tools puede ser claramente el nombre de la mutación
-    // que ocasionó el cambio de estado. Por lo tanto facilita el debugging.
-
-    // no sirven para comunicarse contra backends, xq es una transaccion asíncrona. Toma tiempo que responda.
-    // por ejemplo, si miro en vue tools, voy a ver que se ejecutó la mutación X, pero la vista no se va a actualizar
-    // hasta tanto el backend haya respondido. Si tengo N mutaciones asincronas, es un lío poder detectar cual se ejcutó
-    // y el resultado de la misma (la mutación no se lista cuando terminó sino cuando se lanzó).
+  mutations: { 
     increaseOptions: state => {
       state.options.forEach(option => {
         option.value += 1;
@@ -375,7 +354,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
     openNav: state => {
       state.sideNavStyle.backgroundColor = "#111"; //Background color BLACK
-      //state.sideNavStyle.backgroundColor = "#2b2c37"; // Cosmos Title background color
       state.sideNavStyle.width = "250px";
     },
 
@@ -395,7 +373,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     showDataStreamView: state => {
-      console.log("## Entering showDataStreamView !!");
       state.renderDashboardView = false;
       state.renderDataStreamView = true;
       state.renderActionAddView = false;
@@ -461,53 +438,39 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 //##########################################################################################
 
     setFilteredDataStreamsToAllConfigured: state => {
-      console.log("### Entering  setFilteredDataStreamsToAllConfigured");
       state.filteredDataStreams = state.dataStreamsConfigured;
-      console.log(" state.filteredDataStreams: " + state.filteredDataStreams);
-      console.log(" state.dataStreamsConfigured: "+ state.dataStreamsConfigured);
     },
 
     setFilteredActionsToAllConfigured: state => {
-      console.log("### Entering  setFilteredActionsToAllConfigured");
       state.filteredActions = state.existingActions;
     },
 
     setFilteredTriggersToAllConfigured: state => {
-      console.log("### Entering  setFilteredTriggersToAllConfigured");
       state.filteredTriggers = state.existingTriggers;
     },
 
     getPagesNeededForDataStreams: state => {
-      console.log("### Entering  getPagesNeededForDataStreams");
       state.pagesNeededForDataStreams = getPagesNeeded(state.filteredDataStreams, state.maxDataStreamsPerPage);
     },
 
     getPagesNeededForActions: state => {
-      console.log("### Entering  getPagesNeededForActions");
       state.pagesNeededForActions = getPagesNeeded(state.filteredActions, state.maxActionsPerPage);
     },
 
     getPagesNeededForTriggers: state => {
-      console.log("### Entering  getPagesNeededForTriggers");
       state.pagesNeededForTriggers = getPagesNeeded(state.filteredTriggers, state.maxTriggersPerPage);
     },
 
     getActionsToShowInTable: state => {
-      console.log("#### Entering getActionsToShowInTable");
       state.actionsForPage = getElementsToShowInTable(state.currentPage, state.maxActionsPerPage, state.filteredActions);
-      console.log(" actionsPerPage: " + state.actionsForPage);
     },
 
     getTriggersToShowInTable: state => {
-      console.log("#### Entering getTriggersToShowInTable");
       state.triggersForPage = getElementsToShowInTable(state.currentPage, state.maxTriggersPerPage, state.filteredTriggers);
-      console.log(" triggersForPage: " + state.triggersForPage);
     },
 
     getDataStreamsToShowInTable: state => {
-      console.log("#### Entering getDataStreamsToShowInTable");
       state.dataStreamsForPage = getElementsToShowInTable(state.currentPage, state.maxDataStreamsPerPage, state.filteredDataStreams);
-      console.log(" dataStreamsForPage: " + state.dataStreamsForPage);
     },
 
     setCurrentPage: (state, payload) => {
@@ -528,24 +491,16 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 //##########################################################################################
 
   cleanElementsToDelete: state => {
-    console.log("### ENTERING cleanElementsToDelete");
     state.elementsToDelete = [];
   },
 
   addElementToDeleteList: (state, elem) => {
-      console.log("### Entering addElementToDeleteList!");
-
-      console.log("elementsToDelete: " + state.elementsToDelete);
-      console.log("elem: " + elem);
-
       //if already exists, delete it; add it otherwise
       if (state.elementsToDelete.indexOf(elem) > -1) {
         state.elementsToDelete.splice(state.elementsToDelete.indexOf(elem), 1);
       } else {
         state.elementsToDelete.push(elem);
       }
-      console.log("elementsToDelete: " + state.elementsToDelete);
-      console.log("elem: " + elem);
     },
 
     showDataStream: (state, dataStream) => {
@@ -554,25 +509,18 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     editDataStreams: (state, dataStream) => {
-      console.log("### Entering editDataStream " + dataStream);
-      console.log(" activeDataStream: " + state.activeDataStream);
       state.activeDataStream = dataStream;
-      console.log(" activeDataStream: " + state.activeDataStream);
     },
 
     updateDataStreamsForPage: (state, value) => {
-      console.log(" Entering updateDataStreamsForPage");
       state.dataStreamsForPage = value;
     },
 
 
     filterActionsToDisplay: (state, filterValue) => {
-      console.log("### Entering filterActionsToDisplay ");
 
       state.actionFilter = filterValue;
-      console.log("actionFilter: " + state.actionFilter);
-
-      let intermmediateActions = []; // siempre vacío el intermedio
+      let intermmediateActions = [];
 
       // check if contains a valid value
       if(state.actionFilter !== undefined){ // uso uno intermedio para recien cambiar el array principal cuando haya identificado todos los triggers que tienen que ser mostrados
@@ -613,12 +561,9 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     filterTriggersToDisplay: (state, filterValue) => {
-      console.log("Entering filterTriggersToDisplay ");
-
       state.triggerFilter = filterValue;
-      console.log("triggerFilter: " + state.triggerFilter);
 
-      let intermediateTriggers = []; // siempre vacío el intermedio
+      let intermediateTriggers = [];
 
       // check if contains a valid value
       if(state.triggerFilter !== undefined){ // uso uno intermedio para recien cambiar el array principal cuando haya identificado todos los triggers que tienen que ser mostrados
@@ -639,8 +584,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
           //check Trigger policy type
           filteredField = state.existingTriggers[i].policy.type;
           intermediateTriggers = addElementToFilteredOnes(filteredField, state.triggerFilter, intermediateTriggers, state.existingTriggers[i]);
-
-          console.log("state.existingTriggers[i]: " + JSON.stringify(state.existingTriggers[i]));
 
           if(state.existingTriggers[i].policy.type=='on_data_point_registration'){
             filteredField = state.existingTriggers[i].policy.data_stream;
@@ -666,12 +609,10 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     filterDataStreamToDisplay: (state, filterValue) => {
-      console.log("Entering filterDataStreamToDisplay ");
 
       state.dataStreamFilter = filterValue;
-      console.log("dataStreamFilter: " + state.dataStreamFilter);
 
-      let intermediateDataStreams = []; // siempre vacío el intermedio
+      let intermediateDataStreams = [];
 
       // check if contains a valid value
       if(state.dataStreamFilter !== undefined){ // uso uno intermedio para recien cambiar el array principal cuando haya identificado todos los triggers que tienen que ser mostrados
@@ -701,10 +642,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
 
     filterCommandsToDisplay: (state, filterValue) => {
-      console.log("Entering filterCommandsToDisplay ");
-
       state.commandFilter = filterValue;
-      console.log("commandFilter: " + state.commandFilter);
 
       let intermmediateCommands = []; // siempre vacío el intermedio
 
@@ -763,12 +701,10 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     prepareDataStreamAdding: state => {
-        //$("#addDataStreamModal").modal("hide");  			// close the modal
         state.displayLoadingFeedback = true; // user starts seeing the loading spinner
     },
 
     prepareCommandAdding: state => {
-        //$("#addCommandModal").modal("hide");  			// close the modal
         state.displayLoadingFeedback = true; // user starts seeing the loading spinner
     },
 
@@ -776,7 +712,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
         state.displayLoadingFeedback = false;
         state.errorInInteraction = false;
         state.successMessage = state.dataStreamToAdd + " added successfully.";
-        //$("#successModal").modal();
 
         state.showModalForRequestResult = true;
         setTimeout(function(){
@@ -801,9 +736,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     errorTreatmentForDataStreamAdding: (state,error) => {
-        console.log("### Entering errorTreatmentForDataStreamAdding ");
-        console.log("[ERROR] " + error);
-
         state.displayLoadingFeedback = false;
         state.errorInInteraction = true;
 
@@ -837,8 +769,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
           state.errorMessage = "There was a problem adding " + state.dataStreamToAdd + ". Please try again!";
         }
 
-        //$("#successModal").modal();
-
         state.showModalForRequestResult = true;
         setTimeout(function(){
           state.showModalForRequestResult = false;
@@ -849,7 +779,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     errorTreatmentForTriggersAdding: (state,error) => {
-        console.log("### Entering errorTreatmentForTriggersAdding ");
         console.log("[ERROR] " + error);
 
         state.displayLoadingFeedback = false;
@@ -894,8 +823,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
 
     errorTreatmentForCommandAdding: (state,error) => {
-        console.log("[ERROR] " + error);
-
+        
         state.displayLoadingFeedback = false;
         state.errorInInteraction = true;
 
@@ -942,7 +870,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     addOneMoreElemForActionRequestHeader: state => {
-      console.log("### Entering addOneMoreElemForActionRequestHeader ");
       state.activeIdsForHttpRequestHeader.push({
         key: '',
         value: ''
@@ -954,7 +881,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     prepareActionRequest: state => {
-      console.log(" Entering prepareActionRequest!");
       let request={};
       let request_line={};
 
@@ -965,9 +891,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       request['headers'] = state.activeIdsForHttpRequestHeader;
       request['body'] = state.actionBody;
 
-      console.log("request_line: " + request_line);
-      console.log("request: " + request);
-
       state.request = request;
 
       state.displayLoadingFeedback = true; // user starts seeing the loading spinner
@@ -975,7 +898,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     displayErrorDetailsForAddingAction: (state, error) => {
-        console.log(" Entering displayErrorDetailsForAddingAction!!!");
         console.log("[ERROR] " + error);
 
         state.displayLoadingFeedback = false;
@@ -1006,8 +928,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
         state.errorMessage = "There was a problem adding " + state.activeAction.name + ". Please try again!";
       }
 
-      //$("#successModal").modal();
-
       state.showModalForRequestResult = true;
       setTimeout(function(){
         state.showModalForRequestResult = false;
@@ -1017,7 +937,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
 
     setActionAddSuccessDetails: state => {
-        console.log(" Entering setActionAddSuccessDetails!");
         state.displayLoadingFeedback = false;
         state.errorInInteraction = false;
         state.successMessage = state.activeAction.name + " added successfully.";
@@ -1031,7 +950,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
 
     setActionBody: (state, value) => {
-      console.log("Entering setActionBody!");
       state.actionBody = value;
       try {
         JSON.parse(state.actionBody);
@@ -1042,45 +960,22 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     assignBodyAndHeader: (state, action) => {
-      console.log("Entering assignBodyAndHeader !");
-
       state.activeAction = action;
-
-      console.log("activeIdsForHttpRequestHeader: " + state.activeIdsForHttpRequestHeader);
-      console.log("action.headers: " + action.headers);
-      console.log("activeIdsForHttpRequestBody: " + state.activeIdsForHttpRequestBody);
-      console.log("action.body: " + action.body);
-
       state.activeIdsForHttpRequestHeader = action.headers;
       state.activeIdsForHttpRequestBody = action.body;
-
-      console.log("activeIdsForHttpRequestHeader: " + state.activeIdsForHttpRequestHeader);
-      console.log("activeIdsForHttpRequestBody: " + state.activeIdsForHttpRequestBody);
     },
 
     updateAction: state =>{
-      console.log("##### ABOUT TO UPDATE AN ACTION!! ");
-      console.log("activeIdsForHttpRequestHeader: " + state.activeIdsForHttpRequestHeader);
-      console.log("activeIdsForHttpRequestBody: " + state.actionBody);
-      console.log("activeAction - Name: " + state.activeAction.name);
-      console.log("activeAction - Method: " + state.activeAction.method);
-      console.log("activeAction - URL: " + state.activeAction.url);
-      console.log("activeAction - Version: " + state.activeAction.version);
-
+        
       // FIXME => FALTA HACER EL UDPATE
 
     },
 
     dataPointPolicy: state => {
-      console.log("### Entering DataPointPolicy");
-      console.log(state.isTimePeriodPolicy);
       state.isTimePeriodPolicy = false;
-      console.log(state.isTimePeriodPolicy);
     },
 
     timePeriodPolicy: state => {
-      console.log("### Entering TimePeriodPolicy");
-      console.log(state.isTimePeriodPolicy);
       state.isTimePeriodPolicy = true;
     },
 
@@ -1090,30 +985,18 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     editTrigger: (state, trigger) => {
-      console.log("...Entering editTrigger!");
-      console.log("activeTrigger: " + state.activeTrigger);
-      console.log("trigger: " + trigger.name);
       state.activeTrigger = trigger;
       state.isTimePeriodPolicy = trigger.policy.type === "time_interval";
-      console.log("activeTrigger: " + JSON.stringify(state.activeTrigger));
     },
 
     cleanActiveAction: state => {
-      console.log(" Entering cleanActiveAction!");
       state.activeAction = [];
       state.activeIdsForHttpRequestHeader = [];
       state.actionBody = '{"foo":"bar", "jane":"doe"}';
-
     },
 
 
     drawMosTriggeredActionsChart: state => {
-      console.log("Entering drawMosTriggeredActionsChart!!");
-
-      console.log("######################################################");
-      console.log("FFF : " + JSON.stringify(document.getElementById('myPieChart2').outerHTML));
-      console.log("######################################################");
-
       let ctx = document.getElementById("myPieChart2").getContext('2d');
 
       new Chart(ctx, {
@@ -1140,7 +1023,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     drawTriggerTypesPercentagesChart: state => {
-      console.log("Entering drawTriggerTypesPercentagesChart!!");
       let ctx = document.getElementById("percentageBar").getContext('2d');
       new Chart(ctx, {
         type: 'doughnut',
@@ -1165,23 +1047,14 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
 
     drawDataPointsChart: state => {
-      console.log("==> ENTERING drawDataPointsChart");
-
-      console.log("######################################################");
-      console.log("LALA : " + JSON.stringify(document.getElementById('line-chart').outerHTML));
-      console.log("######################################################");
-
       let ctx = document.getElementById("line-chart").getContext('2d');
 
       new Chart(ctx, {
         type: 'line',
         data: {
-          //labels: [1,2,3,4,5,6,7,8,9,10],
           labels: state.labelsForDataPoints,
           datasets: [{
-            //data: [86,114,106,106,107,111,114,90,99,107],
             data: state.dataPointsAvailables,
-            //label: "Temperature",
             label: state.activeDataStream.name,
             borderColor: "#3e95cd",
             fill: false
@@ -1212,7 +1085,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
 
     drawMostExecutedTriggersChart: state => {
-      console.log("Etenring drawMostExecutedTriggersChart!!");
       let ctx = document.getElementById("barChart").getContext('2d');
       new Chart(ctx, {
         type: 'horizontalBar',
@@ -1257,35 +1129,25 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     processActionsConfigured: (state, response)  => {
-      console.log(" Entering processActionsConfigured!!");
-
-      console.log(" RESPONSE: " + response);
       state.displayLoadingFeedback = false;
       let actions = response.data;
-      console.log("[SUCCESS] actions =>>>> " + actions);
 
       state.existingActions = [];
 
       for(let i=0; i<actions.length; i++){
         state.existingActions.push(actions[i]);
-        console.log("DataStreams =>" + state.existingActions);
       }
 
     },
 
     processTriggersConfigured: (state, response)  => {
-      console.log(" Entering processTriggersConfigured!!");
-
-      console.log(" RESPONSE: " + response);
       state.displayLoadingFeedback = false;
       let triggers = response.data;
-      console.log("[SUCCESS] triggers =>>>> " + triggers);
 
       state.existingTriggers = [];
 
       for(let i=0; i<triggers.length; i++){
         state.existingTriggers.push(triggers[i]);
-        console.log("existingTriggers =>" + state.existingTriggers);
       }
 
     },
@@ -1296,8 +1158,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     deleteElements: (state, view) => {
-      console.log("### Entering deleteElements");
-
       // assume everything succeded
       state.successMessage = "Elements deleted successfully!";
       state.errorMessage = "";
@@ -1305,9 +1165,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       for(let i=0; i<state.elementsToDelete.length; i++){
         state.displayLoadingFeedback = true; // user starts seeing the loading spinner
 
-        //axios.delete( url + state.elementsToDelete[i].metadata[0].identifier).then(response => {
-
-        console.log(">> URL : " + state.elementsToDelete[i].links.self);
         axios.delete(state.elementsToDelete[i].links.self).then(response => {
 
           state.displayLoadingFeedback = false;
@@ -1322,7 +1179,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
         })
       }
 
-
       state.showModalForRequestResult = true;
       setTimeout(function(){
         state.showModalForRequestResult = false;
@@ -1331,12 +1187,10 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     displayLoadingFeedback: state => {
-      console.log("### ENTERING  displayLoadingFeedback");
       state.displayLoadingFeedback = true;
     },
 
     hideLoadingFeedback: state => {
-      console.log("### ENTERING  hideLoadingFeedback");
       state.displayLoadingFeedback = false;
     },
 
@@ -1352,13 +1206,9 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       state.dataStreamsResponseFromBackend = response.data;
       state.dataStreamsConfigured = [];
 
-      console.log("Amount of Streams in Response: " + state.dataStreamsResponseFromBackend.length);
-
       for(let i=0; i<state.dataStreamsResponseFromBackend.length; i++){
         state.dataStreamsConfigured.push(state.dataStreamsResponseFromBackend[i]);
-        console.log("DataStreams =>" + state.dataStreamsConfigured);
       }
-      console.log(" Finishing getDataStreamsConfigured ######");
     },
 
     treatErrorForAddingDataStream: (state, error) => {
@@ -1388,39 +1238,28 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
 
     setOnDataStreamValue: (state, newValue) =>{
-      console.log("### Entering setOnDataStreamValue");
       state.onDataStreamValueCondition.dataStream = newValue;
-      console.log("# " + state.onDataStreamValueCondition.dataStream + " #");
     },
 
     setOnDataStreamCondition: (state, newValue) =>{
-      console.log("### Entering setOnDataStreamCondition");
       state.onDataStreamValueCondition.condition = newValue;
-      console.log("# " + state.onDataStreamValueCondition.condition + " #");
     },
 
     setOnDataStreamReferenceValue: (state, newValue) =>{
-      console.log("### Entering setOnDataStreamReferenceValue");
       state.onDataStreamValueCondition.value = newValue;
-      console.log("# " + state.onDataStreamValueCondition.value + " #");
     },
 
     setDataStreamNotUpdated: (state, newValue) =>{
-      console.log("### Entering setDataStreamNotUpdated");
       state.dataStreamNotUpdatedCondition.dataStream = newValue;
-      console.log("# " + state.dataStreamNotUpdatedCondition.dataStream + " #");
     },
 
     addNewCondition: state => {
-      console.log("### Entering addNewCondition");
-
       let condition = {};
       let elemId = state.conditionsCounter;
 
       condition.type =  state.conditionSelected.text;
 
       if (state.conditionSelected.id === 2) {
-        //condition.details = Object.assign({}, state.onDataStreamValueCondition);   // This prevents binding the variables, since you are copying the initial object
         condition.data_stream = state.onDataStreamValueCondition.dataStream;
         condition.condition = {operator:state.onDataStreamValueCondition.condition, value: parseInt(state.onDataStreamValueCondition.value)};
         state.dataStreamCurrentValueConditions.push(condition);
@@ -1432,12 +1271,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 	  condition.time_period = state.dataStreamNotUpdatedCondition.dataStreamNotUpdatedFrom.minutes + " minutes";
           state.dataStreamNotUpdatedConditions.push(condition);
         } else {
-          console.log("state.timeIntervalCondition: " + state.timeIntervalCondition);
-          console.log("state.timeIntervalCondition.from: " + state.timeIntervalCondition.from);
-          console.log("state.timeIntervalCondition.to: " + state.timeIntervalCondition.to);
-
 	  condition.time_interval = {start: state.timeIntervalCondition.from.hours + ":" + state.timeIntervalCondition.from.minutes, stop: state.timeIntervalCondition.to.hours + ":" + state.timeIntervalCondition.to.minutes};
-
           state.timeIntervalConditions.push(condition);
         }
       }
@@ -1453,47 +1287,31 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
         state.timeIntervalConditions=[];
         state.dataStreamNotUpdatedConditions=[];
       }
-
-      console.log("### state.conditionsForTrigger: " + JSON.stringify(state.conditionsForTrigger));
-      console.log("### conditionsCounter: " + state.conditionsCounter);
-      console.log("ABCDE###########################");
-      console.log("condition: " + JSON.stringify(condition));
-      console.log("state.conditionsForTrigger: " + JSON.stringify(state.conditionsForTrigger));
-      console.log("ABCDE###########################");
+      
     },
 
 
     getPagesNeededForCommands: state => {
-      console.log("### Entering  getPagesNeededForCommands");
       state.pagesNeededForCommands = getPagesNeeded(state.filteredCommands, state.maxCommandsPerPage);
     },
 
     getCommandsToShowInTable: state => {
-        console.log("#### Entering getCommandsToShowInTable");
         state.commandsForPage = getElementsToShowInTable(state.currentPage, state.maxCommandsPerPage, state.filteredCommands);
-        console.log(" commandsForPage: " + state.commandsForPage);
       },
 
 
     processCommandsConfigured: (state, response)  => {
-      console.log(" Entering processCommandsConfigured!");
-      console.log(" RESPONSE: " + response);
-
       let commands = response.data;
-      console.log("[SUCCESS] commands =>>>> " + commands);
-
       state.existingCommands = [];
 
       for(let i=0; i<commands.length; i++){
         state.existingCommands.push(commands[i]);
-        console.log(" Commands =>" + state.existingCommands);
       }
 
     },
 
 
     setFilteredCommandsToAllConfigured: state => {
-      console.log("### Entering  setFilteredCommandsToAllConfigured");
       state.filteredCommands = state.existingCommands;
     },
 
@@ -1502,12 +1320,10 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     //####################################################################
 
     displayModalForStreamAdding: state => {
-      console.log("### Entering  displayModalForStreamAdding");
       state.showModalForStreamAdding = true;
     },
 
     hideModalForStreamAdding: state => {
-      console.log("### Entering  hideModalForStreamAdding");
       state.showModalForStreamAdding = false;
     },
 
@@ -1524,12 +1340,10 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     //####################################################################
 
     displayModalForCommandAdding: state => {
-      console.log("### Entering  displayModalForCommandAdding");
       state.showModalForCommandAdding = true;
     },
 
     hideModalForCommandAdding: state => {
-      console.log("### Entering  hideModalForCommandAdding");
       state.showModalForCommandAdding = false;
     },
 
@@ -1538,12 +1352,10 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     //####################################################################
 
     displayModalForActionAdding: state => {
-      console.log("### Entering  displayModalForActionAdding");
       state.showModalForActionAdding = true;
     },
 
     hideModalForActionAdding: state => {
-      console.log("### Entering  hideModalForActionAdding");
       state.showModalForActionAdding = false;
     },
 
@@ -1564,7 +1376,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     displayModalForDataPointsAdding: state => {
-      console.log(" Entering displayModalForDataPointsAdding mutation");
       state.showModalForDataPointsAdding = true;
     },
     hideModalForDataPointsAdding: state => {
@@ -1572,9 +1383,9 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     displayModalForDataPointsChart: state => {
-      console.log(" Entering displayModalForDataPointsChart mutation");
       state.showModalForDataPointsChart = true;
     },
+    
     hideModalForDataPointsChart: state => {
       state.showModalForDataPointsChart = false;
     },
@@ -1584,22 +1395,18 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     //####################################################################
 
     displayModalForTriggerAdding: state => {
-      console.log("### Entering  displayModalForTriggerAdding");
       state.showModalForTriggerAdding = true;
     },
 
     hideModalForTriggerAdding: state => {
-      console.log("### Entering  hideModalForTriggerAdding");
       state.showModalForTriggerAdding = false;
     },
 
     displayModalForTriggerDetails: state => {
-      console.log("### Entering  displayModalForTriggerDetails");
       state.showModalForTriggerDetails = true;
     },
 
     hideModalForTriggerDetails: state => {
-      console.log("### Entering  hideModalForTriggerDetails");
       state.showModalForTriggerDetails = false;
     },
 
@@ -1608,23 +1415,18 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     //####################################################################
 
     displayModalForRemovingElements: state => {
-      console.log("### Entering  displayModalForRemovingElements");
       state.showModalForRemovingElements = true;
     },
 
     hideModalForRemovingElements: state => {
-      console.log("### Entering  hideModalForRemovingElements");
       state.showModalForRemovingElements = false;
     },
 
     setdataPointToAdd: (state,value) => {
-      console.log("### Entering  setdataPointToAdd");
       state.dataPointToAdd = value;
-      console.log(" dataPointToAdd: " + state.dataPointToAdd);
     },
 
     processDataPointsConfigured: (state, response) => {
-      console.log("### Entering  processDataPointsConfigured");
       state.labelsForDataPoints = [];
       state.dataPointsAvailables = [];
       state.dataPointsMinValue = 0;
@@ -1647,69 +1449,39 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
 
     getAmountOfTriggerTypes: state => {
-      console.log("### Entering  getAmountOfTriggerTypes");
       state.amountOfPeriodicalTriggers=0;
       state.amountOfDataPointTriggers=0;
 
       for(let i=0; i<state.existingTriggers.length; i++){
           if(state.existingTriggers[i].policy.type==='periodical'){
             state.amountOfPeriodicalTriggers+=1;
-            console.log("!!!!!!!!!!!state.amountOfPeriodicalTriggers: " + state.amountOfPeriodicalTriggers);
           }else{
             state.amountOfDataPointTriggers+=1;
-            console.log("!!!!!!!!!!!state.amountOfDataPointTriggers: " + state.amountOfDataPointTriggers);
           }
       }
 
     },
 
     determineUpdateTimeForStreams: (state, instant) => {
-      console.log("### Entering determineUpdateTimeForStreams!!");
-      console.log("instant: " + instant);
       state.mostRecentlyUpdatedStreams=[];
-
       let amountOfStreams = state.dataStreamsConfigured.length;
-      console.log("dataStreamsConfigured: " + JSON.stringify(state.dataStreamsConfigured));
-
-      console.log("TimezoneOffset: " + instant.getTimezoneOffset()); // negative value means ahead, positive behind UTC
-
       let milisFromTimezone = instant.getTimezoneOffset()*60000;
-      console.log("milisFromTimezone: " + milisFromTimezone);
-
       let thisMoment = moment(instant);
-      console.log("thisMoment: " + thisMoment);
-
-      console.log("moment Adapted: " + (milisFromTimezone + thisMoment));
 
       for(let i=0; i<amountOfStreams; i++){
 
         if(state.dataStreamsConfigured[i].last_update !== 'N/A'){
-          console.log("last_update: " + state.dataStreamsConfigured[i].last_update);
-          //let iso8610 = state.dataStreamsConfigured[i].last_update.slice(0,19) + '-' + state.dataStreamsConfigured[i].last_update.slice(19,24);
           let iso8610 = state.dataStreamsConfigured[i].last_update.slice(0,19);
-          console.log("iso8610: " + iso8610);
 
           let registrationMoment = moment(iso8610, moment.ISO_8601);
-
-          console.log("===>" + registrationMoment.day());
-          console.log("===>" + registrationMoment.month());
-          console.log("===>" + registrationMoment.year());
-          console.log("===>" + registrationMoment.hour());
-          console.log("===>" + registrationMoment.minutes());
-          console.log("===>" + registrationMoment.seconds());
-
-          console.log("registrationMoment: " + registrationMoment);
           // storing the time in another field, need the original to do every calculation
           state.dataStreamsConfigured[i].not_updated_since = ( (thisMoment + milisFromTimezone ) - registrationMoment)/60000;
-          console.log("state.dataStreamsConfigured[i].not_updated_since: " + state.dataStreamsConfigured[i].not_updated_since);
           state.mostRecentlyUpdatedStreams.push(state.dataStreamsConfigured[i]);
         }
-
       }
     },
 
     determineMostRecentlyUpdatedStreams: state => {
-      console.log("### Entering determineMostRecentlyUpdatedStreams!!");
       state.mostRecentlyUpdatedStreams = state.mostRecentlyUpdatedStreams.sort(function(a, b){return a.not_updated_since-b.not_updated_since});
 
       if(state.mostRecentlyUpdatedStreams.length>5){
@@ -1719,44 +1491,19 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     determineMostRecentlyUpdatedActions: (state, instant) => {
-
-      console.log("### Entering determineMostRecentlyUpdatedActions!!");
-      console.log("instant: " + instant);
       state.mostRecentlyUpdatedActions=[];
-
       let amountOfActions = state.lastExecutedActions.length;
-      console.log("lastExecutedActions: " + JSON.stringify(state.lastExecutedActions));
-
-      console.log("TimezoneOffset: " + instant.getTimezoneOffset()); // negative value means ahead, positive behind UTC
-
       let milisFromTimezone = instant.getTimezoneOffset()*60000;
-      console.log("milisFromTimezone: " + milisFromTimezone);
-
       let thisMoment = moment(instant);
-      console.log("thisMoment: " + thisMoment);
-
-      console.log("moment Adapted: " + (milisFromTimezone + thisMoment));
-
+      
       for(let i=0; i<amountOfActions; i++){
 
         if(state.lastExecutedActions[i].evaluationDateTime !== 'N/A'){
-          console.log("last_update: " + state.lastExecutedActions[i].evaluationDateTime);
           let iso8610 = state.lastExecutedActions[i].evaluationDateTime.slice(0,19);
-          console.log("iso8610: " + iso8610);
-
           let registrationMoment = moment(iso8610, moment.ISO_8601);
-
-          console.log("===>" + registrationMoment.day());
-          console.log("===>" + registrationMoment.month());
-          console.log("===>" + registrationMoment.year());
-          console.log("===>" + registrationMoment.hour());
-          console.log("===>" + registrationMoment.minutes());
-          console.log("===>" + registrationMoment.seconds());
-
-          console.log("registrationMoment: " + registrationMoment);
+          
           // storing the time in another field, need the original to do every calculation
           state.lastExecutedActions[i].not_updated_since = ( (thisMoment + milisFromTimezone ) - registrationMoment)/60000;
-          console.log("state.lastExecutedActions[i].not_updated_since: " + state.lastExecutedActions[i].not_updated_since);
           state.mostRecentlyUpdatedActions.push(state.lastExecutedActions[i]);
         }
 
@@ -1767,31 +1514,22 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       if(state.mostRecentlyUpdatedActions.length>5){
         state.mostRecentlyUpdatedActions = state.mostRecentlyUpdatedActions.slice(0,5);
       }
-      console.log(JSON.stringify(state.mostRecentlyUpdatedActions));
+
     },
 
     getNextCommandsInQueue: (state, response) => {
-      console.log(" Entering getNextCommandsInQueue");
-      console.log(" RESPONSE: " + JSON.stringify(response));
-
       let commands = response.data;
-      console.log("[SUCCESS] commands =>>>> " + commands);
-
       state.existingCommandsPrioritized = [];
 
       for(let i=0; i<commands.length; i++){
         state.existingCommandsPrioritized.push(commands[i]);
       }
-      console.log(" Commands =>" + JSON.stringify(state.existingCommandsPrioritized));
     },
 
    getMostExecutedActions: (state, response) => {
-      console.log(" Entering getMostExecutedActions");
-      console.log(" RESPONSE: " + JSON.stringify(response));
       let actionsExecuted = response.data;
       state.mostExecutedActions.labels = [];
       state.mostExecutedActions.points = [];
-
       actionsExecuted = actionsExecuted.sort(function(a, b){return a.evaluationCount-b.evaluationCount});
 
       if(actionsExecuted.length>5){
@@ -1802,19 +1540,13 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 	state.mostExecutedActions.labels.push(actionsExecuted[i].action.name);
 	state.mostExecutedActions.points.push(actionsExecuted[i].evaluationCount);
       }
-
-      console.log(" RESPONSE: " + JSON.stringify(state.mostExecutedActions));
    },
 
    getLastExecutedActions: (state, response) => {
-      console.log(" Entering getLastExecutedActions");
-      console.log(" RESPONSE: " + JSON.stringify(response));
       let actionsExecuted = response.data;
       state.lastExecutedActions = [];
-
       state.lastExecutedActions.push(actionsExecuted[actionsExecuted.length-1]);
       let alreadyIncluded = false;
-
 
 	for(let i=actionsExecuted.length-1; i>=0; i--){
 		for(let j=0; j<state.lastExecutedActions.length; j++){
@@ -1828,11 +1560,10 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 		}
 		alreadyIncluded = false;
 	}
-      console.log(" Before chopping: " + JSON.stringify(state.lastExecutedActions));
+
       if(state.lastExecutedActions.length>5){
          state.lastExecutedActions = state.lastExecutedActions.slice(0,5);
       }
-      console.log(" Finally: " + JSON.stringify(state.lastExecutedActions));
    },
 
 
@@ -1842,7 +1573,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
   // ACTIONS
   //#####################################################################
 
-  actions:{ // es una BUENA PRACTICA que todas sean acciones y commiteen mutaciones, aún éstas no sean asíncronas
+  actions:{
 
     showDataStreamView: (context, url) => {
       context.commit('showDataStreamView');
@@ -1936,17 +1667,13 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     showDashboardView: context => {
-      console.log("Entering showDashboardView");
       context.commit('showDashboardView');
       context.commit('cleanElementsToDelete');
 
       setTimeout(function () { // This setTimeout is needed due to a race condition between the DOM rendering and the Chart drawing events
-        console.log("Entering drawMosTriggeredActionsChart");
-
         context.commit('drawMostExecutedTriggersChart');
         context.commit('drawTriggerTypesPercentagesChart');
         context.commit('drawMosTriggeredActionsChart');
-
       }, 100);
 
     },
@@ -1956,8 +1683,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     showActionView: (context, url) => {
-      console.log("Entering showActionView ");
-
       context.commit('showActionView');
       context.commit('cleanElementsToDelete');
       context.commit('displayLoadingFeedback');
@@ -1977,8 +1702,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     showTriggerView: (context, url) => {
-      console.log("Entering showTriggerView ");
-
       context.commit('showTriggerView');
       context.commit('cleanElementsToDelete');
       context.commit('displayLoadingFeedback');
@@ -2002,7 +1725,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     showCommandView: (context, url) => {
-      console.log("Entering showCommandView ");
       context.commit('showCommandView');
       context.commit('cleanElementsToDelete');
       context.commit('displayLoadingFeedback');
@@ -2029,79 +1751,66 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     showSecurityView: context =>{
-      console.log("Entering showSecurityView ");
       context.commit('showSecurityView');
       context.commit('cleanElementsToDelete');
     },
 
     showAboutView: context => {
-      console.log("Entering showAboutView ");
       context.commit('showAboutView');
       context.commit('cleanElementsToDelete');
     },
 
     displayPrevPageCommands: context => {
-      console.log("Entering displayPrevPageCommands ");
       context.commit('setCurrentPagePreviousPage');
       context.commit('getCommandsToShowInTable');
     },
 
     displayNextPageCommands: context => {
-      console.log("Entering displayNextPageCommands");
       context.commit('setCurrentPageNextPage');
       context.commit('getCommandsToShowInTable');
     },
 
     displayPrevPageActions: context => {
-      console.log("Entering displayPrevPageActions ");
       context.commit('setCurrentPagePreviousPage');
       context.commit('getActionsToShowInTable');
     },
 
     displayNextPageActions: context => {
-      console.log("Entering displayNextPageActions ");
       context.commit('setCurrentPageNextPage');
       context.commit('getActionsToShowInTable');
     },
 
     getActionsToShowInTable: (context, number) => {
-      console.log("Entering getActionsToShowInTable ");
       context.commit('setCurrentPage', number);
       context.commit('getActionsToShowInTable');
     },
 
     getCommandsToShowInTable: (context, number) => {
-      console.log("Entering getCommandsToShowInTable ");
       context.commit('setCurrentPage', number);
       context.commit('getCommandsToShowInTable');
     },
 
     getDataStreamsToShowInTable: (context, number) => {
-      console.log("Entering getDataStreamsToShowInTable ");
       context.commit('setCurrentPage', number);
       context.commit('getDataStreamsToShowInTable');
     },
 
     getTriggersToShowInTable: (context, number) =>{
-      console.log("Entering getTriggersToShowInTable ");
       context.commit('setCurrentPage', number);
       context.commit('getTriggersToShowInTable');
     },
 
     displayPrevPageTriggers: context => {
-      console.log("Entering displayPrevPageDataStream ");
       context.commit('setCurrentPagePreviousPage');
       context.commit('getTriggersToShowInTable');
     },
 
     displayNextPageTriggers: context => {
-      console.log("Entering displayNextPageDataStream ");
       context.commit('setCurrentPageNextPage');
       context.commit('getTriggersToShowInTable');
     },
 
     setMaxTriggersPerPage: (context, value) => {
-      console.log("Entering setMaxTriggersPerPage ");
       context.commit('setMaxTriggersPerPage', value);
       context.commit('setCurrentPage', 1);
       context.commit('getTriggersToShowInTable');
@@ -2109,53 +1818,44 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     filterTriggersToDisplay: (context, value) => {
-      console.log("Entering filterTriggersToDisplay");
       context.commit('filterTriggersToDisplay', value);
       context.commit('getPagesNeededForTriggers');
       context.commit('getTriggersToShowInTable');
     },
 
     displayPrevPageDataStream: context => {
-      console.log("Entering displayPrevPageDataStream ");
       context.commit('setCurrentPagePreviousPage');
       context.commit('getDataStreamsToShowInTable');
     },
 
     displayNextPageDataStream: context => {
-      console.log("Entering displayNextPageDataStream ");
       context.commit('setCurrentPageNextPage');
       context.commit('getDataStreamsToShowInTable');
     },
 
     addElementToDeleteList: (context, elem) => {
-      console.log("Entering addElementToDeleteList ");
       context.commit('addElementToDeleteList', elem);
     },
 
     showDataStream: (context, dataStream) => {
-      console.log("Entering showDataStream ");
       context.commit('showDataStream', dataStream);
     },
 
     editDataStreams: (context, dataStream) => {
-      console.log("## Entering editDataStreams " + dataStream);
       context.commit('editDataStreams', dataStream);
     },
 
     updateDataStreamsForPage: (context, value) =>{
-      console.log(" Entering updateDataStreamsForPage");
       context.commit('updateDataStreamsForPage', value);
     },
 
     filterActionsToDisplay: (context, value) => {
-      console.log(" Entering filterActionsToDisplay");
       context.commit('filterActionsToDisplay', value);
       context.commit('getPagesNeededForActions');
       context.commit('getActionsToShowInTable');
     },
 
     filterCommandsToDisplay: (context, value) => {
-      console.log(" Entering filterCommandsToDisplay");
       context.commit('filterCommandsToDisplay', value);
       context.commit('getPagesNeededForCommands');
       context.commit('getCommandsToShowInTable');
@@ -2172,8 +1872,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     */
 
     addDataStream: (context, url) => {
-        console.log(' Entering addDataStream!');
-
         context.commit('prepareDataStreamAdding');
 
         axios.post( url + '/data-streams', {
@@ -2213,8 +1911,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     addCommand: (context, url) => {
-        console.log(' Entering addCommand!');
-
         context.commit('prepareCommandAdding');
 
         axios.post( url + '/commands', {
@@ -2261,24 +1957,16 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     addAction: (context, url, request, name) => {
-    console.log("######## TU VIEJAAAAA ########");
     context.commit('prepareActionRequest');
 
     axios.post(url + '/actions', {
         name: context.state.activeAction.name,
         http_request: context.state.request
       }).then(function (response) {
-          console.log("(1)");
-          console.log("data: " + response.data);
-          console.log("status: " + response.status);
-          console.log("statusText: " + response.statusText);
-          console.log("headers: " + response.headers);
-          console.log("config: " + response.config);
 
           context.commit('setActionAddSuccessDetails');
 
           axios.get(url + '/actions', {headers: {"Accept" : "application/json"} }).then(response => {
-                console.log("(2)");
                 context.commit('processActionsConfigured', response);
                 context.commit('setFilteredActionsToAllConfigured');
                 context.commit('setCurrentPage', 1);
@@ -2336,7 +2024,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     deleteElements: context => {
-      console.log('### ENTERING deleteElements!!');
       context.commit('deleteElements');
 
       setTimeout(function(){
@@ -2388,22 +2075,15 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     addTrigger: (context, url) => {
-      console.log("### [addTrigger] ");
-
       let policy = {};
 
       if(context.state.isTimePeriodPolicy){
-        //policy = {type: "time_interval", granularity: context.state.activeTrigger.timePeriod.granularity};
         policy = {type: "periodical", time_interval: context.state.activeTrigger.timePeriod.granularity};
       }else{
         policy= {type: "data_point_registration", data_stream: context.state.activeTrigger.dataPointRegistration.dataStream};
       }
 
       context.state.displayLoadingFeedback = true; // user starts seeing the loading spinner
-
-      console.log("conditionsForTrigger: " + JSON.stringify(context.state.conditionsForTrigger));
-
-      console.log("name="+ JSON.stringify(context.state.activeTrigger.name)+", action=" + JSON.stringify(context.state.activeTrigger.action)+", policy="+ JSON.stringify(policy)+", conditions=" + JSON.stringify(context.state.conditionsForTrigger));
 
       axios.post(url + '/triggers', {
         name: context.state.activeTrigger.name,
@@ -2513,7 +2193,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     displayModalForDataPointsAdding: context => {
-      console.log("Entering displayModalForDataPointsAdding");
       context.commit('displayModalForDataPointsAdding');
     },
     hideModalForDataPointsAdding: context => {
@@ -2540,8 +2219,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
         setTimeout(function(){
           context.state.showModalForRequestResult = false;
         }, 1500);
-
-        console.log("#$$$$$$$: " + context.state.activeDataStream.links.data_points);
 
         setTimeout(function(){
             axios.get(url + '/data-streams',{ headers: { "Accept": "application/json" } }).then(response => {
@@ -2601,8 +2278,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     getNextCommandsInQueue: (context, url) => {
-        console.log("Entering getNextCommandsInQueue ");
-
         axios.get(url + '/commands?order=priority', {headers:{"Accept" : "application/json"}} ).then(response => {
           context.commit('getNextCommandsInQueue', response);
         }, (err) => {
@@ -2612,8 +2287,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     getMostExecutedActions: (context, url) => {
-       console.log("Entering getMostExecutedActions ");
-
         axios.get(url + '/action-evaluations/summaries', {headers:{"Accept" : "application/json"}} ).then(response => {
           context.commit('getMostExecutedActions', response);
         }, (err) => {
@@ -2622,8 +2295,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     getLastExecutedActions: (context, url) => {
-       console.log("Entering getLastExecutedActions");
-
         axios.get(url + '/action-evaluations/last', {headers:{"Accept" : "application/json"}} ).then(response => {
           	context.commit('getLastExecutedActions', response);
 	  	context.commit('determineMostRecentlyUpdatedActions', new Date());
@@ -2636,7 +2307,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
    determineMostRecentlyUpdatedActions: (context, now) => {
-      console.log("determineMostRecentlyUpdatedActions");
       context.commit('determineMostRecentlyUpdatedActions', now);
    },
   }

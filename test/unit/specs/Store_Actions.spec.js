@@ -5,7 +5,7 @@ describe('Actions', () => {
 
   before(function () {
     // runs before all tests in this block
-    console.log("#### BEFORE ALL #####");
+
     var body = document.getElementsByTagName("body")[0];
     var canvasForFirstChart = document.createElement("canvas");
     canvasForFirstChart.id = 'line-chart';
@@ -36,7 +36,6 @@ describe('Actions', () => {
     body.appendChild(canvasForThirdChart);
     body.appendChild(canvasForFourthChart);
 
-    console.log("#### BEFORE ALL #####");
   });
 
   it('showAddDataStreamModalTest', () => {

@@ -10,5 +10,10 @@ RUN npm run build
 FROM nginx:1.13.12-alpine as production-stage
 COPY --from=build-stage /telescope/dist /usr/share/nginx/html
 EXPOSE 80
-ENV COSMOS_LOCATION=http://localhost:8090
-CMD ["nginx", "-g", "daemon off;"]
+#CMD ["nginx", "-g", "daemon off;"]
+
+# Copy initialization script 
+COPY initialization.sh ./initialization.sh
+RUN chmod +x ./initialization.sh
+
+ENTRYPOINT initialization.sh

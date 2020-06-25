@@ -18,7 +18,7 @@ Vue.use(VueRouter)
 // Register routes
 const router = new VueRouter({
   routes:  Routes,
-  mode: 'hash',
+  mode: 'history',
   //mode: 'hash',  ==>> es el modo default, lo que te asegura que se agregue un # al final del recurso, para evitar requests al server. cada elementoq ue se pone dsps del
   // '/' hace referencia a un recurso del server, entonces cada uno hace un request distinto teóricamente
   //

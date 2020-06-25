@@ -30,13 +30,13 @@
                   <canvas id="line-chart" class="chartjs-render-monitor"></canvas>
                 </div>
                 <div class="col-sm-4 text-center my-auto">
-                  <div class="h4 mb-0 text-primary">{{this.$store.state.dataPointsMaxValue}}</div>
+                  <div class="h4 mb-0" style="color:#4AFF82">{{this.$store.state.dataPointsMaxValue}}</div>
                   <div class="small text-muted">Highest</div>
                   <hr>
-                  <div class="h4 mb-0 text-warning">{{this.$store.state.dataPointsMinValue}}</div>
+                  <div class="h4 mb-0" style="color:#4AFF82">{{this.$store.state.dataPointsMinValue}}</div>
                   <div class="small text-muted">Lowest</div>
                   <hr>
-                  <div class="h4 mb-0 text-success">{{this.$store.state.dataPointsAverageValue}}</div>
+                  <div class="h4 mb-0" style="color:#4AFF82">{{this.$store.state.dataPointsAverageValue}}</div>
                   <div class="small text-muted">Average</div>
                 </div>
               </div>

@@ -1183,7 +1183,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
             data: state.dataPointsAvailables,
             //label: "Temperature",
             label: state.activeDataStream.name,
-            borderColor: "#3e95cd",
+            borderColor: "#343a40",
             fill: false
           }]
         },

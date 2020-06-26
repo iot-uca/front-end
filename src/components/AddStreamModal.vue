@@ -31,23 +31,6 @@
                     </div>
                   </div>
 
-                  <div class="mb-3">
-                    <label for="streamType">Type</label>
-                    <div class="input-group">
-                      <!--div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fa fa-star-o"></i></span>
-                      </div-->
-                      <select class="form-control custom-select" id="streamType" required="true">    <!-- NEED v-model="activeAction.method" -->
-                        <option v-for="(type, index) in streamTypes" v-bind:value="type.name">
-                          {{type.name}}
-                        </option>
-                      </select>
-                      <div class="invalid-feedback" style="width: 100%;">
-                        The Stream type is required.
-                      </div>
-                    </div>
-                  </div>
-
 
                   <hr>
                   <button class="btn button-green btn-sm" type="submit" @click="addDataStream();hideModalForStreamAdding();" style="float: right; font-size: 1.1rem;">Add stream</button>

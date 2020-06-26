@@ -358,10 +358,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       state.sideNavStyle.backgroundColor = "#111"; //Background color BLACK
       state.sideNavStyle.width = "250px";
     },
-    
-    setBackendEndPoint: (state, url) => {
-        state.backendEndPoint = url;
-    },
+
     showDashboardView: state => {
       state.renderDashboardView = true;
       state.renderDataStreamView = false;
@@ -1677,7 +1674,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     showDashboardView: (context, url) => {
-      context.commit ('setBackendEndPoint', url);
       context.commit('showDashboardView');
       context.commit('cleanElementsToDelete');
 
@@ -2289,8 +2285,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     getNextCommandsInQueue: (context, url) => {
-            console.log("TONGOOOOO:" + url);
-            axios.get(url + "/commands?order=priority", 
+            axios.get(url + '/commands?order=priority', 
                   {
                       headers:{"Accept" : "application/json"}
                 } 

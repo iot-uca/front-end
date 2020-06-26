@@ -253,7 +253,6 @@ describe('Actions', () => {
       expect(store.state.renderAboutView).to.equal(false);
       expect(store.state.renderCommandsView).to.equal(false);
       expect(store.state.elementsToDelete.length).to.equal(0);
-
     });
 
     it('testShowSecurityView', () => {

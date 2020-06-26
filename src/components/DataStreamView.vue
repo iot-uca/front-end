@@ -86,7 +86,7 @@
               <a @click="showDataStream(dataStream); getDataPoints();" data-toggle="modal" data-target="#dataPointsForStreamModal" style="color:#4AFF82"><i class="fa fa-bar-chart"></i></a>
             </td>
             <td>
-              <a @click="displayModalForDataPointsAdding();" style="color:#4AFF82"><i class="fa fa-plus"></i></a>
+              <a @click="editDataStreams(dataStream); displayModalForDataPointsAdding();" style="color:#4AFF82"><i class="fa fa-plus"></i></a>
             </td>
 
           </tr>

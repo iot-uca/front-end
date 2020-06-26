@@ -997,57 +997,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       state.actionBody = '{"foo":"bar", "jane":"doe"}';
     },
 
-
-    drawMosTriggeredActionsChart: state => {
-      let ctx = document.getElementById("myPieChart2").getContext('2d');
-
-      new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-          labels: ['Action 1', 'Action 2', 'Action 3'],
-          datasets: [{
-            data: [7, 9, 5],
-            backgroundColor: ['#ffc107', '#007bff', '#28a745']
-            /*backgroundColor: ['#3e95cd', '#8e5ea2','#3cba9f','#e8c3b9','#c45850']*/
-          }]
-        },
-        options: {
-          legend: { // Para no mostrar la leyenda de cada set de datos
-            display: false
-          },
-          title: false,
-          responsive:true,
-          cutoutPercentage:0,
-          maintainAspectRatio: false,
-        }
-      });
-
-    },
-
-    drawTriggerTypesPercentagesChart: state => {
-      let ctx = document.getElementById("percentageBar").getContext('2d');
-      new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-          labels: ['Action1', 'Action2', 'Action3', 'Action4', 'Action5'],
-          datasets: [{
-            data: [11, 22, 7, 17, 9],
-            backgroundColor: ['#0000FF', '#ff4d4d', '#ffff33', ' #32D75E', ' #c61aff']
-          }]
-        },
-        options: {
-          legend: {
-            display: false
-          },
-          title: false,
-          responsive:true,
-          cutoutPercentage:75,
-          maintainAspectRatio: false,
-        }
-      });
-    },
-
-
     drawDataPointsChart: state => {
       let ctx = document.getElementById("line-chart").getContext('2d');
       
@@ -1101,7 +1050,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
             datasets: [{
                 //data: [22, 17, 15, 11, 9],
                 data: state.mostExecutedActions.points,
-                backgroundColor: ['#FABB3C', '#32D75E','#D02FC0','#EB0524','#3e95cd']
+                backgroundColor: ['#4AFF82', '#4AFF82','#4AFF82','#4AFF82','#4AFF82']
                 /*backgroundColor: ['#3e95cd', '#8e5ea2','#3cba9f','#e8c3b9','#c45850']*/
             }]
             },
@@ -1117,18 +1066,21 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
             },
             scales: {
                 xAxes: [{
-                gridLines: {
-                    display:false
-                },
-                ticks: {
-                    display: false //this will remove only the label
-                },
-                display: false
-                }],
+		        gridLines: {
+		            display:true
+		        },
+		        ticks: {
+		            	display: true, //this will remove only the label
+		            	beginAtZero: true,
+				min: 0,
+				stepSize: 1
+		        },
+                	display: true
+                 }],
                 yAxes: [{
-                gridLines: {
-                    display:false
-                }
+		        gridLines: {
+		            display:true
+		        }
                 }]
             }
             }
@@ -1677,11 +1629,9 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       context.commit('showDashboardView');
       context.commit('cleanElementsToDelete');
 
-      setTimeout(function () { // This setTimeout is needed due to a race condition between the DOM rendering and the Chart drawing events
+/*      setTimeout(function () { // This setTimeout is needed due to a race condition between the DOM rendering and the Chart drawing events
         context.commit('drawMostExecutedTriggersChart');
-        context.commit('drawTriggerTypesPercentagesChart');
-        context.commit('drawMosTriggeredActionsChart');
-      }, 100);
+      }, 300);*/
 
     },
 
@@ -2025,8 +1975,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     drawCharts: context => {
-      context.commit('drawMosTriggeredActionsChart');
-      context.commit('drawTriggerTypesPercentagesChart');
       context.commit('drawMostExecutedTriggersChart');
     },
 
@@ -2298,7 +2246,9 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     getMostExecutedActions: (context, url) => {
+	console.log("getMostExecutedActions!!");
         axios.get(url + '/action-evaluations/summaries', {headers:{"Accept" : "application/json"}} ).then(response => {
+	  console.log("getMostExecutedActions>> : " + JSON.stringify(response));
           context.commit('getMostExecutedActions', response);
         }, (err) => {
           console.log("[ERROR] => " + err);
@@ -2306,10 +2256,11 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     getLastExecutedActions: (context, url) => {
+	console.log("getLastExecutedActions!!");
         axios.get(url + '/action-evaluations/last', {headers:{"Accept" : "application/json"}} ).then(response => {
+		console.log("getLastExecutedActions >> " + JSON.stringify(response));
           	context.commit('getLastExecutedActions', response);
 	  	context.commit('determineMostRecentlyUpdatedActions', new Date());
-      		context.commit('drawMosTriggeredActionsChart');
       		context.commit('drawTriggerTypesPercentagesChart');
       		context.commit('drawMostExecutedTriggersChart');
         }, (err) => {

@@ -66,9 +66,8 @@
               <th scope="col" style="width: 2%"></th>
               <th scope="col" style="width: 77%; color: white;">Name</th>
               <th scope="col" style="width: 15%; color: white;">Current Value</th>
-              <th scope="col" style="width: 2%"></th>
-              <th scope="col" style="width: 2%"></th>
-              <th scope="col" style="width: 2%"></th>
+              <th scope="col" style="width: 3%"></th>
+              <th scope="col" style="width: 3%"></th>
             </tr>
           </thead>
           <tbody>
@@ -87,12 +86,7 @@
               <a @click="showDataStream(dataStream); getDataPoints();" data-toggle="modal" data-target="#dataPointsForStreamModal" style="color:#4AFF82"><i class="fa fa-bar-chart"></i></a>
             </td>
             <td>
-              <a @click="editDataStreams(dataStream); displayModalForStreamEditing()" style="color:#4AFF82"><i class="fa fa-pencil-square-o"></i></a>
-
-            </td>
-
-            <td>
-              <a @click="editDataStreams(dataStream); displayModalForDataPointsAdding();" style="color:#4AFF82"><i class="fa fa-plus"></i></a>
+              <a @click="displayModalForDataPointsAdding();" style="color:#4AFF82"><i class="fa fa-plus"></i></a>
             </td>
 
           </tr>

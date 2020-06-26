@@ -1447,7 +1447,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
         state.labelsForDataPoints.push(i+1);
         sum = sum + +response[i].value; //convert the string number to number
       }
-
+      state.dataPointsAvailables = state.dataPointsAvailables.reverse();
       state.dataPointsMaxValue = ((state.dataPointsAvailables.length < 1) ? 0 : Math.max(...state.dataPointsAvailables));
       state.dataPointsMinValue = ((state.dataPointsAvailables.length < 1) ? 0 : Math.min(...state.dataPointsAvailables));
       state.dataPointsAverageValue = ((amountOfPoints < 1) ? 0 : (sum/amountOfPoints).toFixed(2));

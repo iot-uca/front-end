@@ -1023,8 +1023,8 @@ it('setMaxDataStreamsPerPageTest', () => {
     store.commit('processDataPointsConfigured',response);
 
     expect(store.state.dataPointsAvailables.length).to.equal(5);
-    expect(store.state.dataPointsAvailables[0]).to.equal(1);
-    expect(store.state.dataPointsAvailables[4]).to.equal(5);
+    expect(store.state.dataPointsAvailables[0]).to.equal(5);
+    expect(store.state.dataPointsAvailables[4]).to.equal(1);
     expect(store.state.labelsForDataPoints.length).to.equal(5);
     expect(store.state.labelsForDataPoints[0]).to.equal(1);
     expect(store.state.labelsForDataPoints[4]).to.equal(5);

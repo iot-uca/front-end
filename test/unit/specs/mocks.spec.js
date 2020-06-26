@@ -161,9 +161,9 @@ describe('mocking axios requests', function () {
         }).then(function () {
           equal(onFulfilled.called, true)
           expect(store.state.dataPointsAvailables.length).to.equal(3)
-          expect(store.state.dataPointsAvailables[0]).to.equal("1")
+          expect(store.state.dataPointsAvailables[0]).to.equal("11")
           expect(store.state.dataPointsAvailables[1]).to.equal("4")
-          expect(store.state.dataPointsAvailables[2]).to.equal("11")
+          expect(store.state.dataPointsAvailables[2]).to.equal("1")
           done()
         })
       })

@@ -1355,6 +1355,8 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
 
     displayModalForTriggerAdding: state => {
       state.showModalForTriggerAdding = true;
+      state.conditionsForTrigger= [];
+
     },
 
     hideModalForTriggerAdding: state => {
@@ -2246,9 +2248,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     getMostExecutedActions: (context, url) => {
-	console.log("getMostExecutedActions!!");
         axios.get(url + '/action-evaluations/summaries', {headers:{"Accept" : "application/json"}} ).then(response => {
-	  console.log("getMostExecutedActions>> : " + JSON.stringify(response));
           context.commit('getMostExecutedActions', response);
         }, (err) => {
           console.log("[ERROR] => " + err);
@@ -2256,9 +2256,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     getLastExecutedActions: (context, url) => {
-	console.log("getLastExecutedActions!!");
         axios.get(url + '/action-evaluations/last', {headers:{"Accept" : "application/json"}} ).then(response => {
-		console.log("getLastExecutedActions >> " + JSON.stringify(response));
           	context.commit('getLastExecutedActions', response);
 	  	context.commit('determineMostRecentlyUpdatedActions', new Date());
       		context.commit('drawTriggerTypesPercentagesChart');

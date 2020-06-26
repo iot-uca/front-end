@@ -243,20 +243,12 @@
 export default {
 
   mounted(){
-    console.log("1");
     this.$store.dispatch('showDashboardView');
-    console.log("2");
     this.$store.dispatch('getNextCommandsInQueue', this.$store.state.backendEndPoint);
-    console.log("3");
     this.determineMostRecentlyUpdatedStreams(new Date());
-    console.log("4");
     this.$store.dispatch('getMostExecutedActions', this.$store.state.backendEndPoint);
-    console.log("5");
     this.$store.dispatch('getLastExecutedActions', this.$store.state.backendEndPoint);
-    console.log("6");
     this.drawCharts();
-    console.log("7");
-
   },
 
   computed:{

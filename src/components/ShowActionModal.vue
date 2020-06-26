@@ -79,7 +79,7 @@
                       <div class="mb-3">
                         <label>Body</label>
                         <div class="input-group">
-                          <textarea disabled class="form-control" aria-label="Request body" v-model="activeAction.body"></textarea>
+                          <textarea disabled class="form-control" aria-label="Request body" v-model="activeAction.http_request.entity.contents"></textarea>
                         </div>
                       </div>
 

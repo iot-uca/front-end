@@ -16,7 +16,7 @@
 
           <div class="card mb-3" style="height: 80%; width: 100%;">
             <div class="card-header">
-              <i class="fa fa-bar-chart"></i> Data Points
+              <i class="fa fa-bar-chart"></i> {{this.$store.state.activeDataStream.name}}
               <select  style="float: right;" id="days" placeholder="Latest" required="true">
                 <option value="Latest">Latest</option>
                 <option value="day">Day</option>

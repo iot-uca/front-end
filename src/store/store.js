@@ -1009,28 +1009,31 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
             datasets: [{
                 data: state.dataPointsAvailables,
                 label: state.activeDataStream.name,
-                borderColor: "#3e95cd",
+                borderColor: "#343a40",
                 fill: false
             }]
             },
             options: {
-            title:false,
-            title: {
-                display: false,
-                text: 'Data Points registered in ' + state.activeDataStream.name
-            },
-            scales: {
-                xAxes: [{
-                gridLines: {
-                    display:false
-                }
-                }],
-                yAxes: [{
-                gridLines: {
-                    display:false
-                }
-                }]
-            }
+		    legend: {
+		        display: false
+		    },
+		    title:false,
+		    title: {
+		        display: false,
+		        text: 'Data Points registered in ' + state.activeDataStream.name
+		    },
+		    scales: {
+		        xAxes: [{
+		        	gridLines: {
+		            		display:false
+		        	}
+		        }],
+		        yAxes: [{
+		        	gridLines: {
+		            		display:false
+		        	}	
+		        }]
+		    }
             }
         });
     },
@@ -1079,7 +1082,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
                  }],
                 yAxes: [{
 		        gridLines: {
-		            display:true
+		            display: true
 		        }
                 }]
             }

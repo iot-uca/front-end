@@ -74,19 +74,29 @@
 
 
           <tr v-for="dataStream in dataStreamsForPage">
+
+
             <td>
-              <div class="custom-control custom-checkbox" >
+              <div class="custom-control custom-checkbox">
                 <input type="checkbox" :id="dataStream.name" class="custom-control-input" @click="addElementToDeleteList(dataStream)">
                 <label :for="dataStream.name" class="custom-control-label"></label>
               </div>
             </td>
+
+
+
+
             <td>{{dataStream.name}}</td>
             <td>{{dataStream.current_value}}</td>
             <td>
-              <a @click="showDataStream(dataStream); getDataPoints();" data-toggle="modal" data-target="#dataPointsForStreamModal" style="color:#4AFF82"><i class="fa fa-bar-chart"></i></a>
+              <button type="button" class="btn button-green button-green-view btn-sm" style="height: 75%;" data-toggle="modal" data-target="#dataPointsForStreamModal" @click="showDataStream(dataStream); getDataPoints();">
+                <i class="fa fa-bar-chart"></i>
+              </button>
             </td>
             <td>
-              <a @click="editDataStreams(dataStream); displayModalForDataPointsAdding();" style="color:#4AFF82"><i class="fa fa-plus"></i></a>
+              <button type="button" class="btn button-green button-green-view btn-sm" style="height: 75%;" @click="editDataStreams(dataStream); displayModalForDataPointsAdding();">
+                <i class="fa fa-plus"></i>
+              </button>
             </td>
 
           </tr>

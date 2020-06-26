@@ -19,13 +19,6 @@ Vue.use(VueRouter)
 const router = new VueRouter({
   routes:  Routes,
   mode: 'history',
-  //mode: 'hash',  ==>> es el modo default, lo que te asegura que se agregue un # al final del recurso, para evitar requests al server. cada elementoq ue se pone dsps del
-  // '/' hace referencia a un recurso del server, entonces cada uno hace un request distinto teóricamente
-  //
-  // Lo que pasa es que el server cuando le pegan a /algunRecurso hace alguna petición... al vos ponerle modo 'history' no hace ningún request adicional, siempre sirve el
-  // index.html de la app VUE que luego es controlado por VUE a través del div con id App
-  // .
-
 });
 
 /* eslint-disable no-new */

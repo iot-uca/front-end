@@ -3,8 +3,7 @@
 
     <burguer-menu></burguer-menu>
     <add-stream-modal></add-stream-modal>
-    <add-command-modal></add-command-modal
-    <remove-elements-modal></remove-elements-modal>
+    <add-command-modal></add-command-modal>
     <add-action-modal></add-action-modal>
     <show-action-modal></show-action-modal>
     <add-trigger-modal></add-trigger-modal>
@@ -13,6 +12,7 @@
     <show-trigger-modal></show-trigger-modal>
     <router-view></router-view>
     <add-data-point-modal></add-data-point-modal>
+    <remove-elements-modal></remove-elements-modal>
 
   </div>
 </template>

@@ -70,8 +70,7 @@
             <th scope="col" style="width: 10%; color: white;">Method</th>
             <th scope="col" style="width: 40%; color: white;">URL</th>
             <th scope="col" style="width: 7%; color: white;">Version</th>
-            <th scope="col" style="width: 1%"></th>
-            <th scope="col" style="width: 1%"></th>
+            <th scope="col" style="width: 2%"></th>
           </tr>
           </thead>
           <tbody class="table-hover">
@@ -97,11 +96,6 @@
             <td>
               <button type="button" class="btn button-green button-green-view btn-sm" style="height: 75%;" @click="assignBodyAndHeader(action); displayModalForActionDetails();">
                 <i class="fa fa-eye"></i>
-              </button>
-            </td>
-            <td>
-              <button type="button" class="btn button-green button-green-edit btn-sm" @click="assignBodyAndHeader(action); displayModalForActionEditing();">
-                <i class="fa fa-pencil-square-o"></i>
               </button>
             </td>
           </tr>

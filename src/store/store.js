@@ -1359,6 +1359,17 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     displayModalForTriggerAdding: state => {
       state.showModalForTriggerAdding = true;
       state.conditionsForTrigger= [];
+      state.activeTrigger= {
+	      name:'',
+	      action:'',
+	      dataPointRegistration:{
+		dataStream:''
+	      },
+	      timePeriod:{
+		granularity:''
+	      },
+	      conditions:[],
+      };
 
     },
 
@@ -1633,11 +1644,6 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     showDashboardView: (context, url) => {
       context.commit('showDashboardView');
       context.commit('cleanElementsToDelete');
-
-/*      setTimeout(function () { // This setTimeout is needed due to a race condition between the DOM rendering and the Chart drawing events
-        context.commit('drawMostExecutedTriggersChart');
-      }, 300);*/
-
     },
 
     closeNav: context => {
@@ -1664,6 +1670,7 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
     },
 
     showTriggerView: (context, url) => {
+
       context.commit('showTriggerView');
       context.commit('cleanElementsToDelete');
       context.commit('displayLoadingFeedback');
@@ -1680,9 +1687,21 @@ export const store = new Vuex.Store({ // we need to export it to make it avaibla
       }, (err) => {
         console.log("[ERROR] => " + err);
         context.commit('hideLoadingFeedback');
-        //context.commit('treatErrorForActions', err);
       });
 
+      axios.get(url + '/actions', {headers:{"Accept" : "application/json"}} ).then(response => {
+        context.commit('processActionsConfigured', response);
+        context.commit('setFilteredActionsToAllConfigured');
+      }, (err) => {
+        console.log("[ERROR] => " + err);
+      });
+
+      axios.get(url + '/data-streams',{ headers: { "Accept": "application/json" } }).then(response => {
+	context.commit('processDataStreamsConfigured', response);
+	context.commit('setFilteredDataStreamsToAllConfigured');
+      }, (err) => {
+	console.log("[ERROR] => " + JSON.stringify(err));
+      });
 
     },
 
